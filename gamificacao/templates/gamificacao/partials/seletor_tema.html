@@ -2,14 +2,16 @@
     <button type="button" id="botao-tema-usuario"
         aria-expanded="false" aria-controls="opcoes-tema-usuario"
         class="w-11 h-11 rounded-full border border-white/20 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center text-lg shadow-xl hover:scale-110 transition"
-        title="Mudar tema">🎨</button>
+        title="Mudar paisagem da trilha">🎨</button>
 
     <div id="opcoes-tema-usuario"
         class="absolute top-1/2 right-14 -translate-y-1/2 flex items-center gap-2 rounded-full bg-slate-950/95 border border-white/10 backdrop-blur-xl px-3 py-2 shadow-2xl opacity-0 scale-90 pointer-events-none transition-all duration-200 origin-right">
-        <button type="button" data-theme-option="tema-padrao" aria-label="Noite Estrelada" title="Noite Estrelada" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#0f172a,#334155)"></button>
-        <button type="button" data-theme-option="tema-floresta" aria-label="Trilha na Floresta" title="Trilha na Floresta" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#052e16,#16a34a,#064e3b)"></button>
-        <button type="button" data-theme-option="tema-deserto" aria-label="Deserto Escaldante" title="Deserto Escaldante" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#451a03,#d97706,#92400e)"></button>
-        <button type="button" data-theme-option="tema-masmorra" aria-label="Masmorra Sombria" title="Masmorra Sombria" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#020617,#312e81,#171717)"></button>
+        <button type="button" data-theme-option="tema-padrao" aria-label="Noite Estrelada" title="Noite Estrelada" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:radial-gradient(circle at 70% 25%,#dbeafe 0 8%,transparent 9%),linear-gradient(135deg,#020617,#334155)"></button>
+        <button type="button" data-theme-option="tema-floresta" aria-label="Floresta Encantada" title="Floresta Encantada" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#052e16,#16a34a,#022c22)"></button>
+        <button type="button" data-theme-option="tema-deserto" aria-label="Deserto Escaldante" title="Deserto Escaldante" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:radial-gradient(circle at 75% 25%,#fed7aa 0 12%,transparent 13%),linear-gradient(135deg,#451a03,#d97706,#78350f)"></button>
+        <button type="button" data-theme-option="tema-masmorra" aria-label="Masmorra Sombria" title="Masmorra Sombria" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:radial-gradient(circle at 25% 35%,#ef4444 0 6%,transparent 7%),linear-gradient(135deg,#020617,#312e81,#111827)"></button>
+        <button type="button" data-theme-option="tema-aurora" aria-label="Aurora Boreal" title="Aurora Boreal" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#082f49,#22d3ee,#172554,#020617)"></button>
+        <button type="button" data-theme-option="tema-oceano" aria-label="Oceano Profundo" title="Oceano Profundo" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#082f49,#0ea5e9,#075985)"></button>
     </div>
 </div>
 
@@ -23,7 +25,7 @@
     const options=root.querySelectorAll('[data-theme-option]');
     const endpoint='{% url "atualizar_tema_usuario" %}';
     const currentInitial='{{ tema_atual|default:"tema-padrao" }}';
-    const themes=['tema-padrao','tema-floresta','tema-deserto','tema-masmorra'];
+    const themes=['tema-padrao','tema-floresta','tema-deserto','tema-masmorra','tema-aurora','tema-oceano'];
     let currentTheme=currentInitial;
 
     function openPanel(open){
@@ -58,6 +60,7 @@
             },
             body:JSON.stringify({tema:theme})
         });
+
         if(!response.ok)throw new Error('Não foi possível salvar o tema.');
         return response.json();
     }
@@ -77,6 +80,7 @@
             const previous=currentTheme;
             apply(next);
             openPanel(false);
+
             try{
                 await save(next);
             }catch(error){
