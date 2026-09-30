@@ -134,6 +134,18 @@ urlpatterns = [
         name='ajax_excluir_fase',
     ),
 
+    path(
+        'estudio/ajax/questao/<int:questao_id>/editar/',
+        views.ajax_editar_questao,
+        name='ajax_editar_questao',
+    ),
+
+    path(
+        'estudio/ajax/questao/<int:questao_id>/excluir/',
+        views.ajax_excluir_questao,
+        name='ajax_excluir_questao',
+    ),
+
     # ========================================================
     # JOGO
     # ========================================================
