@@ -72,25 +72,30 @@
 
             <div class="flex items-center gap-3">
 
-                {% if modo_teste_ativo %}
-
-                    <a
-                        href="{% url 'alternar_papel' %}"
-                        class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
-                    >
-                        🧪
-                        Mudar para Professor
-                    </a>
+                {% if modo_teste_disponivel %}
+                    <form action="{% url 'alternar_papel' %}" method="post">
+                        {% csrf_token %}
+                        <button
+                            type="submit"
+                            class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
+                        >
+                            🧪
+                            Mudar para Professor
+                        </button>
+                    </form>
 
                 {% else %}
 
-                    <a
-                        href="{% url 'alternar_papel' %}"
-                        class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
-                    >
-                        🧪
-                        Modo de teste: Professor
-                    </a>
+                    <form action="{% url 'alternar_papel' %}" method="post">
+                        {% csrf_token %}
+                        <button
+                            type="submit"
+                            class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
+                        >
+                            🧪
+                            Modo de teste: Professor
+                        </button>
+                    </form>
 
                 {% endif %}
 
