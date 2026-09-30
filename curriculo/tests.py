@@ -564,3 +564,148 @@ class ProgressaoEVidasTests(AutenticacaoBaseTests):
             response,
             "Revisão: Fase"
         )
+
+class EstudioConteudoTests(AutenticacaoBaseTests):
+    def setUp(self):
+        self.professor = self.criar_usuario(
+            username="criador",
+        )
+        self.professor.perfil.tipo = "professor"
+        self.professor.perfil.save(update_fields=["tipo"])
+
+        self.trilha = Disciplina.objects.create(
+            nome="Jogo de Teste",
+            slug="jogo-de-teste",
+            ativo=False,
+            autor=self.professor,
+        )
+
+        self.client.login(
+            username="criador",
+            password="SenhaForte123!",
+        )
+
+    def test_editor_exibe_fluxo_e_contadores(self):
+        response = self.client.get(
+            reverse(
+                "editar_trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Estrutura do jogo")
+        self.assertContains(response, "Mapa da jornada")
+        self.assertContains(response, "Módulos")
+
+    def test_professor_pode_criar_editar_e_excluir_modulo(self):
+        response = self.client.post(
+            reverse(
+                "ajax_criar_modulo",
+                args=[self.trilha.id],
+            ),
+            {
+                "titulo": "Base",
+                "descricao": "Fundamentos",
+                "ordem": 1,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        modulo = Modulo.objects.get(
+            disciplina=self.trilha,
+            titulo="Base",
+        )
+
+        response = self.client.post(
+            reverse(
+                "ajax_editar_modulo",
+                args=[modulo.id],
+            ),
+            {
+                "titulo": "Base revisada",
+                "descricao": "Novo resumo",
+                "ordem": 2,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        modulo.refresh_from_db()
+        self.assertEqual(modulo.titulo, "Base revisada")
+        self.assertEqual(modulo.ordem, 2)
+
+        response = self.client.post(
+            reverse(
+                "ajax_excluir_modulo",
+                args=[modulo.id],
+            )
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(
+            Modulo.objects.filter(id=modulo.id).exists()
+        )
+
+    def test_professor_pode_criar_editar_e_excluir_fase(self):
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo 1",
+            ordem=1,
+        )
+
+        response = self.client.post(
+            reverse(
+                "ajax_criar_fase",
+                args=[self.trilha.id],
+            ),
+            {
+                "modulo_id": modulo.id,
+                "titulo": "Fase 1",
+                "ordem": 1,
+                "tipo": "quiz",
+                "xp_recompensa": 50,
+                "moedas_recompensa": 10,
+                "deslocamento_y": 0,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        fase = Fase.objects.get(
+            modulo=modulo,
+            titulo="Fase 1",
+        )
+
+        response = self.client.post(
+            reverse(
+                "ajax_editar_fase",
+                args=[fase.id],
+            ),
+            {
+                "modulo_id": modulo.id,
+                "titulo": "Fase revisada",
+                "ordem": 2,
+                "tipo": "desafio",
+                "xp_recompensa": 80,
+                "moedas_recompensa": 15,
+                "deslocamento_y": 70,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        fase.refresh_from_db()
+        self.assertEqual(fase.titulo, "Fase revisada")
+        self.assertEqual(fase.tipo, "desafio")
+        self.assertEqual(fase.deslocamento_y, 70)
+
+        response = self.client.post(
+            reverse(
+                "ajax_excluir_fase",
+                args=[fase.id],
+            )
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(
+            Fase.objects.filter(id=fase.id).exists()
+        )
+
