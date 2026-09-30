@@ -66,6 +66,12 @@ urlpatterns = [
         name='deletar_trilha',
     ),
 
+    path(
+        'estudio/trilha/<int:trilha_id>/publicar/',
+        views.alternar_publicacao,
+        name='alternar_publicacao',
+    ),
+
     # ========================================================
     # EDITOR VISUAL
     # ========================================================
@@ -135,6 +141,12 @@ urlpatterns = [
     # ========================================================
     # HISTÓRICO
     # ========================================================
+
+    path(
+        'fase/<int:fase_id>/revisao/',
+        views.revisao_fase,
+        name='revisao_fase',
+    ),
 
     path(
         'fase/<int:fase_id>/historico/',
