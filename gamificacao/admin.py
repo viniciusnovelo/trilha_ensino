@@ -20,11 +20,14 @@ class PerfilUsuarioAdmin(admin.ModelAdmin):
         'nivel',
         'moedas',
         'vidas',
+        'tema_fundo',
+        'aparencia_interface',
     )
 
     list_filter = (
         'tipo',
         'tema_fundo',
+        'aparencia_interface',
     )
 
     search_fields = (
