@@ -7,8 +7,10 @@
 .tema-masmorra{background:linear-gradient(135deg,#020617,#1e1b4b,#171717);}
 </style></head>
 <body class="{{ tema_aplicado }} text-white min-h-screen font-sans">
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 <div class="min-h-screen bg-slate-950/50">
-<header class="border-b border-white/10 bg-slate-950/75"><div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center"><div><p class="text-xs uppercase text-white/40 font-black">Jogador</p><h1 class="text-3xl font-black">Meu Perfil</h1></div><div class="flex gap-2">{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<a href="{% url 'loja' %}" class="bg-slate-800 px-4 py-2 rounded-xl font-bold">Loja</a><a href="{% url 'dashboard_aluno' %}" class="bg-green-500 px-4 py-2 rounded-xl font-black">Painel</a></div></div></header>
+<header class="border-b border-white/10 bg-slate-950/75"><div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center"><div><p class="text-xs uppercase text-white/40 font-black">Jogador</p><h1 class="text-3xl font-black">Meu Perfil</h1></div><div class="flex gap-2">{% include 'gamificacao/partials/controle_aparencia.html' %}
+{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<a href="{% url 'loja' %}" class="bg-slate-800 px-4 py-2 rounded-xl font-bold">Loja</a><a href="{% url 'dashboard_aluno' %}" class="bg-green-500 px-4 py-2 rounded-xl font-black">Painel</a></div></div></header>
 <main class="max-w-5xl mx-auto px-6 py-8 space-y-6">
 <section class="grid md:grid-cols-4 gap-4">
 <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5"><p class="text-xs uppercase text-white/40 font-black">Nível</p><p class="text-3xl font-black text-yellow-300 mt-2">{{ perfil.nivel }}</p></div>
