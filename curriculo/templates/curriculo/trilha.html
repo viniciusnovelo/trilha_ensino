@@ -22,56 +22,17 @@
             display: none;
         }
 
-        .tema-padrao {
-            background:
-                linear-gradient(
-                    to bottom,
-                    #0f172a,
-                    #1e293b
-                );
-        }
-
-        .tema-floresta {
-            background:
-                linear-gradient(
-                    135deg,
-                    #052e16,
-                    #14532d,
-                    #064e3b
-                );
-        }
-
-        .tema-deserto {
-            background:
-                linear-gradient(
-                    135deg,
-                    #451a03,
-                    #78350f,
-                    #92400e
-                );
-        }
-
-        .tema-masmorra {
-            background:
-                linear-gradient(
-                    135deg,
-                    #020617,
-                    #1e1b4b,
-                    #171717
-                );
-        }
-
         .glass-overlay {
-            background:
-                rgba(
-                    15,
-                    23,
-                    42,
-                    0.68
-                );
+            background: transparent;
+            backdrop-filter: none;
+        }
 
-            backdrop-filter:
-                blur(4px);
+        .mapa-jornada {
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255,255,255,.07),
+                transparent 60%
+            );
         }
 
         .linha-conector {
@@ -115,7 +76,7 @@
          ===================================================== -->
 
     <header
-        class="relative z-30 shrink-0 border-b border-white/10 bg-slate-900/60 backdrop-blur-xl"
+        class="relative z-30 shrink-0 border-b border-white/10 bg-slate-950/35 backdrop-blur-md"
     >
 
         <div
@@ -198,7 +159,7 @@
 
 
                     <div
-                        class="bg-slate-900/70 border border-yellow-500/20 rounded-xl px-3 py-2"
+                        class="bg-slate-950/45 border border-yellow-500/20 rounded-xl px-3 py-2"
                     >
 
                         <span
@@ -211,7 +172,7 @@
 
 
                     <div
-                        class="bg-slate-900/70 border border-blue-500/20 rounded-xl px-3 py-2"
+                        class="bg-slate-950/45 border border-blue-500/20 rounded-xl px-3 py-2"
                     >
 
                         <span
@@ -224,7 +185,7 @@
 
 
                     <div
-                        class="bg-slate-900/70 border border-red-500/20 rounded-xl px-3 py-2"
+                        class="bg-slate-950/45 border border-red-500/20 rounded-xl px-3 py-2"
                     >
 
                         <span
@@ -314,7 +275,7 @@
          ===================================================== -->
 
     <div
-        class="relative z-10 flex-1 overflow-x-auto scrollbar-hide flex items-center cursor-grab active:cursor-grabbing"
+        class="relative z-10 flex-1 overflow-x-auto mapa-jornada scrollbar-hide flex items-center cursor-grab active:cursor-grabbing"
     >
 
         <div
@@ -458,7 +419,7 @@
                     >
 
                         <div
-                            class="bg-slate-950/90 backdrop-blur-xl border border-white/20 rounded-xl px-4 py-3 shadow-2xl text-center"
+                            class="bg-slate-950/55 backdrop-blur-lg border border-white/20 rounded-xl px-4 py-3 shadow-2xl text-center"
                         >
 
                             <p
@@ -546,7 +507,7 @@
          ===================================================== -->
 
     <footer
-        class="relative z-20 shrink-0 border-t border-white/10 bg-slate-950/60 backdrop-blur-xl px-6 py-3"
+        class="relative z-20 shrink-0 border-t border-white/10 bg-slate-950/30 backdrop-blur-md px-6 py-3"
     >
 
         <div
