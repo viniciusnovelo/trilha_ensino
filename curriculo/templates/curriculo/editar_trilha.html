@@ -2,341 +2,718 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Editor Visual: {{ trilha.nome }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estúdio · {{ trilha.nome }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        
-        /* TEMAS COM IMAGENS REALISTAS */
-        .tema-padrao { background: linear-gradient(to bottom, #0f172a, #1e293b); }
-        .tema-floresta { background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2000') center/cover fixed; }
-        .tema-deserto { background: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?q=80&w=2000') center/cover fixed; }
-        .tema-masmorra { background: url('https://images.unsplash.com/photo-1519074002996-a69e7ac46a42?q=80&w=2000') center/cover fixed; }
-        
-        .glass-overlay { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); }
-        .linha-conector { stroke: rgba(255, 255, 255, 0.2); }
-        .linha-tracejada { stroke: rgba(255, 255, 255, 0.6); }
-        .cursor-grab { cursor: grab; }
-        .cursor-grabbing { cursor: grabbing !important; }
-        .modal-bg { display: none; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
-        .modal-active { display: flex; }
+        .scrollbar-hide::-webkit-scrollbar { display:none; }
+        .scrollbar-thin::-webkit-scrollbar { height:7px; width:7px; }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background:rgba(148,163,184,.28); border-radius:999px; }
+        .cursor-grab { cursor:grab; }
+        .cursor-grabbing { cursor:grabbing !important; }
+        .modal-bg { display:none; background:rgba(2,6,23,.72); backdrop-filter:blur(10px); }
+        .modal-active { display:flex; }
+        .linha-conector { stroke:rgba(255,255,255,.15); }
+        .linha-tracejada { stroke:rgba(255,255,255,.45); }
+        .glass-card { background:rgba(15,23,42,.72); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(18px); }
+        .fase-node .fase-actions { opacity:0; transform:translateY(6px); }
+        .fase-node:hover .fase-actions,
+        .fase-node:focus-within .fase-actions { opacity:1; transform:translateY(0); }
+        @media (max-width: 767px) {
+            .fase-node .fase-actions { opacity:1; transform:none; }
+        }
     </style>
 </head>
-<body class="{{ trilha.tema }} text-white h-screen flex flex-col font-sans overflow-hidden select-none relative transition-all duration-1000">
-    
-    <div class="glass-overlay absolute inset-0 z-0"></div> 
 
-    <header class="pt-6 pb-4 z-20 shrink-0 border-b border-white/10 bg-slate-900/80 backdrop-blur-md px-8 flex justify-between items-center shadow-lg">
-        <a href="{% url 'dashboard_professor' %}" class="text-slate-400 hover:text-white flex items-center font-bold">
-            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            Sair do Editor
-        </a>
-        <div class="text-center">
-            <h1 class="text-2xl font-extrabold text-indigo-400">Editor Visual: {{ trilha.nome }}</h1>
-        </div>
-        <div class="flex space-x-3 items-center">
-            <!-- SELETOR DE TEMAS EM TEMPO REAL -->
-            <div class="relative" id="seletor-tema-trilha">
-                <button type="button" id="botao-tema-trilha"
-                    class="w-11 h-11 rounded-full border border-white/15 bg-slate-800/90 flex items-center justify-center text-lg shadow-lg hover:scale-110 transition"
-                    title="Tema padrão desta trilha">🎨</button>
+<body class="{{ trilha.tema }} text-white min-h-screen font-sans relative">
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 
-                <div id="opcoes-tema-trilha"
-                    class="absolute top-1/2 right-14 -translate-y-1/2 z-50 flex items-center gap-2 rounded-full bg-slate-950/95 border border-white/10 backdrop-blur-xl px-3 py-2 shadow-2xl opacity-0 scale-90 pointer-events-none transition-all duration-200">
-                    <button type="button" data-trilha-theme="tema-padrao" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#0f172a,#334155)" title="Noite"></button>
-                    <button type="button" data-trilha-theme="tema-floresta" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#052e16,#16a34a,#064e3b)" title="Floresta"></button>
-                    <button type="button" data-trilha-theme="tema-deserto" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#451a03,#d97706,#92400e)" title="Deserto"></button>
-                    <button type="button" data-trilha-theme="tema-masmorra" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#020617,#312e81,#171717)" title="Masmorra"></button>
-                </div>
-            </div>
-
-            <button onclick="openModal('modal-modulo')" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg font-bold text-sm">+ Módulo</button>
-            <form action="{% url 'alternar_publicacao' trilha.id %}" method="post">
-                {% csrf_token %}
-                {% if trilha.ativo %}
-                    <button type="submit" class="bg-yellow-500/15 hover:bg-yellow-500 text-yellow-200 hover:text-slate-950 px-4 py-2 rounded-lg font-bold text-sm">
-                        Tornar rascunho
-                    </button>
-                {% else %}
-                    <button type="submit" class="bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg font-bold text-sm">
-                        Publicar
-                    </button>
-                {% endif %}
-            </form>
-            <button onclick="openModal('modal-fase')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-bold text-sm">+ Fase</button>
-            <button onclick="window.location.reload()" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm">↻ Atualizar</button>
-        </div>
-    </header>
-
-    <!-- Área do Mapa -->
-    <div class="flex-1 overflow-x-auto scrollbar-hide flex items-center relative z-10">
-        <div class="flex flex-row items-center w-max px-24 min-h-[500px]">
-            <div class="mr-6 flex flex-col items-center opacity-70">
-                <div class="w-5 h-5 rounded-full bg-white/50 mb-2"></div><span class="text-xs font-bold uppercase text-white/80">Início</span>
-            </div>
-
-            {% for fase in fases %}
-                <div class="fase-node relative flex flex-col items-center group z-10 w-24 h-24 transition-transform duration-75" data-id="{{ fase.id }}" data-index="{{ forloop.counter0 }}" data-y="{{ fase.deslocamento_y }}" style="transform: translateY({{ fase.deslocamento_y }}px);">
-                    <div class="w-20 h-20 rounded-full border-b-8 border-indigo-900 bg-indigo-600 flex items-center justify-center shadow-2xl relative z-20">
-                        <span class="text-2xl font-black text-white opacity-50">{{ forloop.counter }}</span>
+    <div class="relative z-10 min-h-screen flex flex-col">
+        <header class="shrink-0 border-b border-white/10 bg-slate-950/75 backdrop-blur-2xl">
+            <div class="max-w-[1500px] mx-auto w-full px-4 sm:px-6 py-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <a href="{% url 'dashboard_professor' %}" class="inline-flex items-center gap-2 text-sm text-white/55 hover:text-white transition font-bold">
+                            ← Voltar ao estúdio
+                        </a>
+                        <div class="mt-1 flex flex-wrap items-center gap-3">
+                            <h1 class="text-xl sm:text-2xl font-black truncate max-w-[70vw]">{{ trilha.nome }}</h1>
+                            {% if trilha.ativo %}
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-300 text-[11px] font-black uppercase tracking-wider">Publicado</span>
+                            {% else %}
+                                <span class="px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-300 text-[11px] font-black uppercase tracking-wider">Rascunho</span>
+                            {% endif %}
+                        </div>
+                        <p class="text-xs sm:text-sm text-white/45 mt-1">Monte o jogo na ordem: jogo → módulos → fases → questões → publicação.</p>
                     </div>
-                    <span class="absolute -top-12 whitespace-nowrap text-xs font-bold text-white bg-slate-800 border border-slate-600 px-3 py-1 rounded-xl shadow-lg pointer-events-none">{{ fase.titulo }}</span>
-                    
-                    <div class="absolute top-20 flex flex-col items-center space-y-2 mt-4 opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                        <button class="drag-handle bg-slate-700 hover:bg-slate-500 text-white px-3 py-1.5 rounded font-bold text-xs cursor-grab flex items-center border border-slate-500">↕ Arrastar</button>
-                        <button onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded font-bold text-xs w-full">+ Questão ({{ fase.questoes.count }})</button>
+
+                    <div class="flex items-center gap-2">
+                        {% include 'gamificacao/partials/controle_aparencia.html' %}
+
+                        <div class="relative z-[90]" id="seletor-tema-trilha">
+                            <button type="button" id="botao-tema-trilha"
+                                class="w-11 h-11 rounded-full border border-white/20 bg-slate-950/90 backdrop-blur-xl flex items-center justify-center text-lg shadow-xl hover:scale-110 transition"
+                                title="Tema padrão desta trilha">🎨</button>
+
+                            <div id="opcoes-tema-trilha"
+                                class="absolute top-1/2 right-14 -translate-y-1/2 flex flex-wrap items-center justify-end gap-2 rounded-2xl bg-slate-950/95 border border-white/10 backdrop-blur-xl px-3 py-2 shadow-2xl opacity-0 scale-90 pointer-events-none transition-all duration-200 origin-right max-w-[340px]">
+                                <button type="button" data-trilha-theme="tema-padrao" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#020617,#334155)" title="Noite Estrelada"></button>
+                                <button type="button" data-trilha-theme="tema-floresta" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#052e16,#16a34a,#022c22)" title="Floresta Encantada"></button>
+                                <button type="button" data-trilha-theme="tema-deserto" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#451a03,#d97706,#78350f)" title="Deserto Escaldante"></button>
+                                <button type="button" data-trilha-theme="tema-masmorra" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#020617,#312e81,#111827)" title="Masmorra Sombria"></button>
+                                <button type="button" data-trilha-theme="tema-aurora" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#082f49,#22d3ee,#172554)" title="Aurora Boreal"></button>
+                                <button type="button" data-trilha-theme="tema-oceano" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#082f49,#0ea5e9,#075985)" title="Oceano Profundo"></button>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="openModal('modal-modulo')" class="hidden sm:inline-flex px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 font-black text-sm">＋ Módulo</button>
+                        <button type="button" onclick="openModal('modal-fase')" class="hidden sm:inline-flex px-3 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black text-sm shadow-lg shadow-indigo-950/30">＋ Fase</button>
+
+                        <form action="{% url 'alternar_publicacao' trilha.id %}" method="post">
+                            {% csrf_token %}
+                            {% if trilha.ativo %}
+                                <button type="submit" class="px-3 py-2 rounded-xl bg-amber-400/10 hover:bg-amber-400 hover:text-slate-950 border border-amber-300/20 text-amber-200 font-black text-sm transition">Rascunho</button>
+                            {% else %}
+                                <button type="submit" class="px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 font-black text-sm transition shadow-lg shadow-emerald-950/30">Publicar</button>
+                            {% endif %}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </header>
 
-                {% if not forloop.last %}
-                    <div class="w-32 h-[200px] flex-shrink-0 -mx-4 z-0 pointer-events-none">
-                        <svg viewBox="0 0 100 200" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-                            <path id="path-base-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-conector" stroke-width="14" stroke-linecap="round" />
-                            <path id="path-dash-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-tracejada" stroke-width="6" stroke-dasharray="10 10" stroke-linecap="round" />
-                        </svg>
+        <main class="max-w-[1500px] mx-auto w-full flex-1 min-h-0 px-4 sm:px-6 py-5 sm:py-6">
+            <section class="glass-card rounded-3xl p-4 sm:p-5 mb-5">
+                <div class="flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[.16em] text-white/45">
+                    <span class="px-3 py-1.5 rounded-full bg-indigo-400/10 text-indigo-200 border border-indigo-300/10">1 · Jogo</span>
+                    <span class="text-white/20">→</span>
+                    <span class="px-3 py-1.5 rounded-full bg-sky-400/10 text-sky-200 border border-sky-300/10">2 · Módulos</span>
+                    <span class="text-white/20">→</span>
+                    <span class="px-3 py-1.5 rounded-full bg-violet-400/10 text-violet-200 border border-violet-300/10">3 · Fases</span>
+                    <span class="text-white/20">→</span>
+                    <span class="px-3 py-1.5 rounded-full bg-emerald-400/10 text-emerald-200 border border-emerald-300/10">4 · Questões</span>
+                    <span class="text-white/20">→</span>
+                    <span class="px-3 py-1.5 rounded-full bg-amber-400/10 text-amber-200 border border-amber-300/10">5 · Publicar</span>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Módulos</p>
+                    <p class="text-2xl font-black mt-1">{{ modulos|length }}</p>
+                </div>
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Fases</p>
+                    <p class="text-2xl font-black mt-1">{{ fases|length }}</p>
+                </div>
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Questões</p>
+                    <p class="text-2xl font-black mt-1">{{ fases|length }} <span class="text-sm text-white/35 font-bold">+ abertas no mapa</span></p>
+                </div>
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Estado</p>
+                    <p class="text-sm font-black mt-2 {% if trilha.ativo %}text-emerald-300{% else %}text-amber-300{% endif %}">
+                        {% if trilha.ativo %}Disponível para alunos{% else %}Ainda em construção{% endif %}
+                    </p>
+                </div>
+            </section>
+
+            <div class="grid lg:grid-cols-[360px_minmax(0,1fr)] gap-5 min-h-[calc(100vh-245px)]">
+                <aside class="glass-card rounded-3xl overflow-hidden flex flex-col min-h-[420px] lg:min-h-0">
+                    <div class="p-4 border-b border-white/10">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-[11px] uppercase tracking-widest text-indigo-300 font-black">Estrutura do jogo</p>
+                                <h2 class="text-lg font-black mt-1">Conteúdo</h2>
+                            </div>
+                            <button type="button" onclick="openModal('modal-modulo')" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 font-black text-xl" title="Novo módulo">＋</button>
+                        </div>
+                        <p class="text-xs text-white/45 mt-2">Cada módulo agrupa fases. Cada fase pode receber suas questões.</p>
                     </div>
-                {% endif %}
-            {% empty %}
-                <p class="text-slate-400">Mapa vazio. Comece criando um Módulo e uma Fase lá em cima!</p>
-            {% endfor %}
-            <div class="w-48"></div>
-        </div>
+
+                    <div class="flex-1 overflow-y-auto scrollbar-thin p-3 space-y-3">
+                        {% for modulo in modulos %}
+                            <article class="rounded-2xl bg-black/15 border border-white/10 overflow-hidden">
+                                <div class="p-3 flex items-start gap-3">
+                                    <div class="w-9 h-9 shrink-0 rounded-xl bg-sky-400/10 text-sky-200 border border-sky-300/10 flex items-center justify-center font-black">{{ modulo.ordem }}</div>
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex items-start justify-between gap-2">
+                                            <div class="min-w-0">
+                                                <h3 class="font-black truncate">{{ modulo.titulo }}</h3>
+                                                {% if modulo.descricao %}
+                                                    <p class="text-xs text-white/40 mt-1 line-clamp-2">{{ modulo.descricao }}</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="flex items-center gap-1 shrink-0">
+                                                <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" onclick="openEditModulo({{ modulo.id }}, '{{ modulo.titulo|escapejs }}', '{{ modulo.descricao|default_if_none:""|escapejs }}', {{ modulo.ordem }})" title="Editar módulo">✎</button>
+                                                <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" onclick="deleteModulo({{ modulo.id }}, '{{ modulo.titulo|escapejs }}')" title="Excluir módulo">×</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="px-3 pb-3 space-y-2">
+                                    {% for fase in modulo.fases.all %}
+                                        <div class="rounded-xl bg-slate-950/35 border border-white/7 p-3">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-8 h-8 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-300/20 flex items-center justify-center text-xs font-black text-indigo-200">{{ fase.ordem }}</div>
+                                                <div class="min-w-0 flex-1">
+                                                    <p class="font-bold text-sm truncate">{{ fase.titulo }}</p>
+                                                    <p class="text-[11px] text-white/40 mt-1">{{ fase.get_tipo_display }} · {{ fase.questoes.count }} questão(ões)</p>
+                                                </div>
+                                                <div class="flex gap-1">
+                                                    <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" onclick="openEditFase({{ fase.id }}, {{ fase.modulo_id }}, '{{ fase.titulo|escapejs }}', {{ fase.ordem }}, '{{ fase.tipo }}', {{ fase.xp_recompensa }}, {{ fase.moedas_recompensa }}, {{ fase.deslocamento_y }})" title="Editar fase">✎</button>
+                                                    <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" onclick="deleteFase({{ fase.id }}, '{{ fase.titulo|escapejs }}')" title="Excluir fase">×</button>
+                                                </div>
+                                            </div>
+                                            <button type="button" onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
+                                        </div>
+                                    {% empty %}
+                                        <div class="rounded-xl border border-dashed border-white/10 p-4 text-center text-xs text-white/35">Ainda não há fases neste módulo.</div>
+                                    {% endfor %}
+
+                                    <button type="button" onclick="openPhaseForModule({{ modulo.id }})" class="w-full rounded-xl border border-dashed border-indigo-300/20 hover:border-indigo-300/40 hover:bg-indigo-400/5 px-3 py-2 text-xs font-black text-indigo-200 transition">＋ Nova fase neste módulo</button>
+                                </div>
+                            </article>
+                        {% empty %}
+                            <div class="rounded-2xl border border-dashed border-white/10 p-7 text-center">
+                                <div class="text-4xl">🧩</div>
+                                <p class="font-black mt-3">Comece pelos módulos</p>
+                                <p class="text-xs text-white/40 mt-1">Crie um módulo para organizar as etapas da sua trilha.</p>
+                                <button type="button" onclick="openModal('modal-modulo')" class="mt-4 px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black text-sm">Criar primeiro módulo</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </aside>
+
+                <section class="glass-card rounded-3xl overflow-hidden min-w-0 flex flex-col">
+                    <div class="p-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <p class="text-[11px] uppercase tracking-widest text-emerald-300 font-black">Pré-visualização</p>
+                            <h2 class="text-lg font-black mt-1">Mapa da jornada</h2>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-white/40">
+                            <span class="inline-flex items-center gap-1">● fase</span>
+                            <span class="inline-flex items-center gap-1">↕ arraste verticalmente</span>
+                            <button type="button" onclick="window.location.reload()" class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white/65">Atualizar</button>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 overflow-auto scrollbar-thin">
+                        <div class="min-w-max min-h-[560px] flex items-center px-12 sm:px-20 py-16">
+                            <div class="mr-6 flex flex-col items-center opacity-70">
+                                <div class="w-6 h-6 rounded-full bg-white/55 shadow-lg shadow-white/10"></div>
+                                <span class="text-[11px] font-black uppercase tracking-widest text-white/65 mt-2">Início</span>
+                            </div>
+
+                            {% for fase in fases %}
+                                <div
+                                    class="fase-node relative flex flex-col items-center group z-10 w-24 h-24 transition-transform duration-75"
+                                    data-id="{{ fase.id }}"
+                                    data-index="{{ forloop.counter0 }}"
+                                    data-y="{{ fase.deslocamento_y }}"
+                                    style="transform:translateY({{ fase.deslocamento_y }}px);"
+                                    tabindex="0"
+                                >
+                                    <div class="w-20 h-20 rounded-full border-b-8 border-indigo-950 bg-indigo-500 flex items-center justify-center shadow-2xl relative z-20 ring-4 ring-white/5">
+                                        <span class="text-xl font-black">{{ forloop.counter }}</span>
+                                    </div>
+                                    <span class="absolute -top-11 max-w-[180px] truncate whitespace-nowrap text-xs font-bold text-white bg-slate-950/85 border border-white/10 px-3 py-1.5 rounded-xl shadow-lg pointer-events-none">{{ fase.titulo }}</span>
+                                    <div class="fase-actions absolute top-20 flex items-center gap-2 mt-4 z-50 transition">
+                                        <button type="button" class="drag-handle bg-slate-900/90 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] cursor-grab border border-white/10" title="Arrastar verticalmente">↕</button>
+                                        <button type="button" onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] border border-emerald-300/10">＋ Questão ({{ fase.questoes.count }})</button>
+                                    </div>
+                                </div>
+
+                                {% if not forloop.last %}
+                                    <div class="w-32 h-[200px] flex-shrink-0 -mx-4 z-0 pointer-events-none">
+                                        <svg viewBox="0 0 100 200" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                                            <path id="path-base-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-conector" stroke-width="14" stroke-linecap="round"/>
+                                            <path id="path-dash-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-tracejada" stroke-width="5" stroke-dasharray="9 9" stroke-linecap="round"/>
+                                        </svg>
+                                    </div>
+                                {% endif %}
+                            {% empty %}
+                                <div class="w-full text-center text-white/40">
+                                    <div class="text-5xl">🗺️</div>
+                                    <p class="font-black mt-3">O mapa ainda está vazio.</p>
+                                    <p class="text-sm mt-1">Crie um módulo e depois uma fase para começar a desenhar a jornada.</p>
+                                </div>
+                            {% endfor %}
+
+                            <div class="w-48"></div>
+                        </div>
+                    </div>
+
+                    <div class="sm:hidden border-t border-white/10 p-3 flex gap-2">
+                        <button type="button" onclick="openModal('modal-modulo')" class="flex-1 px-3 py-2 rounded-xl bg-white/10 border border-white/10 font-black text-sm">＋ Módulo</button>
+                        <button type="button" onclick="openModal('modal-fase')" class="flex-1 px-3 py-2 rounded-xl bg-indigo-500 font-black text-sm">＋ Fase</button>
+                    </div>
+                </section>
+            </div>
+        </main>
     </div>
 
-    <!-- MODAL: NOVO MÓDULO -->
-    <div id="modal-modulo" class="modal-bg absolute inset-0 z-50 items-center justify-center">
-        <div class="bg-white rounded-2xl w-full max-w-md p-6 text-slate-800 shadow-2xl relative">
-            <h2 class="text-2xl font-bold mb-4 text-indigo-700">Criar Novo Módulo</h2>
+    <!-- MODAL MÓDULO -->
+    <div id="modal-modulo" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-lg rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-sky-300 font-black">Estrutura</p>
+                    <h2 class="text-2xl font-black mt-1">Novo módulo</h2>
+                    <p class="text-sm text-white/45 mt-1">Dê um nome claro para o conjunto de fases.</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-modulo')" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10">×</button>
+            </div>
             <form id="form-modulo" onsubmit="submitAjax(event, '{% url 'ajax_criar_modulo' trilha.id %}')" class="space-y-4">
                 {% csrf_token %}
-                <div><label class="font-bold text-sm">Título do Módulo</label><input type="text" name="titulo" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-                <div><label class="font-bold text-sm">Ordem (Ex: 1, 2, 3)</label><input type="number" name="ordem" value="1" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-                <div class="flex space-x-3 pt-4">
-                    <button type="button" onclick="closeModal('modal-modulo')" class="flex-1 bg-slate-200 text-slate-700 font-bold py-3 rounded-xl">Fechar</button>
-                    <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700">Salvar Módulo</button>
+                <input type="text" name="titulo" placeholder="Ex.: Introdução às Funções" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-sky-400/60">
+                <textarea name="descricao" rows="3" placeholder="Resumo rápido do que será estudado neste módulo (opcional)." class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-sky-400/60 resize-none"></textarea>
+                <input type="number" name="ordem" value="{{ modulos|length|add:1 }}" min="1" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-sky-400/60">
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeModal('modal-modulo')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black">Criar módulo</button>
                 </div>
-                <p class="success-msg text-green-600 font-bold text-center hidden">✅ Módulo Salvo! Crie outro ou feche.</p>
+                <p class="success-msg text-emerald-300 font-bold text-sm text-center hidden">Módulo criado. Atualizando o estúdio…</p>
+                <p class="error-msg text-red-300 font-bold text-sm text-center hidden"></p>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: NOVA FASE -->
-    <div id="modal-fase" class="modal-bg absolute inset-0 z-50 items-center justify-center">
-        <div class="bg-white rounded-2xl w-full max-w-md p-6 text-slate-800 shadow-2xl relative">
-            <h2 class="text-2xl font-bold mb-4 text-indigo-700">Criar Nova Fase</h2>
+    <!-- MODAL FASE -->
+    <div id="modal-fase" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-indigo-300 font-black">Estrutura</p>
+                    <h2 class="text-2xl font-black mt-1">Nova fase</h2>
+                    <p class="text-sm text-white/45 mt-1">Uma fase é uma parada da jornada do aluno.</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-fase')" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10">×</button>
+            </div>
+
             <form id="form-fase" onsubmit="submitAjax(event, '{% url 'ajax_criar_fase' trilha.id %}')" class="space-y-4">
                 {% csrf_token %}
                 <div>
-                    <label class="font-bold text-sm">A qual Módulo pertence?</label>
-                    <select name="modulo_id" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
-                        {% for mod in modulos %}<option value="{{ mod.id }}">Módulo {{ mod.ordem }}: {{ mod.titulo }}</option>{% endfor %}
+                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Módulo</label>
+                    <select id="select-fase-modulo" name="modulo_id" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                        {% for mod in modulos %}<option value="{{ mod.id }}">Módulo {{ mod.ordem }} · {{ mod.titulo }}</option>{% endfor %}
                     </select>
                 </div>
-                <div><label class="font-bold text-sm">Título da Fase</label><input type="text" name="titulo" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-                <div><label class="font-bold text-sm">Ordem dentro do Módulo</label><input type="number" name="ordem" value="1" min="1" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-
                 <div>
-                    <label class="font-bold text-sm">Tipo de fase</label>
-                    <select name="tipo" class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
-                        <option value="teoria">Conteúdo Teórico</option>
-                        <option value="quiz" selected>Quiz / Exercícios</option>
-                        <option value="desafio">Desafio de Recuperação</option>
-                    </select>
+                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Título</label>
+                    <input type="text" name="titulo" placeholder="Ex.: Identificando a lei de formação" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-indigo-400/60">
                 </div>
-
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Ordem no módulo</label>
+                        <input type="number" name="ordem" value="1" min="1" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Tipo</label>
+                        <select name="tipo" class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                            <option value="teoria">Conteúdo teórico</option>
+                            <option value="quiz" selected>Quiz / exercícios</option>
+                            <option value="desafio">Desafio de recuperação</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="font-bold text-sm">XP da fase</label>
-                        <input type="number" name="xp_recompensa" value="50" min="0" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
+                        <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">XP</label>
+                        <input type="number" name="xp_recompensa" value="50" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
                     </div>
                     <div>
-                        <label class="font-bold text-sm">Moedas da fase</label>
-                        <input type="number" name="moedas_recompensa" value="10" min="0" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
+                        <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Moedas</label>
+                        <input type="number" name="moedas_recompensa" value="10" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
                     </div>
                 </div>
-
                 <div>
-                    <label class="font-bold text-sm">Deslocamento no mapa</label>
-                    <input type="number" name="deslocamento_y" value="0" min="-150" max="150" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
-                    <p class="text-xs text-slate-500 mt-1">Use valores entre -150 e 150 para desenhar a curva da jornada.</p>
+                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Posição vertical</label>
+                    <input type="number" name="deslocamento_y" value="0" min="-150" max="150" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                    <p class="text-xs text-white/35 mt-1">Use a posição para criar uma jornada mais viva no mapa. O ajuste fino pode ser feito arrastando a fase.</p>
                 </div>
-                <div class="flex space-x-3 pt-4">
-                    <button type="button" onclick="closeModal('modal-fase')" class="flex-1 bg-slate-200 text-slate-700 font-bold py-3 rounded-xl">Fechar</button>
-                    <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700">Salvar Fase</button>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeModal('modal-fase')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black">Criar fase</button>
                 </div>
-                <p class="success-msg text-green-600 font-bold text-center hidden">✅ Fase Salva! Crie outra ou feche e clique em Atualizar Tela.</p>
+                <p class="success-msg text-emerald-300 font-bold text-sm text-center hidden">Fase criada. Atualizando o estúdio…</p>
+                <p class="error-msg text-red-300 font-bold text-sm text-center hidden"></p>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: NOVA QUESTÃO -->
-    <div id="modal-questao" class="modal-bg absolute inset-0 z-50 items-center justify-center p-4">
-        <div class="bg-slate-100 rounded-2xl w-full max-w-3xl p-8 text-slate-800 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-2 text-indigo-700">Adicionar Questão rápida</h2>
-            <p id="questao-fase-nome" class="text-slate-500 font-bold mb-6">Fase: </p>
-            
-            <form id="form-questao" onsubmit="submitAjax(event, '{% url 'ajax_criar_questao' %}')" class="space-y-6">
+    <!-- MODAL QUESTÃO -->
+    <div id="modal-questao" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl bg-slate-100 text-slate-900 shadow-2xl p-6">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-emerald-700 font-black">Banco de questões</p>
+                    <h2 class="text-2xl font-black mt-1">Adicionar questão</h2>
+                    <p id="questao-fase-nome" class="text-sm text-slate-500 font-bold mt-1">Fase: —</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-questao')" class="w-9 h-9 rounded-lg bg-slate-200 hover:bg-slate-300">×</button>
+            </div>
+
+            <form id="form-questao" onsubmit="submitAjax(event, '{% url 'ajax_criar_questao' %}')" class="space-y-5">
                 {% csrf_token %}
                 <input type="hidden" name="fase_id" id="input-questao-fase-id">
-                
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                    <label class="block font-bold text-sm mb-2">Enunciado da Pergunta</label>
-                    <textarea name="enunciado" required rows="2" class="w-full p-3 bg-slate-50 rounded-lg border border-slate-300 focus:border-indigo-500"></textarea>
-                    
-                    <label class="block font-bold text-sm mt-4 mb-2">Feedback de Erro (Opcional)</label>
-                    <input type="text" name="explicacao_erro" class="w-full p-3 bg-slate-50 rounded-lg border border-slate-300">
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                    <label class="block text-sm font-black mb-2">Enunciado</label>
+                    <textarea name="enunciado" required rows="4" placeholder="Escreva a pergunta exatamente como o aluno deverá recebê-la." class="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-indigo-500 resize-none"></textarea>
+                    <label class="block text-sm font-black mt-4 mb-2">Feedback de erro</label>
+                    <textarea name="explicacao_erro" rows="2" placeholder="Explique o conceito que deve ser revisado quando o aluno errar." class="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-indigo-500 resize-none"></textarea>
                 </div>
 
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                    <h3 class="font-bold text-sm mb-4 border-b pb-2">Preencha as opções e marque a <span class="text-green-600">correta</span>:</h3>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                    <div class="flex items-center justify-between gap-3 mb-4">
+                        <h3 class="font-black">Alternativas</h3>
+                        <span class="text-xs text-slate-500 font-bold">Marque apenas uma como correta.</span>
+                    </div>
                     <div class="space-y-3">
                         {% for i in "0123"|make_list %}
-                        <div class="flex items-center space-x-3">
-                            <input type="radio" name="op_correta" value="{{ forloop.counter0 }}" required class="w-6 h-6 text-green-600 cursor-pointer">
-                            <input type="text" name="op_texto_{{ forloop.counter0 }}" placeholder="Opção {{ forloop.counter }}" required class="flex-1 p-3 bg-slate-50 rounded-lg border border-slate-300">
-                        </div>
+                            <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-indigo-300 transition">
+                                <input type="radio" name="op_correta" value="{{ forloop.counter0 }}" required class="w-5 h-5 text-emerald-600">
+                                <input type="text" name="op_texto_{{ forloop.counter0 }}" placeholder="Alternativa {{ forloop.counter }}" required class="min-w-0 flex-1 p-2.5 bg-white rounded-lg border border-slate-200 outline-none">
+                            </label>
                         {% endfor %}
                     </div>
                 </div>
 
-                <div class="flex space-x-4 pt-2">
-                    <button type="button" onclick="closeModal('modal-questao')" class="w-1/3 bg-slate-300 text-slate-700 font-bold py-4 rounded-xl hover:bg-slate-400">Fechar</button>
-                    <button type="submit" class="w-2/3 bg-green-600 text-white text-lg font-bold py-4 rounded-xl hover:bg-green-700 shadow-md">Salvar e Adicionar Outra</button>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('modal-questao')" class="flex-1 bg-slate-200 hover:bg-slate-300 px-4 py-3 rounded-xl font-bold">Cancelar</button>
+                    <button type="submit" class="flex-[2] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-xl font-black">Salvar questão</button>
                 </div>
-                <p class="success-msg text-green-600 font-bold text-center text-lg hidden p-4 bg-green-100 rounded-xl">✅ Questão Salva com Sucesso! A tela foi limpa para você digitar a próxima.</p>
+                <p class="success-msg text-emerald-700 font-black text-center hidden">Questão salva. Abrindo outra…</p>
+                <p class="error-msg text-red-600 font-bold text-sm text-center hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR MÓDULO -->
+    <div id="modal-editar-modulo" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-lg rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-sky-300 font-black">Edição</p>
+                    <h2 class="text-2xl font-black mt-1">Editar módulo</h2>
+                </div>
+                <button type="button" onclick="closeModal('modal-editar-modulo')" class="w-9 h-9 rounded-lg bg-white/5">×</button>
+            </div>
+            <form id="form-editar-modulo" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" name="modulo_id" id="editar-modulo-id">
+                <input type="text" name="titulo" id="editar-modulo-titulo" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <textarea name="descricao" id="editar-modulo-descricao" rows="3" class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 resize-none"></textarea>
+                <input type="number" name="ordem" id="editar-modulo-ordem" min="1" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('modal-editar-modulo')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-sky-500 text-slate-950 font-black">Salvar alterações</button>
+                </div>
+                <p id="editar-modulo-erro" class="text-red-300 font-bold text-sm text-center hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR FASE -->
+    <div id="modal-editar-fase" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-indigo-300 font-black">Edição</p>
+                    <h2 class="text-2xl font-black mt-1">Editar fase</h2>
+                </div>
+                <button type="button" onclick="closeModal('modal-editar-fase')" class="w-9 h-9 rounded-lg bg-white/5">×</button>
+            </div>
+            <form id="form-editar-fase" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" name="fase_id" id="editar-fase-id">
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Módulo</label>
+                    <select name="modulo_id" id="editar-fase-modulo" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                        {% for mod in modulos %}<option value="{{ mod.id }}">Módulo {{ mod.ordem }} · {{ mod.titulo }}</option>{% endfor %}
+                    </select>
+                </div>
+                <input type="text" name="titulo" id="editar-fase-titulo" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" name="ordem" id="editar-fase-ordem" min="1" required placeholder="Ordem" class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                    <select name="tipo" id="editar-fase-tipo" class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                        <option value="teoria">Conteúdo teórico</option>
+                        <option value="quiz">Quiz / exercícios</option>
+                        <option value="desafio">Desafio de recuperação</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" name="xp_recompensa" id="editar-fase-xp" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                    <input type="number" name="moedas_recompensa" id="editar-fase-moedas" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Deslocamento vertical</label>
+                    <input type="number" name="deslocamento_y" id="editar-fase-y" min="-150" max="150" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('modal-editar-fase')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black">Salvar alterações</button>
+                </div>
+                <p id="editar-fase-erro" class="text-red-300 font-bold text-sm text-center hidden"></p>
             </form>
         </div>
     </div>
 
     <script>
         const csrfToken = '{{ csrf_token }}';
+        const trilhaId = {{ trilha.id }};
+        const temasTrilha = ['tema-padrao','tema-floresta','tema-deserto','tema-masmorra','tema-aurora','tema-oceano'];
 
-        // Tema padrão da trilha
-        const temaTrilhaRoot = document.getElementById('seletor-tema-trilha');
-        const temaTrilhaButton = document.getElementById('botao-tema-trilha');
-        const temaTrilhaPanel = document.getElementById('opcoes-tema-trilha');
-        const temaAtualTrilha = '{{ trilha.tema }}';
-        const temasTrilha = ['tema-padrao', 'tema-floresta', 'tema-deserto', 'tema-masmorra'];
-
-        function abrirTemaTrilha(abrir) {
-            temaTrilhaButton.setAttribute('aria-expanded', String(abrir));
-            temaTrilhaPanel.classList.toggle('opacity-0', !abrir);
-            temaTrilhaPanel.classList.toggle('scale-90', !abrir);
-            temaTrilhaPanel.classList.toggle('pointer-events-none', !abrir);
+        function openModal(id) {
+            document.getElementById(id)?.classList.add('modal-active');
+            document.body.classList.add('overflow-hidden');
         }
 
-        temaTrilhaButton.addEventListener('click', (event) => {
+        function closeModal(id) {
+            document.getElementById(id)?.classList.remove('modal-active');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function showFormMessage(form, type, message='') {
+            const success=form.querySelector('.success-msg');
+            const error=form.querySelector('.error-msg');
+            if(success) success.classList.toggle('hidden',type!=='success');
+            if(error) {
+                error.textContent=message;
+                error.classList.toggle('hidden',type!=='error');
+            }
+        }
+
+        async function submitAjax(event, url) {
+            event.preventDefault();
+            const form=event.target;
+            showFormMessage(form, 'none');
+
+            try {
+                const response=await fetch(url,{method:'POST',body:new FormData(form)});
+                const data=await response.json();
+
+                if(!response.ok || data.status!=='ok') {
+                    throw new Error(data.msg || 'Não foi possível salvar.');
+                }
+
+                showFormMessage(form,'success');
+                setTimeout(()=>window.location.reload(),650);
+            } catch(error) {
+                showFormMessage(form,'error',error.message);
+            }
+        }
+
+        function openQuestaoModal(faseId, faseTitulo) {
+            document.getElementById('input-questao-fase-id').value=faseId;
+            document.getElementById('questao-fase-nome').textContent='Fase: '+faseTitulo;
+            document.getElementById('form-questao').reset();
+            document.getElementById('input-questao-fase-id').value=faseId;
+            document.getElementById('questao-fase-nome').textContent='Fase: '+faseTitulo;
+            showFormMessage(document.getElementById('form-questao'),'none');
+            openModal('modal-questao');
+        }
+
+        function openPhaseForModule(moduloId) {
+            document.getElementById('select-fase-modulo').value=String(moduloId);
+            openModal('modal-fase');
+        }
+
+        function openEditModulo(id,titulo,descricao,ordem) {
+            document.getElementById('editar-modulo-id').value=id;
+            document.getElementById('editar-modulo-titulo').value=titulo;
+            document.getElementById('editar-modulo-descricao').value=descricao;
+            document.getElementById('editar-modulo-ordem').value=ordem;
+            document.getElementById('editar-modulo-erro').classList.add('hidden');
+            openModal('modal-editar-modulo');
+        }
+
+        function openEditFase(id,moduloId,titulo,ordem,tipo,xp,moedas,y) {
+            document.getElementById('editar-fase-id').value=id;
+            document.getElementById('editar-fase-modulo').value=moduloId;
+            document.getElementById('editar-fase-titulo').value=titulo;
+            document.getElementById('editar-fase-ordem').value=ordem;
+            document.getElementById('editar-fase-tipo').value=tipo;
+            document.getElementById('editar-fase-xp').value=xp;
+            document.getElementById('editar-fase-moedas').value=moedas;
+            document.getElementById('editar-fase-y').value=y;
+            document.getElementById('editar-fase-erro').classList.add('hidden');
+            openModal('modal-editar-fase');
+        }
+
+        async function postAction(url,body={}) {
+            const formData=new FormData();
+            Object.entries(body).forEach(([key,value])=>formData.append(key,value));
+            const response=await fetch(url,{
+                method:'POST',
+                headers:{'X-CSRFToken':csrfToken},
+                body:formData
+            });
+            const data=await response.json();
+            if(!response.ok || data.status!=='ok') throw new Error(data.msg || 'Não foi possível concluir a operação.');
+            return data;
+        }
+
+        async function deleteModulo(id,titulo) {
+            if(!confirm('Excluir o módulo "'+titulo+'"? Todas as fases e questões dele também serão removidas.')) return;
+            try {
+                await postAction('/estudio/ajax/modulo/'+id+'/excluir/');
+                window.location.reload();
+            } catch(error) {
+                alert(error.message);
+            }
+        }
+
+        async function deleteFase(id,titulo) {
+            if(!confirm('Excluir a fase "'+titulo+'"? As questões desta fase também serão removidas.')) return;
+            try {
+                await postAction('/estudio/ajax/fase/'+id+'/excluir/');
+                window.location.reload();
+            } catch(error) {
+                alert(error.message);
+            }
+        }
+
+        document.getElementById('form-editar-modulo').addEventListener('submit',async(event)=>{
+            event.preventDefault();
+            const form=event.target;
+            const id=document.getElementById('editar-modulo-id').value;
+            const error=document.getElementById('editar-modulo-erro');
+            error.classList.add('hidden');
+            try {
+                await postAction('/estudio/ajax/modulo/'+id+'/editar/',Object.fromEntries(new FormData(form).entries()));
+                window.location.reload();
+            } catch(err) {
+                error.textContent=err.message;
+                error.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('form-editar-fase').addEventListener('submit',async(event)=>{
+            event.preventDefault();
+            const form=event.target;
+            const id=document.getElementById('editar-fase-id').value;
+            const error=document.getElementById('editar-fase-erro');
+            error.classList.add('hidden');
+            try {
+                await postAction('/estudio/ajax/fase/'+id+'/editar/',Object.fromEntries(new FormData(form).entries()));
+                window.location.reload();
+            } catch(err) {
+                error.textContent=err.message;
+                error.classList.remove('hidden');
+            }
+        });
+
+        const temaTrilhaRoot=document.getElementById('seletor-tema-trilha');
+        const temaTrilhaButton=document.getElementById('botao-tema-trilha');
+        const temaTrilhaPanel=document.getElementById('opcoes-tema-trilha');
+        const temaAtualTrilha='{{ trilha.tema }}';
+
+        function abrirTemaTrilha(abrir) {
+            temaTrilhaButton.setAttribute('aria-expanded',String(abrir));
+            temaTrilhaPanel.classList.toggle('opacity-0',!abrir);
+            temaTrilhaPanel.classList.toggle('scale-90',!abrir);
+            temaTrilhaPanel.classList.toggle('pointer-events-none',!abrir);
+        }
+
+        temaTrilhaButton.addEventListener('click',(event)=>{
             event.stopPropagation();
-            const aberto = temaTrilhaButton.getAttribute('aria-expanded') === 'true';
-            abrirTemaTrilha(!aberto);
+            abrirTemaTrilha(temaTrilhaButton.getAttribute('aria-expanded')!=='true');
         });
 
-        document.addEventListener('click', (event) => {
-            if (!temaTrilhaRoot.contains(event.target)) {
-                abrirTemaTrilha(false);
-            }
+        document.addEventListener('click',(event)=>{
+            if(temaTrilhaRoot && !temaTrilhaRoot.contains(event.target)) abrirTemaTrilha(false);
         });
 
-        document.querySelectorAll('[data-trilha-theme]').forEach((button) => {
-            if (button.dataset.trilhaTheme === temaAtualTrilha) {
-                button.classList.add('ring-4', 'ring-white/80', 'scale-110');
+        document.querySelectorAll('[data-trilha-theme]').forEach((button)=>{
+            if(button.dataset.trilhaTheme===temaAtualTrilha){
+                button.classList.add('ring-4','ring-white/80','scale-110');
             }
 
-            button.addEventListener('click', async () => {
-                const novoTema = button.dataset.trilhaTheme;
-
+            button.addEventListener('click',async()=>{
+                const novoTema=button.dataset.trilhaTheme;
                 document.body.classList.remove(...temasTrilha);
                 document.body.classList.add(novoTema);
 
                 try {
-                    const response = await fetch(
-                        '{% url "ajax_atualizar_tema" trilha.id %}',
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': csrfToken,
-                            },
-                            body: JSON.stringify({ tema: novoTema }),
-                        }
-                    );
-
-                    if (!response.ok) {
-                        throw new Error('Não foi possível salvar o tema da trilha.');
-                    }
-
-                    document.querySelectorAll('.tema-trilha-option').forEach((item) => {
-                        item.classList.remove('ring-4', 'ring-white/80', 'scale-110');
+                    const response=await fetch('{% url "ajax_atualizar_tema" trilha.id %}',{
+                        method:'POST',
+                        headers:{'Content-Type':'application/json','X-CSRFToken':csrfToken},
+                        body:JSON.stringify({tema:novoTema})
                     });
-
-                    button.classList.add('ring-4', 'ring-white/80', 'scale-110');
+                    if(!response.ok) throw new Error('Não foi possível salvar o tema da trilha.');
+                    document.querySelectorAll('.tema-trilha-option').forEach(item=>item.classList.remove('ring-4','ring-white/80','scale-110'));
+                    button.classList.add('ring-4','ring-white/80','scale-110');
                     abrirTemaTrilha(false);
-                } catch (error) {
+                } catch(error) {
                     alert(error.message);
                     window.location.reload();
                 }
             });
         });
 
-        // Modais e Ajax de Criação (Mantidos)
-        function openModal(id) { document.getElementById(id).classList.add('modal-active'); }
-        function closeModal(id) { 
-            document.getElementById(id).classList.remove('modal-active');
-            document.querySelectorAll('.success-msg').forEach(msg => msg.classList.add('hidden'));
-        }
-        function openQuestaoModal(faseId, faseTitulo) {
-            document.getElementById('input-questao-fase-id').value = faseId;
-            document.getElementById('questao-fase-nome').innerText = "Fase Destino: " + faseTitulo;
-            openModal('modal-questao');
-        }
-        function submitAjax(e, url) {
-            e.preventDefault();
-            const form = e.target;
-            fetch(url, { method: 'POST', body: new FormData(form) })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'ok') {
-                    form.reset(); 
-                    const successMsg = form.querySelector('.success-msg');
-                    successMsg.classList.remove('hidden'); 
-                    setTimeout(() => successMsg.classList.add('hidden'), 3000); 
-                } else { alert('Erro ao salvar.'); }
-            });
-        }
+        let isDragging=false;
+        let activeNode=null;
+        let startCursorY=0;
+        let initialNodeY=0;
 
-        // Drag and Drop (Mantido)
-        let isDragging = false, activeNode = null, startCursorY = 0, initialNodeY = 0;
-        document.querySelectorAll('.drag-handle').forEach(handle => {
-            handle.addEventListener('mousedown', (e) => {
-                isDragging = true; activeNode = e.target.closest('.fase-node');
-                initialNodeY = parseInt(activeNode.getAttribute('data-y')) || 0;
-                startCursorY = e.clientY; document.body.classList.add('cursor-grabbing'); e.target.classList.replace('cursor-grab', 'cursor-grabbing');
+        document.querySelectorAll('.drag-handle').forEach(handle=>{
+            handle.addEventListener('mousedown',(event)=>{
+                isDragging=true;
+                activeNode=event.target.closest('.fase-node');
+                initialNodeY=parseInt(activeNode.getAttribute('data-y'))||0;
+                startCursorY=event.clientY;
+                document.body.classList.add('cursor-grabbing');
+                handle.classList.add('cursor-grabbing');
             });
         });
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging || !activeNode) return;
-            let newY = initialNodeY + (e.clientY - startCursorY);
-            if (newY > 150) newY = 150; if (newY < -150) newY = -150;
-            activeNode.style.transform = `translateY(${newY}px)`; activeNode.setAttribute('data-y', newY);
-            const index = parseInt(activeNode.getAttribute('data-index'));
-            const updateLine = (i, y1, y2) => {
-                const b = document.getElementById(`path-base-${i}`), d = document.getElementById(`path-dash-${i}`);
-                if(b && d) { const path = `M 0,${100+y1} C 50,${100+y1} 50,${100+y2} 100,${100+y2}`; b.setAttribute('d', path); d.setAttribute('d', path); }
-            }
-            const nextNode = document.querySelector(`.fase-node[data-index="${index+1}"]`);
-            updateLine(index, newY, nextNode ? parseInt(nextNode.getAttribute('data-y')) : 0);
-            const prevNode = document.querySelector(`.fase-node[data-index="${index-1}"]`);
-            updateLine(index-1, prevNode ? parseInt(prevNode.getAttribute('data-y')) : 0, newY);
+
+        document.addEventListener('mousemove',(event)=>{
+            if(!isDragging || !activeNode) return;
+            let newY=initialNodeY+(event.clientY-startCursorY);
+            newY=Math.max(-150,Math.min(150,newY));
+            activeNode.style.transform='translateY('+newY+'px)';
+            activeNode.setAttribute('data-y',newY);
+
+            const index=parseInt(activeNode.getAttribute('data-index'));
+            const updateLine=(i,y1,y2)=>{
+                const base=document.getElementById('path-base-'+i);
+                const dash=document.getElementById('path-dash-'+i);
+                if(base && dash){
+                    const path='M 0,'+(100+y1)+' C 50,'+(100+y1)+' 50,'+(100+y2)+' 100,'+(100+y2);
+                    base.setAttribute('d',path);
+                    dash.setAttribute('d',path);
+                }
+            };
+
+            const next=document.querySelector('.fase-node[data-index="'+(index+1)+'"]');
+            const prev=document.querySelector('.fase-node[data-index="'+(index-1)+'"]');
+            updateLine(index,newY,next ? parseInt(next.getAttribute('data-y'))||0 : 0);
+            updateLine(index-1,prev ? parseInt(prev.getAttribute('data-y'))||0 : 0,newY);
         });
-        document.addEventListener('mouseup', () => {
-            if (!isDragging || !activeNode) return;
+
+        document.addEventListener('mouseup',async()=>{
+            if(!isDragging || !activeNode) return;
+            const node=activeNode;
             document.body.classList.remove('cursor-grabbing');
-            activeNode.querySelector('.drag-handle').classList.replace('cursor-grabbing', 'cursor-grab');
-            fetch(`/estudio/fase/${activeNode.getAttribute('data-id')}/atualizar-y/`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
-                body: JSON.stringify({y: activeNode.getAttribute('data-y')})
-            });
-            isDragging = false; activeNode = null;
+            node.querySelector('.drag-handle')?.classList.remove('cursor-grabbing');
+
+            try {
+                const response=await fetch('/estudio/fase/'+node.getAttribute('data-id')+'/atualizar-y/',{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json','X-CSRFToken':csrfToken},
+                    body:JSON.stringify({y:node.getAttribute('data-y')})
+                });
+                if(!response.ok) throw new Error('Não foi possível salvar a posição.');
+            } catch(error) {
+                alert(error.message);
+                window.location.reload();
+            } finally {
+                isDragging=false;
+                activeNode=null;
+            }
         });
     </script>
 </body>
