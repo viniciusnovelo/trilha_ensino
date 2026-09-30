@@ -1801,9 +1801,6 @@ def verificar_resposta(
         {
             'status': 'ok',
             'correta': correta,
-            'opcao_correta_id': (
-                opcao_correta_id
-            ),
             'explicacao_erro': (
                 ''
                 if correta
