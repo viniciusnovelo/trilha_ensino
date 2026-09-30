@@ -782,17 +782,17 @@ class EstudioConteudoTests(AutenticacaoBaseTests):
 
         self.assertContains(
             response,
-            "1 módulo(s)",
+            "1 módulo",
         )
 
         self.assertContains(
             response,
-            "1 fase(s)",
+            "1 fase",
         )
 
         self.assertContains(
             response,
-            "1 questão(ões)",
+            "1 questão",
         )
 
     def test_editor_exibe_e_gerencia_questoes_criadas(self):
