@@ -598,6 +598,32 @@ class EstudioConteudoTests(AutenticacaoBaseTests):
         self.assertContains(response, "Mapa da jornada")
         self.assertContains(response, "Módulos")
 
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo já criado",
+            ordem=1,
+        )
+
+        response = self.client.get(
+            reverse(
+                "editar_trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertContains(
+            response,
+            "Módulo já criado",
+        )
+        self.assertContains(
+            response,
+            "Editar módulo",
+        )
+        self.assertContains(
+            response,
+            "Excluir módulo",
+        )
+
     def test_professor_pode_criar_editar_e_excluir_modulo(self):
         response = self.client.post(
             reverse(
