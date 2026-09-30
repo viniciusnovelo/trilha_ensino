@@ -2,6 +2,7 @@ import json
 from decimal import Decimal
 
 from django.conf import settings
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse
@@ -12,7 +13,7 @@ from django.shortcuts import (
 )
 from django.utils import timezone
 
-from .forms import DisciplinaForm
+from .forms import CadastroUsuarioForm, DisciplinaForm
 from .models import (
     Disciplina,
     Fase,
@@ -57,6 +58,14 @@ def obter_perfil(usuario):
     return perfil
 
 
+def modo_teste_disponivel_usuario(usuario):
+    """Indica se o usuário pode usar a alternância de papéis de desenvolvimento."""
+    return bool(
+        getattr(settings, 'DEBUG', False)
+        and (usuario.is_staff or usuario.is_superuser)
+    )
+
+
 def papel_oficial(usuario):
     """
     Retorna o papel REAL registrado no banco.
@@ -93,7 +102,7 @@ def papel_efetivo(request):
     )
 
     if (
-        getattr(settings, 'DEBUG', False)
+        modo_teste_disponivel_usuario(request.user)
         and papel_teste in (
             'aluno',
             'professor',
@@ -112,7 +121,7 @@ def modo_teste_ativo(request):
     """
 
     return (
-        getattr(settings, 'DEBUG', False)
+        modo_teste_disponivel_usuario(request.user)
         and SESSAO_MODO_TESTE in request.session
     )
 
@@ -353,9 +362,8 @@ def contexto_papel(request):
         'perfil': perfil,
         'papel_oficial': perfil.tipo,
         'papel_efetivo': papel,
-        'modo_teste_ativo': (
-            modo_teste_ativo(request)
-        ),
+        'modo_teste_ativo': modo_teste_ativo(request),
+        'modo_teste_disponivel': modo_teste_disponivel_usuario(request.user),
     }
 
 
@@ -384,44 +392,75 @@ def redirecionamento_inicial(request):
 @login_required
 def alternar_papel(request):
     """
-    Alterna ALUNO <-> PROFESSOR somente no modo de teste.
+    Alterna ALUNO <-> PROFESSOR somente para testes locais.
 
-    O PerfilUsuario não é alterado.
-
-    Quando DEBUG=False, a rota simplesmente direciona
-    para o painel oficial do usuário.
+    O papel oficial gravado em PerfilUsuario nunca é alterado.
+    A alternância só funciona em DEBUG e para usuários de equipe
+    (staff/superuser), evitando transformar uma conta comum em
+    professor por uma rota pública.
     """
 
-    if not getattr(
-        settings,
-        'DEBUG',
-        False,
-    ):
-
-        return redirecionamento_inicial(
-            request
+    if request.method != 'POST':
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Método não permitido. Use POST.',
+            },
+            status=405,
         )
 
-    papel_atual = papel_efetivo(
-        request
-    )
+    if not modo_teste_disponivel_usuario(request.user):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Modo de teste indisponível para esta conta.',
+            },
+            status=403,
+        )
 
-    if papel_atual == 'professor':
+    papel_atual = papel_efetivo(request)
+    novo_papel = 'aluno' if papel_atual == 'professor' else 'professor'
 
-        novo_papel = 'aluno'
-
-    else:
-
-        novo_papel = 'professor'
-
-    request.session[
-        SESSAO_MODO_TESTE
-    ] = novo_papel
-
+    request.session[SESSAO_MODO_TESTE] = novo_papel
     request.session.modified = True
 
-    return redirecionamento_inicial(
-        request
+    return redirect('redirecionamento_inicial')
+
+
+# ============================================================
+# 2. CADASTRO DE USUÁRIO
+# ============================================================
+
+
+def cadastro_usuario(request):
+    """Cria uma conta pública sempre como aluno."""
+
+    if request.user.is_authenticated:
+        return redirect('redirecionamento_inicial')
+
+    if request.method == 'POST':
+        form = CadastroUsuarioForm(request.POST)
+
+        if form.is_valid():
+            usuario = form.save()
+
+            # O sinal post_save cria o PerfilUsuario automaticamente.
+            # Mantemos explicitamente o papel de aluno para deixar a
+            # regra do cadastro público clara e determinística.
+            perfil = obter_perfil(usuario)
+            if perfil.tipo != 'aluno':
+                perfil.tipo = 'aluno'
+                perfil.save(update_fields=['tipo'])
+
+            login(request, usuario)
+            return redirect('redirecionamento_inicial')
+    else:
+        form = CadastroUsuarioForm()
+
+    return render(
+        request,
+        'registration/cadastro.html',
+        {'form': form},
     )
 
 
