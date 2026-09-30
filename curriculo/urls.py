@@ -110,6 +110,30 @@ urlpatterns = [
         name='ajax_criar_questao',
     ),
 
+    path(
+        'estudio/ajax/modulo/<int:modulo_id>/editar/',
+        views.ajax_editar_modulo,
+        name='ajax_editar_modulo',
+    ),
+
+    path(
+        'estudio/ajax/modulo/<int:modulo_id>/excluir/',
+        views.ajax_excluir_modulo,
+        name='ajax_excluir_modulo',
+    ),
+
+    path(
+        'estudio/ajax/fase/<int:fase_id>/editar/',
+        views.ajax_editar_fase,
+        name='ajax_editar_fase',
+    ),
+
+    path(
+        'estudio/ajax/fase/<int:fase_id>/excluir/',
+        views.ajax_excluir_fase,
+        name='ajax_excluir_fase',
+    ),
+
     # ========================================================
     # JOGO
     # ========================================================
