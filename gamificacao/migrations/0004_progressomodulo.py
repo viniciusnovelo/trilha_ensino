@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                 (
                     'modulo',
                     models.ForeignKey(
-                        on_delete=models.deletion.CASCADE,
+                        on_delete=models.CASCADE,
                         related_name='progressos_aluno',
                         to='curriculo.modulo',
                     ),
