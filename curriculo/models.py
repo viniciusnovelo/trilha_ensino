@@ -3,10 +3,12 @@ from django.contrib.auth.models import User
 
 class Disciplina(models.Model):
     TEMAS = [
-        ('tema-padrao', 'Noite Escura (Padrão)'),
+        ('tema-padrao', 'Noite Estrelada'),
         ('tema-floresta', 'Floresta Encantada'),
         ('tema-deserto', 'Deserto Escaldante'),
         ('tema-masmorra', 'Masmorra Sombria'),
+        ('tema-aurora', 'Aurora Boreal'),
+        ('tema-oceano', 'Oceano Profundo'),
     ]
     nome = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
