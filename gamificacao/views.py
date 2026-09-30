@@ -101,6 +101,44 @@ def atualizar_tema_usuario(request):
     )
 
 
+
+@login_required
+@require_POST
+def atualizar_aparencia_usuario(request):
+    try:
+        data = json.loads(request.body or '{}')
+    except json.JSONDecodeError:
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'JSON inválido.'},
+            status=400,
+        )
+
+    aparencia = data.get('aparencia')
+    valores_validos = {
+        valor
+        for valor, _ in PerfilUsuario.APARENCIA_CHOICES
+    }
+
+    if aparencia not in valores_validos:
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Aparência inválida.'},
+            status=400,
+        )
+
+    perfil = obter_perfil(request.user)
+    perfil.aparencia_interface = aparencia
+    perfil.save(update_fields=['aparencia_interface'])
+
+    return JsonResponse(
+        {
+            'status': 'ok',
+            'aparencia': aparencia,
+            'aparencia_display': perfil.get_aparencia_interface_display(),
+        }
+    )
+
+
+
 def garantir_itens_padrao():
     for item in DEFAULT_ITENS_LOJA:
         ItemLoja.objects.get_or_create(
