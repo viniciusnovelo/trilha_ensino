@@ -49,15 +49,29 @@ class PerfilUsuario(models.Model):
 
     TEMAS = [
         ('tema-padrao', 'Noite Estrelada'),
-        ('tema-floresta', 'Trilha na Floresta'),
+        ('tema-floresta', 'Floresta Encantada'),
         ('tema-deserto', 'Deserto Escaldante'),
         ('tema-masmorra', 'Masmorra Sombria'),
+        ('tema-aurora', 'Aurora Boreal'),
+        ('tema-oceano', 'Oceano Profundo'),
+    ]
+
+    APARencias = [
+        ('sistema', 'Seguir preferência do sistema'),
+        ('claro', 'Modo claro'),
+        ('escuro', 'Modo escuro'),
     ]
 
     tema_fundo = models.CharField(
         max_length=50,
         choices=TEMAS,
         default='tema-padrao',
+    )
+
+    aparencia_interface = models.CharField(
+        max_length=20,
+        choices=APARencias,
+        default='sistema',
     )
 
     def __str__(self):
