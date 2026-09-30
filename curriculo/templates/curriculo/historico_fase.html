@@ -26,6 +26,7 @@
 
 
 <body class="{{ tema_aplicado }} text-white min-h-screen font-sans">
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 
 
     <!-- =====================================================
@@ -69,7 +70,8 @@
                 </div>
 
 
-                {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+                {% include 'gamificacao/partials/controle_aparencia.html' %}
+{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
                 <a href="{% url 'revisao_fase' fase.id %}" class="bg-orange-500 hover:bg-orange-400 text-white font-bold px-4 py-2 rounded-xl transition">Revisar erros</a>
 
                 <a
