@@ -2,7 +2,8 @@ import json
 from decimal import Decimal
 
 from django.conf import settings
-from django.contrib.auth import login, messages
+from django.contrib import messages
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse
