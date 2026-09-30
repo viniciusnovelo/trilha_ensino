@@ -71,7 +71,7 @@ class PerfilUsuario(models.Model):
     aparencia_interface = models.CharField(
         max_length=20,
         choices=APARENCIA_CHOICES,
-        default='sistema',
+        default='escuro',
     )
 
     def __str__(self):
