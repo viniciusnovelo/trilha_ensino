@@ -16,10 +16,16 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        .tema-padrao{background:linear-gradient(135deg,#0f172a,#1e293b);}
+        .tema-floresta{background:linear-gradient(135deg,#052e16,#14532d,#064e3b);}
+        .tema-deserto{background:linear-gradient(135deg,#451a03,#78350f,#92400e);}
+        .tema-masmorra{background:linear-gradient(135deg,#020617,#1e1b4b,#171717);}
+    </style>
 </head>
 
 
-<body class="bg-[#111827] text-white min-h-screen font-sans">
+<body class="{{ tema_aplicado }} text-white min-h-screen font-sans">
 
 
     <!-- =====================================================
@@ -62,6 +68,9 @@
 
                 </div>
 
+
+                {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+                <a href="{% url 'revisao_fase' fase.id %}" class="bg-orange-500 hover:bg-orange-400 text-white font-bold px-4 py-2 rounded-xl transition">Revisar erros</a>
 
                 <a
                     href="{% url 'trilha' trilha_id %}"
