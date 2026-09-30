@@ -1126,6 +1126,22 @@
                     "Fase concluída!";
 
 
+                const chaveModuloHtml =
+                    data.chave_proximo_modulo
+                    ? `
+                        <div class="mt-5 bg-yellow-500/10 border border-yellow-400/30 rounded-2xl p-5">
+                            <div class="text-4xl mb-2">🔑</div>
+                            <p class="text-yellow-300 font-black text-lg">
+                                Você encontrou a chave do próximo módulo!
+                            </p>
+                            <p class="text-yellow-100/75 text-sm mt-1">
+                                Volte ao mapa e clique no cadeado para desbloquear
+                                ${data.proximo_modulo_titulo || 'a próxima área'}.
+                            </p>
+                        </div>
+                    `
+                    : '';
+
                 const recompensa =
                     data.concluida_pela_primeira_vez
                     ? `
@@ -1185,6 +1201,8 @@
 
                         ${recompensa}
 
+                        ${chaveModuloHtml}
+
                         <div class="mt-6 flex justify-center gap-3 flex-wrap">
 
                             <a
@@ -1217,7 +1235,9 @@
 
 
                 feedbackTitle.innerText =
-                    "Fase liberada com sucesso!";
+                    data.modulo_concluido
+                    ? "Módulo concluído!"
+                    : "Fase concluída!";
 
 
                 feedbackTitle.className =
@@ -1225,7 +1245,9 @@
 
 
                 feedbackDesc.innerText =
-                    "A próxima etapa da trilha está disponível.";
+                    data.chave_proximo_modulo
+                    ? "Você recebeu uma chave. Volte ao mapa para abrir o próximo módulo."
+                    : "A próxima etapa da trilha está disponível.";
 
 
                 feedbackDesc.className =
