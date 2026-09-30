@@ -68,28 +68,30 @@
                      MODO DE TESTE
                      ================================================= -->
 
-                {% if modo_teste_disponivel %}
-                    
+            {% if modo_teste_disponivel %}
 
-                    <a
-                        href="{% url 'alternar_papel' %}"
+                <form
+                    action="{% url 'alternar_papel' %}"
+                    method="post"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
                         class="bg-yellow-500/10 hover:bg-yellow-500 border border-yellow-500/30 text-yellow-300 hover:text-slate-900 font-bold px-4 py-2 rounded-xl transition"
                     >
                         🧪
-                        Mudar para Aluno
-                    </a>
+                        {% if papel_efetivo == 'professor' %}
+                            Mudar para Aluno
+                        {% else %}
+                            Mudar para Professor
+                        {% endif %}
+                    </button>
 
-                {% else %}
+                </form>
 
-                    <a
-                        href="{% url 'alternar_papel' %}"
-                        class="bg-yellow-500/10 hover:bg-yellow-500 border border-yellow-500/30 text-yellow-300 hover:text-slate-900 font-bold px-4 py-2 rounded-xl transition"
-                    >
-                        🧪
-                        Modo de teste: Aluno
-                    </a>
-
-                {% endif %}
+            {% endif %}
 
 
                 <form
