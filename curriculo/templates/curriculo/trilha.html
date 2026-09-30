@@ -151,10 +151,10 @@
                             </span>
 
                             <span class="text-white/80 font-black">
+                                {{ modulos_concluidos }}/{{ modulos|length }} módulos concluídos
+                                ·
                                 {{ fases_concluidas }}/{{ total_fases }} fases
                                 ·
-                                {% with modulos_concluidos=0 %}
-                                {% endwith %}
                                 {{ percentual_progresso }}%
                             </span>
                         </div>
