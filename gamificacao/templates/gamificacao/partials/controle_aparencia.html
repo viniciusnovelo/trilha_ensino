@@ -22,7 +22,7 @@
     const panel=document.getElementById('opcoes-aparencia');
     const options=root.querySelectorAll('[data-appearance]');
     const endpoint='{% url "atualizar_aparencia_usuario" %}';
-    const saved='{{ perfil.aparencia_interface|default:"sistema" }}';
+    const saved='{{ perfil.aparencia_interface|default:"escuro" }}';
 
     const applyMode=(choice)=>{
         let effective=choice;
