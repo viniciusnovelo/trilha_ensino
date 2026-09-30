@@ -5,6 +5,13 @@ from . import views
 
 urlpatterns = [
 
+    path(
+        'contas/cadastro/',
+        views.cadastro_usuario,
+        name='cadastro_usuario',
+    ),
+
+
     # ========================================================
     # ROTEAMENTO
     # ========================================================
