@@ -2285,6 +2285,11 @@ def trilha_view(
         None,
     )
 
+    modulos_concluidos = sum(
+        modulo.status == 'concluido'
+        for modulo in modulos
+    )
+
     tema_aplicado = (
         perfil.tema_fundo
         if papel == 'aluno'
@@ -2298,6 +2303,9 @@ def trilha_view(
     contexto.update({
         'trilha': trilha,
         'modulos': modulos,
+        'modulos_concluidos': (
+            modulos_concluidos
+        ),
         'fases': fases,
         'fases_concluidas': (
             fases_concluidas
