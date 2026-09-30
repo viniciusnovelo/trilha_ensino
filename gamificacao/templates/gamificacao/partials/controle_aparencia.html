@@ -1,0 +1,149 @@
+<div class="relative z-[80]" id="controle-aparencia">
+    <button type="button" id="botao-aparencia"
+        aria-expanded="false"
+        aria-controls="opcoes-aparencia"
+        class="w-11 h-11 rounded-full border border-white/20 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center text-lg shadow-xl hover:scale-110 transition"
+        title="Aparência do site">🌓</button>
+
+    <div id="opcoes-aparencia"
+        class="absolute top-1/2 right-14 -translate-y-1/2 flex items-center gap-2 rounded-full bg-slate-950/95 border border-white/10 backdrop-blur-xl px-3 py-2 shadow-2xl opacity-0 scale-90 pointer-events-none transition-all duration-200 origin-right">
+        <button type="button" data-appearance="sistema" class="appearance-option w-10 h-10 rounded-full border-2 border-white/20 bg-slate-700 text-xs font-black hover:scale-110 transition" title="Seguir sistema">AUTO</button>
+        <button type="button" data-appearance="claro" class="appearance-option w-10 h-10 rounded-full border-2 border-white/20 bg-slate-100 text-slate-900 text-lg hover:scale-110 transition" title="Modo claro">☀️</button>
+        <button type="button" data-appearance="escuro" class="appearance-option w-10 h-10 rounded-full border-2 border-white/20 bg-slate-950 text-white text-lg hover:scale-110 transition" title="Modo escuro">🌙</button>
+    </div>
+</div>
+
+<script>
+(function(){
+    const root=document.getElementById('controle-aparencia');
+    if(!root)return;
+
+    const trigger=document.getElementById('botao-aparencia');
+    const panel=document.getElementById('opcoes-aparencia');
+    const options=root.querySelectorAll('[data-appearance]');
+    const endpoint='{% url "atualizar_aparencia_usuario" %}';
+    const saved='{{ perfil.aparencia_interface|default:"sistema" }}';
+
+    const applyMode=(choice)=>{
+        let effective=choice;
+
+        if(choice==='sistema'){
+            effective=window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'escuro'
+                : 'claro';
+        }
+
+        document.documentElement.dataset.aparencia=effective;
+        document.documentElement.dataset.aparenciaPreferida=choice;
+
+        if(document.body){
+            document.body.classList.toggle('ui-modo-claro',effective==='claro');
+            document.body.classList.toggle('ui-modo-escuro',effective==='escuro');
+        }
+
+        options.forEach((item)=>{
+            const selected=item.dataset.appearance===choice;
+            item.classList.toggle('ring-4',selected);
+            item.classList.toggle('ring-white/80',selected);
+            item.classList.toggle('scale-110',selected);
+        });
+    };
+
+    const save=async(choice)=>{
+        const response=await fetch(endpoint,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRFToken':'{{ csrf_token }}'
+            },
+            body:JSON.stringify({aparencia:choice})
+        });
+        if(!response.ok)throw new Error('Não foi possível salvar a aparência.');
+        return response.json();
+    };
+
+    const open=(value)=>{
+        trigger.setAttribute('aria-expanded',String(value));
+        panel.classList.toggle('opacity-0',!value);
+        panel.classList.toggle('scale-90',!value);
+        panel.classList.toggle('pointer-events-none',!value);
+    };
+
+    trigger.addEventListener('click',(event)=>{
+        event.stopPropagation();
+        open(trigger.getAttribute('aria-expanded')!=='true');
+    });
+
+    document.addEventListener('click',(event)=>{
+        if(!root.contains(event.target))open(false);
+    });
+
+    options.forEach((option)=>{
+        option.addEventListener('click',async()=>{
+            const choice=option.dataset.appearance;
+            const previous=document.documentElement.dataset.aparenciaPreferida || saved;
+            applyMode(choice);
+            open(false);
+
+            try{
+                await save(choice);
+            }catch(error){
+                applyMode(previous);
+                alert(error.message);
+            }
+        });
+    });
+
+    applyMode(saved);
+
+    const media=window.matchMedia('(prefers-color-scheme: dark)');
+    media.addEventListener?.('change',()=>{
+        if((document.documentElement.dataset.aparenciaPreferida || saved)==='sistema'){
+            applyMode('sistema');
+        }
+    });
+})();
+</script>
+
+<style>
+    html[data-aparencia="claro"] body {
+        background-color: #f1f5f9 !important;
+        color: #0f172a !important;
+    }
+
+    html[data-aparencia="claro"] [class*="text-white"] {
+        color: #0f172a !important;
+    }
+
+    html[data-aparencia="claro"] [class*="text-slate-"] {
+        color: #334155 !important;
+    }
+
+    html[data-aparencia="claro"] [class*="bg-slate-950"],
+    html[data-aparencia="claro"] [class*="bg-slate-900"],
+    html[data-aparencia="claro"] [class*="bg-slate-800"] {
+        background-color: rgba(255,255,255,.92) !important;
+        color: #0f172a !important;
+    }
+
+    html[data-aparencia="claro"] [class*="bg-slate-700"] {
+        background-color: #e2e8f0 !important;
+        color: #0f172a !important;
+    }
+
+    html[data-aparencia="claro"] [class*="border-white"] {
+        border-color: rgba(15,23,42,.12) !important;
+    }
+
+    html[data-aparencia="claro"] [class*="bg-white"] {
+        color: #0f172a !important;
+    }
+
+    html[data-aparencia="escuro"] body {
+        color-scheme: dark;
+    }
+
+    html[data-aparencia="claro"] body {
+        color-scheme: light;
+    }
+</style>
