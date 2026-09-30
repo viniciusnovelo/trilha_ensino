@@ -360,45 +360,43 @@
 
                                                 <div class="px-4 pb-4">
 
-                                                    {% if modulo.fases.all %}
+                                                    <div class="space-y-1.5">
 
-                                                        <div class="space-y-1.5">
-                                                            {% for fase in modulo.fases.all %}
+                                                        {% for fase in modulo.fases.all %}
 
-                                                                <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-black/10 border border-white/5 px-3 py-2.5">
+                                                            <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-black/10 border border-white/5 px-3 py-2.5">
 
-                                                                    <div class="min-w-0 flex items-center gap-2">
-                                                                        <span class="w-7 h-7 shrink-0 rounded-lg bg-indigo-500/10 text-indigo-200 flex items-center justify-center text-[10px] font-black">
-                                                                            {{ fase.ordem }}
-                                                                        </span>
+                                                                <div class="min-w-0 flex items-center gap-2">
+                                                                    <span class="w-7 h-7 shrink-0 rounded-lg bg-indigo-500/10 text-indigo-200 flex items-center justify-center text-[10px] font-black">
+                                                                        {{ fase.ordem }}
+                                                                    </span>
 
-                                                                        <span class="text-xs font-bold text-slate-300 truncate">
-                                                                            {{ fase.titulo }}
-                                                                        </span>
-                                                                    </div>
-
-                                                                    <div class="flex items-center gap-2 shrink-0">
-                                                                        <span class="px-2 py-1 rounded-lg bg-white/5 text-[10px] text-slate-500">
-                                                                            {{ fase.get_tipo_display }}
-                                                                        </span>
-
-                                                                        <span class="text-[10px] text-emerald-300 font-black">
-                                                                            {{ fase.questoes.count }} questão(ões)
-                                                                        </span>
-                                                                    </div>
-
+                                                                    <span class="text-xs font-bold text-slate-300 truncate">
+                                                                        {{ fase.titulo }}
+                                                                    </span>
                                                                 </div>
 
-                                                            {% endfor %}
-                                                        </div>
+                                                                <div class="flex items-center gap-2 shrink-0">
+                                                                    <span class="px-2 py-1 rounded-lg bg-white/5 text-[10px] text-slate-500">
+                                                                        {{ fase.get_tipo_display }}
+                                                                    </span>
 
-                                                    {% else %}
+                                                                    <span class="text-[10px] text-emerald-300 font-black">
+                                                                        {{ fase.questoes.count }} questão(ões)
+                                                                    </span>
+                                                                </div>
 
-                                                        <p class="text-xs text-slate-600 py-2">
-                                                            Nenhuma fase criada neste módulo.
-                                                        </p>
+                                                            </div>
 
-                                                    {% endif %}
+                                                        {% empty %}
+
+                                                            <p class="text-xs text-slate-600 py-2">
+                                                                Nenhuma fase criada neste módulo.
+                                                            </p>
+
+                                                        {% endfor %}
+
+                                                    </div>
 
                                                 </div>
 
