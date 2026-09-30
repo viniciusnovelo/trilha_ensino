@@ -26,6 +26,7 @@
 <body
     class="{{ perfil.tema_fundo }} text-white min-h-screen font-sans"
 >
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 
 
     <div
@@ -78,7 +79,8 @@
 
             <div class="flex items-center gap-3">
 
-                {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+                {% include 'gamificacao/partials/controle_aparencia.html' %}
+{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
 
 
 
