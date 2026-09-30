@@ -1099,6 +1099,70 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             ),
         )
 
+    def test_modulo_seguinte_permanece_bloqueado_apos_conclusao_parcial(self):
+        segunda_fase = Fase.objects.create(
+            modulo=self.modulo_1,
+            titulo="Fase 1B",
+            ordem=2,
+        )
+
+        questao = Questao.objects.create(
+            fase=segunda_fase,
+            enunciado="Pergunta da fase 1B",
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="Correta",
+            e_correta=True,
+        )
+
+        self.client.post(
+            reverse(
+                "finalizar_fase",
+                args=[self.fase_1.id],
+            ),
+            data=json.dumps({
+                "respostas": [
+                    {
+                        "questao_id": self.questao_1.id,
+                        "opcao_id": self.opcao_correta_1.id,
+                    }
+                ]
+            }),
+            content_type="application/json",
+        )
+
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        modulos = response.context["modulos"]
+
+        self.assertEqual(
+            modulos[0].status,
+            "atual",
+        )
+
+        self.assertEqual(
+            modulos[0].fases_concluidas,
+            1,
+        )
+
+        self.assertEqual(
+            modulos[0].percentual_progresso,
+            50,
+        )
+
+        self.assertEqual(
+            modulos[1].status,
+            "bloqueado",
+        )
+
+
     def test_conclusao_do_modulo_anterior_desbloqueia_proximo(self):
         response = self.client.post(
             reverse(
