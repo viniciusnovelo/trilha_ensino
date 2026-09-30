@@ -59,6 +59,66 @@ class GamificacaoTests(TestCase):
             "tema-floresta",
         )
 
+    def test_aluno_pode_trocar_aparencia_e_persistir(self):
+        self.client.login(
+            username="aluno",
+            password="SenhaForte123!",
+        )
+
+        response = self.client.post(
+            reverse("atualizar_aparencia_usuario"),
+            data=json.dumps({
+                "aparencia": "escuro",
+            }),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        self.usuario.refresh_from_db()
+
+        self.assertEqual(
+            self.usuario.perfil.aparencia_interface,
+            "escuro",
+        )
+
+    def test_aparencia_invalida_e_rejeitada(self):
+        self.client.login(
+            username="aluno",
+            password="SenhaForte123!",
+        )
+
+        response = self.client.post(
+            reverse("atualizar_aparencia_usuario"),
+            data=json.dumps({
+                "aparencia": "inexistente",
+            }),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_novos_temas_de_paisagem_sao_validos(self):
+        self.client.login(
+            username="aluno",
+            password="SenhaForte123!",
+        )
+
+        for tema in ("tema-aurora", "tema-oceano"):
+            response = self.client.post(
+                reverse("atualizar_tema_usuario"),
+                data=json.dumps({"tema": tema}),
+                content_type="application/json",
+            )
+
+            self.assertEqual(response.status_code, 200)
+            self.usuario.refresh_from_db()
+            self.assertEqual(
+                self.usuario.perfil.tema_fundo,
+                tema,
+            )
+
+
     def test_tema_invalido_e_rejeitado(self):
         self.client.login(
             username="aluno",
