@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                     ('claro', 'Modo claro'),
                     ('escuro', 'Modo escuro'),
                 ],
-                default='sistema',
+                default='escuro',
                 max_length=20,
             ),
         ),
