@@ -1,8 +1,11 @@
+import json
+
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from .models import Disciplina
+from .models import Disciplina, Fase, Modulo, Opcao, Questao
+from gamificacao.models import ProgressoFase, TentativaFase
 
 
 class AutenticacaoBaseTests(TestCase):
@@ -267,4 +270,297 @@ class PublicacaoTests(AutenticacaoBaseTests):
         self.assertNotContains(
             response,
             "Rascunho",
+        )
+
+
+class PublicacaoTrilhaTests(AutenticacaoBaseTests):
+
+    def test_publicar_trilha_pronta(self):
+        professor = self.criar_usuario(
+            username="professor_publicacao"
+        )
+
+        professor.perfil.tipo = "professor"
+        professor.perfil.save(
+            update_fields=["tipo"]
+        )
+
+        trilha = Disciplina.objects.create(
+            nome="Trilha Publicável",
+            slug="trilha-publicavel-teste",
+            ativo=False,
+            autor=professor,
+        )
+
+        modulo = Modulo.objects.create(
+            disciplina=trilha,
+            titulo="Módulo 1",
+            ordem=1,
+        )
+
+        fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase 1",
+            ordem=1,
+        )
+
+        questao = Questao.objects.create(
+            fase=fase,
+            enunciado="Quanto é 2 + 2?",
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="4",
+            e_correta=True,
+        )
+
+        self.client.login(
+            username=professor.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.post(
+            reverse(
+                "alternar_publicacao",
+                args=[trilha.id],
+            )
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("dashboard_professor"),
+        )
+
+        trilha.refresh_from_db()
+
+        self.assertTrue(
+            trilha.ativo
+        )
+
+    def test_nao_publica_trilha_vazia(self):
+        professor = self.criar_usuario(
+            username="professor_vazio"
+        )
+
+        professor.perfil.tipo = "professor"
+        professor.perfil.save(
+            update_fields=["tipo"]
+        )
+
+        trilha = Disciplina.objects.create(
+            nome="Trilha Vazia",
+            slug="trilha-vazia-teste",
+            ativo=False,
+            autor=professor,
+        )
+
+        self.client.login(
+            username=professor.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.post(
+            reverse(
+                "alternar_publicacao",
+                args=[trilha.id],
+            )
+        )
+
+        self.assertRedirects(
+            response,
+            reverse(
+                "editar_trilha",
+                args=[trilha.id],
+            )
+        )
+
+        trilha.refresh_from_db()
+
+        self.assertFalse(
+            trilha.ativo
+        )
+
+
+class ProgressaoEVidasTests(AutenticacaoBaseTests):
+
+    def setUp(self):
+        self.aluno = self.criar_usuario(
+            username="aluno_progressao"
+        )
+
+        self.trilha = Disciplina.objects.create(
+            nome="Trilha de Teste",
+            slug="trilha-de-teste-gamificacao",
+            ativo=True,
+            autor=self.aluno,
+        )
+
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo",
+            ordem=1,
+        )
+
+        self.fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase",
+            ordem=1,
+            xp_recompensa=100,
+            moedas_recompensa=20,
+        )
+
+        self.questao = Questao.objects.create(
+            fase=self.fase,
+            enunciado="Qual é a resposta?",
+            explicacao_erro="Revise o conceito.",
+        )
+
+        self.correta = Opcao.objects.create(
+            questao=self.questao,
+            texto="Correta",
+            e_correta=True,
+        )
+
+        self.incorreta = Opcao.objects.create(
+            questao=self.questao,
+            texto="Incorreta",
+            e_correta=False,
+        )
+
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+    def _finalizar(self, opcao_id):
+        return self.client.post(
+            reverse(
+                "finalizar_fase",
+                args=[self.fase.id],
+            ),
+            data=json.dumps({
+                "respostas": [
+                    {
+                        "questao_id": self.questao.id,
+                        "opcao_id": opcao_id,
+                    }
+                ]
+            }),
+            content_type="application/json",
+        )
+
+    def test_tentativa_reprovada_consume_uma_vida_e_gera_historico(self):
+        response = self._finalizar(
+            self.incorreta.id
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.aluno.refresh_from_db()
+
+        self.assertEqual(
+            self.aluno.perfil.vidas,
+            self.aluno.perfil.VIDAS_MAXIMAS - 1,
+        )
+
+        self.assertEqual(
+            TentativaFase.objects.filter(
+                perfil=self.aluno.perfil,
+                fase=self.fase,
+            ).count(),
+            1,
+        )
+
+        progresso = ProgressoFase.objects.get(
+            perfil=self.aluno.perfil,
+            fase=self.fase,
+        )
+
+        self.assertFalse(
+            progresso.concluida
+        )
+
+    def test_fase_concluida_concede_recompensa_sem_consumir_vida(self):
+        response = self._finalizar(
+            self.correta.id
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.aluno.refresh_from_db()
+
+        self.assertEqual(
+            self.aluno.perfil.vidas,
+            self.aluno.perfil.VIDAS_MAXIMAS,
+        )
+
+        self.assertEqual(
+            self.aluno.perfil.xp_total,
+            100,
+        )
+
+        self.assertEqual(
+            self.aluno.perfil.moedas,
+            20,
+        )
+
+        self.assertTrue(
+            ProgressoFase.objects.get(
+                perfil=self.aluno.perfil,
+                fase=self.fase,
+            ).concluida
+        )
+
+    def test_sem_vidas_bloqueia_nova_tentativa(self):
+        self.aluno.perfil.vidas = 0
+        self.aluno.perfil.save(
+            update_fields=["vidas"]
+        )
+
+        response = self._finalizar(
+            self.incorreta.id
+        )
+
+        self.assertEqual(
+            response.status_code,
+            409,
+        )
+
+        self.assertIn(
+            "sem vidas",
+            response.json()["msg"].lower()
+        )
+
+    def test_revisao_fica_disponivel_apos_tentativa_reprovada(self):
+        response = self._finalizar(
+            self.incorreta.id
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        response = self.client.get(
+            reverse(
+                "revisao_fase",
+                args=[self.fase.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            "Revisão: Fase"
         )
