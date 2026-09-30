@@ -30,21 +30,45 @@
             backdrop-filter: blur(9px);
         }
 
+        .journey-horizontal {
+            display: flex;
+            align-items: stretch;
+            width: max-content;
+            min-width: 100%;
+        }
+
+        .module-card.horizontal-module {
+            width: min(900px, 82vw);
+            min-width: min(900px, 82vw);
+            flex: 0 0 auto;
+        }
+
         .phase-map {
             position: relative;
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+
+        .phase-track {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: max-content;
+            min-width: 100%;
+            padding: 56px 60px 64px;
         }
 
         .phase-rail {
             position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 8px;
-            transform: translateX(-50%);
+            left: 60px;
+            right: 60px;
+            top: 50%;
+            height: 8px;
+            transform: translateY(-50%);
             border-radius: 999px;
             background:
                 repeating-linear-gradient(
-                    to bottom,
+                    to right,
                     rgba(148, 163, 184, .22) 0 12px,
                     transparent 12px 23px
                 );
@@ -53,7 +77,12 @@
 
         .phase-row {
             position: relative;
-            min-height: 190px;
+            width: 185px;
+            min-width: 185px;
+            min-height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .phase-node-shadow {
@@ -74,7 +103,8 @@
 
         .module-divider {
             position: relative;
-            height: 78px;
+            width: 110px;
+            min-width: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -83,15 +113,15 @@
         .module-divider::before {
             content: "";
             position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 5px;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 5px;
+            transform: translateY(-50%);
             border-radius: 999px;
             background:
                 repeating-linear-gradient(
-                    to bottom,
+                    to right,
                     rgba(148, 163, 184, .28) 0 11px,
                     transparent 11px 20px
                 );
@@ -373,12 +403,30 @@
         }
 
         @media (max-width: 767px) {
-            .phase-row {
-                min-height: 165px;
+            .module-card.horizontal-module {
+                width: 88vw;
+                min-width: 88vw;
+            }
+
+            .phase-track {
+                padding: 46px 34px 54px;
             }
 
             .phase-rail {
-                width: 6px;
+                left: 34px;
+                right: 34px;
+                height: 6px;
+            }
+
+            .phase-row {
+                width: 155px;
+                min-width: 155px;
+                min-height: 230px;
+            }
+
+            .module-divider {
+                width: 70px;
+                min-width: 70px;
             }
 
             .locked-chain-layer {
@@ -512,7 +560,7 @@
 
         <main class="relative z-10 flex-1">
 
-            <div class="max-w-5xl mx-auto px-3 sm:px-6 py-7 sm:py-10">
+            <div class="max-w-[1700px] mx-auto px-3 sm:px-6 py-7 sm:py-10">
 
                 <section class="mb-8">
 
@@ -533,9 +581,9 @@
 
                             <p class="text-sm text-white/50 mt-2 max-w-2xl">
                                 {% if papel_efetivo == 'aluno' %}
-                                    Avance pelas fases em linha vertical. Ao concluir um módulo, uma chave aparece para abrir o próximo.
+                                    Avance pelas fases em linha horizontal. Ao concluir um módulo, uma chave aparece para abrir o próximo.
                                 {% else %}
-                                    Visualize a sequência vertical dos módulos e todas as fases disponíveis.
+                                    Visualize a sequência horizontal dos módulos e todas as fases disponíveis.
                                 {% endif %}
                             </p>
                         </div>
@@ -554,12 +602,14 @@
 
                 </section>
 
-                <section>
+                <section class="overflow-x-auto scrollbar-thin pb-4">
+
+                    <div class="journey-horizontal">
 
                     {% for modulo in modulos %}
 
                         <article
-                            class="module-card rounded-[30px] {% if modulo.status == 'atual' %}is-current{% endif %} {% if modulo.status == 'concluido' %}is-complete{% endif %} {% if modulo.status == 'bloqueado' %}is-locked{% endif %}"
+                            class="module-card horizontal-module rounded-[30px] {% if modulo.status == 'atual' %}is-current{% endif %} {% if modulo.status == 'concluido' %}is-complete{% endif %} {% if modulo.status == 'bloqueado' %}is-locked{% endif %}"
                             data-module-id="{{ modulo.id }}"
                         >
 
@@ -713,73 +763,18 @@
 
                                         <div class="phase-section mt-6 rounded-3xl overflow-hidden">
 
-                                            <div class="phase-map px-3 sm:px-8 py-6 sm:py-8">
+                                            <div class="phase-map">
 
-                                                <div class="phase-rail"></div>
+                                                <div class="phase-track">
 
-                                                {% for fase in modulo.fases.all %}
+                                                    <div class="phase-rail"></div>
 
-                                                    <div class="phase-row grid grid-cols-2 gap-5 items-center">
+                                                    {% for fase in modulo.fases.all %}
 
-                                                        {% if forloop.counter0|divisibleby:2 %}
-
-                                                            <div class="flex justify-end pr-8 sm:pr-12">
-
-                                                                <div class="phase-description w-full max-w-xs rounded-2xl p-4 text-right">
-
-                                                                    <p class="text-sm sm:text-base font-black
-                                                                        {% if fase.status == 'bloqueada' %}
-                                                                            text-white/28
-                                                                        {% else %}
-                                                                            text-white/90
-                                                                        {% endif %}
-                                                                    ">
-                                                                        {{ fase.titulo }}
-                                                                    </p>
-
-                                                                    <p class="text-[10px] text-white/35 uppercase tracking-widest mt-1">
-                                                                        {{ fase.get_tipo_display }}
-                                                                    </p>
-
-                                                                    <p class="text-[10px] text-yellow-400/80 font-bold mt-1">
-                                                                        +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
-                                                                    </p>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div></div>
-
-                                                        {% else %}
-
-                                                            <div></div>
-
-                                                            <div class="flex justify-start pl-8 sm:pl-12">
-
-                                                                <div class="phase-description w-full max-w-xs rounded-2xl p-4 text-left">
-
-                                                                    <p class="text-sm sm:text-base font-black
-                                                                        {% if fase.status == 'bloqueada' %}
-                                                                            text-white/28
-                                                                        {% else %}
-                                                                            text-white/90
-                                                                        {% endif %}
-                                                                    ">
-                                                                        {{ fase.titulo }}
-                                                                    </p>
-
-                                                                    <p class="text-[10px] text-white/35 uppercase tracking-widest mt-1">
-                                                                        {{ fase.get_tipo_display }}
-                                                                    </p>
-
-                                                                    <p class="text-[10px] text-yellow-400/80 font-bold mt-1">
-                                                                        +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
-                                                                    </p>
-                                                                </div>
-
-                                                            </div>
-
-                                                        {% endif %}
+                                                        <div
+                                                            class="phase-row"
+                                                            style="transform: translateY({{ fase.deslocamento_y }}px);"
+                                                        >
 
                                                         <div class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center z-20">
 
@@ -836,7 +831,81 @@
 
                                                     </div>
 
-                                                {% endfor %}
+                                                            {% if forloop.counter0|divisibleby:2 %}
+
+                                                                <div class="absolute left-1/2 -translate-x-1/2 bottom-2 w-44 px-2 text-center z-10">
+
+                                                                    <div class="phase-description rounded-2xl p-3">
+
+                                                                        <p class="text-sm font-black leading-tight
+                                                                            {% if fase.status == 'bloqueada' %}
+                                                                                text-white/28
+                                                                            {% else %}
+                                                                                text-white/90
+                                                                            {% endif %}
+                                                                        ">
+                                                                            {{ fase.titulo }}
+                                                                        </p>
+
+                                                                        <p class="text-[10px] text-white/35 uppercase tracking-widest mt-1">
+                                                                            {{ fase.get_tipo_display }}
+                                                                        </p>
+
+                                                                        <p class="text-[10px] text-yellow-400/80 font-bold mt-1">
+                                                                            +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
+                                                                        </p>
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                            {% else %}
+
+                                                                <div class="absolute left-1/2 -translate-x-1/2 top-2 w-44 px-2 text-center z-10">
+
+                                                                    <div class="phase-description rounded-2xl p-3">
+
+                                                                        <p class="text-sm font-black leading-tight
+                                                                            {% if fase.status == 'bloqueada' %}
+                                                                                text-white/28
+                                                                            {% else %}
+                                                                                text-white/90
+                                                                            {% endif %}
+                                                                        ">
+                                                                            {{ fase.titulo }}
+                                                                        </p>
+
+                                                                        <p class="text-[10px] text-white/35 uppercase tracking-widest mt-1">
+                                                                            {{ fase.get_tipo_display }}
+                                                                        </p>
+
+                                                                        <p class="text-[10px] text-yellow-400/80 font-bold mt-1">
+                                                                            +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
+                                                                        </p>
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                            {% endif %}
+
+                                                        </div>
+
+                                                        {% if not forloop.last %}
+
+                                                            <div class="w-32 min-w-[128px] h-2 shrink-0 relative z-0">
+
+                                                                <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[8px] rounded-full bg-slate-500/40"></div>
+
+                                                                <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[4px] rounded-full border-t-4 border-dashed border-slate-300/55"></div>
+
+                                                            </div>
+
+                                                        {% endif %}
+
+                                                    {% endfor %}
+
+                                                </div>
 
                                             </div>
 
@@ -938,7 +1007,7 @@
                             <div class="module-divider">
 
                                 <div class="module-divider-core">
-                                    ↓
+                                    →
                                 </div>
 
                             </div>
@@ -966,6 +1035,8 @@
                         </div>
 
                     {% endfor %}
+
+                    </div>
 
                 </section>
 
