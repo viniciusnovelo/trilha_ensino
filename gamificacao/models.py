@@ -254,6 +254,75 @@ class ProgressoFase(models.Model):
         )
 
 
+class ProgressoModulo(models.Model):
+    """
+    Estado de um módulo para um aluno.
+
+    O primeiro módulo é liberado automaticamente. Ao concluir
+    um módulo, o aluno recebe uma chave para o próximo módulo.
+    A chave permanece disponível até que o aluno a utilize no
+    cadeado do módulo correspondente.
+    """
+
+    perfil = models.ForeignKey(
+        PerfilUsuario,
+        on_delete=models.CASCADE,
+        related_name='progressos_modulo',
+    )
+
+    modulo = models.ForeignKey(
+        'curriculo.Modulo',
+        on_delete=models.CASCADE,
+        related_name='progressos_aluno',
+    )
+
+    desbloqueado = models.BooleanField(
+        default=False,
+    )
+
+    chave_disponivel = models.BooleanField(
+        default=False,
+    )
+
+    concluido = models.BooleanField(
+        default=False,
+    )
+
+    data_desbloqueio = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    data_conclusao = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['perfil', 'modulo'],
+                name='unique_progresso_por_perfil_modulo',
+            )
+        ]
+
+    def __str__(self):
+        status = (
+            'Concluído'
+            if self.concluido
+            else 'Desbloqueado'
+            if self.desbloqueado
+            else 'Chave disponível'
+            if self.chave_disponivel
+            else 'Bloqueado'
+        )
+
+        return (
+            f"{self.perfil.usuario.username} - "
+            f"{self.modulo.titulo} [{status}]"
+        )
+
+
 class TentativaFase(models.Model):
     """
     Representa UMA execução completa de uma fase.
