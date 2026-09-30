@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Painel do Jogador</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+
+<body
+    class="bg-[#0b1120] text-white min-h-screen font-sans"
+>
+
+
+    <div
+        class="fixed inset-0 pointer-events-none overflow-hidden"
+    >
+
+        <div
+            class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"
+        ></div>
+
+        <div
+            class="absolute top-1/2 -right-32 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"
+        ></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header
+        class="relative z-10 border-b border-white/10 bg-slate-900/70 backdrop-blur-xl"
+    >
+
+        <div
+            class="max-w-6xl mx-auto px-6 py-5 flex flex-wrap justify-between items-center gap-6"
+        >
+
+            <div>
+
+                <p
+                    class="text-xs uppercase tracking-[0.25em] text-slate-500 font-bold"
+                >
+                    Central do Jogador
+                </p>
+
+                <h1
+                    class="text-2xl md:text-3xl font-black mt-1"
+                >
+                    Olá,
+                    <span class="text-yellow-400">
+                        {{ user.username }}
+                    </span>
+                    👋
+                </h1>
+
+            </div>
+
+
+            <div class="flex items-center gap-3">
+
+                {% if modo_teste_ativo %}
+
+                    <a
+                        href="{% url 'alternar_papel' %}"
+                        class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
+                    >
+                        🧪
+                        Mudar para Professor
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'alternar_papel' %}"
+                        class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
+                    >
+                        🧪
+                        Modo de teste: Professor
+                    </a>
+
+                {% endif %}
+
+
+                <form
+                    action="{% url 'logout' %}"
+                    method="post"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="text-slate-400 hover:text-red-400 font-bold transition"
+                    >
+                        Sair
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         INDICADOR DE MODO DE TESTE
+         ===================================================== -->
+
+    {% if modo_teste_ativo %}
+
+        <div
+            class="relative z-10 bg-indigo-950/80 border-b border-indigo-400/20"
+        >
+
+            <div
+                class="max-w-6xl mx-auto px-6 py-2 text-center text-xs text-indigo-300 font-bold"
+            >
+
+                🧪
+                MODO DE TESTE ATIVO
+                ·
+                Papel atual:
+                {{ papel_efetivo|capfirst }}
+
+                ·
+                O PerfilUsuario oficial permanece:
+                {{ papel_oficial|capfirst }}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         CONTEÚDO
+         ===================================================== -->
+
+    <main
+        class="relative z-10 max-w-6xl mx-auto px-6 py-8"
+    >
+
+
+        <!-- =================================================
+             HUD DO JOGADOR
+             ================================================= -->
+
+        <section
+            class="bg-slate-800/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl mb-8"
+        >
+
+            <div
+                class="grid grid-cols-1 lg:grid-cols-[auto_1fr_auto_auto] gap-6 items-center"
+            >
+
+                <div
+                    class="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-700 flex items-center justify-center shadow-lg"
+                >
+
+                    <span class="text-5xl">
+                        🧙
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <div
+                        class="flex flex-wrap justify-between items-end gap-2"
+                    >
+
+                        <div>
+
+                            <p
+                                class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                            >
+                                Nível
+                            </p>
+
+                            <p
+                                class="text-3xl font-black text-yellow-400"
+                            >
+                                {{ perfil.nivel }}
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="text-right"
+                        >
+
+                            <p
+                                class="text-sm text-slate-400"
+                            >
+                                {{ perfil.xp_no_nivel }}
+                                /
+                                {{ perfil.XP_POR_NIVEL }}
+                                XP
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="mt-3 bg-slate-700 rounded-full h-4 overflow-hidden"
+                    >
+
+                        <div
+                            class="h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transition-all duration-700"
+                            style="width: {{ perfil.progresso_nivel }}%;"
+                        ></div>
+
+                    </div>
+
+
+                    <div
+                        class="flex justify-between mt-2 text-xs"
+                    >
+
+                        <span class="text-slate-500">
+                            XP total:
+                            <strong class="text-slate-300">
+                                {{ perfil.xp_total }}
+                            </strong>
+                        </span>
+
+
+                        <span class="text-slate-500">
+                            Faltam:
+                            <strong class="text-yellow-400">
+                                {{ perfil.xp_faltante }}
+                            </strong>
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="bg-slate-900/70 border border-blue-500/20 rounded-2xl p-5 min-w-[150px]"
+                >
+
+                    <p
+                        class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                    >
+                        Moedas
+                    </p>
+
+                    <p
+                        class="text-3xl font-black text-blue-400 mt-2"
+                    >
+                        🪙 {{ perfil.moedas }}
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="bg-slate-900/70 border border-red-500/20 rounded-2xl p-5 min-w-[150px]"
+                >
+
+                    <p
+                        class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                    >
+                        Vidas
+                    </p>
+
+                    <p
+                        class="text-3xl font-black text-red-400 mt-2"
+                    >
+                        ❤️ {{ perfil.vidas }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TÍTULO
+             ================================================= -->
+
+        <div
+            class="flex flex-wrap justify-between items-end gap-4 mb-6"
+        >
+
+            <div>
+
+                <p
+                    class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                >
+                    Mundos disponíveis
+                </p>
+
+                <h2
+                    class="text-3xl font-black mt-1"
+                >
+                    Suas Trilhas
+                </h2>
+
+            </div>
+
+            <p
+                class="text-slate-500 text-sm"
+            >
+                Escolha um jogo para continuar sua jornada.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             TRILHAS
+             ================================================= -->
+
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+        >
+
+            {% for trilha in trilhas %}
+
+                <article
+                    class="group bg-slate-800/80 border border-white/10 rounded-3xl overflow-hidden hover:border-green-500/50 hover:-translate-y-1 transition-all duration-300 shadow-xl"
+                >
+
+                    <div
+                        class="h-36 relative overflow-hidden {% if trilha.tema == 'tema-floresta' %}bg-emerald-950{% elif trilha.tema == 'tema-deserto' %}bg-amber-950{% elif trilha.tema == 'tema-masmorra' %}bg-slate-950{% else %}bg-indigo-950{% endif %}"
+                    >
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-white/5 to-black/40"
+                        ></div>
+
+
+                        <div
+                            class="relative h-full p-6 flex items-end justify-between"
+                        >
+
+                            <div>
+
+                                <p
+                                    class="text-xs uppercase tracking-widest text-white/50 font-bold"
+                                >
+                                    Jogo
+                                </p>
+
+                                <h3
+                                    class="text-2xl font-black mt-1"
+                                >
+                                    {{ trilha.nome }}
+                                </h3>
+
+                            </div>
+
+
+                            <div
+                                class="text-5xl opacity-80"
+                            >
+                                🎮
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="p-6"
+                    >
+
+                        <p
+                            class="text-slate-400 text-sm leading-relaxed min-h-[40px]"
+                        >
+                            {{ trilha.descricao }}
+                        </p>
+
+
+                        <div
+                            class="mt-5 flex justify-between items-center text-sm"
+                        >
+
+                            <span class="text-slate-500">
+
+                                {{ trilha.fases_concluidas }}
+                                /
+                                {{ trilha.total_fases }}
+                                fases
+
+                            </span>
+
+
+                            {% if trilha.concluida %}
+
+                                <span
+                                    class="text-green-400 font-black"
+                                >
+                                    ✓ Concluída
+                                </span>
+
+                            {% elif trilha.total_fases == 0 %}
+
+                                <span
+                                    class="text-slate-500 font-bold"
+                                >
+                                    Em preparação
+                                </span>
+
+                            {% elif trilha.percentual_progresso == 0 %}
+
+                                <span
+                                    class="text-slate-400 font-bold"
+                                >
+                                    Não iniciada
+                                </span>
+
+                            {% else %}
+
+                                <span
+                                    class="text-yellow-400 font-black"
+                                >
+                                    {{ trilha.percentual_progresso }}%
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div
+                            class="mt-3 bg-slate-700 rounded-full h-3 overflow-hidden"
+                        >
+
+                            <div
+                                class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-700"
+                                style="width: {{ trilha.percentual_progresso }}%;"
+                            ></div>
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'trilha' trilha.id %}"
+                            class="mt-6 block w-full text-center bg-green-500 hover:bg-green-400 text-white font-black py-3 rounded-xl transition shadow-lg"
+                        >
+
+                            {% if trilha.concluida %}
+
+                                Jogar novamente
+
+                            {% elif trilha.percentual_progresso > 0 %}
+
+                                Continuar jornada
+
+                            {% else %}
+
+                                Começar jornada
+
+                            {% endif %}
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <div
+                    class="md:col-span-2 xl:col-span-3 bg-slate-800 border border-slate-700 rounded-3xl p-12 text-center"
+                >
+
+                    <div
+                        class="text-6xl mb-5"
+                    >
+                        🗺️
+                    </div>
+
+                    <h3
+                        class="text-2xl font-black"
+                    >
+                        Nenhuma trilha disponível
+                    </h3>
+
+                    <p
+                        class="text-slate-400 mt-3"
+                    >
+                        Aguarde até que um professor publique um jogo.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

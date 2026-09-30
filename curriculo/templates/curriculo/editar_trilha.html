@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor Visual: {{ trilha.nome }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        
+        /* TEMAS COM IMAGENS REALISTAS */
+        .tema-padrao { background: linear-gradient(to bottom, #0f172a, #1e293b); }
+        .tema-floresta { background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2000') center/cover fixed; }
+        .tema-deserto { background: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?q=80&w=2000') center/cover fixed; }
+        .tema-masmorra { background: url('https://images.unsplash.com/photo-1519074002996-a69e7ac46a42?q=80&w=2000') center/cover fixed; }
+        
+        .glass-overlay { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); }
+        .linha-conector { stroke: rgba(255, 255, 255, 0.2); }
+        .linha-tracejada { stroke: rgba(255, 255, 255, 0.6); }
+        .cursor-grab { cursor: grab; }
+        .cursor-grabbing { cursor: grabbing !important; }
+        .modal-bg { display: none; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+        .modal-active { display: flex; }
+    </style>
+</head>
+<body class="{{ trilha.tema }} text-white h-screen flex flex-col font-sans overflow-hidden select-none relative transition-all duration-1000">
+    
+    <div class="glass-overlay absolute inset-0 z-0"></div> 
+
+    <header class="pt-6 pb-4 z-20 shrink-0 border-b border-white/10 bg-slate-900/80 backdrop-blur-md px-8 flex justify-between items-center shadow-lg">
+        <a href="{% url 'dashboard_professor' %}" class="text-slate-400 hover:text-white flex items-center font-bold">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Sair do Editor
+        </a>
+        <div class="text-center">
+            <h1 class="text-2xl font-extrabold text-indigo-400">Editor Visual: {{ trilha.nome }}</h1>
+        </div>
+        <div class="flex space-x-3 items-center">
+            <!-- SELETOR DE TEMAS EM TEMPO REAL -->
+            <select id="seletor-tema" onchange="mudarTema(this.value)" class="bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none cursor-pointer">
+                <option value="tema-padrao" {% if trilha.tema == 'tema-padrao' %}selected{% endif %}>Noite (Padrão)</option>
+                <option value="tema-floresta" {% if trilha.tema == 'tema-floresta' %}selected{% endif %}>Floresta</option>
+                <option value="tema-deserto" {% if trilha.tema == 'tema-deserto' %}selected{% endif %}>Deserto</option>
+                <option value="tema-masmorra" {% if trilha.tema == 'tema-masmorra' %}selected{% endif %}>Masmorra</option>
+            </select>
+
+            <button onclick="openModal('modal-modulo')" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg font-bold text-sm">+ Módulo</button>
+            <button onclick="openModal('modal-fase')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-bold text-sm">+ Fase</button>
+            <button onclick="window.location.reload()" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm">↻ Atualizar</button>
+        </div>
+    </header>
+
+    <!-- Área do Mapa -->
+    <div class="flex-1 overflow-x-auto scrollbar-hide flex items-center relative z-10">
+        <div class="flex flex-row items-center w-max px-24 min-h-[500px]">
+            <div class="mr-6 flex flex-col items-center opacity-70">
+                <div class="w-5 h-5 rounded-full bg-white/50 mb-2"></div><span class="text-xs font-bold uppercase text-white/80">Início</span>
+            </div>
+
+            {% for fase in fases %}
+                <div class="fase-node relative flex flex-col items-center group z-10 w-24 h-24 transition-transform duration-75" data-id="{{ fase.id }}" data-index="{{ forloop.counter0 }}" data-y="{{ fase.deslocamento_y }}" style="transform: translateY({{ fase.deslocamento_y }}px);">
+                    <div class="w-20 h-20 rounded-full border-b-8 border-indigo-900 bg-indigo-600 flex items-center justify-center shadow-2xl relative z-20">
+                        <span class="text-2xl font-black text-white opacity-50">{{ forloop.counter }}</span>
+                    </div>
+                    <span class="absolute -top-12 whitespace-nowrap text-xs font-bold text-white bg-slate-800 border border-slate-600 px-3 py-1 rounded-xl shadow-lg pointer-events-none">{{ fase.titulo }}</span>
+                    
+                    <div class="absolute top-20 flex flex-col items-center space-y-2 mt-4 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                        <button class="drag-handle bg-slate-700 hover:bg-slate-500 text-white px-3 py-1.5 rounded font-bold text-xs cursor-grab flex items-center border border-slate-500">↕ Arrastar</button>
+                        <button onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded font-bold text-xs w-full">+ Questão ({{ fase.questoes.count }})</button>
+                    </div>
+                </div>
+
+                {% if not forloop.last %}
+                    <div class="w-32 h-[200px] flex-shrink-0 -mx-4 z-0 pointer-events-none">
+                        <svg viewBox="0 0 100 200" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                            <path id="path-base-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-conector" stroke-width="14" stroke-linecap="round" />
+                            <path id="path-dash-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-tracejada" stroke-width="6" stroke-dasharray="10 10" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p class="text-slate-400">Mapa vazio. Comece criando um Módulo e uma Fase lá em cima!</p>
+            {% endfor %}
+            <div class="w-48"></div>
+        </div>
+    </div>
+
+    <!-- MODAL: NOVO MÓDULO -->
+    <div id="modal-modulo" class="modal-bg absolute inset-0 z-50 items-center justify-center">
+        <div class="bg-white rounded-2xl w-full max-w-md p-6 text-slate-800 shadow-2xl relative">
+            <h2 class="text-2xl font-bold mb-4 text-indigo-700">Criar Novo Módulo</h2>
+            <form id="form-modulo" onsubmit="submitAjax(event, '{% url 'ajax_criar_modulo' trilha.id %}')" class="space-y-4">
+                {% csrf_token %}
+                <div><label class="font-bold text-sm">Título do Módulo</label><input type="text" name="titulo" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
+                <div><label class="font-bold text-sm">Ordem (Ex: 1, 2, 3)</label><input type="number" name="ordem" value="1" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="closeModal('modal-modulo')" class="flex-1 bg-slate-200 text-slate-700 font-bold py-3 rounded-xl">Fechar</button>
+                    <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700">Salvar Módulo</button>
+                </div>
+                <p class="success-msg text-green-600 font-bold text-center hidden">✅ Módulo Salvo! Crie outro ou feche.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: NOVA FASE -->
+    <div id="modal-fase" class="modal-bg absolute inset-0 z-50 items-center justify-center">
+        <div class="bg-white rounded-2xl w-full max-w-md p-6 text-slate-800 shadow-2xl relative">
+            <h2 class="text-2xl font-bold mb-4 text-indigo-700">Criar Nova Fase</h2>
+            <form id="form-fase" onsubmit="submitAjax(event, '{% url 'ajax_criar_fase' trilha.id %}')" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="font-bold text-sm">A qual Módulo pertence?</label>
+                    <select name="modulo_id" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
+                        {% for mod in modulos %}<option value="{{ mod.id }}">Módulo {{ mod.ordem }}: {{ mod.titulo }}</option>{% endfor %}
+                    </select>
+                </div>
+                <div><label class="font-bold text-sm">Título da Fase</label><input type="text" name="titulo" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
+                <div><label class="font-bold text-sm">Ordem dentro do Módulo</label><input type="number" name="ordem" value="1" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="closeModal('modal-fase')" class="flex-1 bg-slate-200 text-slate-700 font-bold py-3 rounded-xl">Fechar</button>
+                    <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700">Salvar Fase</button>
+                </div>
+                <p class="success-msg text-green-600 font-bold text-center hidden">✅ Fase Salva! Crie outra ou feche e clique em Atualizar Tela.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: NOVA QUESTÃO -->
+    <div id="modal-questao" class="modal-bg absolute inset-0 z-50 items-center justify-center p-4">
+        <div class="bg-slate-100 rounded-2xl w-full max-w-3xl p-8 text-slate-800 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <h2 class="text-2xl font-bold mb-2 text-indigo-700">Adicionar Questão rápida</h2>
+            <p id="questao-fase-nome" class="text-slate-500 font-bold mb-6">Fase: </p>
+            
+            <form id="form-questao" onsubmit="submitAjax(event, '{% url 'ajax_criar_questao' %}')" class="space-y-6">
+                {% csrf_token %}
+                <input type="hidden" name="fase_id" id="input-questao-fase-id">
+                
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                    <label class="block font-bold text-sm mb-2">Enunciado da Pergunta</label>
+                    <textarea name="enunciado" required rows="2" class="w-full p-3 bg-slate-50 rounded-lg border border-slate-300 focus:border-indigo-500"></textarea>
+                    
+                    <label class="block font-bold text-sm mt-4 mb-2">Feedback de Erro (Opcional)</label>
+                    <input type="text" name="explicacao_erro" class="w-full p-3 bg-slate-50 rounded-lg border border-slate-300">
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-sm mb-4 border-b pb-2">Preencha as opções e marque a <span class="text-green-600">correta</span>:</h3>
+                    <div class="space-y-3">
+                        {% for i in "0123"|make_list %}
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="op_correta" value="{{ forloop.counter0 }}" required class="w-6 h-6 text-green-600 cursor-pointer">
+                            <input type="text" name="op_texto_{{ forloop.counter0 }}" placeholder="Opção {{ forloop.counter }}" required class="flex-1 p-3 bg-slate-50 rounded-lg border border-slate-300">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="flex space-x-4 pt-2">
+                    <button type="button" onclick="closeModal('modal-questao')" class="w-1/3 bg-slate-300 text-slate-700 font-bold py-4 rounded-xl hover:bg-slate-400">Fechar</button>
+                    <button type="submit" class="w-2/3 bg-green-600 text-white text-lg font-bold py-4 rounded-xl hover:bg-green-700 shadow-md">Salvar e Adicionar Outra</button>
+                </div>
+                <p class="success-msg text-green-600 font-bold text-center text-lg hidden p-4 bg-green-100 rounded-xl">✅ Questão Salva com Sucesso! A tela foi limpa para você digitar a próxima.</p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const csrfToken = '{{ csrf_token }}';
+
+        // ALTERAR O TEMA DO MAPA NATIVAMENTE
+        function mudarTema(novoTema) {
+            document.body.className = `${novoTema} text-white h-screen flex flex-col font-sans overflow-hidden select-none relative transition-all duration-1000`;
+            fetch(`/estudio/trilha/{{ trilha.id }}/atualizar-tema/`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrfToken},
+                body: JSON.stringify({tema: novoTema})
+            });
+        }
+
+        // Modais e Ajax de Criação (Mantidos)
+        function openModal(id) { document.getElementById(id).classList.add('modal-active'); }
+        function closeModal(id) { 
+            document.getElementById(id).classList.remove('modal-active');
+            document.querySelectorAll('.success-msg').forEach(msg => msg.classList.add('hidden'));
+        }
+        function openQuestaoModal(faseId, faseTitulo) {
+            document.getElementById('input-questao-fase-id').value = faseId;
+            document.getElementById('questao-fase-nome').innerText = "Fase Destino: " + faseTitulo;
+            openModal('modal-questao');
+        }
+        function submitAjax(e, url) {
+            e.preventDefault();
+            const form = e.target;
+            fetch(url, { method: 'POST', body: new FormData(form) })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    form.reset(); 
+                    const successMsg = form.querySelector('.success-msg');
+                    successMsg.classList.remove('hidden'); 
+                    setTimeout(() => successMsg.classList.add('hidden'), 3000); 
+                } else { alert('Erro ao salvar.'); }
+            });
+        }
+
+        // Drag and Drop (Mantido)
+        let isDragging = false, activeNode = null, startCursorY = 0, initialNodeY = 0;
+        document.querySelectorAll('.drag-handle').forEach(handle => {
+            handle.addEventListener('mousedown', (e) => {
+                isDragging = true; activeNode = e.target.closest('.fase-node');
+                initialNodeY = parseInt(activeNode.getAttribute('data-y')) || 0;
+                startCursorY = e.clientY; document.body.classList.add('cursor-grabbing'); e.target.classList.replace('cursor-grab', 'cursor-grabbing');
+            });
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging || !activeNode) return;
+            let newY = initialNodeY + (e.clientY - startCursorY);
+            if (newY > 150) newY = 150; if (newY < -150) newY = -150;
+            activeNode.style.transform = `translateY(${newY}px)`; activeNode.setAttribute('data-y', newY);
+            const index = parseInt(activeNode.getAttribute('data-index'));
+            const updateLine = (i, y1, y2) => {
+                const b = document.getElementById(`path-base-${i}`), d = document.getElementById(`path-dash-${i}`);
+                if(b && d) { const path = `M 0,${100+y1} C 50,${100+y1} 50,${100+y2} 100,${100+y2}`; b.setAttribute('d', path); d.setAttribute('d', path); }
+            }
+            const nextNode = document.querySelector(`.fase-node[data-index="${index+1}"]`);
+            updateLine(index, newY, nextNode ? parseInt(nextNode.getAttribute('data-y')) : 0);
+            const prevNode = document.querySelector(`.fase-node[data-index="${index-1}"]`);
+            updateLine(index-1, prevNode ? parseInt(prevNode.getAttribute('data-y')) : 0, newY);
+        });
+        document.addEventListener('mouseup', () => {
+            if (!isDragging || !activeNode) return;
+            document.body.classList.remove('cursor-grabbing');
+            activeNode.querySelector('.drag-handle').classList.replace('cursor-grabbing', 'cursor-grab');
+            fetch(`/estudio/fase/${activeNode.getAttribute('data-id')}/atualizar-y/`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+                body: JSON.stringify({y: activeNode.getAttribute('data-y')})
+            });
+            isDragging = false; activeNode = null;
+        });
+    </script>
+</body>
+</html>

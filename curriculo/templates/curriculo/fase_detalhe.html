@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ fase.titulo }}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        .op-button {
+            border: 2px solid transparent;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .op-button.selected {
+            border-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.20);
+        }
+
+        .op-button.correct {
+            border-color: #22c55e;
+            background-color: rgba(34, 197, 94, 0.20);
+        }
+
+        .op-button.incorrect {
+            border-color: #ef4444;
+            background-color: rgba(239, 68, 68, 0.20);
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body class="bg-[#111827] text-white min-h-screen flex flex-col font-sans">
+
+
+    <!-- =====================================================
+         DADOS DO QUIZ
+         ===================================================== -->
+
+    {{ questoes_json|json_script:"questoes-data" }}
+
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header class="p-6 flex items-center gap-4">
+
+        <a
+            href="{% url 'trilha' trilha_id %}"
+            class="text-slate-400 hover:text-white transition"
+            title="Voltar ao mapa"
+        >
+
+            <svg
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                />
+
+            </svg>
+
+        </a>
+
+
+        <div class="flex-1">
+
+            <div
+                class="bg-slate-700 h-4 rounded-full overflow-hidden"
+            >
+
+                <div
+                    id="progress-bar"
+                    class="bg-green-500 h-full transition-all duration-300"
+                    style="width: 0%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="contador"
+            class="min-w-[80px] text-right text-sm text-slate-400 font-bold"
+        >
+            0 / 0
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         INFORMAÇÕES DA FASE
+         ===================================================== -->
+
+    <div class="px-6">
+
+        <div
+            class="max-w-3xl mx-auto flex justify-between items-center text-sm"
+        >
+
+            <div
+                class="text-slate-500 font-bold uppercase tracking-widest"
+            >
+                {{ fase.get_tipo_display }}
+            </div>
+
+
+            {% if progresso %}
+
+                <div class="flex items-center gap-4">
+
+                    <span class="text-slate-400">
+                        Tentativas:
+                        <strong class="text-white">
+                            {{ progresso.tentativas }}
+                        </strong>
+                    </span>
+
+                    <span class="text-slate-400">
+                        Melhor:
+                        <strong class="text-green-400">
+                            {{ progresso.melhor_aproveitamento }}%
+                        </strong>
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ÁREA PRINCIPAL
+         ===================================================== -->
+
+    <main
+        class="flex-1 flex flex-col items-center justify-center p-6 max-w-3xl mx-auto w-full"
+    >
+
+        <h2
+            id="enunciado"
+            class="text-2xl md:text-3xl font-bold text-center mb-8 leading-relaxed"
+        >
+            Carregando questão...
+        </h2>
+
+
+        <div
+            id="opcoes-container"
+            class="w-full space-y-4"
+        >
+        </div>
+
+
+        <div
+            id="sem-questoes"
+            class="hidden text-center"
+        >
+
+            <div
+                class="bg-slate-800 border border-slate-700 rounded-2xl p-8"
+            >
+
+                <p class="text-xl font-bold mb-3">
+                    Esta fase ainda não possui questões.
+                </p>
+
+                <p class="text-slate-400 mb-6">
+                    O professor ainda precisa cadastrar as atividades.
+                </p>
+
+                <a
+                    href="{% url 'trilha' trilha_id %}"
+                    class="inline-block bg-slate-600 hover:bg-slate-500 text-white font-bold px-6 py-3 rounded-xl transition"
+                >
+                    Voltar ao mapa
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         RODAPÉ
+         ===================================================== -->
+
+    <footer
+        id="footer-area"
+        class="border-t border-slate-700 bg-[#1f2937] p-6 transition-colors duration-300"
+    >
+
+        <div
+            class="max-w-4xl mx-auto flex justify-between items-center min-h-[96px] gap-6"
+        >
+
+            <div
+                id="feedback-msg"
+                class="flex items-center opacity-0 transition-opacity flex-1"
+            >
+
+                <div
+                    id="feedback-icon"
+                    class="w-12 h-12 rounded-full flex items-center justify-center mr-4 text-white text-xl font-bold shrink-0"
+                ></div>
+
+                <div>
+
+                    <h3
+                        id="feedback-title"
+                        class="text-xl font-bold"
+                    ></h3>
+
+                    <p
+                        id="feedback-desc"
+                        class="text-sm opacity-80 mt-1"
+                    ></p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="btn-acao"
+                onclick="verificarOuAvancar()"
+                disabled
+                class="bg-slate-600 text-slate-300 font-bold py-3 px-10 rounded-xl text-lg uppercase transition-all duration-200 shrink-0"
+            >
+                Verificar
+            </button>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script>
+
+        const questoes = JSON.parse(
+            document.getElementById(
+                'questoes-data'
+            ).textContent
+        );
+
+
+        const csrfToken =
+            '{{ csrf_token }}';
+
+
+        const verificarUrl =
+            "{% url 'verificar_resposta' fase.id %}";
+
+
+        const finalizarUrl =
+            "{% url 'finalizar_fase' fase.id %}";
+
+
+        const mapaUrl =
+            "{% url 'trilha' trilha_id %}";
+
+
+        const historicoUrl =
+            "{% url 'historico_fase' fase.id %}";
+
+
+        let indiceAtual = 0;
+
+        let opcaoSelecionada = null;
+
+        let estadoFooter = "AGUARDANDO";
+
+        let processando = false;
+
+
+        const respostasRegistradas = [];
+
+
+        const enunciadoEl =
+            document.getElementById(
+                'enunciado'
+            );
+
+
+        const containerOpcoes =
+            document.getElementById(
+                'opcoes-container'
+            );
+
+
+        const progressBar =
+            document.getElementById(
+                'progress-bar'
+            );
+
+
+        const contadorEl =
+            document.getElementById(
+                'contador'
+            );
+
+
+        const btnAcao =
+            document.getElementById(
+                'btn-acao'
+            );
+
+
+        const footerArea =
+            document.getElementById(
+                'footer-area'
+            );
+
+
+        const feedbackMsg =
+            document.getElementById(
+                'feedback-msg'
+            );
+
+
+        const feedbackTitle =
+            document.getElementById(
+                'feedback-title'
+            );
+
+
+        const feedbackDesc =
+            document.getElementById(
+                'feedback-desc'
+            );
+
+
+        const feedbackIcon =
+            document.getElementById(
+                'feedback-icon'
+            );
+
+
+        const semQuestoes =
+            document.getElementById(
+                'sem-questoes'
+            );
+
+
+        // ====================================================
+        // FEEDBACK
+        // ====================================================
+
+        function mostrarFeedback(
+            titulo,
+            descricao,
+            tipo
+        ) {
+
+            feedbackMsg.classList.remove(
+                'opacity-0'
+            );
+
+            feedbackTitle.innerText =
+                titulo;
+
+            feedbackDesc.innerText =
+                descricao || '';
+
+
+            if (tipo === 'correto') {
+
+                footerArea.className =
+                    "border-t border-green-700 bg-green-800 p-6 transition-colors duration-300";
+
+
+                feedbackTitle.className =
+                    "text-xl font-bold text-green-300";
+
+
+                feedbackDesc.className =
+                    "text-sm text-green-100 mt-1";
+
+
+                feedbackIcon.innerHTML =
+                    "✓";
+
+
+                feedbackIcon.className =
+                    "w-12 h-12 rounded-full flex items-center justify-center mr-4 text-green-800 bg-white text-xl font-bold";
+
+            }
+
+            else if (tipo === 'incorreto') {
+
+                footerArea.className =
+                    "border-t border-red-900 bg-[#3f1c24] p-6 transition-colors duration-300";
+
+
+                feedbackTitle.className =
+                    "text-xl font-bold text-red-400";
+
+
+                feedbackDesc.className =
+                    "text-sm text-red-200 mt-1";
+
+
+                feedbackIcon.innerHTML =
+                    "✖";
+
+
+                feedbackIcon.className =
+                    "w-12 h-12 rounded-full flex items-center justify-center mr-4 text-[#3f1c24] bg-red-400 text-xl font-bold";
+
+            }
+
+            else {
+
+                footerArea.className =
+                    "border-t border-slate-700 bg-[#1f2937] p-6";
+
+
+                feedbackTitle.className =
+                    "text-xl font-bold text-slate-300";
+
+
+                feedbackDesc.className =
+                    "text-sm text-slate-400 mt-1";
+
+
+                feedbackIcon.innerHTML =
+                    "!";
+
+
+                feedbackIcon.className =
+                    "w-12 h-12 rounded-full flex items-center justify-center mr-4 text-slate-800 bg-slate-300 text-xl font-bold";
+
+            }
+
+        }
+
+
+        function esconderFeedback() {
+
+            feedbackMsg.classList.add(
+                'opacity-0'
+            );
+
+            feedbackTitle.innerText =
+                '';
+
+            feedbackDesc.innerText =
+                '';
+
+            feedbackIcon.innerHTML =
+                '';
+
+        }
+
+
+        function registrarResposta(
+            questaoId,
+            opcaoId
+        ) {
+
+            const indiceExistente =
+                respostasRegistradas.findIndex(
+                    resposta =>
+                        resposta.questao_id
+                        === questaoId
+                );
+
+
+            const novaResposta = {
+                questao_id: questaoId,
+                opcao_id: opcaoId,
+            };
+
+
+            if (
+                indiceExistente >= 0
+            ) {
+
+                respostasRegistradas[
+                    indiceExistente
+                ] = novaResposta;
+
+            }
+
+            else {
+
+                respostasRegistradas.push(
+                    novaResposta
+                );
+
+            }
+
+        }
+
+
+        function atualizarContador() {
+
+            if (!questoes.length) {
+
+                contadorEl.innerText =
+                    "0 / 0";
+
+                return;
+
+            }
+
+
+            contadorEl.innerText =
+                `${indiceAtual + 1} / ${questoes.length}`;
+
+        }
+
+
+        // ====================================================
+        // CARREGAR QUESTÃO
+        // ====================================================
+
+        function carregarQuestao() {
+
+            if (
+                indiceAtual >=
+                questoes.length
+            ) {
+
+                finalizarFase();
+
+                return;
+
+            }
+
+
+            estadoFooter =
+                "AGUARDANDO";
+
+            opcaoSelecionada =
+                null;
+
+            processando =
+                false;
+
+
+            const questao =
+                questoes[indiceAtual];
+
+
+            const porcentagem =
+                (
+                    indiceAtual
+                    / questoes.length
+                ) * 100;
+
+
+            progressBar.style.width =
+                `${porcentagem}%`;
+
+
+            atualizarContador();
+
+
+            enunciadoEl.innerText =
+                questao.enunciado;
+
+
+            containerOpcoes.innerHTML =
+                '';
+
+
+            esconderFeedback();
+
+
+            footerArea.className =
+                "border-t border-slate-700 bg-[#1f2937] p-6";
+
+
+            btnAcao.innerText =
+                "Verificar";
+
+
+            btnAcao.disabled =
+                true;
+
+
+            btnAcao.className =
+                "bg-slate-600 text-slate-300 font-bold py-3 px-10 rounded-xl text-lg uppercase cursor-not-allowed transition-all";
+
+
+            questao.opcoes.forEach(
+                (opcao, index) => {
+
+                    const btn =
+                        document.createElement(
+                            'button'
+                        );
+
+
+                    btn.type =
+                        'button';
+
+
+                    btn.className =
+                        "w-full text-left p-4 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 op-button flex items-center";
+
+
+                    btn.innerHTML = `
+                        <span class="mr-4 text-slate-400 font-bold">
+                            ${index + 1}.
+                        </span>
+
+                        <span>
+                            ${opcao.texto}
+                        </span>
+                    `;
+
+
+                    btn.onclick = () => {
+
+                        if (
+                            estadoFooter
+                            !== "AGUARDANDO"
+                        ) {
+                            return;
+                        }
+
+
+                        if (processando) {
+                            return;
+                        }
+
+
+                        document
+                            .querySelectorAll(
+                                '.op-button'
+                            )
+                            .forEach(
+                                outroBotao => {
+
+                                    outroBotao
+                                        .classList
+                                        .remove(
+                                            'selected'
+                                        );
+
+                                }
+                            );
+
+
+                        btn.classList.add(
+                            'selected'
+                        );
+
+
+                        opcaoSelecionada =
+                            opcao;
+
+
+                        btnAcao.disabled =
+                            false;
+
+
+                        btnAcao.className =
+                            "bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-10 rounded-xl text-lg uppercase transition-all shadow-[0_4px_0_#2563eb] active:translate-y-1 active:shadow-none cursor-pointer";
+
+                    };
+
+
+                    containerOpcoes.appendChild(
+                        btn
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ====================================================
+        // VERIFICAR RESPOSTA
+        // ====================================================
+
+        async function verificarRespostaServidor() {
+
+            if (!opcaoSelecionada) {
+                return;
+            }
+
+
+            if (processando) {
+                return;
+            }
+
+
+            processando =
+                true;
+
+
+            btnAcao.disabled =
+                true;
+
+
+            btnAcao.innerText =
+                "Verificando...";
+
+
+            const questaoAtual =
+                questoes[indiceAtual];
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        verificarUrl,
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json',
+
+                                'X-CSRFToken':
+                                    csrfToken,
+                            },
+
+                            body: JSON.stringify(
+                                {
+                                    questao_id:
+                                        questaoAtual.id,
+
+                                    opcao_id:
+                                        opcaoSelecionada.id,
+                                }
+                            ),
+                        }
+                    );
+
+
+                const data =
+                    await resposta.json();
+
+
+                if (
+                    !resposta.ok
+                    ||
+                    data.status !== 'ok'
+                ) {
+
+                    throw new Error(
+                        data.msg
+                        ||
+                        'Não foi possível verificar a resposta.'
+                    );
+
+                }
+
+
+                registrarResposta(
+                    questaoAtual.id,
+                    opcaoSelecionada.id
+                );
+
+
+                estadoFooter =
+                    "RESPONDIDO";
+
+
+                const botoes =
+                    document.querySelectorAll(
+                        '.op-button'
+                    );
+
+
+                botoes.forEach(
+                    botao => {
+
+                        botao.classList.remove(
+                            'selected'
+                        );
+
+                    }
+                );
+
+
+                const indiceOpcao =
+                    questaoAtual.opcoes.findIndex(
+                        opcao =>
+                            opcao.id
+                            ===
+                            opcaoSelecionada.id
+                    );
+
+
+                if (
+                    botoes[indiceOpcao]
+                ) {
+
+                    if (data.correta) {
+
+                        botoes[indiceOpcao]
+                            .classList.add(
+                                'correct'
+                            );
+
+                    }
+
+                    else {
+
+                        botoes[indiceOpcao]
+                            .classList.add(
+                                'incorrect'
+                            );
+
+                    }
+
+                }
+
+
+                if (data.correta) {
+
+                    mostrarFeedback(
+                        "Correto!",
+                        "Muito bem! Você acertou.",
+                        "correto"
+                    );
+
+
+                    btnAcao.innerText =
+                        "Continuar";
+
+
+                    btnAcao.className =
+                        "bg-green-500 hover:bg-green-400 text-white font-bold py-3 px-10 rounded-xl text-lg uppercase cursor-pointer";
+
+                }
+
+                else {
+
+                    mostrarFeedback(
+                        "Incorreto",
+                        data.explicacao_erro
+                        ||
+                        "Revise esse conteúdo antes de uma nova tentativa.",
+                        "incorreto"
+                    );
+
+
+                    btnAcao.innerText =
+                        "Continuar";
+
+
+                    btnAcao.className =
+                        "bg-red-500 hover:bg-red-400 text-white font-bold py-3 px-10 rounded-xl text-lg uppercase cursor-pointer";
+
+                }
+
+
+                btnAcao.disabled =
+                    false;
+
+            }
+
+            catch (erro) {
+
+                mostrarFeedback(
+                    "Erro ao verificar",
+                    erro.message
+                    ||
+                    "Não foi possível verificar sua resposta.",
+                    "erro"
+                );
+
+
+                btnAcao.innerText =
+                    "Tentar novamente";
+
+
+                btnAcao.className =
+                    "bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-3 px-10 rounded-xl text-lg uppercase cursor-pointer";
+
+
+                estadoFooter =
+                    "AGUARDANDO";
+
+
+                btnAcao.disabled =
+                    false;
+
+            }
+
+            finally {
+
+                processando =
+                    false;
+
+            }
+
+        }
+
+
+        // ====================================================
+        // FINALIZAR FASE
+        // ====================================================
+
+        async function finalizarFase() {
+
+            if (processando) {
+                return;
+            }
+
+
+            processando =
+                true;
+
+
+            estadoFooter =
+                "FINALIZANDO";
+
+
+            progressBar.style.width =
+                "100%";
+
+
+            enunciadoEl.innerText =
+                "Calculando seu resultado...";
+
+
+            containerOpcoes.innerHTML =
+                "";
+
+
+            btnAcao.disabled =
+                true;
+
+
+            btnAcao.innerText =
+                "Finalizando...";
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        finalizarUrl,
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json',
+
+                                'X-CSRFToken':
+                                    csrfToken,
+                            },
+
+                            body: JSON.stringify(
+                                {
+                                    respostas:
+                                        respostasRegistradas,
+                                }
+                            ),
+                        }
+                    );
+
+
+                const data =
+                    await resposta.json();
+
+
+                if (
+                    !resposta.ok
+                    ||
+                    data.status !== 'ok'
+                ) {
+
+                    throw new Error(
+                        data.msg
+                        ||
+                        "Não foi possível finalizar a fase."
+                    );
+
+                }
+
+
+                mostrarResultadoFinal(
+                    data
+                );
+
+            }
+
+            catch (erro) {
+
+                estadoFooter =
+                    "RESPONDIDO";
+
+
+                processando =
+                    false;
+
+
+                mostrarFeedback(
+                    "Não foi possível finalizar",
+                    erro.message
+                    ||
+                    "Tente novamente.",
+                    "erro"
+                );
+
+
+                btnAcao.innerText =
+                    "Tentar finalizar";
+
+
+                btnAcao.className =
+                    "bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold py-3 px-10 rounded-xl text-lg uppercase cursor-pointer";
+
+
+                btnAcao.disabled =
+                    false;
+
+            }
+
+        }
+
+
+        // ====================================================
+        // RESULTADO FINAL
+        // ====================================================
+
+        function mostrarResultadoFinal(
+            data
+        ) {
+
+            processando =
+                false;
+
+
+            estadoFooter =
+                "FINALIZADO";
+
+
+            progressBar.style.width =
+                "100%";
+
+
+            contadorEl.innerText =
+                `${data.acertos} / ${data.total}`;
+
+
+            containerOpcoes.innerHTML =
+                "";
+
+
+            if (data.concluida) {
+
+                enunciadoEl.innerText =
+                    "Fase concluída!";
+
+
+                const recompensa =
+                    data.concluida_pela_primeira_vez
+                    ? `
+                        <div class="mt-6 flex justify-center gap-4 flex-wrap">
+
+                            <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-5 py-3">
+                                <span class="text-yellow-400 font-black">
+                                    +${data.recompensa_xp} XP
+                                </span>
+                            </div>
+
+                            <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl px-5 py-3">
+                                <span class="text-blue-400 font-black">
+                                    +${data.recompensa_moedas} moedas
+                                </span>
+                            </div>
+
+                        </div>
+                    `
+                    : `
+                        <p class="mt-5 text-slate-400">
+                            Esta fase já havia sido concluída.
+                        </p>
+                    `;
+
+
+                containerOpcoes.innerHTML = `
+                    <div class="bg-slate-800 border border-green-700/50 rounded-2xl p-8 text-center">
+
+                        <div class="text-6xl mb-4">
+                            🏆
+                        </div>
+
+                        <h3 class="text-2xl font-black text-green-400">
+                            Excelente trabalho!
+                        </h3>
+
+                        <p class="text-slate-300 mt-3">
+                            Você acertou
+                            <strong>${data.acertos}</strong>
+                            de
+                            <strong>${data.total}</strong>
+                            questões.
+                        </p>
+
+                        <p class="text-green-300 font-bold mt-2">
+                            Aproveitamento:
+                            ${data.aproveitamento}%
+                        </p>
+
+                        <p class="text-slate-400 mt-2">
+                            Melhor aproveitamento:
+                            <strong class="text-white">
+                                ${data.melhor_aproveitamento}%
+                            </strong>
+                        </p>
+
+                        ${recompensa}
+
+                        <div class="mt-6 flex justify-center gap-3 flex-wrap">
+
+                            <a
+                                href="${historicoUrl}"
+                                class="bg-slate-700 hover:bg-slate-600 text-white font-bold px-5 py-3 rounded-xl transition"
+                            >
+                                Ver histórico
+                            </a>
+
+                        </div>
+
+                    </div>
+                `;
+
+
+                footerArea.className =
+                    "border-t border-green-700 bg-green-900/60 p-6";
+
+
+                feedbackMsg.classList.remove(
+                    'opacity-0'
+                );
+
+
+                feedbackTitle.innerText =
+                    "Fase liberada com sucesso!";
+
+
+                feedbackTitle.className =
+                    "text-xl font-bold text-green-300";
+
+
+                feedbackDesc.innerText =
+                    "A próxima etapa da trilha está disponível.";
+
+
+                feedbackDesc.className =
+                    "text-sm text-green-100 mt-1";
+
+
+                feedbackIcon.innerHTML =
+                    "✓";
+
+
+                feedbackIcon.className =
+                    "w-12 h-12 rounded-full flex items-center justify-center mr-4 text-green-800 bg-white text-xl font-bold";
+
+
+                btnAcao.innerText =
+                    "VOLTAR AO MAPA";
+
+
+                btnAcao.className =
+                    "bg-white text-green-700 hover:bg-slate-100 font-bold py-3 px-10 rounded-xl text-lg uppercase cursor-pointer";
+
+
+                btnAcao.disabled =
+                    false;
+
+            }
+
+            else {
+
+                enunciadoEl.innerText =
+                    "Vamos revisar?";
+
+
+                containerOpcoes.innerHTML = `
+                    <div class="bg-slate-800 border border-red-700/50 rounded-2xl p-8 text-center">
+
+                        <div class="text-6xl mb-4">
+                            📚
+                        </div>
+
+                        <h3 class="text-2xl font-black text-red-400">
+                            A fase ainda não foi concluída.
+                        </h3>
+
+                        <p class="text-slate-300 mt-3">
+                            Você acertou
+                            <strong>${data.acertos}</strong>
+                            de
+                            <strong>${data.total}</strong>
+                            questões.
+                        </p>
+
+                        <p class="text-red-300 font-bold mt-2">
+                            Aproveitamento:
+                            ${data.aproveitamento}%
+                        </p>
+
+                        <p class="text-slate-400 mt-4">
+                            Você precisa de pelo menos
+                            <strong class="text-white">
+                                ${data.proximo_minimo}%
+                            </strong>
+                            para concluir esta fase.
+                        </p>
+
+                        <div class="mt-5 p-4 bg-orange-500/10 border border-orange-500/30 rounded-xl">
+                            <p class="text-orange-300 font-bold">
+                                📖 Recomendação de revisão
+                            </p>
+
+                            <p class="text-slate-400 text-sm mt-2">
+                                Revise o conteúdo e os feedbacks
+                                das questões antes de realizar
+                                uma nova tentativa.
+                            </p>
+                        </div>
+
+                        <div class="mt-5 text-sm text-slate-400">
+                            Tentativas realizadas:
+                            <strong class="text-white">
+                                ${data.tentativas_totais}
+                            </strong>
+                        </div>
+
+                        <div class="mt-2 text-sm text-slate-400">
+                            Melhor aproveitamento:
+                            <strong class="text-green-400">
+                                ${data.melhor_aproveitamento}%
+                            </strong>
+                        </div>
+
+                        <div class="mt-6 flex justify-center">
+
+                            <a
+                                href="${historicoUrl}"
+                                class="bg-slate-700 hover:bg-slate-600 text-white font-bold px-5 py-3 rounded-xl transition"
+                            >
+                                Ver minhas tentativas
+                            </a>
+
+                        </div>
+
+                    </div>
+                `;
+
+
+                footerArea.className =
+                    "border-t border-red-900 bg-[#3f1c24] p-6";
+
+
+                feedbackMsg.classList.remove(
+                    'opacity-0'
+                );
+
+
+                feedbackTitle.innerText =
+                    "A fase continua bloqueada";
+
+
+                feedbackTitle.className =
+                    "text-xl font-bold text-red-400";
+
+
+                feedbackDesc.innerText =
+                    "A revisão é recomendada antes de tentar novamente.";
+
+
+                feedbackDesc.className =
+                    "text-sm text-red-200 mt-1";
+
+
+                feedbackIcon.innerHTML =
+                    "✖";
+
+
+                feedbackIcon.className =
+                    "w-12 h-12 rounded-full flex items-center justify-center mr-4 text-[#3f1c24] bg-red-400 text-xl font-bold";
+
+
+                btnAcao.innerText =
+                    "VOLTAR AO MAPA";
+
+
+                btnAcao.className =
+                    "bg-red-500 hover:bg-red-400 text-white font-bold py-3 px-10 rounded-xl text-lg uppercase cursor-pointer";
+
+
+                btnAcao.disabled =
+                    false;
+
+            }
+
+        }
+
+
+        // ====================================================
+        // BOTÃO PRINCIPAL
+        // ====================================================
+
+        function verificarOuAvancar() {
+
+            if (
+                estadoFooter
+                === "FINALIZADO"
+            ) {
+
+                window.location.href =
+                    mapaUrl;
+
+                return;
+
+            }
+
+
+            if (
+                estadoFooter
+                === "AGUARDANDO"
+            ) {
+
+                verificarRespostaServidor();
+
+                return;
+
+            }
+
+
+            if (
+                estadoFooter
+                === "RESPONDIDO"
+            ) {
+
+                indiceAtual++;
+
+                if (
+                    indiceAtual
+                    >= questoes.length
+                ) {
+
+                    finalizarFase();
+
+                }
+
+                else {
+
+                    carregarQuestao();
+
+                }
+
+                return;
+
+            }
+
+        }
+
+
+        // ====================================================
+        // INICIALIZAÇÃO
+        // ====================================================
+
+        if (
+            questoes.length
+            === 0
+        ) {
+
+            enunciadoEl.innerText =
+                "Nenhuma questão cadastrada.";
+
+
+            containerOpcoes.innerHTML =
+                "";
+
+
+            semQuestoes.classList.remove(
+                'hidden'
+            );
+
+
+            progressBar.style.width =
+                "0%";
+
+
+            contadorEl.innerText =
+                "0 / 0";
+
+
+        }
+
+        else {
+
+            carregarQuestao();
+
+        }
+
+    </script>
+
+</body>
+
+</html>

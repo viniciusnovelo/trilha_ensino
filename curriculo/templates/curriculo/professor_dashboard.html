@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Estúdio do Professor</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+
+<body
+    class="bg-[#0f172a] text-white min-h-screen font-sans"
+>
+
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header
+        class="border-b border-white/10 bg-slate-900/80 backdrop-blur-xl"
+    >
+
+        <div
+            class="max-w-6xl mx-auto px-6 py-5 flex flex-wrap justify-between items-center gap-4"
+        >
+
+            <div>
+
+                <p
+                    class="text-xs uppercase tracking-widest text-slate-500 font-bold"
+                >
+                    Área de criação
+                </p>
+
+                <h1
+                    class="text-3xl font-black text-indigo-400 mt-1"
+                >
+                    Estúdio do Professor
+                </h1>
+
+                <p
+                    class="text-slate-400 mt-1"
+                >
+                    Olá,
+                    <strong class="text-white">
+                        {{ user.username }}
+                    </strong>
+                </p>
+
+            </div>
+
+
+            <div
+                class="flex flex-wrap items-center gap-3"
+            >
+
+                <!-- =================================================
+                     MODO DE TESTE
+                     ================================================= -->
+
+                {% if modo_teste_ativo %}
+
+                    <a
+                        href="{% url 'alternar_papel' %}"
+                        class="bg-yellow-500/10 hover:bg-yellow-500 border border-yellow-500/30 text-yellow-300 hover:text-slate-900 font-bold px-4 py-2 rounded-xl transition"
+                    >
+                        🧪
+                        Mudar para Aluno
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'alternar_papel' %}"
+                        class="bg-yellow-500/10 hover:bg-yellow-500 border border-yellow-500/30 text-yellow-300 hover:text-slate-900 font-bold px-4 py-2 rounded-xl transition"
+                    >
+                        🧪
+                        Modo de teste: Aluno
+                    </a>
+
+                {% endif %}
+
+
+                <form
+                    action="{% url 'logout' %}"
+                    method="post"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="text-slate-400 hover:text-red-400 font-bold transition"
+                    >
+                        Sair
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         INDICADOR
+         ===================================================== -->
+
+    {% if modo_teste_ativo %}
+
+        <div
+            class="bg-yellow-950/50 border-b border-yellow-500/20"
+        >
+
+            <div
+                class="max-w-6xl mx-auto px-6 py-2 text-center text-xs text-yellow-300 font-bold"
+            >
+
+                🧪
+                MODO DE TESTE ATIVO
+                ·
+                Papel atual:
+                {{ papel_efetivo|capfirst }}
+
+                ·
+                Perfil oficial:
+                {{ papel_oficial|capfirst }}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         CONTEÚDO
+         ===================================================== -->
+
+    <main
+        class="max-w-6xl mx-auto px-6 py-8"
+    >
+
+        <div
+            class="flex flex-wrap justify-between items-center gap-4 mb-8"
+        >
+
+            <div>
+
+                <h2
+                    class="text-2xl font-black"
+                >
+                    Meus Jogos
+                </h2>
+
+                <p
+                    class="text-slate-400 mt-1"
+                >
+                    Crie, edite e publique suas trilhas.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'criar_trilha' %}"
+                class="bg-indigo-600 hover:bg-indigo-500 text-white font-black px-6 py-3 rounded-xl shadow-lg transition"
+            >
+                + Novo Jogo
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             LISTA
+             ================================================= -->
+
+        <div
+            class="space-y-4"
+        >
+
+            {% for trilha in trilhas %}
+
+                <article
+                    class="bg-slate-800 border border-slate-700 rounded-2xl p-6 hover:border-indigo-500/50 transition"
+                >
+
+                    <div
+                        class="flex flex-wrap justify-between items-center gap-5"
+                    >
+
+                        <div
+                            class="flex-1 min-w-[250px]"
+                        >
+
+                            <div
+                                class="flex flex-wrap items-center gap-3"
+                            >
+
+                                <h3
+                                    class="text-xl font-black"
+                                >
+                                    {{ trilha.nome }}
+                                </h3>
+
+
+                                {% if trilha.ativo %}
+
+                                    <span
+                                        class="px-3 py-1 rounded-full text-xs font-black bg-green-500/10 text-green-400 border border-green-500/20"
+                                    >
+                                        PUBLICADO
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        class="px-3 py-1 rounded-full text-xs font-black bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
+                                    >
+                                        RASCUNHO
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <p
+                                class="text-slate-400 mt-2"
+                            >
+                                {{ trilha.descricao }}
+                            </p>
+
+
+                            <div
+                                class="mt-3 text-xs text-slate-500"
+                            >
+                                Tema:
+
+                                <span class="text-slate-300">
+                                    {{ trilha.get_tema_display }}
+                                </span>
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="flex flex-wrap gap-3"
+                        >
+
+                            <a
+                                href="{% url 'editar_trilha' trilha.id %}"
+                                class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-5 py-3 rounded-xl transition"
+                            >
+                                Gerenciar
+                            </a>
+
+
+                            <a
+                                href="{% url 'trilha' trilha.id %}"
+                                class="bg-green-500 hover:bg-green-400 text-white font-bold px-5 py-3 rounded-xl transition"
+                            >
+                                Visualizar
+                            </a>
+
+
+                            <form
+                                action="{% url 'deletar_trilha' trilha.id %}"
+                                method="post"
+                                onsubmit="return confirm('Tem certeza que deseja excluir este jogo? Esta ação não pode ser desfeita.');"
+                            >
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/20 font-bold px-5 py-3 rounded-xl transition"
+                                >
+                                    Excluir
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <div
+                    class="bg-slate-800 border border-slate-700 rounded-3xl p-12 text-center"
+                >
+
+                    <div
+                        class="text-6xl mb-5"
+                    >
+                        🧩
+                    </div>
+
+                    <h3
+                        class="text-2xl font-black"
+                    >
+                        Seu estúdio ainda está vazio
+                    </h3>
+
+                    <p
+                        class="text-slate-400 mt-3 mb-7"
+                    >
+                        Crie seu primeiro jogo e comece a montar a trilha.
+                    </p>
+
+
+                    <a
+                        href="{% url 'criar_trilha' %}"
+                        class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-black px-7 py-3 rounded-xl transition"
+                    >
+                        Criar meu primeiro jogo
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

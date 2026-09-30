@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Login - Plataforma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 flex items-center justify-center h-screen text-white">
+    <div class="bg-slate-800 p-10 rounded-2xl shadow-2xl w-full max-w-md">
+        <h2 class="text-3xl font-bold text-yellow-400 mb-6 text-center">Acessar a Plataforma</h2>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label class="block text-slate-400 text-sm mb-1">Usuário</label>
+                <input type="text" name="username" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:border-yellow-400 outline-none">
+            </div>
+            <div>
+                <label class="block text-slate-400 text-sm mb-1">Senha</label>
+                <input type="password" name="password" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:border-yellow-400 outline-none">
+            </div>
+            <button type="submit" class="w-full bg-green-500 hover:bg-green-400 text-white font-bold py-3 rounded-lg mt-4 transition">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>

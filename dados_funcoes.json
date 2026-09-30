@@ -1,0 +1,1215 @@
+{
+  "nome": "Mestre das Funções",
+  "slug": "mestre-das-funcoes",
+  "descricao": "Trilha completa de funções, começando pelos conceitos fundamentais e avançando para função afim, gráficos, comportamento e aplicações no cotidiano.",
+  "icone": "function",
+  "ordem": 1,
+  "ativo": true,
+  "tema": "tema-floresta",
+  "modulos": [
+    {
+      "titulo": "Fundamentos das Funções",
+      "descricao": "Conceitos essenciais para entender o que é uma função e como trabalhar com entradas, saídas, domínio e imagem.",
+      "ordem": 1,
+      "fases": [
+        {
+          "titulo": "O conceito de função",
+          "ordem": 1,
+          "deslocamento_y": -40,
+          "tipo": "quiz",
+          "xp_recompensa": 50,
+          "moedas_recompensa": 10,
+          "questoes": [
+            {
+              "enunciado": "O que é uma função?",
+              "explicacao_erro": "Em uma função, cada elemento do domínio deve estar associado a exatamente um elemento do contradomínio.",
+              "opcoes": [
+                {
+                  "texto": "Uma relação em que cada elemento do domínio pode ter vários valores de saída.",
+                  "correta": false
+                },
+                {
+                  "texto": "Uma relação em que cada elemento do domínio está associado a exatamente um elemento do contradomínio.",
+                  "correta": true
+                },
+                {
+                  "texto": "Uma relação em que nenhum elemento pode se repetir.",
+                  "correta": false
+                },
+                {
+                  "texto": "Uma relação sem domínio definido.",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Considere f(x)=2x+1 com domínio {0,1,2}. Quais são os elementos da imagem?",
+              "explicacao_erro": "Calcule f(0), f(1) e f(2). Os resultados são 1, 3 e 5.",
+              "opcoes": [
+                {
+                  "texto": "{0,1,2}",
+                  "correta": false
+                },
+                {
+                  "texto": "{1,2,3}",
+                  "correta": false
+                },
+                {
+                  "texto": "{2,3,4}",
+                  "correta": false
+                },
+                {
+                  "texto": "{1,3,5}",
+                  "correta": true
+                }
+              ]
+            },
+            {
+              "enunciado": "Se f(x)=2x+5, qual é o valor de f(3)?",
+              "explicacao_erro": "Substitua x por 3: f(3)=2·3+5=11.",
+              "opcoes": [
+                {
+                  "texto": "8",
+                  "correta": false
+                },
+                {
+                  "texto": "10",
+                  "correta": false
+                },
+                {
+                  "texto": "11",
+                  "correta": true
+                },
+                {
+                  "texto": "15",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Em uma função custo C(x), em que x representa a quantidade de produtos comprados, qual é a variável independente?",
+              "explicacao_erro": "A variável independente é a entrada da função. Neste caso, é a quantidade x de produtos.",
+              "opcoes": [
+                {
+                  "texto": "O custo total C(x)",
+                  "correta": false
+                },
+                {
+                  "texto": "A quantidade x de produtos",
+                  "correta": true
+                },
+                {
+                  "texto": "O preço final",
+                  "correta": false
+                },
+                {
+                  "texto": "O lucro",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Domínio e imagem",
+          "ordem": 2,
+          "deslocamento_y": 50,
+          "tipo": "quiz",
+          "xp_recompensa": 55,
+          "moedas_recompensa": 11,
+          "questoes": [
+            {
+              "enunciado": "Para a função f(x)=x+4, definida para x∈{1,2,3}, qual é o domínio?",
+              "explicacao_erro": "O domínio é o conjunto de valores que podem ser usados como entrada da função.",
+              "opcoes": [
+                {
+                  "texto": "{4,5,6}",
+                  "correta": false
+                },
+                {
+                  "texto": "{1,2,3}",
+                  "correta": true
+                },
+                {
+                  "texto": "{0,1,2}",
+                  "correta": false
+                },
+                {
+                  "texto": "{5,6,7}",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Para f(x)=3x com domínio {1,2,3}, qual é a imagem?",
+              "explicacao_erro": "Calcule 3·1, 3·2 e 3·3. Os resultados formam a imagem.",
+              "opcoes": [
+                {
+                  "texto": "{1,2,3}",
+                  "correta": false
+                },
+                {
+                  "texto": "{3,5,7}",
+                  "correta": false
+                },
+                {
+                  "texto": "{3,6,9}",
+                  "correta": true
+                },
+                {
+                  "texto": "{0,3,6}",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Uma relação deixa de ser função quando:",
+              "explicacao_erro": "Para ser função, uma mesma entrada não pode possuir duas saídas diferentes.",
+              "opcoes": [
+                {
+                  "texto": "Um valor do contradomínio não for usado.",
+                  "correta": false
+                },
+                {
+                  "texto": "Duas entradas diferentes tiverem a mesma saída.",
+                  "correta": false
+                },
+                {
+                  "texto": "Uma mesma entrada estiver associada a duas saídas diferentes.",
+                  "correta": true
+                },
+                {
+                  "texto": "O domínio tiver apenas dois elementos.",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se f(0)=5, f(1)=7 e f(2)=9, qual valor corresponde à saída para x=1?",
+              "explicacao_erro": "Basta localizar a saída associada à entrada x=1.",
+              "opcoes": [
+                {
+                  "texto": "5",
+                  "correta": false
+                },
+                {
+                  "texto": "7",
+                  "correta": true
+                },
+                {
+                  "texto": "9",
+                  "correta": false
+                },
+                {
+                  "texto": "1",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Lei de formação e avaliação",
+          "ordem": 3,
+          "deslocamento_y": 0,
+          "tipo": "quiz",
+          "xp_recompensa": 60,
+          "moedas_recompensa": 12,
+          "questoes": [
+            {
+              "enunciado": "Qual expressão representa uma função que a cada x associa o dobro de x mais 3?",
+              "explicacao_erro": "Dobro de x corresponde a 2x. Depois somamos 3.",
+              "opcoes": [
+                {
+                  "texto": "f(x)=x+3",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=2x+3",
+                  "correta": true
+                },
+                {
+                  "texto": "f(x)=2x-3",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=3x+2",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se f(x)=4x-1, qual é f(5)?",
+              "explicacao_erro": "Substitua x por 5: 4·5−1=19.",
+              "opcoes": [
+                {
+                  "texto": "15",
+                  "correta": false
+                },
+                {
+                  "texto": "19",
+                  "correta": true
+                },
+                {
+                  "texto": "20",
+                  "correta": false
+                },
+                {
+                  "texto": "21",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se f(x)=x²+2 e x=-3, qual é f(-3)?",
+              "explicacao_erro": "Primeiro calcule (-3)²=9. Depois some 2.",
+              "opcoes": [
+                {
+                  "texto": "-11",
+                  "correta": false
+                },
+                {
+                  "texto": "-7",
+                  "correta": false
+                },
+                {
+                  "texto": "7",
+                  "correta": false
+                },
+                {
+                  "texto": "11",
+                  "correta": true
+                }
+              ]
+            },
+            {
+              "enunciado": "Qual é o valor de x para que f(x)=10, sabendo que f(x)=2x+4?",
+              "explicacao_erro": "Resolva 2x+4=10. Então 2x=6 e x=3.",
+              "opcoes": [
+                {
+                  "texto": "2",
+                  "correta": false
+                },
+                {
+                  "texto": "3",
+                  "correta": true
+                },
+                {
+                  "texto": "4",
+                  "correta": false
+                },
+                {
+                  "texto": "7",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Função Afim",
+      "descricao": "Estudo da forma f(x)=ax+b, seus coeficientes, crescimento, decrescimento e zero da função.",
+      "ordem": 2,
+      "fases": [
+        {
+          "titulo": "Coeficientes da função afim",
+          "ordem": 1,
+          "deslocamento_y": 35,
+          "tipo": "quiz",
+          "xp_recompensa": 60,
+          "moedas_recompensa": 12,
+          "questoes": [
+            {
+              "enunciado": "Na função f(x)=-3x+7, quais são os coeficientes angular e linear?",
+              "explicacao_erro": "Na forma ax+b, temos a=-3 e b=7.",
+              "opcoes": [
+                {
+                  "texto": "a=7 e b=-3",
+                  "correta": false
+                },
+                {
+                  "texto": "a=-3 e b=7",
+                  "correta": true
+                },
+                {
+                  "texto": "a=3 e b=-7",
+                  "correta": false
+                },
+                {
+                  "texto": "a=-7 e b=3",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Na função f(x)=5x-2, o coeficiente linear é:",
+              "explicacao_erro": "O coeficiente linear é o termo que não multiplica x.",
+              "opcoes": [
+                {
+                  "texto": "5",
+                  "correta": false
+                },
+                {
+                  "texto": "-5",
+                  "correta": false
+                },
+                {
+                  "texto": "2",
+                  "correta": false
+                },
+                {
+                  "texto": "-2",
+                  "correta": true
+                }
+              ]
+            },
+            {
+              "enunciado": "Qual das funções abaixo é uma função afim?",
+              "explicacao_erro": "Função afim possui a forma f(x)=ax+b.",
+              "opcoes": [
+                {
+                  "texto": "f(x)=x²+1",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=3x-4",
+                  "correta": true
+                },
+                {
+                  "texto": "f(x)=1/x",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=√x",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se f(x)=ax+6 e f(2)=10, qual é o valor de a?",
+              "explicacao_erro": "Substitua x=2: 2a+6=10. Então 2a=4 e a=2.",
+              "opcoes": [
+                {
+                  "texto": "1",
+                  "correta": false
+                },
+                {
+                  "texto": "2",
+                  "correta": true
+                },
+                {
+                  "texto": "3",
+                  "correta": false
+                },
+                {
+                  "texto": "4",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Crescimento e decrescimento",
+          "ordem": 2,
+          "deslocamento_y": -55,
+          "tipo": "quiz",
+          "xp_recompensa": 65,
+          "moedas_recompensa": 13,
+          "questoes": [
+            {
+              "enunciado": "A função f(x)=-2x+8 é:",
+              "explicacao_erro": "Quando o coeficiente angular é negativo, a função é decrescente.",
+              "opcoes": [
+                {
+                  "texto": "Crescente",
+                  "correta": false
+                },
+                {
+                  "texto": "Decrescente",
+                  "correta": true
+                },
+                {
+                  "texto": "Constante",
+                  "correta": false
+                },
+                {
+                  "texto": "Quadrática",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "A função g(x)=4x-1 é:",
+              "explicacao_erro": "Quando o coeficiente angular é positivo, a função é crescente.",
+              "opcoes": [
+                {
+                  "texto": "Crescente",
+                  "correta": true
+                },
+                {
+                  "texto": "Decrescente",
+                  "correta": false
+                },
+                {
+                  "texto": "Constante",
+                  "correta": false
+                },
+                {
+                  "texto": "Nula",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Qual função representa uma reta horizontal?",
+              "explicacao_erro": "Uma reta horizontal tem coeficiente angular igual a zero.",
+              "opcoes": [
+                {
+                  "texto": "f(x)=2x+1",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=-x+4",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=7",
+                  "correta": true
+                },
+                {
+                  "texto": "f(x)=x",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Na função f(x)=6-3x, quando x aumenta uma unidade, o valor de f(x):",
+              "explicacao_erro": "O coeficiente angular é -3, então a saída diminui 3 unidades quando x aumenta 1.",
+              "opcoes": [
+                {
+                  "texto": "aumenta 3",
+                  "correta": false
+                },
+                {
+                  "texto": "diminui 3",
+                  "correta": true
+                },
+                {
+                  "texto": "aumenta 6",
+                  "correta": false
+                },
+                {
+                  "texto": "não muda",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Zero da função",
+          "ordem": 3,
+          "deslocamento_y": 25,
+          "tipo": "quiz",
+          "xp_recompensa": 70,
+          "moedas_recompensa": 14,
+          "questoes": [
+            {
+              "enunciado": "Qual é o zero da função f(x)=4x-12?",
+              "explicacao_erro": "Faça f(x)=0: 4x−12=0. Assim, x=3.",
+              "opcoes": [
+                {
+                  "texto": "-3",
+                  "correta": false
+                },
+                {
+                  "texto": "0",
+                  "correta": false
+                },
+                {
+                  "texto": "3",
+                  "correta": true
+                },
+                {
+                  "texto": "12",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "O zero da função f(x)=2x+10 é:",
+              "explicacao_erro": "Resolva 2x+10=0. Logo, x=-5.",
+              "opcoes": [
+                {
+                  "texto": "-10",
+                  "correta": false
+                },
+                {
+                  "texto": "-5",
+                  "correta": true
+                },
+                {
+                  "texto": "5",
+                  "correta": false
+                },
+                {
+                  "texto": "10",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se f(x)=-5x+20, em qual ponto o gráfico cruza o eixo x?",
+              "explicacao_erro": "No eixo x temos y=0. Assim, -5x+20=0 e x=4.",
+              "opcoes": [
+                {
+                  "texto": "(0,20)",
+                  "correta": false
+                },
+                {
+                  "texto": "(4,0)",
+                  "correta": true
+                },
+                {
+                  "texto": "(20,0)",
+                  "correta": false
+                },
+                {
+                  "texto": "(-4,0)",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Qual função tem zero igual a 2?",
+              "explicacao_erro": "Substitua x=2 e verifique qual expressão resulta em zero.",
+              "opcoes": [
+                {
+                  "texto": "f(x)=x+2",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=2x-4",
+                  "correta": true
+                },
+                {
+                  "texto": "f(x)=3x+6",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=x-5",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Gráficos e Representações",
+      "descricao": "Leitura e interpretação de gráficos, pontos, tabelas e relações entre funções.",
+      "ordem": 3,
+      "fases": [
+        {
+          "titulo": "Pontos e gráfico",
+          "ordem": 1,
+          "deslocamento_y": -65,
+          "tipo": "quiz",
+          "xp_recompensa": 65,
+          "moedas_recompensa": 13,
+          "questoes": [
+            {
+              "enunciado": "Onde o gráfico de f(x)=2x-6 cruza o eixo y?",
+              "explicacao_erro": "No eixo y temos x=0. Portanto, f(0)=-6.",
+              "opcoes": [
+                {
+                  "texto": "(0,2)",
+                  "correta": false
+                },
+                {
+                  "texto": "(0,-6)",
+                  "correta": true
+                },
+                {
+                  "texto": "(6,0)",
+                  "correta": false
+                },
+                {
+                  "texto": "(-6,0)",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Qual ponto pertence ao gráfico de f(x)=3x+1?",
+              "explicacao_erro": "Substitua o x de cada alternativa na função e verifique se o y coincide.",
+              "opcoes": [
+                {
+                  "texto": "(0,0)",
+                  "correta": false
+                },
+                {
+                  "texto": "(1,3)",
+                  "correta": false
+                },
+                {
+                  "texto": "(1,4)",
+                  "correta": true
+                },
+                {
+                  "texto": "(2,8)",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Qual é o ponto onde o gráfico de f(x)=-4x+9 cruza o eixo y?",
+              "explicacao_erro": "Para encontrar a interseção com o eixo y, faça x=0.",
+              "opcoes": [
+                {
+                  "texto": "(9,0)",
+                  "correta": false
+                },
+                {
+                  "texto": "(0,-4)",
+                  "correta": false
+                },
+                {
+                  "texto": "(0,9)",
+                  "correta": true
+                },
+                {
+                  "texto": "(-9,0)",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Uma reta passa pelos pontos (0,2) e (2,6). Qual é o coeficiente angular?",
+              "explicacao_erro": "Use a=(y2−y1)/(x2−x1)=(6−2)/(2−0)=2.",
+              "opcoes": [
+                {
+                  "texto": "1",
+                  "correta": false
+                },
+                {
+                  "texto": "2",
+                  "correta": true
+                },
+                {
+                  "texto": "3",
+                  "correta": false
+                },
+                {
+                  "texto": "4",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Tabelas e padrões",
+          "ordem": 2,
+          "deslocamento_y": 55,
+          "tipo": "quiz",
+          "xp_recompensa": 70,
+          "moedas_recompensa": 14,
+          "questoes": [
+            {
+              "enunciado": "Uma tabela mostra x: 0,1,2 e f(x): 3,5,7. Qual lei representa a função?",
+              "explicacao_erro": "A saída aumenta 2 a cada unidade de x e começa em 3. Logo, f(x)=2x+3.",
+              "opcoes": [
+                {
+                  "texto": "f(x)=x+3",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=2x+3",
+                  "correta": true
+                },
+                {
+                  "texto": "f(x)=3x+2",
+                  "correta": false
+                },
+                {
+                  "texto": "f(x)=2x-3",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se f(x)=3x+2, qual valor aparece na tabela quando x=4?",
+              "explicacao_erro": "Calcule f(4)=3·4+2=14.",
+              "opcoes": [
+                {
+                  "texto": "10",
+                  "correta": false
+                },
+                {
+                  "texto": "12",
+                  "correta": false
+                },
+                {
+                  "texto": "14",
+                  "correta": true
+                },
+                {
+                  "texto": "16",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Observe a sequência de valores 10, 7, 4, 1. Qual é a variação a cada passo?",
+              "explicacao_erro": "Cada termo é obtido subtraindo 3 do termo anterior.",
+              "opcoes": [
+                {
+                  "texto": "+3",
+                  "correta": false
+                },
+                {
+                  "texto": "-3",
+                  "correta": true
+                },
+                {
+                  "texto": "+4",
+                  "correta": false
+                },
+                {
+                  "texto": "-4",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se uma função afim apresenta f(0)=5 e f(1)=8, qual é o coeficiente angular?",
+              "explicacao_erro": "A variação entre x=0 e x=1 é 8−5=3. Portanto, a=3.",
+              "opcoes": [
+                {
+                  "texto": "2",
+                  "correta": false
+                },
+                {
+                  "texto": "3",
+                  "correta": true
+                },
+                {
+                  "texto": "5",
+                  "correta": false
+                },
+                {
+                  "texto": "8",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Comparando funções",
+          "ordem": 3,
+          "deslocamento_y": 0,
+          "tipo": "quiz",
+          "xp_recompensa": 75,
+          "moedas_recompensa": 15,
+          "questoes": [
+            {
+              "enunciado": "Comparando f(x)=x+2 e g(x)=3x+2, qual é mais inclinada?",
+              "explicacao_erro": "A inclinação de uma função afim é determinada pelo coeficiente angular.",
+              "opcoes": [
+                {
+                  "texto": "f, pois 1 é menor.",
+                  "correta": false
+                },
+                {
+                  "texto": "g, pois 3 é maior.",
+                  "correta": true
+                },
+                {
+                  "texto": "As duas têm a mesma inclinação.",
+                  "correta": false
+                },
+                {
+                  "texto": "Não é possível comparar.",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "As funções f(x)=2x+1 e g(x)=2x-5 possuem:",
+              "explicacao_erro": "Elas têm o mesmo coeficiente angular e, portanto, gráficos com a mesma inclinação.",
+              "opcoes": [
+                {
+                  "texto": "o mesmo coeficiente angular.",
+                  "correta": true
+                },
+                {
+                  "texto": "o mesmo coeficiente linear.",
+                  "correta": false
+                },
+                {
+                  "texto": "o mesmo zero.",
+                  "correta": false
+                },
+                {
+                  "texto": "o mesmo gráfico.",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Qual é o ponto de encontro das funções f(x)=x+2 e g(x)=6-x?",
+              "explicacao_erro": "Iguale as expressões: x+2=6−x. Assim, x=2 e y=4.",
+              "opcoes": [
+                {
+                  "texto": "(2,4)",
+                  "correta": true
+                },
+                {
+                  "texto": "(4,2)",
+                  "correta": false
+                },
+                {
+                  "texto": "(2,6)",
+                  "correta": false
+                },
+                {
+                  "texto": "(6,2)",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se duas funções têm o mesmo coeficiente angular, mas coeficientes lineares diferentes, seus gráficos são:",
+              "explicacao_erro": "Mesma inclinação e alturas diferentes produzem retas paralelas.",
+              "opcoes": [
+                {
+                  "texto": "perpendiculares",
+                  "correta": false
+                },
+                {
+                  "texto": "coincidentes",
+                  "correta": false
+                },
+                {
+                  "texto": "paralelos",
+                  "correta": true
+                },
+                {
+                  "texto": "curvas",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Funções na Prática",
+      "descricao": "Aplicação das funções em situações do cotidiano, envolvendo custos, tarifas, salários, receitas, temperatura e lucro.",
+      "ordem": 4,
+      "fases": [
+        {
+          "titulo": "Custos e tarifas",
+          "ordem": 1,
+          "deslocamento_y": 45,
+          "tipo": "quiz",
+          "xp_recompensa": 75,
+          "moedas_recompensa": 15,
+          "questoes": [
+            {
+              "enunciado": "Um táxi cobra R$6,00 de bandeirada e R$2,50 por quilômetro. Qual função representa o custo C(x)?",
+              "explicacao_erro": "A parcela fixa é 6 e o valor por quilômetro é 2,50. Portanto, C(x)=2,50x+6.",
+              "opcoes": [
+                {
+                  "texto": "C(x)=6x+2,50",
+                  "correta": false
+                },
+                {
+                  "texto": "C(x)=2,50x+6",
+                  "correta": true
+                },
+                {
+                  "texto": "C(x)=8,50x",
+                  "correta": false
+                },
+                {
+                  "texto": "C(x)=2,50x-6",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Usando C(x)=2,50x+6, qual é o custo de uma viagem de 10 km?",
+              "explicacao_erro": "Calcule 2,50·10+6=31.",
+              "opcoes": [
+                {
+                  "texto": "R$25,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$31,00",
+                  "correta": true
+                },
+                {
+                  "texto": "R$35,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$40,00",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Uma empresa cobra uma taxa fixa de R$20,00 mais R$5,00 por item. Quanto custa comprar 8 itens?",
+              "explicacao_erro": "Use C(x)=5x+20 e substitua x=8. O resultado é R$60,00.",
+              "opcoes": [
+                {
+                  "texto": "R$40,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$50,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$60,00",
+                  "correta": true
+                },
+                {
+                  "texto": "R$80,00",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Em C(x)=3x+50, o número 50 representa:",
+              "explicacao_erro": "O termo independente representa o custo fixo.",
+              "opcoes": [
+                {
+                  "texto": "o preço por item",
+                  "correta": false
+                },
+                {
+                  "texto": "o custo fixo",
+                  "correta": true
+                },
+                {
+                  "texto": "a quantidade de itens",
+                  "correta": false
+                },
+                {
+                  "texto": "o lucro",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Salários e receitas",
+          "ordem": 2,
+          "deslocamento_y": -50,
+          "tipo": "quiz",
+          "xp_recompensa": 80,
+          "moedas_recompensa": 16,
+          "questoes": [
+            {
+              "enunciado": "Um vendedor recebe R$1.200,00 fixos e R$40,00 por venda. Quanto recebe ao vender 15 produtos?",
+              "explicacao_erro": "Calcule 1200+40·15. O resultado é R$1.800,00.",
+              "opcoes": [
+                {
+                  "texto": "R$1.600,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$1.800,00",
+                  "correta": true
+                },
+                {
+                  "texto": "R$2.000,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$2.400,00",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Qual função representa o salário S(x) de um vendedor com R$1.500,00 fixos e R$50,00 por venda?",
+              "explicacao_erro": "A parcela fixa é 1500 e a variável é 50x. Portanto, S(x)=50x+1500.",
+              "opcoes": [
+                {
+                  "texto": "S(x)=1500x+50",
+                  "correta": false
+                },
+                {
+                  "texto": "S(x)=50x+1500",
+                  "correta": true
+                },
+                {
+                  "texto": "S(x)=1550x",
+                  "correta": false
+                },
+                {
+                  "texto": "S(x)=50x-1500",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Uma loja vende cada produto por R$30,00. Qual função representa a receita R(x) de x produtos?",
+              "explicacao_erro": "A receita é o preço multiplicado pela quantidade: R(x)=30x.",
+              "opcoes": [
+                {
+                  "texto": "R(x)=30+x",
+                  "correta": false
+                },
+                {
+                  "texto": "R(x)=30x",
+                  "correta": true
+                },
+                {
+                  "texto": "R(x)=x/30",
+                  "correta": false
+                },
+                {
+                  "texto": "R(x)=30-x",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Se R(x)=30x, qual é a receita com 25 produtos?",
+              "explicacao_erro": "Calcule 30·25=750.",
+              "opcoes": [
+                {
+                  "texto": "R$550,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$650,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$750,00",
+                  "correta": true
+                },
+                {
+                  "texto": "R$850,00",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Temperatura, lucro e desafio final",
+          "ordem": 3,
+          "deslocamento_y": 10,
+          "tipo": "quiz",
+          "xp_recompensa": 90,
+          "moedas_recompensa": 18,
+          "questoes": [
+            {
+              "enunciado": "Na conversão F=1,8C+32, qual temperatura corresponde a 10 °C?",
+              "explicacao_erro": "Substitua C=10: F=1,8·10+32=50.",
+              "opcoes": [
+                {
+                  "texto": "42 °F",
+                  "correta": false
+                },
+                {
+                  "texto": "50 °F",
+                  "correta": true
+                },
+                {
+                  "texto": "52 °F",
+                  "correta": false
+                },
+                {
+                  "texto": "62 °F",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Uma empresa tem receita R(x)=30x e custo C(x)=10x+200. Qual é o lucro em 20 unidades?",
+              "explicacao_erro": "R(20)=600 e C(20)=400. Logo, lucro=600−400=200.",
+              "opcoes": [
+                {
+                  "texto": "R$0,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$100,00",
+                  "correta": false
+                },
+                {
+                  "texto": "R$200,00",
+                  "correta": true
+                },
+                {
+                  "texto": "R$400,00",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "No problema anterior, para qual quantidade x o lucro é zero?",
+              "explicacao_erro": "Resolva 30x−(10x+200)=0. Então 20x=200 e x=10.",
+              "opcoes": [
+                {
+                  "texto": "5",
+                  "correta": false
+                },
+                {
+                  "texto": "10",
+                  "correta": true
+                },
+                {
+                  "texto": "15",
+                  "correta": false
+                },
+                {
+                  "texto": "20",
+                  "correta": false
+                }
+              ]
+            },
+            {
+              "enunciado": "Um reservatório contém 500 L e perde 20 L por hora. Qual expressão representa o volume V(t) após t horas?",
+              "explicacao_erro": "O volume inicial é 500 L e a perda é de 20 L por hora. Portanto, V(t)=500−20t.",
+              "opcoes": [
+                {
+                  "texto": "V(t)=500+20t",
+                  "correta": false
+                },
+                {
+                  "texto": "V(t)=20t-500",
+                  "correta": false
+                },
+                {
+                  "texto": "V(t)=500-20t",
+                  "correta": true
+                },
+                {
+                  "texto": "V(t)=20-500t",
+                  "correta": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

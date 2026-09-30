@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><title>Criar Novo Jogo</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-slate-100 text-slate-900 min-h-screen p-8">
+    <div class="max-w-3xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-indigo-700">Criar Nova Trilha/Jogo</h1>
+            <a href="{% url 'dashboard_professor' %}" class="text-slate-500 font-bold hover:underline">Voltar</a>
+        </div>
+        
+        <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                <div><label class="block text-slate-700 font-bold mb-2">Nome do Jogo</label>{{ form.nome }}</div>
+                <div><label class="block text-slate-700 font-bold mb-2">Link Único (Slug - sem espaços)</label>{{ form.slug }}</div>
+                <div><label class="block text-slate-700 font-bold mb-2">Descrição da Matéria</label>{{ form.descricao }}</div>
+                <div><label class="block text-slate-700 font-bold mb-2">Tema Visual (Pano de Fundo)</label>{{ form.tema }}</div>
+                
+                <div class="flex items-center space-x-3 bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                    {{ form.ativo }}
+                    <div>
+                        <label class="font-bold text-indigo-900 block">Publicar Jogo?</label>
+                        <span class="text-sm text-indigo-700">Se marcado, os alunos já poderão ver este jogo no painel deles.</span>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition shadow-lg hover:shadow-indigo-500/30">
+                        Salvar e Criar Jogo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Adicionar Questão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen p-8">
+    <div class="max-w-3xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-indigo-700">Nova Questão para: {{ fase.titulo }}</h1>
+            <a href="{% url 'editar_trilha' fase.modulo.disciplina.id %}" class="text-slate-500 font-bold hover:underline">Cancelar</a>
+        </div>
+        
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- Pergunta e Explicacao -->
+            <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-2 mb-4">A Pergunta</h2>
+                <div>
+                    <label class="block text-slate-700 font-bold mb-2">Enunciado (O que o aluno vai ler)</label>
+                    {{ form.enunciado }}
+                </div>
+                <div>
+                    <label class="block text-slate-700 font-bold mb-2">Feedback de Erro (Opcional)</label>
+                    {{ form.explicacao_erro }}
+                </div>
+            </div>
+
+            <!-- Formulário das 4 Opções -->
+            <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-2 mb-6">Alternativas</h2>
+                {{ formset.management_form }}
+                
+                <div class="space-y-4">
+                    {% for form_opcao in formset %}
+                        <div class="flex items-center space-x-4 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <div class="flex-1">
+                                <label class="text-sm font-bold text-slate-500">Texto da Alternativa {{ forloop.counter }}</label>
+                                {{ form_opcao.texto }}
+                            </div>
+                            <div class="flex flex-col items-center justify-center pt-5">
+                                <label class="text-xs font-bold text-green-700 mb-1">É a Correta?</label>
+                                {{ form_opcao.e_correta }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition shadow-lg text-lg">
+                    Salvar Questão Completa
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
