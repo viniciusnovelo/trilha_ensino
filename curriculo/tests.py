@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from .models import Disciplina
@@ -37,6 +37,16 @@ class CadastroUsuarioTests(AutenticacaoBaseTests):
 
         self.assertRedirects(
             response,
+            reverse("redirecionamento_inicial"),
+            fetch_redirect_response=False,
+        )
+
+        dashboard_response = self.client.get(
+            reverse("redirecionamento_inicial")
+        )
+
+        self.assertRedirects(
+            dashboard_response,
             reverse("dashboard_aluno"),
         )
 
@@ -86,6 +96,7 @@ class LoginTests(AutenticacaoBaseTests):
         )
 
 
+@override_settings(DEBUG=True)
 class ModoTestePapelTests(AutenticacaoBaseTests):
     def test_staff_pode_alternar_para_professor_sem_alterar_perfil_oficial(self):
         usuario = self.criar_usuario(
@@ -104,6 +115,16 @@ class ModoTestePapelTests(AutenticacaoBaseTests):
 
         self.assertRedirects(
             response,
+            reverse("redirecionamento_inicial"),
+            fetch_redirect_response=False,
+        )
+
+        dashboard_response = self.client.get(
+            reverse("redirecionamento_inicial")
+        )
+
+        self.assertRedirects(
+            dashboard_response,
             reverse("dashboard_professor"),
         )
 
@@ -120,6 +141,16 @@ class ModoTestePapelTests(AutenticacaoBaseTests):
 
         self.assertRedirects(
             response,
+            reverse("redirecionamento_inicial"),
+            fetch_redirect_response=False,
+        )
+
+        dashboard_response = self.client.get(
+            reverse("redirecionamento_inicial")
+        )
+
+        self.assertRedirects(
+            dashboard_response,
             reverse("dashboard_aluno"),
         )
 
