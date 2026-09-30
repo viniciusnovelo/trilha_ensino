@@ -878,6 +878,9 @@ def editar_trilha(
         .filter(
             disciplina=trilha
         )
+        .prefetch_related(
+            'fases__questoes',
+        )
         .order_by(
             'ordem',
             'id',
