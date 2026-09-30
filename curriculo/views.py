@@ -26,6 +26,7 @@ from .models import (
 from gamificacao.models import (
     PerfilUsuario,
     ProgressoFase,
+    ProgressoModulo,
     TentativaFase,
     RespostaTentativa,
 )
@@ -197,24 +198,14 @@ def preparar_progressao_modulos(
     modulos,
 ):
     """
-    Calcula o estado da jornada em dois níveis:
+    Calcula o estado da jornada do aluno.
 
-    MÓDULO:
-      - concluido
-      - atual
-      - bloqueado
+    A progressão possui dois níveis:
+    - as fases avançam uma por vez dentro do módulo;
+    - o próximo módulo permanece trancado até que o aluno
+      conclua o módulo anterior e use a chave recebida.
 
-    FASE:
-      - concluida
-      - atual
-      - bloqueada
-
-    Um módulo só é liberado depois que todas as fases do
-    módulo anterior estiverem concluídas.
-
-    Um módulo sem fases é considerado incompleto. Assim, ele
-    não libera o próximo módulo até que o professor acrescente
-    conteúdo e o aluno conclua suas fases.
+    O primeiro módulo é liberado automaticamente.
     """
 
     progressos = {
@@ -225,8 +216,17 @@ def preparar_progressao_modulos(
         )
     }
 
+    progressos_modulo = {
+        progresso.modulo_id: progresso
+        for progresso in ProgressoModulo.objects.filter(
+            perfil=perfil,
+            modulo__in=modulos,
+        )
+    }
+
+    agora = timezone.now()
     modulo_anterior_concluido = True
-    encontrou_modulo_atual = False
+    primeiro_modulo = True
 
     for modulo in modulos:
         fases = list(modulo.fases.all())
@@ -258,23 +258,112 @@ def preparar_progressao_modulos(
             and modulo.fases_concluidas == modulo.total_fases
         )
 
+        progresso_modulo = progressos_modulo.get(
+            modulo.id
+        )
+
+        if primeiro_modulo:
+            if progresso_modulo is None:
+                progresso_modulo = ProgressoModulo.objects.create(
+                    perfil=perfil,
+                    modulo=modulo,
+                    desbloqueado=True,
+                    chave_disponivel=False,
+                )
+                progressos_modulo[modulo.id] = progresso_modulo
+
+            elif not progresso_modulo.desbloqueado:
+                progresso_modulo.desbloqueado = True
+                progresso_modulo.data_desbloqueio = (
+                    progresso_modulo.data_desbloqueio
+                    or agora
+                )
+                progresso_modulo.save(
+                    update_fields=[
+                        'desbloqueado',
+                        'data_desbloqueio',
+                    ]
+                )
+
+        elif (
+            modulo_anterior_concluido
+            and not (
+                progresso_modulo
+                and progresso_modulo.desbloqueado
+            )
+        ):
+            if progresso_modulo is None:
+                progresso_modulo = ProgressoModulo.objects.create(
+                    perfil=perfil,
+                    modulo=modulo,
+                    desbloqueado=False,
+                    chave_disponivel=True,
+                )
+                progressos_modulo[modulo.id] = progresso_modulo
+
+            elif not progresso_modulo.desbloqueado:
+                if not progresso_modulo.chave_disponivel:
+                    progresso_modulo.chave_disponivel = True
+                    progresso_modulo.save(
+                        update_fields=[
+                            'chave_disponivel',
+                        ]
+                    )
+
+        modulo.desbloqueado = bool(
+            progresso_modulo
+            and progresso_modulo.desbloqueado
+        )
+
+        modulo.chave_disponivel = bool(
+            progresso_modulo
+            and progresso_modulo.chave_disponivel
+        )
+
+        modulo.data_desbloqueio = (
+            progresso_modulo.data_desbloqueio
+            if progresso_modulo
+            else None
+        )
+
         if modulo.concluido:
+            if progresso_modulo is None:
+                progresso_modulo = ProgressoModulo.objects.create(
+                    perfil=perfil,
+                    modulo=modulo,
+                    desbloqueado=modulo == modulos[0],
+                    chave_disponivel=False,
+                    concluido=True,
+                    data_conclusao=agora,
+                )
+                progressos_modulo[modulo.id] = progresso_modulo
+            elif not progresso_modulo.concluido:
+                progresso_modulo.concluido = True
+                progresso_modulo.data_conclusao = (
+                    progresso_modulo.data_conclusao
+                    or agora
+                )
+                progresso_modulo.save(
+                    update_fields=[
+                        'concluido',
+                        'data_conclusao',
+                    ]
+                )
+
+            modulo.desbloqueado = True
             modulo.status = 'concluido'
-            modulo.desbloqueado = True
 
-        elif modulo_anterior_concluido and not encontrou_modulo_atual:
+        elif modulo.desbloqueado:
             modulo.status = 'atual'
-            modulo.desbloqueado = True
-            encontrou_modulo_atual = True
-
         else:
             modulo.status = 'bloqueado'
-            modulo.desbloqueado = False
 
         encontrou_fase_atual = False
 
         for fase in fases:
-            progresso = progressos.get(fase.id)
+            progresso = progressos.get(
+                fase.id
+            )
 
             if (
                 progresso
@@ -294,10 +383,12 @@ def preparar_progressao_modulos(
 
             fase.modulo_status = modulo.status
 
-        modulo_anterior_concluido = modulo.concluido
+        modulo_anterior_concluido = (
+            modulo.concluido
+        )
+        primeiro_modulo = False
 
     return modulos
-
 
 def modulos_da_trilha(trilha):
     return list(
@@ -315,19 +406,193 @@ def modulos_da_trilha(trilha):
     )
 
 
+def modulo_esta_desbloqueado(
+    perfil,
+    modulo,
+):
+    """
+    Confere o estado persistido do módulo.
+
+    O primeiro módulo é sempre liberado. Os demais dependem
+    do ProgressoModulo criado quando o aluno recebe e utiliza
+    a chave.
+    """
+
+    primeira_ordem = (
+        Modulo.objects
+        .filter(
+            disciplina=modulo.disciplina,
+        )
+        .order_by(
+            'ordem',
+            'id',
+        )
+        .values_list(
+            'id',
+            flat=True,
+        )
+        .first()
+    )
+
+    if primeira_ordem == modulo.id:
+        return True
+
+    progresso_modulo = (
+        ProgressoModulo.objects
+        .filter(
+            perfil=perfil,
+            modulo=modulo,
+        )
+        .first()
+    )
+
+    return bool(
+        progresso_modulo
+        and progresso_modulo.desbloqueado
+    )
+
+
+def proximo_modulo_da_trilha(
+    modulo,
+):
+    modulos = list(
+        Modulo.objects
+        .filter(
+            disciplina=modulo.disciplina,
+        )
+        .order_by(
+            'ordem',
+            'id',
+        )
+    )
+
+    for indice, modulo_atual in enumerate(modulos):
+        if modulo_atual.id == modulo.id:
+            if indice + 1 < len(modulos):
+                return modulos[indice + 1]
+
+            return None
+
+    return None
+
+
+def modulo_esta_completo_para_aluno(
+    perfil,
+    modulo,
+):
+    fases = list(
+        modulo.fases.all()
+    )
+
+    if not fases:
+        return False
+
+    fases_concluidas = (
+        ProgressoFase.objects
+        .filter(
+            perfil=perfil,
+            fase__in=fases,
+            concluida=True,
+        )
+        .count()
+    )
+
+    return fases_concluidas == len(fases)
+
+
+def preparar_chave_do_proximo_modulo(
+    perfil,
+    modulo,
+    agora=None,
+):
+    """
+    Quando um módulo é concluído, cria/preserva a chave
+    necessária para abrir o próximo módulo.
+    """
+
+    agora = agora or timezone.now()
+
+    if not modulo_esta_completo_para_aluno(
+        perfil,
+        modulo,
+    ):
+        return None
+
+    progresso_modulo, _ = (
+        ProgressoModulo.objects
+        .get_or_create(
+            perfil=perfil,
+            modulo=modulo,
+        )
+    )
+
+    alterou = False
+
+    if not progresso_modulo.concluido:
+        progresso_modulo.concluido = True
+        progresso_modulo.data_conclusao = (
+            progresso_modulo.data_conclusao
+            or agora
+        )
+        alterou = True
+
+    if not progresso_modulo.desbloqueado:
+        progresso_modulo.desbloqueado = True
+        progresso_modulo.data_desbloqueio = (
+            progresso_modulo.data_desbloqueio
+            or agora
+        )
+        alterou = True
+
+    if alterou:
+        progresso_modulo.save(
+            update_fields=[
+                'concluido',
+                'data_conclusao',
+                'desbloqueado',
+                'data_desbloqueio',
+            ]
+        )
+
+    proximo_modulo = proximo_modulo_da_trilha(
+        modulo
+    )
+
+    if proximo_modulo is None:
+        return None
+
+    proximo_progresso, _ = (
+        ProgressoModulo.objects
+        .get_or_create(
+            perfil=perfil,
+            modulo=proximo_modulo,
+        )
+    )
+
+    if not proximo_progresso.desbloqueado:
+        if not proximo_progresso.chave_disponivel:
+            proximo_progresso.chave_disponivel = True
+            proximo_progresso.save(
+                update_fields=[
+                    'chave_disponivel',
+                ]
+            )
+
+        return proximo_modulo
+
+    return None
+
+
+
 def fase_esta_liberada(
     request,
     fase,
 ):
     """
-    Verifica a progressão real da fase no servidor.
+    Verifica no servidor se a fase pode ser executada pelo aluno.
 
-    Para alunos, a fase só é liberada quando:
-      1. a trilha está publicada;
-      2. todos os módulos anteriores estão concluídos;
-      3. todas as fases anteriores do mesmo módulo estão
-         concluídas.
-
+    A fase precisa pertencer a um módulo desbloqueado e todas
+    as fases anteriores do mesmo módulo precisam estar concluídas.
     Professores continuam com acesso de visualização a qualquer
     fase da própria trilha.
     """
@@ -341,17 +606,14 @@ def fase_esta_liberada(
     if not trilha.ativo:
         return False
 
-    perfil = obter_perfil(request.user)
-    modulos = modulos_da_trilha(trilha)
+    perfil = obter_perfil(
+        request.user
+    )
 
-    modulo_alvo = None
-
-    for modulo in modulos:
-        if modulo.id == fase.modulo_id:
-            modulo_alvo = modulo
-            break
-
-    if modulo_alvo is None:
+    if not modulo_esta_desbloqueado(
+        perfil,
+        fase.modulo,
+    ):
         return False
 
     fases_concluidas = set(
@@ -367,25 +629,14 @@ def fase_esta_liberada(
         )
     )
 
-    for modulo in modulos:
-        if modulo.id == modulo_alvo.id:
-            break
-
-        fases_anteriores = list(
-            modulo.fases.all()
+    for fase_anterior in (
+        fase.modulo.fases
+        .all()
+        .order_by(
+            'ordem',
+            'id',
         )
-
-        if (
-            not fases_anteriores
-            or any(
-                fase_anterior.id
-                not in fases_concluidas
-                for fase_anterior in fases_anteriores
-            )
-        ):
-            return False
-
-    for fase_anterior in modulo_alvo.fases.all():
+    ):
         if fase_anterior.id == fase.id:
             return True
 
@@ -2141,6 +2392,160 @@ def ajax_excluir_questao(request, questao_id):
 
 
 # ============================================================
+# 12. DESBLOQUEIO MANUAL DO MÓDULO
+# ============================================================
+
+@login_required
+def desbloquear_modulo(
+    request,
+    modulo_id,
+):
+    if request.method != 'POST':
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Método não permitido.',
+            },
+            status=405,
+        )
+
+    if not usuario_e_aluno(request):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Apenas alunos podem desbloquear módulos.',
+            },
+            status=403,
+        )
+
+    modulo = get_object_or_404(
+        Modulo.objects.select_related(
+            'disciplina'
+        ),
+        id=modulo_id,
+        disciplina__ativo=True,
+    )
+
+    perfil = obter_perfil(
+        request.user
+    )
+
+    primeiro_modulo_id = (
+        Modulo.objects
+        .filter(
+            disciplina=modulo.disciplina,
+        )
+        .order_by(
+            'ordem',
+            'id',
+        )
+        .values_list(
+            'id',
+            flat=True,
+        )
+        .first()
+    )
+
+    if modulo.id == primeiro_modulo_id:
+        return JsonResponse(
+            {
+                'status': 'ok',
+                'desbloqueado': True,
+                'ja_estava_desbloqueado': True,
+            }
+        )
+
+    anterior = None
+    modulos = list(
+        Modulo.objects
+        .filter(
+            disciplina=modulo.disciplina,
+        )
+        .order_by(
+            'ordem',
+            'id',
+        )
+    )
+
+    for indice, modulo_atual in enumerate(modulos):
+        if modulo_atual.id == modulo.id:
+            if indice > 0:
+                anterior = modulos[indice - 1]
+            break
+
+    if anterior is None:
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Não foi possível identificar o módulo anterior.',
+            },
+            status=400,
+        )
+
+    if not modulo_esta_completo_para_aluno(
+        perfil,
+        anterior,
+    ):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Complete o módulo anterior para receber a chave.',
+            },
+            status=409,
+        )
+
+    with transaction.atomic():
+        progresso_modulo, _ = (
+            ProgressoModulo.objects
+            .select_for_update()
+            .get_or_create(
+                perfil=perfil,
+                modulo=modulo,
+            )
+        )
+
+        if progresso_modulo.desbloqueado:
+            return JsonResponse(
+                {
+                    'status': 'ok',
+                    'desbloqueado': True,
+                    'ja_estava_desbloqueado': True,
+                }
+            )
+
+        if not progresso_modulo.chave_disponivel:
+            progresso_modulo.chave_disponivel = True
+            progresso_modulo.save(
+                update_fields=[
+                    'chave_disponivel',
+                ]
+            )
+
+        agora = timezone.now()
+
+        progresso_modulo.desbloqueado = True
+        progresso_modulo.chave_disponivel = False
+        progresso_modulo.data_desbloqueio = agora
+        progresso_modulo.save(
+            update_fields=[
+                'desbloqueado',
+                'chave_disponivel',
+                'data_desbloqueio',
+            ]
+        )
+
+    return JsonResponse(
+        {
+            'status': 'ok',
+            'desbloqueado': True,
+            'ja_estava_desbloqueado': False,
+            'modulo_id': modulo.id,
+            'modulo_titulo': modulo.titulo,
+        }
+    )
+
+
+# ============================================================
 # 12. MAPA DA TRILHA
 # ============================================================
 
@@ -2199,6 +2604,7 @@ def trilha_view(
             modulo.percentual_progresso = 0
             modulo.status = 'disponivel-professor'
             modulo.desbloqueado = True
+            modulo.chave_disponivel = False
 
             for fase in fases_modulo:
                 fase.status = 'atual'
@@ -2264,6 +2670,10 @@ def trilha_view(
         'modulos': modulos,
         'modulos_concluidos': (
             modulos_concluidos
+        ),
+        'chaves_disponiveis': sum(
+            modulo.chave_disponivel
+            for modulo in modulos
         ),
         'fases': fases,
         'fases_concluidas': (
