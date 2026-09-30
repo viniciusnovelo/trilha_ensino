@@ -72,32 +72,24 @@
 
             <div class="flex items-center gap-3">
 
-                {% if modo_teste_disponivel %}
-                    <form action="{% url 'alternar_papel' %}" method="post">
-                        {% csrf_token %}
-                        <button
-                            type="submit"
-                            class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
-                        >
-                            🧪
+            {% if modo_teste_disponivel %}
+
+                <form action="{% url 'alternar_papel' %}" method="post">
+                    {% csrf_token %}
+                    <button
+                        type="submit"
+                        class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
+                    >
+                        🧪
+                        {% if papel_efetivo == 'professor' %}
+                            Mudar para Aluno
+                        {% else %}
                             Mudar para Professor
-                        </button>
-                    </form>
+                        {% endif %}
+                    </button>
+                </form>
 
-                {% else %}
-
-                    <form action="{% url 'alternar_papel' %}" method="post">
-                        {% csrf_token %}
-                        <button
-                            type="submit"
-                            class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
-                        >
-                            🧪
-                            Modo de teste: Professor
-                        </button>
-                    </form>
-
-                {% endif %}
+            {% endif %}
 
 
                 <form
