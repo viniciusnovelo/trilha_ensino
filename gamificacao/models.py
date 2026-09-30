@@ -7,6 +7,9 @@ from curriculo.models import Fase
 
 
 class PerfilUsuario(models.Model):
+    XP_POR_NIVEL = 200
+    VIDAS_MAXIMAS = 5
+
     TIPO_CHOICES = [
         ('aluno', 'Aluno (Jogador)'),
         ('professor', 'Professor (Criador)'),
@@ -69,7 +72,31 @@ class PerfilUsuario(models.Model):
 
     @property
     def nivel(self):
-        return (self.xp_total // 200) + 1
+        return (self.xp_total // self.XP_POR_NIVEL) + 1
+
+    @property
+    def xp_no_nivel(self):
+        return self.xp_total % self.XP_POR_NIVEL
+
+    @property
+    def xp_proximo_nivel(self):
+        return self.nivel * self.XP_POR_NIVEL
+
+    @property
+    def xp_faltante(self):
+        return max(
+            0,
+            self.xp_proximo_nivel - self.xp_total,
+        )
+
+    @property
+    def progresso_nivel(self):
+        return min(
+            100,
+            round(
+                (self.xp_no_nivel / self.XP_POR_NIVEL) * 100
+            ),
+        )
 
 
 class ItemLoja(models.Model):
