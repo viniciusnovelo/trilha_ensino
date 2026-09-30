@@ -3266,6 +3266,11 @@ def finalizar_fase(
         request.user
     )
 
+    modulo_concluido = False
+    chave_proximo_modulo = False
+    proximo_modulo_id = None
+    proximo_modulo_titulo = None
+
     # --------------------------------------------------------
     # PROFESSOR
     #
@@ -3302,6 +3307,10 @@ def finalizar_fase(
                     APROVEITAMENTO_MINIMO
                     * 100
                 ),
+                'modulo_concluido': False,
+                'chave_proximo_modulo': False,
+                'proximo_modulo_id': None,
+                'proximo_modulo_titulo': None,
             }
         )
 
@@ -3392,6 +3401,23 @@ def finalizar_fase(
             )
 
         progresso.save()
+
+        if concluida_pela_primeira_vez:
+            proximo_modulo = preparar_chave_do_proximo_modulo(
+                perfil,
+                fase.modulo,
+                agora,
+            )
+
+            modulo_concluido = modulo_esta_completo_para_aluno(
+                perfil,
+                fase.modulo,
+            )
+
+            if proximo_modulo is not None:
+                chave_proximo_modulo = True
+                proximo_modulo_id = proximo_modulo.id
+                proximo_modulo_titulo = proximo_modulo.titulo
 
         campos_perfil_atualizados = []
 
@@ -3535,6 +3561,10 @@ def finalizar_fase(
                     melhor_aproveitamento
                 )
             ),
+            'modulo_concluido': modulo_concluido,
+            'chave_proximo_modulo': chave_proximo_modulo,
+            'proximo_modulo_id': proximo_modulo_id,
+            'proximo_modulo_titulo': proximo_modulo_titulo,
             'tentativa_id': (
                 tentativa.id
             ),
