@@ -192,59 +192,6 @@ def preparar_geometria(fases):
             fase.svg_y2 = 100
 
 
-def aplicar_status_progressao(
-    perfil,
-    fases,
-):
-
-    if not fases:
-        return
-
-    progressos = {
-        progresso.fase_id: progresso
-        for progresso in (
-            ProgressoFase.objects
-            .filter(
-                perfil=perfil,
-                fase__in=fases,
-            )
-        )
-    }
-
-    encontrou_primeira_pendente = (
-        False
-    )
-
-    for fase in fases:
-
-        progresso = progressos.get(
-            fase.id
-        )
-
-        if (
-            progresso
-            and progresso.concluida
-        ):
-
-            fase.status = (
-                'concluida'
-            )
-
-        elif not encontrou_primeira_pendente:
-
-            fase.status = 'atual'
-
-            encontrou_primeira_pendente = (
-                True
-            )
-
-        else:
-
-            fase.status = (
-                'bloqueada'
-            )
-
-
 def preparar_progressao_modulos(
     perfil,
     modulos,
