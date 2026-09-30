@@ -52,6 +52,7 @@
 
 
 <body class="{{ tema_aplicado }} text-white min-h-screen flex flex-col font-sans">
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 
 
     <!-- =====================================================
@@ -110,7 +111,8 @@
 
 
         {% if papel_efetivo == 'aluno' %}
-            {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+            {% include 'gamificacao/partials/controle_aparencia.html' %}
+{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
             <span class="text-red-300 font-black whitespace-nowrap">❤️ {{ perfil.vidas }}</span>
         {% endif %}
 
