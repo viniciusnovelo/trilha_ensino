@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
-from .models import ItemComprado, ItemLoja, PerfilUsuario
+from .models import ItemLoja, PerfilUsuario
 
 
 DEFAULT_ITENS_LOJA = [
@@ -16,13 +16,11 @@ DEFAULT_ITENS_LOJA = [
         'nome': 'Recarga completa de vidas',
         'descricao': 'Restaura suas vidas até o máximo de 5.',
         'preco_moedas': 30,
-        'tipo': 'vida',
     },
     {
         'nome': 'Recarga econômica de vidas',
         'descricao': 'Adiciona até 2 vidas, respeitando o máximo de 5.',
         'preco_moedas': 18,
-        'tipo': 'vida',
     },
 ]
 
@@ -34,12 +32,16 @@ def obter_perfil(usuario):
     return perfil
 
 
-def em_modo_professor_teste(request):
+def modo_professor_teste(request):
     return bool(
         getattr(settings, 'DEBUG', False)
         and request.user.is_authenticated
-        and (request.user.is_staff or request.user.is_superuser)
-        and request.session.get('modo_teste') == 'professor'
+        and (
+            request.user.is_staff
+            or request.user.is_superuser
+        )
+        and request.session.get('modo_teste')
+        == 'professor'
     )
 
 
@@ -47,7 +49,9 @@ def em_modo_professor_teste(request):
 @require_POST
 def atualizar_tema_usuario(request):
     try:
-        data = json.loads(request.body or '{}')
+        data = json.loads(
+            request.body or '{}'
+        )
     except json.JSONDecodeError:
         return JsonResponse(
             {
@@ -61,7 +65,8 @@ def atualizar_tema_usuario(request):
 
     temas_validos = {
         valor
-        for valor, _ in PerfilUsuario.TEMAS
+        for valor, _
+        in PerfilUsuario.TEMAS
     }
 
     if tema not in temas_validos:
@@ -73,15 +78,25 @@ def atualizar_tema_usuario(request):
             status=400,
         )
 
-    perfil = obter_perfil(request.user)
+    perfil = obter_perfil(
+        request.user
+    )
+
     perfil.tema_fundo = tema
-    perfil.save(update_fields=['tema_fundo'])
+
+    perfil.save(
+        update_fields=[
+            'tema_fundo'
+        ]
+    )
 
     return JsonResponse(
         {
             'status': 'ok',
             'tema': tema,
-            'tema_display': perfil.get_tema_fundo_display(),
+            'tema_display': (
+                perfil.get_tema_fundo_display()
+            ),
         }
     )
 
@@ -93,22 +108,34 @@ def garantir_itens_padrao():
             defaults={
                 'descricao': item['descricao'],
                 'preco_moedas': item['preco_moedas'],
-                'tipo': item['tipo'],
+                'tipo': 'vida',
             },
         )
 
 
 @login_required
 def loja(request):
-    if em_modo_professor_teste(request):
-        return redirect('dashboard_professor')
 
-    perfil = obter_perfil(request.user)
+    if modo_professor_teste(request):
+        return redirect(
+            'dashboard_professor'
+        )
+
+    perfil = obter_perfil(
+        request.user
+    )
+
     garantir_itens_padrao()
 
-    itens = ItemLoja.objects.all().order_by(
-        'preco_moedas',
-        'id',
+    itens = (
+        ItemLoja.objects
+        .filter(
+            tipo='vida'
+        )
+        .order_by(
+            'preco_moedas',
+            'id',
+        )
     )
 
     return render(
@@ -125,74 +152,36 @@ def loja(request):
 @login_required
 @require_POST
 def comprar_item(request, item_id):
-    if em_modo_professor_teste(request):
-        return redirect('dashboard_professor')
 
-    perfil = obter_perfil(request.user)
+    if modo_professor_teste(request):
+        return redirect(
+            'dashboard_professor'
+        )
+
     item = get_object_or_404(
         ItemLoja,
         id=item_id,
+        tipo='vida',
     )
 
     with transaction.atomic():
+
         perfil = (
             PerfilUsuario.objects
             .select_for_update()
-            .get(pk=perfil.pk)
+            .get(
+                usuario=request.user
+            )
         )
 
-        if item.tipo == 'vida':
-            if perfil.vidas >= perfil.VIDAS_MAXIMAS:
-                messages.info(
-                    request,
-                    'Você já está com o máximo de vidas.',
-                )
-                return redirect('loja')
-
-            if perfil.moedas < item.preco_moedas:
-                messages.error(
-                    request,
-                    'Você não possui moedas suficientes.',
-                )
-                return redirect('loja')
-
-            perfil.moedas -= item.preco_moedas
-
-            if 'completa' in item.nome.lower():
-                perfil.vidas = perfil.VIDAS_MAXIMAS
-            else:
-                perfil.vidas = min(
-                    perfil.VIDAS_MAXIMAS,
-                    perfil.vidas + 2,
-                )
-
-            perfil.save(
-                update_fields=[
-                    'moedas',
-                    'vidas',
-                ]
-            )
-
-            messages.success(
-                request,
-                'Recarga comprada. Suas vidas foram atualizadas.',
-            )
-            return redirect('loja')
-
-        comprado, criado = ItemComprado.objects.get_or_create(
-            perfil=perfil,
-            item=item,
-        )
-
-        if not criado:
+        if perfil.vidas >= perfil.VIDAS_MAXIMAS:
             messages.info(
                 request,
-                'Você já possui este item.',
+                'Você já está com o máximo de vidas.',
             )
             return redirect('loja')
 
         if perfil.moedas < item.preco_moedas:
-            comprado.delete()
             messages.error(
                 request,
                 'Você não possui moedas suficientes.',
@@ -200,30 +189,40 @@ def comprar_item(request, item_id):
             return redirect('loja')
 
         perfil.moedas -= item.preco_moedas
-        perfil.save(update_fields=['moedas'])
 
-        comprado.equipado = True
-        comprado.save(update_fields=['equipado'])
+        if 'completa' in item.nome.lower():
+            perfil.vidas = perfil.VIDAS_MAXIMAS
+        else:
+            perfil.vidas = min(
+                perfil.VIDAS_MAXIMAS,
+                perfil.vidas + 2,
+            )
 
-        messages.success(
-            request,
-            f'Você desbloqueou: {item.nome}.',
+        perfil.save(
+            update_fields=[
+                'moedas',
+                'vidas',
+            ]
         )
+
+    messages.success(
+        request,
+        'Recarga realizada com sucesso.',
+    )
 
     return redirect('loja')
 
 
 @login_required
 def perfil_gamificacao(request):
-    if em_modo_professor_teste(request):
-        return redirect('dashboard_professor')
 
-    perfil = obter_perfil(request.user)
+    if modo_professor_teste(request):
+        return redirect(
+            'dashboard_professor'
+        )
 
-    itens_comprados = (
-        perfil.itens
-        .select_related('item')
-        .order_by('-data_aquisicao')
+    perfil = obter_perfil(
+        request.user
     )
 
     return render(
@@ -231,7 +230,6 @@ def perfil_gamificacao(request):
         'gamificacao/perfil.html',
         {
             'perfil': perfil,
-            'itens_comprados': itens_comprados,
             'tema_aplicado': perfil.tema_fundo,
         },
     )
