@@ -13,11 +13,13 @@
 </style>
 </head>
 <body class="{{ tema_aplicado }} text-white min-h-screen font-sans">
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 <div class="min-h-screen bg-slate-950/50 backdrop-blur-sm">
 <header class="border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
 <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center gap-4">
 <div><p class="text-xs uppercase tracking-widest text-white/40 font-black">Gamificação</p><h1 class="text-3xl font-black">Loja 🪙</h1></div>
-<div class="flex items-center gap-2">{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<a href="{% url 'dashboard_aluno' %}" class="bg-green-500 hover:bg-green-400 px-4 py-2 rounded-xl font-black">Painel</a></div>
+<div class="flex items-center gap-2">{% include 'gamificacao/partials/controle_aparencia.html' %}
+{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<a href="{% url 'dashboard_aluno' %}" class="bg-green-500 hover:bg-green-400 px-4 py-2 rounded-xl font-black">Painel</a></div>
 </div>
 </header>
 <main class="max-w-6xl mx-auto px-6 py-8">
