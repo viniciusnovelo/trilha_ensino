@@ -868,6 +868,11 @@ def editar_trilha(
         fases
     )
 
+    total_questoes = sum(
+        fase.questoes.count()
+        for fase in fases
+    )
+
     return render(
         request,
         'curriculo/editar_trilha.html',
@@ -875,6 +880,7 @@ def editar_trilha(
             'trilha': trilha,
             'modulos': modulos,
             'fases': fases,
+            'total_questoes': total_questoes,
             'perfil': obter_perfil(request.user),
             'tema_aplicado': trilha.tema,
         },
