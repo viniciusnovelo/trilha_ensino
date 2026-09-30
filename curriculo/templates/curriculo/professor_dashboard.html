@@ -237,15 +237,15 @@
                                     </span>
 
                                     <span class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/8 text-slate-400">
-                                        {{ trilha.total_modulos }} módulos
+                                        {% if trilha.total_modulos == 1 %}1 módulo{% else %}{{ trilha.total_modulos }} módulos{% endif %}
                                     </span>
 
                                     <span class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/8 text-slate-400">
-                                        {{ trilha.total_fases }} fases
+                                        {% if trilha.total_fases == 1 %}1 fase{% else %}{{ trilha.total_fases }} fases{% endif %}
                                     </span>
 
                                     <span class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/8 text-slate-400">
-                                        {{ trilha.total_questoes }} questões
+                                        {% if trilha.total_questoes == 1 %}1 questão{% else %}{{ trilha.total_questoes }} questões{% endif %}
                                     </span>
 
                                 </div>
@@ -312,7 +312,7 @@
                                         </span>
 
                                         <span class="flex items-center gap-2 text-xs text-slate-500 font-bold">
-                                            {{ trilha.total_modulos }} módulos
+                                            {% if trilha.total_modulos == 1 %}1 módulo{% else %}{{ trilha.total_modulos }} módulos{% endif %}
                                             <svg class="chevron w-4 h-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                                             </svg>
