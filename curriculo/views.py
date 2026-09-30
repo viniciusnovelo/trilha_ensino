@@ -721,6 +721,8 @@ def criar_trilha(request):
         'curriculo/criar_trilha.html',
         {
             'form': form,
+            'perfil': obter_perfil(request.user),
+            'tema_aplicado': form.data.get('tema', form.initial.get('tema', 'tema-padrao')) or 'tema-padrao',
         },
     )
 
