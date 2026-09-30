@@ -1859,6 +1859,211 @@ def ajax_criar_questao(
 
 
 # ============================================================
+# 12. EDIÇÃO E EXCLUSÃO DE QUESTÃO
+# ============================================================
+
+@login_required
+def ajax_editar_questao(request, questao_id):
+
+    if not usuario_e_professor(request):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Acesso permitido apenas a professores.',
+            },
+            status=403,
+        )
+
+    if request.method != 'POST':
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Método não permitido.',
+            },
+            status=405,
+        )
+
+    questao = get_object_or_404(
+        Questao,
+        id=questao_id,
+        fase__modulo__disciplina__autor=request.user,
+    )
+
+    enunciado = request.POST.get(
+        'enunciado',
+        '',
+    ).strip()
+
+    explicacao = request.POST.get(
+        'explicacao_erro',
+        '',
+    ).strip()
+
+    correta_idx = request.POST.get(
+        'op_correta'
+    )
+
+    if not enunciado:
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Preencha o enunciado.',
+            },
+            status=400,
+        )
+
+    if correta_idx is None:
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Marque a resposta correta.',
+            },
+            status=400,
+        )
+
+    try:
+        correta_idx = int(correta_idx)
+    except (TypeError, ValueError):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Alternativa correta inválida.',
+            },
+            status=400,
+        )
+
+    if correta_idx not in range(4):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Alternativa correta inválida.',
+            },
+            status=400,
+        )
+
+    opcoes = []
+
+    for indice in range(4):
+        texto = request.POST.get(
+            f'op_texto_{indice}',
+            '',
+        ).strip()
+
+        if texto:
+            opcoes.append(
+                {
+                    'indice': indice,
+                    'texto': texto,
+                }
+            )
+
+    if len(opcoes) < 2:
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Cadastre pelo menos duas alternativas.',
+            },
+            status=400,
+        )
+
+    if not any(
+        opcao['indice'] == correta_idx
+        for opcao in opcoes
+    ):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'A alternativa correta está vazia.',
+            },
+            status=400,
+        )
+
+    with transaction.atomic():
+        opcoes_existentes = list(
+            questao.opcoes.order_by('id')
+        )
+
+        for posicao, opcao in enumerate(opcoes):
+            correta = opcao['indice'] == correta_idx
+
+            if posicao < len(opcoes_existentes):
+                objeto = opcoes_existentes[posicao]
+                objeto.texto = opcao['texto']
+                objeto.e_correta = correta
+                objeto.save(
+                    update_fields=[
+                        'texto',
+                        'e_correta',
+                    ]
+                )
+            else:
+                Opcao.objects.create(
+                    questao=questao,
+                    texto=opcao['texto'],
+                    e_correta=correta,
+                )
+
+        for objeto in opcoes_existentes[len(opcoes):]:
+            objeto.delete()
+
+        questao.enunciado = enunciado
+        questao.explicacao_erro = explicacao
+        questao.save(
+            update_fields=[
+                'enunciado',
+                'explicacao_erro',
+            ]
+        )
+
+    return JsonResponse(
+        {
+            'status': 'ok',
+            'questao': {
+                'id': questao.id,
+                'fase_id': questao.fase_id,
+                'enunciado': questao.enunciado,
+            },
+        }
+    )
+
+
+@login_required
+def ajax_excluir_questao(request, questao_id):
+
+    if not usuario_e_professor(request):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Acesso permitido apenas a professores.',
+            },
+            status=403,
+        )
+
+    if request.method != 'POST':
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Método não permitido.',
+            },
+            status=405,
+        )
+
+    questao = get_object_or_404(
+        Questao,
+        id=questao_id,
+        fase__modulo__disciplina__autor=request.user,
+    )
+
+    questao.delete()
+
+    return JsonResponse(
+        {
+            'status': 'ok',
+        }
+    )
+
+
+# ============================================================
 # 12. MAPA DA TRILHA
 # ============================================================
 
