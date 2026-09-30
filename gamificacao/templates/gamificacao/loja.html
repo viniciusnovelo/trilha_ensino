@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loja — Trilha Ensino</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.tema-padrao{background:linear-gradient(135deg,#0f172a,#1e293b);}
+.tema-floresta{background:linear-gradient(135deg,#052e16,#14532d,#064e3b);}
+.tema-deserto{background:linear-gradient(135deg,#451a03,#78350f,#92400e);}
+.tema-masmorra{background:linear-gradient(135deg,#020617,#1e1b4b,#171717);}
+</style>
+</head>
+<body class="{{ tema_aplicado }} text-white min-h-screen font-sans">
+<div class="min-h-screen bg-slate-950/50 backdrop-blur-sm">
+<header class="border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
+<div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center gap-4">
+<div><p class="text-xs uppercase tracking-widest text-white/40 font-black">Gamificação</p><h1 class="text-3xl font-black">Loja 🪙</h1></div>
+<div class="flex items-center gap-2">{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<a href="{% url 'dashboard_aluno' %}" class="bg-green-500 hover:bg-green-400 px-4 py-2 rounded-xl font-black">Painel</a></div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-6 py-8">
+{% if messages %}<div class="space-y-2 mb-6">{% for message in messages %}<div class="rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3">{{ message }}</div>{% endfor %}</div>{% endif %}
+<section class="grid md:grid-cols-3 gap-4 mb-8">
+<div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5"><p class="text-xs uppercase text-white/40 font-black">Moedas</p><p class="text-3xl font-black text-blue-300 mt-2">🪙 {{ perfil.moedas }}</p></div>
+<div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5"><p class="text-xs uppercase text-white/40 font-black">Vidas</p><p class="text-3xl font-black text-red-300 mt-2">❤️ {{ perfil.vidas }} / {{ perfil.VIDAS_MAXIMAS }}</p></div>
+<div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5"><p class="text-xs uppercase text-white/40 font-black">Nível</p><p class="text-3xl font-black text-yellow-300 mt-2">{{ perfil.nivel }}</p></div>
+</section>
+<h2 class="text-3xl font-black mb-6">Recupere suas vidas</h2>
+<div class="grid md:grid-cols-2 gap-5">
+{% for item in itens %}<article class="bg-slate-900/80 border border-white/10 rounded-3xl p-6">
+<div class="flex justify-between gap-4"><div><div class="text-4xl">❤️</div><h3 class="text-xl font-black mt-3">{{ item.nome }}</h3><p class="text-white/50 mt-2">{{ item.descricao }}</p></div><span class="rounded-full bg-blue-500/10 border border-blue-400/20 px-3 py-1 h-fit text-blue-300 font-black">🪙 {{ item.preco_moedas }}</span></div>
+<form action="{% url 'comprar_item' item.id %}" method="post" class="mt-6">{% csrf_token %}<button type="submit" {% if perfil.vidas >= perfil.VIDAS_MAXIMAS %}disabled{% endif %} class="w-full rounded-xl py-3 bg-blue-500 hover:bg-blue-400 font-black disabled:bg-slate-700 disabled:text-slate-500">{% if perfil.vidas >= perfil.VIDAS_MAXIMAS %}Vidas completas{% else %}Comprar{% endif %}</button></form>
+</article>{% empty %}<p class="text-white/45">Nenhuma recarga disponível.</p>{% endfor %}
+</div>
+</main>
+</div>
+</body>
+</html>
