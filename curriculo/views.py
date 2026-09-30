@@ -245,51 +245,170 @@ def aplicar_status_progressao(
             )
 
 
+def preparar_progressao_modulos(
+    perfil,
+    modulos,
+):
+    """
+    Calcula o estado da jornada em dois níveis:
+
+    MÓDULO:
+      - concluido
+      - atual
+      - bloqueado
+
+    FASE:
+      - concluida
+      - atual
+      - bloqueada
+
+    Um módulo só é liberado depois que todas as fases do
+    módulo anterior estiverem concluídas.
+
+    Um módulo sem fases é considerado incompleto. Assim, ele
+    não libera o próximo módulo até que o professor acrescente
+    conteúdo e o aluno conclua suas fases.
+    """
+
+    progressos = {
+        progresso.fase_id: progresso
+        for progresso in ProgressoFase.objects.filter(
+            perfil=perfil,
+            fase__modulo__in=modulos,
+        )
+    }
+
+    modulo_anterior_concluido = True
+    encontrou_modulo_atual = False
+
+    for modulo in modulos:
+        fases = list(modulo.fases.all())
+
+        modulo.total_fases = len(fases)
+        modulo.fases_concluidas = sum(
+            progressos.get(fase.id)
+            and progressos[fase.id].concluida
+            for fase in fases
+        )
+
+        modulo.percentual_progresso = (
+            round(
+                (
+                    modulo.fases_concluidas
+                    / modulo.total_fases
+                )
+                * 100
+            )
+            if modulo.total_fases
+            else 0
+        )
+
+        modulo.concluido = (
+            modulo.total_fases > 0
+            and modulo.fases_concluidas == modulo.total_fases
+        )
+
+        if modulo.concluido:
+            modulo.status = 'concluido'
+            modulo.desbloqueado = True
+
+        elif modulo_anterior_concluido and not encontrou_modulo_atual:
+            modulo.status = 'atual'
+            modulo.desbloqueado = True
+            encontrou_modulo_atual = True
+
+        else:
+            modulo.status = 'bloqueado'
+            modulo.desbloqueado = False
+
+        encontrou_fase_atual = False
+
+        for fase in fases:
+            progresso = progressos.get(fase.id)
+
+            if (
+                progresso
+                and progresso.concluida
+            ):
+                fase.status = 'concluida'
+
+            elif (
+                modulo.status == 'atual'
+                and not encontrou_fase_atual
+            ):
+                fase.status = 'atual'
+                encontrou_fase_atual = True
+
+            else:
+                fase.status = 'bloqueada'
+
+            fase.modulo_status = modulo.status
+
+        modulo_anterior_concluido = modulo.concluido
+
+    return modulos
+
+
+def modulos_da_trilha(trilha):
+    return list(
+        Modulo.objects
+        .filter(
+            disciplina=trilha,
+        )
+        .prefetch_related(
+            'fases__questoes',
+        )
+        .order_by(
+            'ordem',
+            'id',
+        )
+    )
+
+
 def fase_esta_liberada(
     request,
     fase,
 ):
+    """
+    Verifica a progressão real da fase no servidor.
 
-    perfil = obter_perfil(
-        request.user
-    )
+    Para alunos, a fase só é liberada quando:
+      1. a trilha está publicada;
+      2. todos os módulos anteriores estão concluídos;
+      3. todas as fases anteriores do mesmo módulo estão
+         concluídas.
 
-    trilha = (
-        fase.modulo.disciplina
-    )
+    Professores continuam com acesso de visualização a qualquer
+    fase da própria trilha.
+    """
 
-    papel = papel_efetivo(
-        request
-    )
-
-    # --------------------------------------------------------
-    # PROFESSOR REAL OU MODO DE TESTE COMO PROFESSOR
-    # --------------------------------------------------------
+    trilha = fase.modulo.disciplina
+    papel = papel_efetivo(request)
 
     if papel == 'professor':
-
-        return (
-            trilha.autor_id
-            == request.user.id
-        )
-
-    # --------------------------------------------------------
-    # ALUNO
-    # --------------------------------------------------------
+        return trilha.autor_id == request.user.id
 
     if not trilha.ativo:
-
         return False
 
-    fases = fases_da_trilha(
-        trilha
-    )
+    perfil = obter_perfil(request.user)
+    modulos = modulos_da_trilha(trilha)
 
-    concluidas = set(
+    modulo_alvo = None
+
+    for modulo in modulos:
+        if modulo.id == fase.modulo_id:
+            modulo_alvo = modulo
+            break
+
+    if modulo_alvo is None:
+        return False
+
+    fases_concluidas = set(
         ProgressoFase.objects
         .filter(
             perfil=perfil,
-            fase__in=fases,
+            fase__modulo__disciplina=trilha,
             concluida=True,
         )
         .values_list(
@@ -298,24 +417,32 @@ def fase_esta_liberada(
         )
     )
 
-    for fase_atual in fases:
+    for modulo in modulos:
+        if modulo.id == modulo_alvo.id:
+            break
+
+        fases_anteriores = list(
+            modulo.fases.all()
+        )
 
         if (
-            fase_atual.id
-            == fase.id
+            not fases_anteriores
+            or any(
+                fase_anterior.id
+                not in fases_concluidas
+                for fase_anterior in fases_anteriores
+            )
         ):
+            return False
 
+    for fase_anterior in modulo_alvo.fases.all():
+        if fase_anterior.id == fase.id:
             return True
 
-        if (
-            fase_atual.id
-            not in concluidas
-        ):
-
+        if fase_anterior.id not in fases_concluidas:
             return False
 
     return False
-
 
 def trilha_acessivel_para_usuario(
     request,
@@ -2084,27 +2211,36 @@ def trilha_view(
         )
     )
 
-    fases = fases_da_trilha(
+    modulos = modulos_da_trilha(
         trilha
     )
+
+    fases = []
+
+    for modulo in modulos:
+        fases.extend(
+            modulo.fases.all()
+        )
 
     papel = papel_efetivo(
         request
     )
 
-    # Professores não utilizam o progresso de aluno
-    # para determinar o mapa.
+    # Professores visualizam todo o conteúdo da própria trilha.
     if papel == 'professor':
 
-        for fase in fases:
+        for modulo in modulos:
+            modulo.status = 'disponivel-professor'
+            modulo.desbloqueado = True
 
-            fase.status = 'atual'
+            for fase in modulo.fases.all():
+                fase.status = 'atual'
 
     else:
 
-        aplicar_status_progressao(
+        preparar_progressao_modulos(
             perfil,
-            fases,
+            modulos,
         )
 
     preparar_geometria(
@@ -2157,6 +2293,7 @@ def trilha_view(
 
     contexto.update({
         'trilha': trilha,
+        'modulos': modulos,
         'fases': fases,
         'fases_concluidas': (
             fases_concluidas
