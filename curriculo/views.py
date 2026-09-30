@@ -2218,8 +2218,16 @@ def trilha_view(
     fases = []
 
     for modulo in modulos:
-        fases.extend(
+        fases_modulo = list(
             modulo.fases.all()
+        )
+
+        preparar_geometria(
+            fases_modulo
+        )
+
+        fases.extend(
+            fases_modulo
         )
 
     papel = papel_efetivo(
@@ -2242,10 +2250,6 @@ def trilha_view(
             perfil,
             modulos,
         )
-
-    preparar_geometria(
-        fases
-    )
 
     fases_concluidas = sum(
         fase.status
