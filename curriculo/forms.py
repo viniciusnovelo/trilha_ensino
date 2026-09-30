@@ -7,12 +7,12 @@ from .models import Disciplina, Modulo, Fase, Questao
 class DisciplinaForm(forms.ModelForm):
     class Meta:
         model = Disciplina
-        fields = ['nome', 'slug', 'descricao', 'tema', 'ativo']
+        fields = ['nome', 'slug', 'descricao', 'tema']
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'w-full bg-slate-100 border border-slate-300 rounded-lg p-3 outline-none'}),
             'slug': forms.TextInput(attrs={'class': 'w-full bg-slate-100 border border-slate-300 rounded-lg p-3 outline-none'}),
             'descricao': forms.Textarea(attrs={'class': 'w-full bg-slate-100 border border-slate-300 rounded-lg p-3', 'rows': 3}),
-            'tema': forms.Select(attrs={'class': 'w-full bg-slate-100 border border-slate-300 rounded-lg p-3 outline-none'}),
+            'tema': forms.Select(attrs={'class': 'w-full bg-slate-100 border border-slate-300 rounded-lg p-3 outline-none', 'id': 'tema-trilha-form'}),
             'ativo': forms.CheckboxInput(attrs={'class': 'w-6 h-6 text-indigo-600 rounded'}),
         }
 
