@@ -959,3 +959,219 @@ class EstudioConteudoTests(AutenticacaoBaseTests):
                 id=questao.id
             ).exists()
         )
+
+
+class ProgressaoPorModulosTests(AutenticacaoBaseTests):
+    def setUp(self):
+        self.aluno = self.criar_usuario(
+            username="aluno_modulos",
+        )
+
+        self.professor = self.criar_usuario(
+            username="professor_modulos",
+        )
+
+        self.professor.perfil.tipo = "professor"
+        self.professor.perfil.save(
+            update_fields=["tipo"]
+        )
+
+        self.trilha = Disciplina.objects.create(
+            nome="Jornada por Módulos",
+            slug="jornada-por-modulos",
+            ativo=True,
+            autor=self.professor,
+        )
+
+        self.modulo_1 = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo 1",
+            ordem=1,
+        )
+
+        self.modulo_2 = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo 2",
+            ordem=2,
+        )
+
+        self.fase_1 = Fase.objects.create(
+            modulo=self.modulo_1,
+            titulo="Fase 1",
+            ordem=1,
+        )
+
+        self.fase_2 = Fase.objects.create(
+            modulo=self.modulo_2,
+            titulo="Fase 2",
+            ordem=1,
+        )
+
+        self.questao_1 = Questao.objects.create(
+            fase=self.fase_1,
+            enunciado="Qual é a resposta da fase 1?",
+        )
+
+        self.opcao_correta_1 = Opcao.objects.create(
+            questao=self.questao_1,
+            texto="Correta",
+            e_correta=True,
+        )
+
+        Opcao.objects.create(
+            questao=self.questao_1,
+            texto="Incorreta",
+            e_correta=False,
+        )
+
+        self.questao_2 = Questao.objects.create(
+            fase=self.fase_2,
+            enunciado="Qual é a resposta da fase 2?",
+        )
+
+        Opcao.objects.create(
+            questao=self.questao_2,
+            texto="Correta",
+            e_correta=True,
+        )
+
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+    def test_primeiro_modulo_e_liberado_e_segundo_fica_bloqueado(self):
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        modulos = response.context["modulos"]
+
+        self.assertEqual(
+            modulos[0].status,
+            "atual",
+        )
+
+        self.assertTrue(
+            modulos[0].desbloqueado,
+        )
+
+        self.assertEqual(
+            modulos[1].status,
+            "bloqueado",
+        )
+
+        self.assertFalse(
+            modulos[1].desbloqueado,
+        )
+
+        self.assertEqual(
+            modulos[0].fases_concluidas,
+            0,
+        )
+
+        self.assertEqual(
+            modulos[1].fases_concluidas,
+            0,
+        )
+
+    def test_fase_do_modulo_seguinte_nao_pode_ser_acessada_antes(self):
+        response = self.client.get(
+            reverse(
+                "fase_detalhe",
+                args=[self.fase_2.id],
+            )
+        )
+
+        self.assertRedirects(
+            response,
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            ),
+        )
+
+    def test_conclusao_do_modulo_anterior_desbloqueia_proximo(self):
+        response = self.client.post(
+            reverse(
+                "finalizar_fase",
+                args=[self.fase_1.id],
+            ),
+            data=json.dumps({
+                "respostas": [
+                    {
+                        "questao_id": self.questao_1.id,
+                        "opcao_id": self.opcao_correta_1.id,
+                    }
+                ]
+            }),
+            content_type="application/json",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        modulos = response.context["modulos"]
+
+        self.assertEqual(
+            modulos[0].status,
+            "concluido",
+        )
+
+        self.assertEqual(
+            modulos[0].percentual_progresso,
+            100,
+        )
+
+        self.assertEqual(
+            modulos[1].status,
+            "atual",
+        )
+
+        self.assertTrue(
+            modulos[1].desbloqueado,
+        )
+
+        fase_2 = next(
+            fase
+            for fase in modulos[1].fases.all()
+        )
+
+        self.assertEqual(
+            fase_2.status,
+            "atual",
+        )
+
+        response = self.client.get(
+            reverse(
+                "fase_detalhe",
+                args=[self.fase_2.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
