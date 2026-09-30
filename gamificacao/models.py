@@ -56,7 +56,7 @@ class PerfilUsuario(models.Model):
         ('tema-oceano', 'Oceano Profundo'),
     ]
 
-    APARencias = [
+    APARENCIA_CHOICES = [
         ('sistema', 'Seguir preferência do sistema'),
         ('claro', 'Modo claro'),
         ('escuro', 'Modo escuro'),
@@ -70,7 +70,7 @@ class PerfilUsuario(models.Model):
 
     aparencia_interface = models.CharField(
         max_length=20,
-        choices=APARencias,
+        choices=APARENCIA_CHOICES,
         default='sistema',
     )
 
