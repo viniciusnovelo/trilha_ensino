@@ -2,7 +2,7 @@ import json
 from decimal import Decimal
 
 from django.conf import settings
-from django.contrib.auth import login
+from django.contrib.auth import login, messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse
@@ -578,12 +578,29 @@ def dashboard_aluno(request):
             )
         )
 
+    fases_revisao = list(
+        ProgressoFase.objects
+        .filter(
+            perfil=perfil,
+            tentativas__gt=0,
+            melhor_aproveitamento__lt=Decimal('60'),
+        )
+        .select_related(
+            'fase__modulo__disciplina'
+        )
+        .order_by(
+            'melhor_aproveitamento',
+            '-data_ultima_tentativa',
+        )[:6]
+    )
+
     contexto = contexto_papel(
         request
     )
 
     contexto.update({
         'trilhas': trilhas,
+        'fases_revisao': fases_revisao,
         'dashboard_modo': 'aluno',
     })
 
@@ -611,16 +628,33 @@ def dashboard_professor(request):
             'dashboard_aluno'
         )
 
-    minhas_trilhas = (
+    minhas_trilhas = list(
         Disciplina.objects
         .filter(
             autor=request.user
+        )
+        .prefetch_related(
+            'modulos__fases__questoes'
         )
         .order_by(
             'ordem',
             'nome',
         )
     )
+
+    for trilha in minhas_trilhas:
+        trilha.total_modulos = len(
+            trilha.modulos.all()
+        )
+        trilha.total_fases = sum(
+            len(modulo.fases.all())
+            for modulo in trilha.modulos.all()
+        )
+        trilha.total_questoes = sum(
+            len(fase.questoes.all())
+            for modulo in trilha.modulos.all()
+            for fase in modulo.fases.all()
+        )
 
     contexto = contexto_papel(
         request
@@ -668,6 +702,8 @@ def criar_trilha(request):
             trilha.autor = (
                 request.user
             )
+
+            trilha.ativo = False
 
             trilha.save()
 
@@ -719,6 +755,73 @@ def deletar_trilha(
     return redirect(
         'dashboard_professor'
     )
+
+
+# ============================================================
+# 6. PUBLICAÇÃO DA TRILHA
+# ============================================================
+
+@login_required
+def alternar_publicacao(request, trilha_id):
+
+    if not usuario_e_professor(request):
+        return redirect('dashboard_aluno')
+
+    if request.method != 'POST':
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'Método não permitido.',
+            },
+            status=405,
+        )
+
+    trilha = get_object_or_404(
+        Disciplina,
+        id=trilha_id,
+        autor=request.user,
+    )
+
+    total_fases = Fase.objects.filter(
+        modulo__disciplina=trilha
+    ).count()
+
+    total_questoes = Questao.objects.filter(
+        fase__modulo__disciplina=trilha
+    ).count()
+
+    if (
+        not trilha.ativo
+        and (
+            total_fases == 0
+            or total_questoes == 0
+        )
+    ):
+        messages.error(
+            request,
+            'Antes de publicar, cadastre pelo menos uma fase e uma questão.',
+        )
+        return redirect(
+            'editar_trilha',
+            trilha_id=trilha.id,
+        )
+
+    trilha.ativo = not trilha.ativo
+
+    trilha.save(
+        update_fields=['ativo']
+    )
+
+    messages.success(
+        request,
+        (
+            'Trilha publicada para os alunos.'
+            if trilha.ativo
+            else 'Trilha voltou para rascunho.'
+        ),
+    )
+
+    return redirect('dashboard_professor')
 
 
 # ============================================================
@@ -1565,6 +1668,12 @@ def trilha_view(
         None,
     )
 
+    tema_aplicado = (
+        perfil.tema_fundo
+        if papel == 'aluno'
+        else trilha.tema
+    )
+
     contexto = contexto_papel(
         request
     )
@@ -1584,6 +1693,7 @@ def trilha_view(
         'fase_atual': (
             fase_atual
         ),
+        'tema_aplicado': tema_aplicado,
     })
 
     return render(
@@ -1635,6 +1745,21 @@ def fase_detalhe(
         .first()
     )
 
+    sem_vidas = (
+        usuario_e_aluno(request)
+        and perfil.vidas <= 0
+        and not (
+            progresso
+            and progresso.concluida
+        )
+    )
+
+    tema_aplicado = (
+        perfil.tema_fundo
+        if usuario_e_aluno(request)
+        else fase.modulo.disciplina.tema
+    )
+
     questoes = []
 
     questoes_db = (
@@ -1680,6 +1805,8 @@ def fase_detalhe(
             fase.modulo.disciplina_id
         ),
         'progresso': progresso,
+        'sem_vidas': sem_vidas,
+        'tema_aplicado': tema_aplicado,
     })
 
     return render(
@@ -1766,6 +1893,38 @@ def verificar_resposta(
                 ),
             },
             status=400,
+        )
+
+    perfil = obter_perfil(
+        request.user
+    )
+
+    progresso = (
+        ProgressoFase.objects
+        .filter(
+            perfil=perfil,
+            fase=fase,
+        )
+        .first()
+    )
+
+    if (
+        usuario_e_aluno(request)
+        and perfil.vidas <= 0
+        and not (
+            progresso
+            and progresso.concluida
+        )
+    ):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': (
+                    'Você está sem vidas. '
+                    'Recarregue na loja para continuar.'
+                ),
+            },
+            status=409,
         )
 
     questao = get_object_or_404(
@@ -1855,6 +2014,38 @@ def finalizar_fase(
                 ),
             },
             status=403,
+        )
+
+    perfil = obter_perfil(
+        request.user
+    )
+
+    progresso_existente = (
+        ProgressoFase.objects
+        .filter(
+            perfil=perfil,
+            fase=fase,
+        )
+        .first()
+    )
+
+    if (
+        usuario_e_aluno(request)
+        and perfil.vidas <= 0
+        and not (
+            progresso_existente
+            and progresso_existente.concluida
+        )
+    ):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': (
+                    'Você está sem vidas. '
+                    'Recarregue na loja para continuar.'
+                ),
+            },
+            status=409,
         )
 
     try:
@@ -2207,16 +2398,36 @@ def finalizar_fase(
 
         progresso.save()
 
+        campos_perfil_atualizados = []
+
+        if (
+            not aprovado
+            and not fase_ja_concluida
+        ):
+            perfil.vidas = max(
+                0,
+                perfil.vidas - 1,
+            )
+            campos_perfil_atualizados.append(
+                'vidas'
+            )
+
         if (
             recompensa_xp
             or recompensa_moedas
         ):
+            campos_perfil_atualizados.extend([
+                'xp_total',
+                'moedas',
+            ])
 
+        if campos_perfil_atualizados:
             perfil.save(
-                update_fields=[
-                    'xp_total',
-                    'moedas',
-                ]
+                update_fields=list(
+                    dict.fromkeys(
+                        campos_perfil_atualizados
+                    )
+                )
             )
 
         # ----------------------------------------------------
@@ -2336,6 +2547,7 @@ def finalizar_fase(
                 APROVEITAMENTO_MINIMO
                 * 100
             ),
+            'vidas': perfil.vidas,
             'perfil': {
                 'xp_total': (
                     perfil.xp_total
@@ -2343,11 +2555,79 @@ def finalizar_fase(
                 'moedas': (
                     perfil.moedas
                 ),
+                'vidas': perfil.vidas,
                 'nivel': (
                     perfil.nivel
                 ),
             },
         }
+    )
+
+
+# ============================================================
+# 16. REVISÃO PEDAGÓGICA
+# ============================================================
+
+@login_required
+def revisao_fase(request, fase_id):
+
+    fase = get_object_or_404(
+        Fase.objects.select_related(
+            'modulo__disciplina'
+        ),
+        id=fase_id,
+    )
+
+    if usuario_e_professor(request):
+        return redirect(
+            'editar_trilha',
+            trilha_id=fase.modulo.disciplina_id,
+        )
+
+    perfil = obter_perfil(request.user)
+
+    ultima_tentativa = (
+        TentativaFase.objects
+        .filter(
+            perfil=perfil,
+            fase=fase,
+            aprovado=False,
+        )
+        .prefetch_related(
+            'respostas__questao__opcoes',
+        )
+        .order_by('-iniciada_em')
+        .first()
+    )
+
+    respostas_revisao = []
+
+    if ultima_tentativa:
+        for resposta in ultima_tentativa.respostas.all():
+            if resposta.correta:
+                continue
+
+            resposta.opcao_correta_atual = (
+                resposta.questao.opcoes
+                .filter(e_correta=True)
+                .first()
+                if resposta.questao
+                else None
+            )
+
+            respostas_revisao.append(resposta)
+
+    return render(
+        request,
+        'gamificacao/revisao_fase.html',
+        {
+            'fase': fase,
+            'trilha_id': fase.modulo.disciplina_id,
+            'perfil': perfil,
+            'ultima_tentativa': ultima_tentativa,
+            'respostas_revisao': respostas_revisao,
+            'tema_aplicado': perfil.tema_fundo,
+        },
     )
 
 
