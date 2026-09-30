@@ -15,6 +15,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+        .tema-padrao{background:linear-gradient(135deg,#0f172a,#1e293b);}
+        .tema-floresta{background:linear-gradient(135deg,#052e16,#14532d,#064e3b);}
+        .tema-deserto{background:linear-gradient(135deg,#451a03,#78350f,#92400e);}
+        .tema-masmorra{background:linear-gradient(135deg,#020617,#1e1b4b,#171717);}
+
 
         .op-button {
             border: 2px solid transparent;
@@ -46,7 +51,7 @@
 </head>
 
 
-<body class="bg-[#111827] text-white min-h-screen flex flex-col font-sans">
+<body class="{{ tema_aplicado }} text-white min-h-screen flex flex-col font-sans">
 
 
     <!-- =====================================================
@@ -104,6 +109,11 @@
         </div>
 
 
+        {% if papel_efetivo == 'aluno' %}
+            {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+            <span class="text-red-300 font-black whitespace-nowrap">❤️ {{ perfil.vidas }}</span>
+        {% endif %}
+
         <div
             id="contador"
             class="min-w-[80px] text-right text-sm text-slate-400 font-bold"
@@ -157,6 +167,18 @@
 
     </div>
 
+
+    {% if sem_vidas and papel_efetivo == 'aluno' %}
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="mb-5 rounded-2xl border border-red-400/25 bg-red-500/10 p-4 flex flex-wrap justify-between items-center gap-3">
+                <div>
+                    <p class="font-black text-red-300">Você está sem vidas.</p>
+                    <p class="text-sm text-red-100/60 mt-1">Recarregue na loja para continuar tentando esta fase.</p>
+                </div>
+                <a href="{% url 'loja' %}" class="bg-red-500 hover:bg-red-400 px-4 py-2 rounded-xl font-black">Abrir loja</a>
+            </div>
+        </div>
+    {% endif %}
 
     <!-- =====================================================
          ÁREA PRINCIPAL
@@ -272,6 +294,8 @@
 
     <script>
 
+        const semVidas = {{ sem_vidas|yesno:"true,false" }};
+
         const questoes = JSON.parse(
             document.getElementById(
                 'questoes-data'
@@ -297,6 +321,9 @@
 
         const historicoUrl =
             "{% url 'historico_fase' fase.id %}";
+
+        const revisaoUrl =
+            "{% url 'revisao_fase' fase.id %}";
 
 
         let indiceAtual = 0;
@@ -551,6 +578,13 @@
         // ====================================================
 
         function carregarQuestao() {
+
+            if (semVidas) {
+                enunciadoEl.innerText = "Você está sem vidas.";
+                containerOpcoes.innerHTML = "";
+                btnAcao.disabled = true;
+                return;
+            }
 
             if (
                 indiceAtual >=
@@ -1150,6 +1184,13 @@
                         ${recompensa}
 
                         <div class="mt-6 flex justify-center gap-3 flex-wrap">
+
+                            <a
+                                href="${revisaoUrl}"
+                                class="bg-orange-500 hover:bg-orange-400 text-white font-bold px-5 py-3 rounded-xl transition"
+                            >
+                                Revisar meus erros
+                            </a>
 
                             <a
                                 href="${historicoUrl}"
