@@ -1539,6 +1539,15 @@ def ajax_editar_fase(request, fase_id):
         disciplina__autor=request.user,
     )
 
+    if modulo.disciplina_id != fase.modulo.disciplina_id:
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': 'A fase só pode ser movida dentro da própria trilha.',
+            },
+            status=400,
+        )
+
     deslocamento_y = max(
         DESLOCAMENTO_MINIMO,
         min(DESLOCAMENTO_MAXIMO, deslocamento_y),
