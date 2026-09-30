@@ -2238,10 +2238,19 @@ def trilha_view(
     if papel == 'professor':
 
         for modulo in modulos:
+            fases_modulo = list(
+                modulo.fases.all()
+            )
+
+            modulo.total_fases = len(
+                fases_modulo
+            )
+            modulo.fases_concluidas = 0
+            modulo.percentual_progresso = 0
             modulo.status = 'disponivel-professor'
             modulo.desbloqueado = True
 
-            for fase in modulo.fases.all():
+            for fase in fases_modulo:
                 fase.status = 'atual'
 
     else:
