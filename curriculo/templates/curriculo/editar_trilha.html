@@ -167,6 +167,35 @@
                                                 </div>
                                             </div>
                                             <button type="button" onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
+                                    {% for questao in fase.questoes.all %}
+                                        <article id="questao-card-{{ questao.id }}" class="mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-3">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-7 h-7 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[11px] font-black">
+                                                    Q
+                                                </div>
+                                                <div class="min-w-0 flex-1">
+                                                    <p class="text-xs font-bold text-white/80 line-clamp-2">{{ questao.enunciado }}</p>
+                                                    <p class="text-[10px] text-white/35 mt-1">{{ questao.opcoes.count }} alternativa(s)</p>
+                                                </div>
+                                                <div class="flex gap-1 shrink-0">
+                                                    <button
+                                                        type="button"
+                                                        onclick="openEditQuestao({{ questao.id }})"
+                                                        class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10"
+                                                        title="Editar questão"
+                                                    >✎</button>
+                                                    <button
+                                                        type="button"
+                                                        onclick="deleteQuestao({{ questao.id }}, '{{ questao.enunciado|escapejs }}')"
+                                                        class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200"
+                                                        title="Excluir questão"
+                                                    >×</button>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    {% empty %}
+                                        <p class="mt-2 text-[10px] text-white/30 text-center">Nenhuma atividade criada nesta fase.</p>
+                                    {% endfor %}
                                         </div>
                                     {% empty %}
                                         <div class="rounded-xl border border-dashed border-white/10 p-4 text-center text-xs text-white/35">Ainda não há fases neste módulo.</div>
@@ -391,6 +420,54 @@
         </div>
     </div>
 
+    <!-- MODAL EDITAR QUESTÃO -->
+    <div id="modal-editar-questao" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl bg-slate-100 text-slate-900 shadow-2xl p-6">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-emerald-700 font-black">Banco de questões</p>
+                    <h2 class="text-2xl font-black mt-1">Editar questão</h2>
+                    <p id="editar-questao-fase-nome" class="text-sm text-slate-500 font-bold mt-1">Fase: —</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-editar-questao')" class="w-9 h-9 rounded-lg bg-slate-200 hover:bg-slate-300">×</button>
+            </div>
+
+            <form id="form-editar-questao" class="space-y-5">
+                {% csrf_token %}
+                <input type="hidden" name="questao_id" id="editar-questao-id">
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                    <label class="block text-sm font-black mb-2">Enunciado</label>
+                    <textarea name="enunciado" id="editar-questao-enunciado" required rows="4" class="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-indigo-500 resize-none"></textarea>
+
+                    <label class="block text-sm font-black mt-4 mb-2">Feedback de erro</label>
+                    <textarea name="explicacao_erro" id="editar-questao-explicacao" rows="2" class="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-indigo-500 resize-none"></textarea>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                    <div class="flex items-center justify-between gap-3 mb-4">
+                        <h3 class="font-black">Alternativas</h3>
+                        <span class="text-xs text-slate-500 font-bold">Marque apenas uma como correta.</span>
+                    </div>
+                    <div class="space-y-3">
+                        {% for i in "0123"|make_list %}
+                            <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-indigo-300 transition">
+                                <input type="radio" name="op_correta" value="{{ forloop.counter0 }}" class="w-5 h-5 text-emerald-600">
+                                <input type="text" name="op_texto_{{ forloop.counter0 }}" id="editar-questao-op-{{ forloop.counter0 }}" placeholder="Alternativa {{ forloop.counter }}" class="min-w-0 flex-1 p-2.5 bg-white rounded-lg border border-slate-200 outline-none">
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('modal-editar-questao')" class="flex-1 bg-slate-200 hover:bg-slate-300 px-4 py-3 rounded-xl font-bold">Cancelar</button>
+                    <button type="submit" class="flex-[2] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-xl font-black">Salvar alterações</button>
+                </div>
+                <p id="editar-questao-erro" class="text-red-600 font-bold text-sm text-center hidden"></p>
+            </form>
+        </div>
+    </div>
+
     <!-- MODAL EDITAR MÓDULO -->
     <div id="modal-editar-modulo" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
         <div class="w-full max-w-lg rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
@@ -462,6 +539,29 @@
     </div>
 
     <script>
+        const questoesEditor = {
+            {% for modulo in modulos %}
+                {% for fase in modulo.fases.all %}
+                    {% for questao in fase.questoes.all %}
+                        '{{ questao.id }}': {
+                            faseId: {{ questao.fase_id }},
+                            faseTitulo: '{{ questao.fase.titulo|escapejs }}',
+                            enunciado: '{{ questao.enunciado|escapejs }}',
+                            explicacao: '{{ questao.explicacao_erro|default_if_none:""|escapejs }}',
+                            opcoes: [
+                                {% for opcao in questao.opcoes.all %}
+                                    {
+                                        texto: '{{ opcao.texto|escapejs }}',
+                                        correta: {% if opcao.e_correta %}true{% else %}false{% endif %}
+                                    }{% if not forloop.last %},{% endif %}
+                                {% endfor %}
+                            ]
+                        }{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        };
+
         const csrfToken = '{{ csrf_token }}';
         const trilhaId = {{ trilha.id }};
         const temasTrilha = ['tema-padrao','tema-floresta','tema-deserto','tema-masmorra','tema-aurora','tema-oceano'];
@@ -515,6 +615,65 @@
             showFormMessage(document.getElementById('form-questao'),'none');
             openModal('modal-questao');
         }
+
+        function openEditQuestao(questaoId) {
+            const questao = questoesEditor[String(questaoId)];
+
+            if (!questao) {
+                alert('Não foi possível carregar esta questão.');
+                return;
+            }
+
+            document.getElementById('editar-questao-id').value = questaoId;
+            document.getElementById('editar-questao-fase-nome').textContent = 'Fase: ' + questao.faseTitulo;
+            document.getElementById('editar-questao-enunciado').value = questao.enunciado;
+            document.getElementById('editar-questao-explicacao').value = questao.explicacao;
+
+            for (let indice = 0; indice < 4; indice += 1) {
+                const input = document.getElementById('editar-questao-op-' + indice);
+                const radio = document.querySelector('#form-editar-questao input[name="op_correta"][value="' + indice + '"]');
+
+                input.value = questao.opcoes[indice]?.texto || '';
+                radio.checked = Boolean(questao.opcoes[indice]?.correta);
+            }
+
+            document.getElementById('editar-questao-erro').classList.add('hidden');
+            openModal('modal-editar-questao');
+        }
+
+        async function deleteQuestao(id, enunciado) {
+            if (!confirm('Excluir esta atividade?\n\n"' + enunciado + '"')) {
+                return;
+            }
+
+            try {
+                await postAction('/estudio/ajax/questao/' + id + '/excluir/');
+                window.location.reload();
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        document.getElementById('form-editar-questao').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const form = event.target;
+            const id = document.getElementById('editar-questao-id').value;
+            const error = document.getElementById('editar-questao-erro');
+
+            error.classList.add('hidden');
+
+            try {
+                await postAction(
+                    '/estudio/ajax/questao/' + id + '/editar/',
+                    Object.fromEntries(new FormData(form).entries())
+                );
+                window.location.reload();
+            } catch (err) {
+                error.textContent = err.message;
+                error.classList.remove('hidden');
+            }
+        });
 
         function openPhaseForModule(moduloId) {
             document.getElementById('select-fase-modulo').value=String(moduloId);
