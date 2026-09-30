@@ -5,6 +5,7 @@ from .models import (
     ItemLoja,
     ItemComprado,
     ProgressoFase,
+    ProgressoModulo,
     TentativaFase,
     RespostaTentativa,
 )
@@ -161,6 +162,32 @@ class TentativaFaseAdmin(admin.ModelAdmin):
     inlines = [
         RespostaTentativaInline,
     ]
+
+
+@admin.register(ProgressoModulo)
+class ProgressoModuloAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'perfil',
+        'modulo',
+        'desbloqueado',
+        'chave_disponivel',
+        'concluido',
+        'data_desbloqueio',
+        'data_conclusao',
+    )
+
+    list_filter = (
+        'desbloqueado',
+        'chave_disponivel',
+        'concluido',
+        'modulo__disciplina',
+    )
+
+    search_fields = (
+        'perfil__usuario__username',
+        'modulo__titulo',
+    )
 
 
 @admin.register(RespostaTentativa)
