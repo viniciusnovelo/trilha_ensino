@@ -36,14 +36,33 @@
         </div>
         <div class="flex space-x-3 items-center">
             <!-- SELETOR DE TEMAS EM TEMPO REAL -->
-            <select id="seletor-tema" onchange="mudarTema(this.value)" class="bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none cursor-pointer">
-                <option value="tema-padrao" {% if trilha.tema == 'tema-padrao' %}selected{% endif %}>Noite (Padrão)</option>
-                <option value="tema-floresta" {% if trilha.tema == 'tema-floresta' %}selected{% endif %}>Floresta</option>
-                <option value="tema-deserto" {% if trilha.tema == 'tema-deserto' %}selected{% endif %}>Deserto</option>
-                <option value="tema-masmorra" {% if trilha.tema == 'tema-masmorra' %}selected{% endif %}>Masmorra</option>
-            </select>
+            <div class="relative" id="seletor-tema-trilha">
+                <button type="button" id="botao-tema-trilha"
+                    class="w-11 h-11 rounded-full border border-white/15 bg-slate-800/90 flex items-center justify-center text-lg shadow-lg hover:scale-110 transition"
+                    title="Tema padrão desta trilha">🎨</button>
+
+                <div id="opcoes-tema-trilha"
+                    class="absolute top-1/2 right-14 -translate-y-1/2 z-50 flex items-center gap-2 rounded-full bg-slate-950/95 border border-white/10 backdrop-blur-xl px-3 py-2 shadow-2xl opacity-0 scale-90 pointer-events-none transition-all duration-200">
+                    <button type="button" data-trilha-theme="tema-padrao" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#0f172a,#334155)" title="Noite"></button>
+                    <button type="button" data-trilha-theme="tema-floresta" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#052e16,#16a34a,#064e3b)" title="Floresta"></button>
+                    <button type="button" data-trilha-theme="tema-deserto" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#451a03,#d97706,#92400e)" title="Deserto"></button>
+                    <button type="button" data-trilha-theme="tema-masmorra" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#020617,#312e81,#171717)" title="Masmorra"></button>
+                </div>
+            </div>
 
             <button onclick="openModal('modal-modulo')" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg font-bold text-sm">+ Módulo</button>
+            <form action="{% url 'alternar_publicacao' trilha.id %}" method="post">
+                {% csrf_token %}
+                {% if trilha.ativo %}
+                    <button type="submit" class="bg-yellow-500/15 hover:bg-yellow-500 text-yellow-200 hover:text-slate-950 px-4 py-2 rounded-lg font-bold text-sm">
+                        Tornar rascunho
+                    </button>
+                {% else %}
+                    <button type="submit" class="bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg font-bold text-sm">
+                        Publicar
+                    </button>
+                {% endif %}
+            </form>
             <button onclick="openModal('modal-fase')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-bold text-sm">+ Fase</button>
             <button onclick="window.location.reload()" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm">↻ Atualizar</button>
         </div>
@@ -114,7 +133,33 @@
                     </select>
                 </div>
                 <div><label class="font-bold text-sm">Título da Fase</label><input type="text" name="titulo" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-                <div><label class="font-bold text-sm">Ordem dentro do Módulo</label><input type="number" name="ordem" value="1" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
+                <div><label class="font-bold text-sm">Ordem dentro do Módulo</label><input type="number" name="ordem" value="1" min="1" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
+
+                <div>
+                    <label class="font-bold text-sm">Tipo de fase</label>
+                    <select name="tipo" class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
+                        <option value="teoria">Conteúdo Teórico</option>
+                        <option value="quiz" selected>Quiz / Exercícios</option>
+                        <option value="desafio">Desafio de Recuperação</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-bold text-sm">XP da fase</label>
+                        <input type="number" name="xp_recompensa" value="50" min="0" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
+                    </div>
+                    <div>
+                        <label class="font-bold text-sm">Moedas da fase</label>
+                        <input type="number" name="moedas_recompensa" value="10" min="0" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="font-bold text-sm">Deslocamento no mapa</label>
+                    <input type="number" name="deslocamento_y" value="0" min="-150" max="150" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
+                    <p class="text-xs text-slate-500 mt-1">Use valores entre -150 e 150 para desenhar a curva da jornada.</p>
+                </div>
                 <div class="flex space-x-3 pt-4">
                     <button type="button" onclick="closeModal('modal-fase')" class="flex-1 bg-slate-200 text-slate-700 font-bold py-3 rounded-xl">Fechar</button>
                     <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700">Salvar Fase</button>
@@ -166,15 +211,72 @@
     <script>
         const csrfToken = '{{ csrf_token }}';
 
-        // ALTERAR O TEMA DO MAPA NATIVAMENTE
-        function mudarTema(novoTema) {
-            document.body.className = `${novoTema} text-white h-screen flex flex-col font-sans overflow-hidden select-none relative transition-all duration-1000`;
-            fetch(`/estudio/trilha/{{ trilha.id }}/atualizar-tema/`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrfToken},
-                body: JSON.stringify({tema: novoTema})
-            });
+        // Tema padrão da trilha
+        const temaTrilhaRoot = document.getElementById('seletor-tema-trilha');
+        const temaTrilhaButton = document.getElementById('botao-tema-trilha');
+        const temaTrilhaPanel = document.getElementById('opcoes-tema-trilha');
+        const temaAtualTrilha = '{{ trilha.tema }}';
+        const temasTrilha = ['tema-padrao', 'tema-floresta', 'tema-deserto', 'tema-masmorra'];
+
+        function abrirTemaTrilha(abrir) {
+            temaTrilhaButton.setAttribute('aria-expanded', String(abrir));
+            temaTrilhaPanel.classList.toggle('opacity-0', !abrir);
+            temaTrilhaPanel.classList.toggle('scale-90', !abrir);
+            temaTrilhaPanel.classList.toggle('pointer-events-none', !abrir);
         }
+
+        temaTrilhaButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const aberto = temaTrilhaButton.getAttribute('aria-expanded') === 'true';
+            abrirTemaTrilha(!aberto);
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!temaTrilhaRoot.contains(event.target)) {
+                abrirTemaTrilha(false);
+            }
+        });
+
+        document.querySelectorAll('[data-trilha-theme]').forEach((button) => {
+            if (button.dataset.trilhaTheme === temaAtualTrilha) {
+                button.classList.add('ring-4', 'ring-white/80', 'scale-110');
+            }
+
+            button.addEventListener('click', async () => {
+                const novoTema = button.dataset.trilhaTheme;
+
+                document.body.classList.remove(...temasTrilha);
+                document.body.classList.add(novoTema);
+
+                try {
+                    const response = await fetch(
+                        '{% url "ajax_atualizar_tema" trilha.id %}',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrfToken,
+                            },
+                            body: JSON.stringify({ tema: novoTema }),
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error('Não foi possível salvar o tema da trilha.');
+                    }
+
+                    document.querySelectorAll('.tema-trilha-option').forEach((item) => {
+                        item.classList.remove('ring-4', 'ring-white/80', 'scale-110');
+                    });
+
+                    button.classList.add('ring-4', 'ring-white/80', 'scale-110');
+                    abrirTemaTrilha(false);
+                } catch (error) {
+                    alert(error.message);
+                    window.location.reload();
+                }
+            });
+        });
 
         // Modais e Ajax de Criação (Mantidos)
         function openModal(id) { document.getElementById(id).classList.add('modal-active'); }
