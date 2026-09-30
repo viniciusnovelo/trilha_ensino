@@ -875,6 +875,8 @@ def editar_trilha(
             'trilha': trilha,
             'modulos': modulos,
             'fases': fases,
+            'perfil': obter_perfil(request.user),
+            'tema_aplicado': trilha.tema,
         },
     )
 
@@ -1122,6 +1124,11 @@ def ajax_criar_modulo(
         '',
     ).strip()
 
+    descricao = request.POST.get(
+        'descricao',
+        '',
+    ).strip()
+
     try:
 
         ordem = int(
@@ -1166,6 +1173,7 @@ def ajax_criar_modulo(
     modulo = Modulo.objects.create(
         disciplina=trilha,
         titulo=titulo,
+        descricao=descricao,
         ordem=ordem,
     )
 
@@ -1175,6 +1183,7 @@ def ajax_criar_modulo(
             'modulo': {
                 'id': modulo.id,
                 'titulo': modulo.titulo,
+                'descricao': modulo.descricao,
                 'ordem': modulo.ordem,
             },
         }
@@ -1396,7 +1405,227 @@ def ajax_criar_fase(
 
 
 # ============================================================
-# 11. CRIAÇÃO DE QUESTÃO
+# 11. EDIÇÃO E EXCLUSÃO DE CONTEÚDO
+# ============================================================
+
+@login_required
+def ajax_editar_modulo(request, modulo_id):
+
+    if not usuario_e_professor(request):
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Acesso permitido apenas a professores.'},
+            status=403,
+        )
+
+    if request.method != 'POST':
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Método não permitido.'},
+            status=405,
+        )
+
+    modulo = get_object_or_404(
+        Modulo,
+        id=modulo_id,
+        disciplina__autor=request.user,
+    )
+
+    titulo = request.POST.get('titulo', '').strip()
+    descricao = request.POST.get('descricao', '').strip()
+
+    try:
+        ordem = int(request.POST.get('ordem', modulo.ordem))
+    except (TypeError, ValueError):
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'A ordem do módulo é inválida.'},
+            status=400,
+        )
+
+    if not titulo:
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Informe o título do módulo.'},
+            status=400,
+        )
+
+    if ordem < 1:
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'A ordem deve ser maior ou igual a 1.'},
+            status=400,
+        )
+
+    modulo.titulo = titulo
+    modulo.descricao = descricao
+    modulo.ordem = ordem
+    modulo.save(update_fields=['titulo', 'descricao', 'ordem'])
+
+    return JsonResponse(
+        {
+            'status': 'ok',
+            'modulo': {
+                'id': modulo.id,
+                'titulo': modulo.titulo,
+                'descricao': modulo.descricao,
+                'ordem': modulo.ordem,
+            },
+        }
+    )
+
+
+@login_required
+def ajax_editar_fase(request, fase_id):
+
+    if not usuario_e_professor(request):
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Acesso permitido apenas a professores.'},
+            status=403,
+        )
+
+    if request.method != 'POST':
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Método não permitido.'},
+            status=405,
+        )
+
+    fase = get_object_or_404(
+        Fase,
+        id=fase_id,
+        modulo__disciplina__autor=request.user,
+    )
+
+    modulo_id = request.POST.get('modulo_id')
+    titulo = request.POST.get('titulo', '').strip()
+    tipo = request.POST.get('tipo', fase.tipo)
+
+    try:
+        ordem = int(request.POST.get('ordem', fase.ordem))
+        xp_recompensa = int(request.POST.get('xp_recompensa', fase.xp_recompensa))
+        moedas_recompensa = int(request.POST.get('moedas_recompensa', fase.moedas_recompensa))
+        deslocamento_y = int(request.POST.get('deslocamento_y', fase.deslocamento_y))
+    except (TypeError, ValueError):
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Um dos valores numéricos é inválido.'},
+            status=400,
+        )
+
+    if not titulo:
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Informe o título da fase.'},
+            status=400,
+        )
+
+    if ordem < 1 or xp_recompensa < 0 or moedas_recompensa < 0:
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Verifique ordem, XP e moedas.'},
+            status=400,
+        )
+
+    tipos_validos = {valor for valor, _ in Fase.TIPO_CHOICES}
+    if tipo not in tipos_validos:
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Tipo de fase inválido.'},
+            status=400,
+        )
+
+    modulo = get_object_or_404(
+        Modulo,
+        id=modulo_id,
+        disciplina__autor=request.user,
+    )
+
+    deslocamento_y = max(
+        DESLOCAMENTO_MINIMO,
+        min(DESLOCAMENTO_MAXIMO, deslocamento_y),
+    )
+
+    fase.modulo = modulo
+    fase.titulo = titulo
+    fase.ordem = ordem
+    fase.tipo = tipo
+    fase.xp_recompensa = xp_recompensa
+    fase.moedas_recompensa = moedas_recompensa
+    fase.deslocamento_y = deslocamento_y
+    fase.save(
+        update_fields=[
+            'modulo',
+            'titulo',
+            'ordem',
+            'tipo',
+            'xp_recompensa',
+            'moedas_recompensa',
+            'deslocamento_y',
+        ]
+    )
+
+    return JsonResponse(
+        {
+            'status': 'ok',
+            'fase': {
+                'id': fase.id,
+                'titulo': fase.titulo,
+                'ordem': fase.ordem,
+                'tipo': fase.tipo,
+                'xp_recompensa': fase.xp_recompensa,
+                'moedas_recompensa': fase.moedas_recompensa,
+                'deslocamento_y': fase.deslocamento_y,
+                'modulo_id': fase.modulo_id,
+            },
+        }
+    )
+
+
+@login_required
+def ajax_excluir_modulo(request, modulo_id):
+
+    if not usuario_e_professor(request):
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Acesso permitido apenas a professores.'},
+            status=403,
+        )
+
+    if request.method != 'POST':
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Método não permitido.'},
+            status=405,
+        )
+
+    modulo = get_object_or_404(
+        Modulo,
+        id=modulo_id,
+        disciplina__autor=request.user,
+    )
+
+    modulo.delete()
+
+    return JsonResponse({'status': 'ok'})
+
+
+@login_required
+def ajax_excluir_fase(request, fase_id):
+
+    if not usuario_e_professor(request):
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Acesso permitido apenas a professores.'},
+            status=403,
+        )
+
+    if request.method != 'POST':
+        return JsonResponse(
+            {'status': 'erro', 'msg': 'Método não permitido.'},
+            status=405,
+        )
+
+    fase = get_object_or_404(
+        Fase,
+        id=fase_id,
+        modulo__disciplina__autor=request.user,
+    )
+
+    fase.delete()
+
+    return JsonResponse({'status': 'ok'})
+
+
+# ============================================================
+# 12. CRIAÇÃO DE QUESTÃO
 # ============================================================
 
 @login_required
