@@ -9,6 +9,12 @@ urlpatterns = [
         views.atualizar_tema_usuario,
         name='atualizar_tema_usuario',
     ),
+
+    path(
+        'aparencia/',
+        views.atualizar_aparencia_usuario,
+        name='atualizar_aparencia_usuario',
+    ),
     path(
         'loja/',
         views.loja,
