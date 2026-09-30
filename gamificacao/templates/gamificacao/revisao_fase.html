@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão - {{ fase.titulo }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tema-padrao{background:linear-gradient(135deg,#0f172a,#1e293b);}
+        .tema-floresta{background:linear-gradient(135deg,#052e16,#14532d,#064e3b);}
+        .tema-deserto{background:linear-gradient(135deg,#451a03,#78350f,#92400e);}
+        .tema-masmorra{background:linear-gradient(135deg,#020617,#1e1b4b,#171717);}
+    </style>
+</head>
+<body class="{{ tema_aplicado }} text-white min-h-screen font-sans">
+<div class="min-h-screen bg-slate-950/55">
+<header class="border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex flex-wrap justify-between items-center gap-4">
+        <div>
+            <p class="text-xs uppercase tracking-widest text-orange-300 font-black">Recuperação pedagógica</p>
+            <h1 class="text-3xl font-black mt-1">{{ fase.titulo }}</h1>
+            {% if ultima_tentativa %}
+                <p class="text-white/50 mt-2">
+                    Última tentativa não aprovada: {{ ultima_tentativa.aproveitamento }}%
+                </p>
+            {% endif %}
+        </div>
+        <div class="flex items-center gap-2">
+            {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+            <a href="{% url 'historico_fase' fase.id %}" class="px-4 py-2 rounded-xl bg-slate-800 border border-white/10 font-bold">Histórico</a>
+            <a href="{% url 'trilha' trilha_id %}" class="px-4 py-2 rounded-xl bg-green-500 hover:bg-green-400 font-black">Mapa</a>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-6 py-8">
+{% if respostas_revisao %}
+    <div class="rounded-2xl bg-orange-500/10 border border-orange-400/20 p-5 mb-6">
+        <p class="font-black text-orange-200">Revise os erros antes de tentar novamente.</p>
+        <p class="text-sm text-white/50 mt-1">Compare sua resposta, a resposta correta e o feedback do professor.</p>
+    </div>
+
+    <div class="space-y-5">
+    {% for resposta in respostas_revisao %}
+        <article class="bg-slate-900/80 border border-white/10 rounded-3xl p-6">
+            <p class="text-xs uppercase tracking-widest text-red-300 font-black">Questão para revisar</p>
+            <p class="text-lg font-bold leading-relaxed mt-3">{{ resposta.texto_questao_snapshot }}</p>
+
+            <div class="grid md:grid-cols-2 gap-4 mt-5">
+                <div class="rounded-2xl bg-red-500/10 border border-red-400/20 p-4">
+                    <p class="text-xs uppercase tracking-widest text-red-300 font-black">Sua resposta</p>
+                    <p class="mt-2 text-white/80">{{ resposta.texto_opcao_snapshot }}</p>
+                </div>
+
+                {% if resposta.opcao_correta_atual %}
+                <div class="rounded-2xl bg-green-500/10 border border-green-400/20 p-4">
+                    <p class="text-xs uppercase tracking-widest text-green-300 font-black">Resposta correta</p>
+                    <p class="mt-2 text-white/80">{{ resposta.opcao_correta_atual.texto }}</p>
+                </div>
+                {% else %}
+                <div class="rounded-2xl bg-slate-800 border border-white/10 p-4">
+                    <p class="text-xs uppercase tracking-widest text-white/40 font-black">Resposta correta</p>
+                    <p class="mt-2 text-white/50">A alternativa correta original não está mais disponível.</p>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if resposta.questao and resposta.questao.explicacao_erro %}
+            <div class="mt-4 rounded-2xl bg-yellow-500/10 border border-yellow-400/20 p-4">
+                <p class="text-xs uppercase tracking-widest text-yellow-300 font-black">Feedback</p>
+                <p class="mt-2 text-yellow-50/80">{{ resposta.questao.explicacao_erro }}</p>
+            </div>
+            {% endif %}
+        </article>
+    {% endfor %}
+    </div>
+
+    <div class="flex flex-wrap gap-3 mt-7">
+        <a href="{% url 'fase_detalhe' fase.id %}" class="bg-green-500 hover:bg-green-400 px-6 py-3 rounded-xl font-black">Tentar novamente</a>
+        <a href="{% url 'trilha' trilha_id %}" class="bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-xl font-bold">Voltar ao mapa</a>
+    </div>
+{% elif not ultima_tentativa %}
+    <section class="bg-slate-900/80 border border-white/10 rounded-3xl p-10 text-center">
+        <div class="text-6xl">📚</div>
+        <h2 class="text-2xl font-black mt-4">Ainda não há tentativa para revisar.</h2>
+        <a href="{% url 'fase_detalhe' fase.id %}" class="inline-block mt-6 bg-green-500 px-6 py-3 rounded-xl font-black">Ir para a fase</a>
+    </section>
+{% else %}
+    <section class="bg-green-500/10 border border-green-400/20 rounded-3xl p-10 text-center">
+        <div class="text-6xl">✅</div>
+        <h2 class="text-2xl font-black mt-4 text-green-300">Nenhum erro disponível para revisão.</h2>
+        <a href="{% url 'trilha' trilha_id %}" class="inline-block mt-6 bg-slate-700 px-6 py-3 rounded-xl font-black">Voltar ao mapa</a>
+    </section>
+{% endif %}
+</main>
+</div>
+</body>
+</html>
