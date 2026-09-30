@@ -2,418 +2,463 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Estúdio do Professor</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        details > summary {
+            list-style: none;
+        }
+
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .game-card {
+            background: rgba(15, 23, 42, .80);
+            border: 1px solid rgba(255, 255, 255, .10);
+            backdrop-filter: blur(16px);
+        }
+
+        .game-card:hover {
+            border-color: rgba(99, 102, 241, .38);
+        }
+
+        .module-row {
+            background: rgba(15, 23, 42, .64);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        details[open] .chevron {
+            transform: rotate(180deg);
+        }
+
+        details[open] .module-content {
+            animation: reveal-content .22s ease-out;
+        }
+
+        @keyframes reveal-content {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
-
-<body
-    class="tema-padrao text-white min-h-screen font-sans relative"
->
+<body class="tema-padrao text-white min-h-screen font-sans relative">
 
     {% include 'gamificacao/partials/paisagem_animada.html' %}
 
+    <div class="relative z-10 min-h-screen">
 
-    <!-- =====================================================
-         CABEÇALHO
-         ===================================================== -->
+        <header class="relative z-20 border-b border-white/10 bg-slate-950/58 backdrop-blur-2xl">
 
-    <header
-        class="relative z-10 border-b border-white/10 bg-slate-900/80 backdrop-blur-xl"
-    >
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-5">
 
-        <div
-            class="max-w-6xl mx-auto px-6 py-5 flex flex-wrap justify-between items-center gap-4"
-        >
+                <div class="flex flex-wrap justify-between items-center gap-4">
 
-            <div>
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-slate-500 font-black">
+                            Área de criação
+                        </p>
 
-                <p
-                    class="text-xs uppercase tracking-widest text-slate-500 font-bold"
-                >
-                    Área de criação
-                </p>
+                        <h1 class="text-2xl sm:text-3xl font-black text-indigo-300 mt-1">
+                            Estúdio do Professor
+                        </h1>
 
-                <h1
-                    class="text-3xl font-black text-indigo-400 mt-1"
-                >
-                    Estúdio do Professor
-                </h1>
+                        <p class="text-slate-400 mt-1">
+                            Olá,
+                            <strong class="text-white">
+                                {{ user.username }}
+                            </strong>
+                        </p>
+                    </div>
 
-                <p
-                    class="text-slate-400 mt-1"
-                >
-                    Olá,
-                    <strong class="text-white">
-                        {{ user.username }}
-                    </strong>
-                </p>
+                    <div class="flex flex-wrap items-center gap-2">
 
-            </div>
+                        {% include 'gamificacao/partials/controle_aparencia.html' %}
 
-
-            <div
-                class="flex flex-wrap items-center gap-3"
-            >
-
-                {% include 'gamificacao/partials/controle_aparencia.html' %}
-
-                <!-- =================================================
-                     MODO DE TESTE
-                     ================================================= -->
-
-            {% if modo_teste_disponivel %}
-
-                <form
-                    action="{% url 'alternar_papel' %}"
-                    method="post"
-                >
-
-                    {% csrf_token %}
-
-                    <button
-                        type="submit"
-                        class="bg-yellow-500/10 hover:bg-yellow-500 border border-yellow-500/30 text-yellow-300 hover:text-slate-900 font-bold px-4 py-2 rounded-xl transition"
-                    >
-                        🧪
-                        {% if papel_efetivo == 'professor' %}
-                            Mudar para Aluno
-                        {% else %}
-                            Mudar para Professor
-                        {% endif %}
-                    </button>
-
-                </form>
-
-            {% endif %}
-
-
-                <form
-                    action="{% url 'logout' %}"
-                    method="post"
-                >
-
-                    {% csrf_token %}
-
-                    <button
-                        type="submit"
-                        class="text-slate-400 hover:text-red-400 font-bold transition"
-                    >
-                        Sair
-                    </button>
-
-                </form>
-
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <!-- =====================================================
-         INDICADOR
-         ===================================================== -->
-
-    {% if modo_teste_ativo %}
-
-        <div
-            class="bg-yellow-950/50 border-b border-yellow-500/20"
-        >
-
-            <div
-                class="max-w-6xl mx-auto px-6 py-2 text-center text-xs text-yellow-300 font-bold"
-            >
-
-                🧪
-                MODO DE TESTE ATIVO
-                ·
-                Papel atual:
-                {{ papel_efetivo|capfirst }}
-
-                ·
-                Perfil oficial:
-                {{ papel_oficial|capfirst }}
-
-            </div>
-
-        </div>
-
-    {% endif %}
-
-
-    <!-- =====================================================
-         CONTEÚDO
-         ===================================================== -->
-
-    <main
-        class="relative z-10 max-w-6xl mx-auto px-6 py-8"
-    >
-
-        <section class="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-7">
-            <div class="bg-slate-800/80 border border-white/10 rounded-2xl p-4">
-                <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Jogos</p>
-                <p class="text-2xl font-black mt-1">{{ total_trilhas }}</p>
-            </div>
-            <div class="bg-slate-800/80 border border-white/10 rounded-2xl p-4">
-                <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Publicados</p>
-                <p class="text-2xl font-black mt-1 text-emerald-300">{{ total_publicadas }}</p>
-            </div>
-            <div class="bg-slate-800/80 border border-white/10 rounded-2xl p-4">
-                <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Módulos</p>
-                <p class="text-2xl font-black mt-1">{{ total_modulos }}</p>
-            </div>
-            <div class="bg-slate-800/80 border border-white/10 rounded-2xl p-4">
-                <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Fases</p>
-                <p class="text-2xl font-black mt-1">{{ total_fases }}</p>
-            </div>
-            <div class="bg-slate-800/80 border border-white/10 rounded-2xl p-4">
-                <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Questões</p>
-                <p class="text-2xl font-black mt-1">{{ total_questoes }}</p>
-            </div>
-        </section>
-
-        <div
-            class="flex flex-wrap justify-between items-center gap-4 mb-8"
-        >
-
-            <div>
-
-                <h2
-                    class="text-2xl font-black"
-                >
-                    Meus Jogos
-                </h2>
-
-                <p
-                    class="text-slate-400 mt-1"
-                >
-                    Crie, edite e publique suas trilhas.
-                </p>
-
-            </div>
-
-
-            <a
-                href="{% url 'criar_trilha' %}"
-                class="bg-indigo-600 hover:bg-indigo-500 text-white font-black px-6 py-3 rounded-xl shadow-lg transition"
-            >
-                + Novo Jogo
-            </a>
-
-        </div>
-
-
-        <!-- =================================================
-             LISTA
-             ================================================= -->
-
-        <div
-            class="space-y-4"
-        >
-
-            {% for trilha in trilhas %}
-
-                <article
-                    class="bg-slate-800 border border-slate-700 rounded-2xl p-6 hover:border-indigo-500/50 transition"
-                >
-
-                    <div
-                        class="flex flex-wrap justify-between items-center gap-5"
-                    >
-
-                        <div
-                            class="flex-1 min-w-[250px]"
-                        >
-
-                            <div
-                                class="flex flex-wrap items-center gap-3"
-                            >
-
-                                <h3
-                                    class="text-xl font-black"
-                                >
-                                    {{ trilha.nome }}
-                                </h3>
-
-
-                                {% if trilha.ativo %}
-
-                                    <span
-                                        class="px-3 py-1 rounded-full text-xs font-black bg-green-500/10 text-green-400 border border-green-500/20"
-                                    >
-                                        PUBLICADO
-                                    </span>
-
-                                {% else %}
-
-                                    <span
-                                        class="px-3 py-1 rounded-full text-xs font-black bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
-                                    >
-                                        RASCUNHO
-                                    </span>
-
-                                {% endif %}
-
-                            </div>
-
-
-                            <p
-                                class="text-slate-400 mt-2"
-                            >
-                                {{ trilha.descricao }}
-                            </p>
-
-
-                            <div
-                                class="mt-3 text-xs text-slate-500"
-                            >
-                                Tema:
-
-                                <span class="text-slate-300">
-                                    {{ trilha.get_tema_display }}
-                                </span>
-                            </div>
-
-                            <div class="mt-4 rounded-2xl bg-slate-950/35 border border-white/5 p-3">
-                                <div class="flex items-center justify-between gap-3">
-                                    <span class="text-xs uppercase tracking-widest text-slate-500 font-black">Estrutura do jogo</span>
-                                    <span class="text-xs text-slate-400 font-bold">
-                                        {{ trilha.total_modulos }} módulo(s) · {{ trilha.total_fases }} fase(s) · {{ trilha.total_questoes }} questão(ões)
-                                    </span>
-                                </div>
-
-                                <div class="mt-3 space-y-2">
-                                    {% for modulo in trilha.modulos.all %}
-                                        <div class="rounded-xl bg-sky-400/5 border border-sky-300/10 p-3">
-                                            <div class="flex items-center gap-2">
-                                                <span class="w-7 h-7 shrink-0 rounded-lg bg-sky-400/10 text-sky-200 border border-sky-300/10 flex items-center justify-center text-xs font-black">{{ modulo.ordem }}</span>
-                                                <div class="min-w-0">
-                                                    <p class="text-sm font-black text-white truncate">{{ modulo.titulo }}</p>
-                                                    {% if modulo.descricao %}
-                                                        <p class="text-[11px] text-slate-500 mt-0.5 truncate">{{ modulo.descricao }}</p>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-
-                                            <div class="mt-2 ml-9 space-y-1.5">
-                                                {% for fase in modulo.fases.all %}
-                                                    <div class="flex items-center justify-between gap-3 rounded-lg bg-slate-950/25 border border-white/5 px-2.5 py-2">
-                                                        <div class="min-w-0 flex items-center gap-2">
-                                                            <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-500/10 text-indigo-200 flex items-center justify-center text-[10px] font-black">{{ fase.ordem }}</span>
-                                                            <span class="text-xs font-bold text-slate-300 truncate">{{ fase.titulo }}</span>
-                                                        </div>
-                                                        <span class="shrink-0 text-[10px] text-emerald-300 font-black">
-                                                            {{ fase.questoes.count }} questão(ões)
-                                                        </span>
-                                                    </div>
-                                                {% empty %}
-                                                    <p class="text-[11px] text-slate-600">Nenhuma fase criada neste módulo.</p>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    {% empty %}
-                                        <p class="text-xs text-slate-500">Nenhum módulo criado ainda. Entre em <strong>Gerenciar</strong> para começar.</p>
-                                    {% endfor %}
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="flex flex-wrap gap-3"
-                        >
-
-                            <a
-                                href="{% url 'editar_trilha' trilha.id %}"
-                                class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-5 py-3 rounded-xl transition"
-                            >
-                                Gerenciar
-                            </a>
-
-
-                            <a
-                                href="{% url 'trilha' trilha.id %}"
-                                class="bg-green-500 hover:bg-green-400 text-white font-bold px-5 py-3 rounded-xl transition"
-                            >
-                                Visualizar
-                            </a>
-
-
-                            <form
-                                action="{% url 'deletar_trilha' trilha.id %}"
-                                method="post"
-                                onsubmit="return confirm('Tem certeza que deseja excluir este jogo? Esta ação não pode ser desfeita.');"
-                            >
-
+                        {% if modo_teste_disponivel %}
+                            <form action="{% url 'alternar_papel' %}" method="post">
                                 {% csrf_token %}
 
                                 <button
                                     type="submit"
-                                    class="bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/20 font-bold px-5 py-3 rounded-xl transition"
+                                    class="bg-yellow-500/10 hover:bg-yellow-500 border border-yellow-500/30 text-yellow-300 hover:text-slate-900 font-bold px-4 py-2 rounded-xl transition"
                                 >
-                                    Excluir
+                                    🧪
+                                    {% if papel_efetivo == 'professor' %}
+                                        Mudar para Aluno
+                                    {% else %}
+                                        Mudar para Professor
+                                    {% endif %}
                                 </button>
-
                             </form>
+                        {% endif %}
+
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="text-slate-400 hover:text-red-400 font-bold transition px-2 py-2"
+                            >
+                                Sair
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {% if modo_teste_ativo %}
+            <div class="relative z-20 bg-yellow-950/55 border-b border-yellow-500/20">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 py-2 text-center text-xs text-yellow-300 font-bold">
+                    🧪 MODO DE TESTE · Papel atual: {{ papel_efetivo|capfirst }}
+                    · Perfil oficial: {{ papel_oficial|capfirst }}
+                </div>
+            </div>
+        {% endif %}
+
+        <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-7 sm:py-9">
+
+            <section class="flex flex-wrap items-end justify-between gap-4 mb-7">
+
+                <div>
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-indigo-300 font-black">
+                        Visão geral
+                    </p>
+
+                    <h2 class="text-2xl sm:text-3xl font-black mt-1">
+                        Meus Jogos
+                    </h2>
+
+                    <p class="text-sm text-slate-400 mt-1">
+                        Administre suas trilhas aqui. Abra <strong class="text-white/75">Gerenciar</strong> quando quiser editar o conteúdo.
+                    </p>
+                </div>
+
+                <a
+                    href="{% url 'criar_trilha' %}"
+                    class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-black px-5 py-3 rounded-xl shadow-lg transition"
+                >
+                    + Novo Jogo
+                </a>
+
+            </section>
+
+            <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-7">
+
+                <div class="bg-slate-900/60 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
+                    <p class="text-[10px] uppercase tracking-widest text-white/35 font-black">
+                        Jogos
+                    </p>
+                    <p class="text-2xl font-black mt-1">
+                        {{ total_trilhas }}
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/60 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
+                    <p class="text-[10px] uppercase tracking-widest text-white/35 font-black">
+                        Publicados
+                    </p>
+                    <p class="text-2xl font-black mt-1 text-emerald-300">
+                        {{ total_publicadas }}
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/60 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
+                    <p class="text-[10px] uppercase tracking-widest text-white/35 font-black">
+                        Módulos
+                    </p>
+                    <p class="text-2xl font-black mt-1">
+                        {{ total_modulos }}
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/60 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
+                    <p class="text-[10px] uppercase tracking-widest text-white/35 font-black">
+                        Questões
+                    </p>
+                    <p class="text-2xl font-black mt-1">
+                        {{ total_questoes }}
+                    </p>
+                </div>
+
+            </section>
+
+            <section class="space-y-4">
+
+                {% for trilha in trilhas %}
+
+                    <article class="game-card rounded-3xl p-4 sm:p-5 transition">
+
+                        <div class="flex flex-col lg:flex-row lg:items-center gap-5">
+
+                            <div class="flex-1 min-w-0">
+
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <h3 class="text-xl font-black truncate">
+                                        {{ trilha.nome }}
+                                    </h3>
+
+                                    {% if trilha.ativo %}
+                                        <span class="px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-500/10 text-emerald-300 border border-emerald-400/20 uppercase tracking-wider">
+                                            Publicado
+                                        </span>
+                                    {% else %}
+                                        <span class="px-2.5 py-1 rounded-full text-[10px] font-black bg-amber-500/10 text-amber-300 border border-amber-400/20 uppercase tracking-wider">
+                                            Rascunho
+                                        </span>
+                                    {% endif %}
+                                </div>
+
+                                {% if trilha.descricao %}
+                                    <p class="text-sm text-slate-400 mt-2 max-w-3xl line-clamp-2">
+                                        {{ trilha.descricao }}
+                                    </p>
+                                {% endif %}
+
+                                <div class="flex flex-wrap items-center gap-2 mt-3 text-xs">
+
+                                    <span class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/8 text-slate-400">
+                                        🎨 {{ trilha.get_tema_display }}
+                                    </span>
+
+                                    <span class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/8 text-slate-400">
+                                        {{ trilha.total_modulos }} módulos
+                                    </span>
+
+                                    <span class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/8 text-slate-400">
+                                        {{ trilha.total_fases }} fases
+                                    </span>
+
+                                    <span class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/8 text-slate-400">
+                                        {{ trilha.total_questoes }} questões
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="flex flex-wrap gap-2 shrink-0">
+
+                                <a
+                                    href="{% url 'editar_trilha' trilha.id %}"
+                                    class="bg-indigo-600 hover:bg-indigo-500 text-white font-black px-4 py-2.5 rounded-xl transition"
+                                >
+                                    Gerenciar
+                                </a>
+
+                                <a
+                                    href="{% url 'trilha' trilha.id %}"
+                                    class="bg-emerald-500 hover:bg-emerald-400 text-white font-black px-4 py-2.5 rounded-xl transition"
+                                >
+                                    Visualizar
+                                </a>
+
+                                <form
+                                    action="{% url 'deletar_trilha' trilha.id %}"
+                                    method="post"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este jogo? Esta ação não pode ser desfeita.');"
+                                >
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="bg-red-500/5 hover:bg-red-500 text-red-300 hover:text-white border border-red-400/15 font-black px-4 py-2.5 rounded-xl transition"
+                                    >
+                                        Excluir
+                                    </button>
+                                </form>
+
+                            </div>
 
                         </div>
 
+                        <div class="mt-4 pt-4 border-t border-white/7">
+
+                            {% if trilha.total_modulos > 0 %}
+
+                                <details class="group">
+
+                                    <summary class="cursor-pointer select-none flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/[0.025] hover:bg-white/[0.05] border border-white/7 px-4 py-3 transition">
+
+                                        <span class="flex items-center gap-3">
+                                            <span class="w-8 h-8 rounded-xl bg-sky-400/10 border border-sky-300/10 text-sky-200 flex items-center justify-center font-black">
+                                                ☰
+                                            </span>
+
+                                            <span>
+                                                <span class="block text-sm font-black">
+                                                    Estrutura do jogo
+                                                </span>
+
+                                                <span class="block text-[11px] text-slate-500 mt-0.5">
+                                                    Clique para visualizar módulos e fases
+                                                </span>
+                                            </span>
+                                        </span>
+
+                                        <span class="flex items-center gap-2 text-xs text-slate-500 font-bold">
+                                            {{ trilha.total_modulos }} módulos
+                                            <svg class="chevron w-4 h-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                            </svg>
+                                        </span>
+
+                                    </summary>
+
+                                    <div class="module-content mt-3 space-y-2">
+
+                                        {% for modulo in trilha.modulos.all %}
+
+                                            <details class="module-row rounded-2xl overflow-hidden">
+
+                                                <summary class="cursor-pointer select-none flex items-center justify-between gap-3 px-4 py-3">
+
+                                                    <span class="flex items-center gap-3 min-w-0">
+                                                        <span class="w-9 h-9 shrink-0 rounded-xl bg-sky-400/10 text-sky-200 border border-sky-300/10 flex items-center justify-center font-black">
+                                                            {{ modulo.ordem }}
+                                                        </span>
+
+                                                        <span class="min-w-0">
+                                                            <span class="block text-sm font-black truncate">
+                                                                {{ modulo.titulo }}
+                                                            </span>
+
+                                                            {% if modulo.descricao %}
+                                                                <span class="block text-[11px] text-slate-500 mt-0.5 truncate max-w-[55vw]">
+                                                                    {{ modulo.descricao }}
+                                                                </span>
+                                                            {% endif %}
+                                                        </span>
+                                                    </span>
+
+                                                    <span class="flex items-center gap-3 shrink-0">
+                                                        <span class="text-[10px] text-slate-500 font-black">
+                                                            {{ modulo.fases.count }} fases
+                                                        </span>
+
+                                                        <svg class="chevron w-4 h-4 text-slate-500 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                                        </svg>
+                                                    </span>
+
+                                                </summary>
+
+                                                <div class="px-4 pb-4">
+
+                                                    {% if modulo.fases.all %}
+
+                                                        <div class="space-y-1.5">
+                                                            {% for fase in modulo.fases.all %}
+
+                                                                <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-black/10 border border-white/5 px-3 py-2.5">
+
+                                                                    <div class="min-w-0 flex items-center gap-2">
+                                                                        <span class="w-7 h-7 shrink-0 rounded-lg bg-indigo-500/10 text-indigo-200 flex items-center justify-center text-[10px] font-black">
+                                                                            {{ fase.ordem }}
+                                                                        </span>
+
+                                                                        <span class="text-xs font-bold text-slate-300 truncate">
+                                                                            {{ fase.titulo }}
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <div class="flex items-center gap-2 shrink-0">
+                                                                        <span class="px-2 py-1 rounded-lg bg-white/5 text-[10px] text-slate-500">
+                                                                            {{ fase.get_tipo_display }}
+                                                                        </span>
+
+                                                                        <span class="text-[10px] text-emerald-300 font-black">
+                                                                            {{ fase.questoes.count }} questão(ões)
+                                                                        </span>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            {% endfor %}
+                                                        </div>
+
+                                                    {% else %}
+
+                                                        <p class="text-xs text-slate-600 py-2">
+                                                            Nenhuma fase criada neste módulo.
+                                                        </p>
+
+                                                    {% endif %}
+
+                                                </div>
+
+                                            </details>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                </details>
+
+                            {% else %}
+
+                                <div class="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-5 text-center">
+                                    <div class="text-3xl">🧩</div>
+                                    <p class="text-sm font-black mt-2">
+                                        Este jogo ainda não possui módulos.
+                                    </p>
+                                    <p class="text-xs text-slate-500 mt-1">
+                                        Abra <strong>Gerenciar</strong> para começar a estruturar o conteúdo.
+                                    </p>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                {% empty %}
+
+                    <div class="game-card rounded-3xl p-12 text-center">
+
+                        <div class="text-6xl mb-4">
+                            🧩
+                        </div>
+
+                        <h3 class="text-2xl font-black">
+                            Seu estúdio ainda está vazio
+                        </h3>
+
+                        <p class="text-sm text-slate-400 mt-2 mb-6">
+                            Crie seu primeiro jogo e comece pelos módulos.
+                        </p>
+
+                        <a
+                            href="{% url 'criar_trilha' %}"
+                            class="inline-flex bg-indigo-600 hover:bg-indigo-500 text-white font-black px-6 py-3 rounded-xl transition"
+                        >
+                            Criar meu primeiro jogo
+                        </a>
+
                     </div>
 
-                </article>
+                {% endfor %}
 
-            {% empty %}
+            </section>
 
-                <div
-                    class="bg-slate-800 border border-slate-700 rounded-3xl p-12 text-center"
-                >
-
-                    <div
-                        class="text-6xl mb-5"
-                    >
-                        🧩
-                    </div>
-
-                    <h3
-                        class="text-2xl font-black"
-                    >
-                        Seu estúdio ainda está vazio
-                    </h3>
-
-                    <p
-                        class="text-slate-400 mt-3 mb-7"
-                    >
-                        Crie seu primeiro jogo e comece a montar a trilha.
-                    </p>
-
-
-                    <a
-                        href="{% url 'criar_trilha' %}"
-                        class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-black px-7 py-3 rounded-xl transition"
-                    >
-                        Criar meu primeiro jogo
-                    </a>
-
-                </div>
-
-            {% endfor %}
-
-        </div>
-
-    </main>
+        </main>
+    </div>
 
 </body>
-
 </html>
