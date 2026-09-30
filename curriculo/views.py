@@ -661,8 +661,30 @@ def dashboard_professor(request):
         request
     )
 
+    total_modulos = sum(
+        trilha.total_modulos
+        for trilha in minhas_trilhas
+    )
+    total_fases = sum(
+        trilha.total_fases
+        for trilha in minhas_trilhas
+    )
+    total_questoes = sum(
+        trilha.total_questoes
+        for trilha in minhas_trilhas
+    )
+    total_publicadas = sum(
+        trilha.ativo
+        for trilha in minhas_trilhas
+    )
+
     contexto.update({
         'trilhas': minhas_trilhas,
+        'total_trilhas': len(minhas_trilhas),
+        'total_publicadas': total_publicadas,
+        'total_modulos': total_modulos,
+        'total_fases': total_fases,
+        'total_questoes': total_questoes,
         'dashboard_modo': 'professor',
     })
 
