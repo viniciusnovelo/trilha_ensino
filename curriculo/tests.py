@@ -735,3 +735,227 @@ class EstudioConteudoTests(AutenticacaoBaseTests):
             Fase.objects.filter(id=fase.id).exists()
         )
 
+
+
+    def test_dashboard_professor_exibe_trilha_e_estrutura_criada(self):
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo visível",
+            ordem=1,
+        )
+
+        fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase visível",
+            ordem=1,
+        )
+
+        questao = Questao.objects.create(
+            fase=fase,
+            enunciado="Atividade visível",
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="Resposta A",
+            e_correta=True,
+        )
+
+        response = self.client.get(
+            reverse("dashboard_professor")
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            self.trilha.nome,
+        )
+
+        self.assertContains(
+            response,
+            modulo.titulo,
+        )
+
+        self.assertContains(
+            response,
+            "1 módulo(s)",
+        )
+
+        self.assertContains(
+            response,
+            "1 fase(s)",
+        )
+
+        self.assertContains(
+            response,
+            "1 questão(ões)",
+        )
+
+    def test_editor_exibe_e_gerencia_questoes_criadas(self):
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo Atividades",
+            ordem=1,
+        )
+
+        fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase Atividades",
+            ordem=1,
+        )
+
+        questao = Questao.objects.create(
+            fase=fase,
+            enunciado="Atividade que deve aparecer",
+            explicacao_erro="Feedback de revisão.",
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="Alternativa A",
+            e_correta=False,
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="Alternativa B",
+            e_correta=True,
+        )
+
+        response = self.client.get(
+            reverse(
+                "editar_trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            "Atividade que deve aparecer",
+        )
+
+        self.assertContains(
+            response,
+            "Editar questão",
+        )
+
+        self.assertContains(
+            response,
+            "Excluir questão",
+        )
+
+    def test_professor_pode_criar_editar_e_excluir_questao(self):
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo Questões",
+            ordem=1,
+        )
+
+        fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase Questões",
+            ordem=1,
+        )
+
+        response = self.client.post(
+            reverse("ajax_criar_questao"),
+            {
+                "fase_id": fase.id,
+                "enunciado": "Quanto é 2 + 2?",
+                "explicacao_erro": "Revise a soma.",
+                "op_texto_0": "3",
+                "op_texto_1": "4",
+                "op_texto_2": "5",
+                "op_texto_3": "6",
+                "op_correta": "1",
+            },
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        questao = Questao.objects.get(
+            fase=fase,
+            enunciado="Quanto é 2 + 2?",
+        )
+
+        self.assertEqual(
+            questao.opcoes.count(),
+            4,
+        )
+
+        self.assertEqual(
+            questao.opcoes.filter(e_correta=True).count(),
+            1,
+        )
+
+        response = self.client.post(
+            reverse(
+                "ajax_editar_questao",
+                args=[questao.id],
+            ),
+            {
+                "enunciado": "Quanto é 3 + 2?",
+                "explicacao_erro": "Revise a soma de números naturais.",
+                "op_texto_0": "4",
+                "op_texto_1": "5",
+                "op_texto_2": "6",
+                "op_correta": "1",
+            },
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        questao.refresh_from_db()
+
+        self.assertEqual(
+            questao.enunciado,
+            "Quanto é 3 + 2?",
+        )
+
+        self.assertEqual(
+            questao.opcoes.count(),
+            3,
+        )
+
+        self.assertEqual(
+            questao.opcoes.filter(e_correta=True).count(),
+            1,
+        )
+
+        self.assertEqual(
+            questao.opcoes.get(e_correta=True).texto,
+            "5",
+        )
+
+        response = self.client.post(
+            reverse(
+                "ajax_excluir_questao",
+                args=[questao.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertFalse(
+            Questao.objects.filter(
+                id=questao.id
+            ).exists()
+        )
