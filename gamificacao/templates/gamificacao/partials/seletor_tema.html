@@ -1,0 +1,91 @@
+<div class="relative z-[90]" id="seletor-tema-usuario">
+    <button type="button" id="botao-tema-usuario"
+        aria-expanded="false" aria-controls="opcoes-tema-usuario"
+        class="w-11 h-11 rounded-full border border-white/20 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center text-lg shadow-xl hover:scale-110 transition"
+        title="Mudar tema">🎨</button>
+
+    <div id="opcoes-tema-usuario"
+        class="absolute top-1/2 right-14 -translate-y-1/2 flex items-center gap-2 rounded-full bg-slate-950/95 border border-white/10 backdrop-blur-xl px-3 py-2 shadow-2xl opacity-0 scale-90 pointer-events-none transition-all duration-200 origin-right">
+        <button type="button" data-theme-option="tema-padrao" aria-label="Noite Estrelada" title="Noite Estrelada" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#0f172a,#334155)"></button>
+        <button type="button" data-theme-option="tema-floresta" aria-label="Trilha na Floresta" title="Trilha na Floresta" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#052e16,#16a34a,#064e3b)"></button>
+        <button type="button" data-theme-option="tema-deserto" aria-label="Deserto Escaldante" title="Deserto Escaldante" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#451a03,#d97706,#92400e)"></button>
+        <button type="button" data-theme-option="tema-masmorra" aria-label="Masmorra Sombria" title="Masmorra Sombria" class="theme-option w-10 h-10 md:w-11 md:h-11 rounded-full border-2 border-white/20 transition hover:scale-110" style="background:linear-gradient(135deg,#020617,#312e81,#171717)"></button>
+    </div>
+</div>
+
+<script>
+(function(){
+    const root=document.getElementById('seletor-tema-usuario');
+    if(!root)return;
+
+    const trigger=document.getElementById('botao-tema-usuario');
+    const panel=document.getElementById('opcoes-tema-usuario');
+    const options=root.querySelectorAll('[data-theme-option]');
+    const endpoint='{% url "atualizar_tema_usuario" %}';
+    const currentInitial='{{ tema_atual|default:"tema-padrao" }}';
+    const themes=['tema-padrao','tema-floresta','tema-deserto','tema-masmorra'];
+    let currentTheme=currentInitial;
+
+    function openPanel(open){
+        trigger.setAttribute('aria-expanded',String(open));
+        panel.classList.toggle('opacity-0',!open);
+        panel.classList.toggle('scale-90',!open);
+        panel.classList.toggle('pointer-events-none',!open);
+    }
+
+    function mark(theme){
+        options.forEach((item)=>{
+            const selected=item.dataset.themeOption===theme;
+            item.classList.toggle('ring-4',selected);
+            item.classList.toggle('ring-white/80',selected);
+            item.classList.toggle('scale-110',selected);
+        });
+    }
+
+    function apply(theme){
+        document.body.classList.remove(...themes);
+        document.body.classList.add(theme);
+        currentTheme=theme;
+        mark(theme);
+    }
+
+    async function save(theme){
+        const response=await fetch(endpoint,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRFToken':'{{ csrf_token }}'
+            },
+            body:JSON.stringify({tema:theme})
+        });
+        if(!response.ok)throw new Error('Não foi possível salvar o tema.');
+        return response.json();
+    }
+
+    trigger.addEventListener('click',(event)=>{
+        event.stopPropagation();
+        openPanel(trigger.getAttribute('aria-expanded')!=='true');
+    });
+
+    document.addEventListener('click',(event)=>{
+        if(!root.contains(event.target))openPanel(false);
+    });
+
+    options.forEach((option)=>{
+        option.addEventListener('click',async()=>{
+            const next=option.dataset.themeOption;
+            const previous=currentTheme;
+            apply(next);
+            openPanel(false);
+            try{
+                await save(next);
+            }catch(error){
+                apply(previous);
+                alert(error.message);
+            }
+        });
+    });
+
+    apply(currentTheme);
+})();
+</script>
