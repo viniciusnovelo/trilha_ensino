@@ -14,11 +14,17 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        .tema-padrao { background: linear-gradient(135deg,#0f172a,#1e293b); }
+        .tema-floresta { background: linear-gradient(135deg,#052e16,#14532d,#064e3b); }
+        .tema-deserto { background: linear-gradient(135deg,#451a03,#78350f,#92400e); }
+        .tema-masmorra { background: linear-gradient(135deg,#020617,#1e1b4b,#171717); }
+    </style>
 </head>
 
 
 <body
-    class="bg-[#0b1120] text-white min-h-screen font-sans"
+    class="{{ perfil.tema_fundo }} text-white min-h-screen font-sans"
 >
 
 
@@ -71,6 +77,10 @@
 
 
             <div class="flex items-center gap-3">
+
+                {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+
+
 
             {% if modo_teste_disponivel %}
 
