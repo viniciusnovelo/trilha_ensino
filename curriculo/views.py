@@ -233,9 +233,12 @@ def preparar_progressao_modulos(
 
         modulo.total_fases = len(fases)
         modulo.fases_concluidas = sum(
-            progressos.get(fase.id)
-            and progressos[fase.id].concluida
+            1
             for fase in fases
+            if (
+                progressos.get(fase.id)
+                and progressos[fase.id].concluida
+            )
         )
 
         modulo.percentual_progresso = (
