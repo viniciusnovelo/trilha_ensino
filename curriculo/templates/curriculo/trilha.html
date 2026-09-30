@@ -100,7 +100,7 @@
 
 
 <body
-    class="{{ trilha.tema }} text-white h-screen flex flex-col font-sans overflow-hidden"
+    class="{{ tema_aplicado }} text-white h-screen flex flex-col font-sans overflow-hidden"
 >
 
 
@@ -173,6 +173,10 @@
                 <div
                     class="flex items-center gap-2"
                 >
+
+                    {% if papel_efetivo == 'aluno' %}
+                        {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+                    {% endif %}
 
                     {% if modo_teste_ativo %}
 
