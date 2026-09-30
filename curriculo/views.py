@@ -2703,5 +2703,7 @@ def historico_fase(
             ),
             'tentativas': tentativas,
             'progresso': progresso,
+            'perfil': perfil,
+            'tema_aplicado': perfil.tema_fundo,
         },
     )
