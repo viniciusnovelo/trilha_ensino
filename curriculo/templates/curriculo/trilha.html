@@ -102,6 +102,7 @@
 <body
     class="{{ tema_aplicado }} text-white h-screen flex flex-col font-sans overflow-hidden"
 >
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 
 
     <div
@@ -175,7 +176,8 @@
                 >
 
                     {% if papel_efetivo == 'aluno' %}
-                        {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+                        {% include 'gamificacao/partials/controle_aparencia.html' %}
+{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
                     {% endif %}
 
                     {% if modo_teste_ativo %}
