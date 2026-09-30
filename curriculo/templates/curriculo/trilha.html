@@ -297,38 +297,50 @@
 
                                     <div class="w-full lg:max-w-xs shrink-0">
 
-                                        <div class="flex items-center justify-between text-xs mb-2">
-                                            <span class="text-white/40 font-bold">
-                                                {{ modulo.fases_concluidas }}/{{ modulo.total_fases }} fases
-                                            </span>
+                                        {% if papel_efetivo == 'professor' %}
 
-                                            <span class="font-black {% if modulo.status == 'concluido' %}text-emerald-300{% elif modulo.status == 'atual' %}text-indigo-200{% else %}text-white/25{% endif %}">
-                                                {{ modulo.percentual_progresso }}%
-                                            </span>
-                                        </div>
+                                            <div class="flex items-center justify-end">
+                                                <span class="px-3 py-2 rounded-xl bg-white/5 border border-white/8 text-xs text-white/45 font-black">
+                                                    {{ modulo.total_fases }} fases disponíveis
+                                                </span>
+                                            </div>
 
-                                        <div class="h-2 bg-black/25 rounded-full overflow-hidden">
-                                            <div
-                                                class="h-full rounded-full transition-all duration-700
-                                                {% if modulo.status == 'concluido' %}
-                                                    bg-gradient-to-r from-emerald-400 to-cyan-300
-                                                {% elif modulo.status == 'atual' %}
-                                                    bg-gradient-to-r from-indigo-400 to-sky-300
-                                                {% else %}
-                                                    bg-slate-700
-                                                {% endif %}"
-                                                style="width: {{ modulo.percentual_progresso }}%;"
-                                            ></div>
-                                        </div>
+                                        {% else %}
 
-                                        {% if modulo.status == 'bloqueado' %}
-                                            <p class="text-[11px] text-white/30 font-bold mt-2 text-right">
-                                                Complete o módulo anterior para desbloquear.
-                                            </p>
-                                        {% elif modulo.status == 'atual' and modulo.total_fases == 0 %}
-                                            <p class="text-[11px] text-amber-300/70 font-bold mt-2 text-right">
-                                                O conteúdo deste módulo ainda está sendo preparado.
-                                            </p>
+                                            <div class="flex items-center justify-between text-xs mb-2">
+                                                <span class="text-white/40 font-bold">
+                                                    {{ modulo.fases_concluidas }}/{{ modulo.total_fases }} fases
+                                                </span>
+
+                                                <span class="font-black {% if modulo.status == 'concluido' %}text-emerald-300{% elif modulo.status == 'atual' %}text-indigo-200{% else %}text-white/25{% endif %}">
+                                                    {{ modulo.percentual_progresso }}%
+                                                </span>
+                                            </div>
+
+                                            <div class="h-2 bg-black/25 rounded-full overflow-hidden">
+                                                <div
+                                                    class="h-full rounded-full transition-all duration-700
+                                                    {% if modulo.status == 'concluido' %}
+                                                        bg-gradient-to-r from-emerald-400 to-cyan-300
+                                                    {% elif modulo.status == 'atual' %}
+                                                        bg-gradient-to-r from-indigo-400 to-sky-300
+                                                    {% else %}
+                                                        bg-slate-700
+                                                    {% endif %}"
+                                                    style="width: {{ modulo.percentual_progresso }}%;"
+                                                ></div>
+                                            </div>
+
+                                            {% if modulo.status == 'bloqueado' %}
+                                                <p class="text-[11px] text-white/30 font-bold mt-2 text-right">
+                                                    Complete o módulo anterior para desbloquear.
+                                                </p>
+                                            {% elif modulo.status == 'atual' and modulo.total_fases == 0 %}
+                                                <p class="text-[11px] text-amber-300/70 font-bold mt-2 text-right">
+                                                    O conteúdo deste módulo ainda está sendo preparado.
+                                                </p>
+                                            {% endif %}
+
                                         {% endif %}
                                     </div>
 
