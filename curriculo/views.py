@@ -17,6 +17,7 @@ from django.utils import timezone
 from .forms import CadastroUsuarioForm, DisciplinaForm
 from .models import (
     Disciplina,
+    Materia,
     Fase,
     Modulo,
     Opcao,
@@ -804,6 +805,86 @@ def cadastro_usuario(request):
     )
 
 
+def preparar_progresso_trilha_aluno(
+    trilha,
+    fases_concluidas_ids,
+):
+    fases = []
+
+    for modulo in trilha.modulos.all():
+        fases.extend(modulo.fases.all())
+
+    total_fases = len(fases)
+    fases_concluidas = sum(
+        fase.id in fases_concluidas_ids
+        for fase in fases
+    )
+
+    percentual = (
+        round((fases_concluidas / total_fases) * 100)
+        if total_fases
+        else 0
+    )
+
+    trilha.total_fases = total_fases
+    trilha.fases_concluidas = fases_concluidas
+    trilha.percentual_progresso = percentual
+    trilha.concluida = (
+        total_fases > 0
+        and fases_concluidas == total_fases
+    )
+
+    return trilha
+
+
+def dados_materias_aluno(
+    perfil,
+    materias,
+    fases_concluidas_ids,
+):
+    for materia in materias:
+        jogos = list(
+            materia.jogos.all()
+        )
+
+        for trilha in jogos:
+            preparar_progresso_trilha_aluno(
+                trilha,
+                fases_concluidas_ids,
+            )
+
+        materia.jogos_lista = jogos
+        materia.total_jogos = len(jogos)
+        materia.jogos_iniciados = sum(
+            trilha.fases_concluidas > 0
+            for trilha in jogos
+        )
+        materia.jogos_concluidos = sum(
+            trilha.concluida
+            for trilha in jogos
+        )
+        materia.total_fases = sum(
+            trilha.total_fases
+            for trilha in jogos
+        )
+        materia.fases_concluidas = sum(
+            trilha.fases_concluidas
+            for trilha in jogos
+        )
+        materia.percentual_progresso = (
+            round(
+                (
+                    materia.fases_concluidas
+                    / materia.total_fases
+                ) * 100
+            )
+            if materia.total_fases
+            else 0
+        )
+
+    return materias
+
+
 # ============================================================
 # 2. DASHBOARD DO ALUNO
 # ============================================================
@@ -811,40 +892,12 @@ def cadastro_usuario(request):
 @login_required
 def dashboard_aluno(request):
 
-    papel = papel_efetivo(
-        request
-    )
-
-    if papel == 'professor':
-
-        return redirect(
-            'dashboard_professor'
-        )
+    if papel_efetivo(request) == 'professor':
+        return redirect('dashboard_professor')
 
     perfil = obter_perfil(
         request.user
     )
-
-    trilhas = list(
-        Disciplina.objects
-        .filter(
-            ativo=True
-        )
-        .select_related(
-            'autor'
-        )
-        .prefetch_related(
-            'modulos__fases'
-        )
-        .order_by(
-            'ordem',
-            'nome',
-        )
-    )
-
-    # --------------------------------------------------------
-    # Uma consulta para obter as fases concluídas
-    # --------------------------------------------------------
 
     fases_concluidas_ids = set(
         ProgressoFase.objects
@@ -858,65 +911,27 @@ def dashboard_aluno(request):
         )
     )
 
-    # --------------------------------------------------------
-    # Progresso de cada trilha
-    # --------------------------------------------------------
-
-    for trilha in trilhas:
-
-        fases = []
-
-        for modulo in (
-            trilha.modulos.all()
-        ):
-
-            fases.extend(
-                modulo.fases.all()
-            )
-
-        total_fases = len(
-            fases
+    materias = list(
+        Materia.objects
+        .filter(
+            ativo=True,
+            jogos__ativo=True,
         )
-
-        fases_concluidas = sum(
-            fase.id
-            in fases_concluidas_ids
-            for fase in fases
+        .prefetch_related(
+            'jogos__modulos__fases',
         )
-
-        if total_fases > 0:
-
-            percentual = round(
-                (
-                    fases_concluidas
-                    / total_fases
-                )
-                * 100
-            )
-
-        else:
-
-            percentual = 0
-
-        trilha.total_fases = (
-            total_fases
+        .order_by(
+            'ordem',
+            'id',
         )
+        .distinct()
+    )
 
-        trilha.fases_concluidas = (
-            fases_concluidas
-        )
-
-        trilha.percentual_progresso = (
-            percentual
-        )
-
-        trilha.concluida = (
-            total_fases > 0
-            and (
-                fases_concluidas
-                == total_fases
-            )
-        )
+    dados_materias_aluno(
+        perfil,
+        materias,
+        fases_concluidas_ids,
+    )
 
     fases_revisao = list(
         ProgressoFase.objects
@@ -926,7 +941,7 @@ def dashboard_aluno(request):
             melhor_aproveitamento__lt=Decimal('60'),
         )
         .select_related(
-            'fase__modulo__disciplina'
+            'fase__modulo__disciplina__materia'
         )
         .order_by(
             'melhor_aproveitamento',
@@ -939,14 +954,100 @@ def dashboard_aluno(request):
     )
 
     contexto.update({
-        'trilhas': trilhas,
+        'materias': materias,
         'fases_revisao': fases_revisao,
+        'total_materias': len(materias),
         'dashboard_modo': 'aluno',
     })
 
     return render(
         request,
         'curriculo/aluno_dashboard.html',
+        contexto,
+    )
+
+
+# ============================================================
+# 2.1 CATÁLOGO DE UMA MATÉRIA
+# ============================================================
+
+@login_required
+def materia_detalhe(request, materia_slug):
+
+    if papel_efetivo(request) == 'professor':
+        return redirect('dashboard_professor')
+
+    perfil = obter_perfil(
+        request.user
+    )
+
+    materia = get_object_or_404(
+        Materia,
+        slug=materia_slug,
+        ativo=True,
+    )
+
+    fases_concluidas_ids = set(
+        ProgressoFase.objects
+        .filter(
+            perfil=perfil,
+            concluida=True,
+            fase__modulo__disciplina__materia=materia,
+        )
+        .values_list(
+            'fase_id',
+            flat=True,
+        )
+    )
+
+    jogos = list(
+        materia.jogos
+        .filter(
+            ativo=True,
+        )
+        .prefetch_related(
+            'modulos__fases',
+        )
+        .select_related(
+            'materia',
+        )
+        .order_by(
+            'ordem',
+            'nome',
+        )
+    )
+
+    preparar_progresso_materia = dados_materias_aluno(
+        perfil,
+        [materia],
+        fases_concluidas_ids,
+    )[0]
+
+    jogo_em_andamento = next(
+        (
+            jogo
+            for jogo in jogos
+            if (
+                jogo.fases_concluidas > 0
+                and not jogo.concluida
+            )
+        ),
+        None,
+    )
+
+    contexto = contexto_papel(
+        request
+    )
+
+    contexto.update({
+        'materia': materia,
+        'jogos': jogos,
+        'jogo_em_andamento': jogo_em_andamento,
+    })
+
+    return render(
+        request,
+        'curriculo/materia_detalhe.html',
         contexto,
     )
 
