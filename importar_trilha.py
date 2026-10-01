@@ -860,6 +860,160 @@ def importar_dados(
 
 
 # ============================================================
+# ATUALIZAÇÃO SEGURA DO FEEDBACK
+# ============================================================
+
+def atualizar_feedback(
+    dados,
+    dry_run=False,
+):
+    """
+    Atualiza somente as explicações das questões existentes.
+
+    A correspondência usa:
+    - slug da trilha;
+    - ordem do módulo;
+    - ordem da fase;
+    - posição da questão dentro da fase.
+
+    Esta operação não cria, exclui ou altera alternativas,
+    fases, módulos ou progresso do aluno.
+    """
+
+    slug = dados.get(
+        'slug',
+        ''
+    ).strip()
+
+    if not slug:
+        from django.utils.text import slugify
+        slug = slugify(dados['nome'])
+
+    trilha = (
+        Disciplina.objects
+        .filter(slug=slug)
+        .first()
+    )
+
+    if trilha is None:
+        erro(
+            f'Não existe uma trilha com slug "{slug}" '
+            'para receber a atualização de feedback.'
+        )
+
+    atualizadas = 0
+    sem_correspondencia = []
+
+    for modulo_data in sorted(
+        dados['modulos'],
+        key=lambda item: item['ordem'],
+    ):
+        modulo = (
+            trilha.modulos
+            .filter(
+                ordem=modulo_data['ordem']
+            )
+            .order_by('id')
+            .first()
+        )
+
+        if modulo is None:
+            sem_correspondencia.append(
+                f'módulo:{modulo_data["ordem"]}'
+            )
+            continue
+
+        for fase_data in sorted(
+            modulo_data['fases'],
+            key=lambda item: item['ordem'],
+        ):
+            fase = (
+                modulo.fases
+                .filter(
+                    ordem=fase_data['ordem']
+                )
+                .order_by('id')
+                .first()
+            )
+
+            if fase is None:
+                sem_correspondencia.append(
+                    (
+                        f'módulo:{modulo.ordem}:'
+                        f'fase:{fase_data["ordem"]}'
+                    )
+                )
+                continue
+
+            questoes = list(
+                fase.questoes
+                .order_by('id')
+            )
+
+            for indice, questao_data in enumerate(
+                fase_data['questoes']
+            ):
+                if indice >= len(questoes):
+                    sem_correspondencia.append(
+                        (
+                            f'módulo:{modulo.ordem}:'
+                            f'fase:{fase.ordem}:'
+                            f'questão:{indice + 1}'
+                        )
+                    )
+                    continue
+
+                questao = questoes[indice]
+
+                nova_explicacao = (
+                    questao_data
+                    .get(
+                        'explicacao_erro',
+                        '',
+                    )
+                    .strip()
+                )
+
+                if (
+                    questao.explicacao_erro
+                    == nova_explicacao
+                ):
+                    continue
+
+                if not dry_run:
+                    questao.explicacao_erro = (
+                        nova_explicacao
+                    )
+                    questao.save(
+                        update_fields=[
+                            'explicacao_erro'
+                        ]
+                    )
+
+                atualizadas += 1
+
+    print()
+
+    if dry_run:
+        print(
+            '🧪 DRY-RUN: nenhuma explicação será alterada.'
+        )
+
+    print(
+        f'📖 Explicações que seriam/foram atualizadas: '
+        f'{atualizadas}'
+    )
+
+    if sem_correspondencia:
+        print(
+            '⚠️ Correspondências não encontradas: '
+            + ', '.join(sem_correspondencia)
+        )
+
+    print()
+
+
+# ============================================================
 # ARGUMENTOS
 # ============================================================
 
@@ -916,6 +1070,15 @@ def criar_parser():
         ),
     )
 
+    parser.add_argument(
+        '--atualizar-feedback',
+        action='store_true',
+        help=(
+            'Atualiza somente as explicações das questões existentes, '
+            'sem alterar alternativas, estrutura ou progresso.'
+        ),
+    )
+
     return parser
 
 
@@ -958,6 +1121,20 @@ def main():
     validar_dados(
         dados
     )
+
+    if args.atualizar_feedback:
+
+        if args.replace:
+            erro(
+                'Use --atualizar-feedback isoladamente. '
+                'Ele não pode ser combinado com --replace.'
+            )
+
+        atualizar_feedback(
+            dados=dados,
+            dry_run=args.dry_run,
+        )
+        return
 
     autor = obter_autor(
         args.autor
