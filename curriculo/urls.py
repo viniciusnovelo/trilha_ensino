@@ -39,6 +39,12 @@ urlpatterns = [
     ),
 
     path(
+        'jogar/materia/<slug:materia_slug>/',
+        views.materia_detalhe,
+        name='materia_detalhe',
+    ),
+
+    path(
         'estudio/',
         views.dashboard_professor,
         name='dashboard_professor',
