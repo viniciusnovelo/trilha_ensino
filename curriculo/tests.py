@@ -1436,6 +1436,67 @@ class PreviewProfessorTests(AutenticacaoBaseTests):
             "Questão disponível no preview",
         )
 
+    def test_preview_do_professor_reproduz_inicio_da_jornada_do_aluno(self):
+        segunda = Fase.objects.create(
+            modulo=self.modulo,
+            titulo="Segunda fase",
+            ordem=2,
+        )
+
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            ) + "?preview=aluno"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertTrue(
+            response.context["modo_preview_aluno"],
+        )
+
+        self.assertEqual(
+            response.context["papel_exibicao"],
+            "aluno",
+        )
+
+        modulos = response.context["modulos"]
+        fases = list(
+            modulos[0].fases.all()
+        )
+
+        self.assertEqual(
+            modulos[0].status,
+            "atual",
+        )
+
+        self.assertEqual(
+            fases[0].status,
+            "atual",
+        )
+
+        self.assertEqual(
+            fases[1].status,
+            "bloqueada",
+        )
+
+        self.assertContains(
+            response,
+            reverse(
+                "fase_detalhe",
+                args=[self.fase.id],
+            ),
+        )
+
+        self.assertContains(
+            response,
+            "Pré-visualização como aluno",
+        )
+
     def test_preview_do_professor_nao_marca_todas_as_fases_como_atuais(self):
         segunda = Fase.objects.create(
             modulo=self.modulo,
