@@ -202,10 +202,11 @@ def preparar_progressao_modulos(
 
     A progressão possui dois níveis:
     - as fases avançam uma por vez dentro do módulo;
-    - o próximo módulo permanece trancado até que o aluno
-      conclua o módulo anterior e use a chave recebida.
+    - o próximo módulo é liberado automaticamente quando todas
+      as fases do módulo anterior forem concluídas.
 
-    O primeiro módulo é liberado automaticamente.
+    O mapa atual não possui um cadeado central para módulos,
+    portanto a liberação precisa ser persistida diretamente.
     """
 
     progressos = {
@@ -225,13 +226,19 @@ def preparar_progressao_modulos(
     }
 
     agora = timezone.now()
+
     modulo_anterior_concluido = True
     primeiro_modulo = True
 
     for modulo in modulos:
-        fases = list(modulo.fases.all())
+        fases = list(
+            modulo.fases.all()
+        )
 
-        modulo.total_fases = len(fases)
+        modulo.total_fases = len(
+            fases
+        )
+
         modulo.fases_concluidas = sum(
             1
             for fase in fases
@@ -255,89 +262,94 @@ def preparar_progressao_modulos(
 
         modulo.concluido = (
             modulo.total_fases > 0
-            and modulo.fases_concluidas == modulo.total_fases
+            and modulo.fases_concluidas
+            == modulo.total_fases
         )
 
-        progresso_modulo = progressos_modulo.get(
-            modulo.id
+        progresso_modulo = (
+            progressos_modulo.get(
+                modulo.id
+            )
         )
 
-        if primeiro_modulo:
-            if progresso_modulo is None:
-                progresso_modulo = ProgressoModulo.objects.create(
+        if progresso_modulo is None:
+            progresso_modulo = (
+                ProgressoModulo.objects.create(
                     perfil=perfil,
                     modulo=modulo,
-                    desbloqueado=True,
+                    desbloqueado=(
+                        primeiro_modulo
+                        or modulo_anterior_concluido
+                    ),
                     chave_disponivel=False,
+                    concluido=False,
+                    data_desbloqueio=(
+                        agora
+                        if primeiro_modulo
+                        or modulo_anterior_concluido
+                        else None
+                    ),
                 )
-                progressos_modulo[modulo.id] = progresso_modulo
+            )
 
-            elif not progresso_modulo.desbloqueado:
+            progressos_modulo[
+                modulo.id
+            ] = progresso_modulo
+
+        else:
+            atualizacoes = []
+
+            deve_desbloquear = (
+                primeiro_modulo
+                or modulo_anterior_concluido
+            )
+
+            if (
+                deve_desbloquear
+                and not progresso_modulo.desbloqueado
+            ):
                 progresso_modulo.desbloqueado = True
                 progresso_modulo.data_desbloqueio = (
                     progresso_modulo.data_desbloqueio
                     or agora
                 )
-                progresso_modulo.save(
-                    update_fields=[
-                        'desbloqueado',
-                        'data_desbloqueio',
-                    ]
-                )
+                atualizacoes.extend([
+                    'desbloqueado',
+                    'data_desbloqueio',
+                ])
 
-        elif (
-            modulo_anterior_concluido
-            and not (
-                progresso_modulo
+            if (
+                progresso_modulo.chave_disponivel
                 and progresso_modulo.desbloqueado
-            )
-        ):
-            if progresso_modulo is None:
-                progresso_modulo = ProgressoModulo.objects.create(
-                    perfil=perfil,
-                    modulo=modulo,
-                    desbloqueado=False,
-                    chave_disponivel=True,
+            ):
+                progresso_modulo.chave_disponivel = False
+                atualizacoes.append(
+                    'chave_disponivel'
                 )
-                progressos_modulo[modulo.id] = progresso_modulo
 
-            elif not progresso_modulo.desbloqueado:
-                if not progresso_modulo.chave_disponivel:
-                    progresso_modulo.chave_disponivel = True
-                    progresso_modulo.save(
-                        update_fields=[
-                            'chave_disponivel',
-                        ]
+            if atualizacoes:
+                progresso_modulo.save(
+                    update_fields=(
+                        list(
+                            dict.fromkeys(
+                                atualizacoes
+                            )
+                        )
                     )
+                )
 
         modulo.desbloqueado = bool(
-            progresso_modulo
-            and progresso_modulo.desbloqueado
+            progresso_modulo.desbloqueado
         )
 
-        modulo.chave_disponivel = bool(
-            progresso_modulo
-            and progresso_modulo.chave_disponivel
-        )
+        modulo.chave_disponivel = False
 
         modulo.data_desbloqueio = (
             progresso_modulo.data_desbloqueio
-            if progresso_modulo
-            else None
         )
 
         if modulo.concluido:
-            if progresso_modulo is None:
-                progresso_modulo = ProgressoModulo.objects.create(
-                    perfil=perfil,
-                    modulo=modulo,
-                    desbloqueado=modulo == modulos[0],
-                    chave_disponivel=False,
-                    concluido=True,
-                    data_conclusao=agora,
-                )
-                progressos_modulo[modulo.id] = progresso_modulo
-            elif not progresso_modulo.concluido:
+            if not progresso_modulo.concluido:
                 progresso_modulo.concluido = True
                 progresso_modulo.data_conclusao = (
                     progresso_modulo.data_conclusao
@@ -350,11 +362,11 @@ def preparar_progressao_modulos(
                     ]
                 )
 
-            modulo.desbloqueado = True
             modulo.status = 'concluido'
 
         elif modulo.desbloqueado:
             modulo.status = 'atual'
+
         else:
             modulo.status = 'bloqueado'
 
@@ -386,6 +398,7 @@ def preparar_progressao_modulos(
         modulo_anterior_concluido = (
             modulo.concluido
         )
+
         primeiro_modulo = False
 
     return modulos
@@ -500,14 +513,17 @@ def modulo_esta_completo_para_aluno(
     return fases_concluidas == len(fases)
 
 
-def preparar_chave_do_proximo_modulo(
+def desbloquear_proximo_modulo(
     perfil,
     modulo,
     agora=None,
 ):
     """
-    Quando um módulo é concluído, cria/preserva a chave
-    necessária para abrir o próximo módulo.
+    Após a conclusão total de um módulo, libera automaticamente
+    o próximo módulo da jornada.
+
+    A antiga mecânica de chave/cadeado central foi removida da
+    interface, então a liberação agora acontece nesta etapa.
     """
 
     agora = agora or timezone.now()
@@ -519,14 +535,13 @@ def preparar_chave_do_proximo_modulo(
         return None
 
     progresso_modulo, _ = (
-        ProgressoModulo.objects
-        .get_or_create(
+        ProgressoModulo.objects.get_or_create(
             perfil=perfil,
             modulo=modulo,
         )
     )
 
-    alterou = False
+    atualizacoes = []
 
     if not progresso_modulo.concluido:
         progresso_modulo.concluido = True
@@ -534,7 +549,10 @@ def preparar_chave_do_proximo_modulo(
             progresso_modulo.data_conclusao
             or agora
         )
-        alterou = True
+        atualizacoes.extend([
+            'concluido',
+            'data_conclusao',
+        ])
 
     if not progresso_modulo.desbloqueado:
         progresso_modulo.desbloqueado = True
@@ -542,45 +560,31 @@ def preparar_chave_do_proximo_modulo(
             progresso_modulo.data_desbloqueio
             or agora
         )
-        alterou = True
+        atualizacoes.extend([
+            'desbloqueado',
+            'data_desbloqueio',
+        ])
 
-    if alterou:
-        progresso_modulo.save(
-            update_fields=[
-                'concluido',
-                'data_conclusao',
-                'desbloqueado',
-                'data_desbloqueio',
-            ]
+    if progresso_modulo.chave_disponivel:
+        progresso_modulo.chave_disponivel = False
+        atualizacoes.append(
+            'chave_disponivel'
         )
 
-    proximo_modulo = proximo_modulo_da_trilha(
+    if atualizacoes:
+        progresso_modulo.save(
+            update_fields=(
+                list(
+                    dict.fromkeys(
+                        atualizacoes
+                    )
+                )
+            )
+        )
+
+    return proximo_modulo_da_trilha(
         modulo
     )
-
-    if proximo_modulo is None:
-        return None
-
-    proximo_progresso, _ = (
-        ProgressoModulo.objects
-        .get_or_create(
-            perfil=perfil,
-            modulo=proximo_modulo,
-        )
-    )
-
-    if not proximo_progresso.desbloqueado:
-        if not proximo_progresso.chave_disponivel:
-            proximo_progresso.chave_disponivel = True
-            proximo_progresso.save(
-                update_fields=[
-                    'chave_disponivel',
-                ]
-            )
-
-        return proximo_modulo
-
-    return None
 
 
 
@@ -2627,12 +2631,12 @@ def trilha_view(
             )
             modulo.fases_concluidas = 0
             modulo.percentual_progresso = 0
-            modulo.status = 'disponivel-professor'
+            modulo.status = 'professor'
             modulo.desbloqueado = True
             modulo.chave_disponivel = False
 
             for fase in fases_modulo:
-                fase.status = 'atual'
+                fase.status = 'professor'
 
     else:
 
@@ -2692,13 +2696,12 @@ def trilha_view(
 
     contexto.update({
         'trilha': trilha,
+        'visualizacao_professor': (
+            papel == 'professor'
+        ),
         'modulos': modulos,
         'modulos_concluidos': (
             modulos_concluidos
-        ),
-        'chaves_disponiveis': sum(
-            modulo.chave_disponivel
-            for modulo in modulos
         ),
         'fases': fases,
         'fases_concluidas': (
@@ -3292,7 +3295,7 @@ def finalizar_fase(
     )
 
     modulo_concluido = False
-    chave_proximo_modulo = False
+    proximo_modulo_desbloqueado = False
     proximo_modulo_id = None
     proximo_modulo_titulo = None
 
@@ -3333,7 +3336,7 @@ def finalizar_fase(
                     * 100
                 ),
                 'modulo_concluido': False,
-                'chave_proximo_modulo': False,
+                'proximo_modulo_desbloqueado': False,
                 'proximo_modulo_id': None,
                 'proximo_modulo_titulo': None,
             }
@@ -3428,7 +3431,7 @@ def finalizar_fase(
         progresso.save()
 
         if concluida_pela_primeira_vez:
-            proximo_modulo = preparar_chave_do_proximo_modulo(
+            proximo_modulo = desbloquear_proximo_modulo(
                 perfil,
                 fase.modulo,
                 agora,
@@ -3440,7 +3443,7 @@ def finalizar_fase(
             )
 
             if proximo_modulo is not None:
-                chave_proximo_modulo = True
+                proximo_modulo_desbloqueado = True
                 proximo_modulo_id = proximo_modulo.id
                 proximo_modulo_titulo = proximo_modulo.titulo
 
@@ -3587,7 +3590,7 @@ def finalizar_fase(
                 )
             ),
             'modulo_concluido': modulo_concluido,
-            'chave_proximo_modulo': chave_proximo_modulo,
+            'proximo_modulo_desbloqueado': proximo_modulo_desbloqueado,
             'proximo_modulo_id': proximo_modulo_id,
             'proximo_modulo_titulo': proximo_modulo_titulo,
             'tentativa_id': (
