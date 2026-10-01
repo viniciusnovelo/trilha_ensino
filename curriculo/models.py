@@ -1,6 +1,31 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+class Materia(models.Model):
+    nome = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+    descricao = models.TextField(blank=True)
+    materia = models.ForeignKey(
+        Materia,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='jogos',
+    )
+    icone = models.CharField(max_length=50, default="book")
+    ordem = models.PositiveIntegerField(default=1)
+    ativo = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['ordem', 'id']
+        verbose_name = "Matéria"
+        verbose_name_plural = "Matérias"
+
+    def __str__(self):
+        return self.nome
+
+
 class Disciplina(models.Model):
     TEMAS = [
         ('tema-padrao', 'Noite Estrelada'),
