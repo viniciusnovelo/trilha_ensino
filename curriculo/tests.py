@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from .models import Disciplina, Fase, Modulo, Opcao, Questao
+from .models import Disciplina, Fase, Materia, Modulo, Opcao, Questao
 from gamificacao.models import ProgressoFase, ProgressoModulo, TentativaFase
 
 
@@ -1874,4 +1874,181 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         self.assertNotContains(
             response,
             ">▶<",
+        )
+
+
+
+class CatalogoMateriaTests(AutenticacaoBaseTests):
+
+    def setUp(self):
+        self.aluno = self.criar_usuario(
+            username="aluno_catalogo",
+        )
+
+        self.professor = self.criar_usuario(
+            username="professor_catalogo",
+        )
+
+        self.trilha = Disciplina.objects.create(
+            nome="Jogo de Matemática",
+            slug="jogo-matematica-catalogo",
+            ativo=True,
+            autor=self.professor,
+            materia=Materia.objects.get(
+                slug="matematica",
+            ),
+        )
+
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo de exemplo",
+            ordem=1,
+        )
+
+        fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase de exemplo",
+            ordem=1,
+        )
+
+        questao = Questao.objects.create(
+            fase=fase,
+            enunciado="Questão de catálogo",
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="Correta",
+            e_correta=True,
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="Incorreta",
+            e_correta=False,
+        )
+
+    def test_quatro_materias_do_catalogo_existentes(self):
+        self.assertEqual(
+            Materia.objects.filter(
+                ativo=True,
+            ).count(),
+            4,
+        )
+
+        self.assertEqual(
+            set(
+                Materia.objects
+                .filter(ativo=True)
+                .values_list('slug', flat=True)
+            ),
+            {
+                "matematica",
+                "fisica",
+                "geografia",
+                "biologia",
+            },
+        )
+
+    def test_aluno_abre_catalogo_de_materia_e_enxerga_jogo(self):
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.get(
+            reverse(
+                "materia_detalhe",
+                args=["matematica"],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            "Matemática",
+        )
+
+        self.assertContains(
+            response,
+            "Jogo de Matemática",
+        )
+
+        self.assertContains(
+            response,
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            ),
+        )
+
+    def test_aluno_nao_enxerga_jogo_em_rascunho_no_catalogo(self):
+        Disciplina.objects.create(
+            nome="Rascunho de Matemática",
+            slug="rascunho-matematica-catalogo",
+            ativo=False,
+            autor=self.professor,
+            materia=Materia.objects.get(
+                slug="matematica",
+            ),
+        )
+
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.get(
+            reverse("dashboard_aluno")
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertNotContains(
+            response,
+            "Rascunho de Matemática",
+        )
+
+    def test_professor_cria_jogo_associado_a_materia(self):
+        self.client.login(
+            username=self.professor.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.post(
+            reverse("criar_trilha"),
+            {
+                "materia": Materia.objects.get(
+                    slug="fisica",
+                ).id,
+                "nome": "Novo Jogo de Física",
+                "slug": "novo-jogo-fisica",
+                "descricao": "Jogo de teste.",
+                "tema": "tema-oceano",
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("dashboard_professor"),
+        )
+
+        jogo = Disciplina.objects.get(
+            slug="novo-jogo-fisica",
+        )
+
+        self.assertEqual(
+            jogo.materia.slug,
+            "fisica",
+        )
+
+        self.assertFalse(
+            jogo.ativo,
         )
