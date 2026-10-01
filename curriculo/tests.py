@@ -795,6 +795,44 @@ class EstudioConteudoTests(AutenticacaoBaseTests):
             "1 questão",
         )
 
+    def test_editor_previsualiza_fase_com_link_para_a_fase_real(self):
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo Preview",
+            ordem=1,
+        )
+
+        fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase clicável",
+            ordem=1,
+        )
+
+        response = self.client.get(
+            reverse(
+                "editar_trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            "Fase clicável",
+        )
+
+        self.assertContains(
+            response,
+            reverse(
+                "fase_detalhe",
+                args=[fase.id],
+            ),
+        )
+
     def test_editor_exibe_e_gerencia_questoes_criadas(self):
         modulo = Modulo.objects.create(
             disciplina=self.trilha,
@@ -1486,6 +1524,27 @@ class AcessoAlunoFaseTests(AutenticacaoBaseTests):
         self.client.login(
             username=self.aluno.username,
             password="SenhaForte123!",
+        )
+
+    def test_aluno_enxerga_link_da_primeira_fase_no_mapa(self):
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            reverse(
+                "fase_detalhe",
+                args=[self.fase.id],
+            ),
         )
 
     def test_aluno_consegue_abrir_primeira_fase_da_trilha(self):
