@@ -43,7 +43,12 @@
         .mapa-scroll {
             overflow-x: auto;
             overflow-y: visible;
-            scrollbar-width: thin;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .mapa-scroll::-webkit-scrollbar {
+            display: none;
         }
 
         .mapa-track {
@@ -317,6 +322,8 @@
         }
 
         .module-transition svg {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             overflow: visible;
@@ -335,6 +342,28 @@
             stroke-width: 5;
             stroke-dasharray: 10 10;
             stroke-linecap: round;
+        }
+
+        .module-transition-divider {
+            position: absolute;
+            left: 50%;
+            top: 14px;
+            width: 1px;
+            height: 62px;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,.18);
+            box-shadow: 0 0 7px rgba(255,255,255,.03);
+            z-index: 0;
+        }
+
+        .module-transition-divider::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 176px;
+            width: 1px;
+            height: 30px;
+            background: rgba(255,255,255,.15);
         }
 
         /* =====================================================
@@ -372,69 +401,6 @@
         /* =====================================================
            CADEADO DO MÓDULO
            ===================================================== */
-
-        .module-lock-overlay {
-            position: absolute;
-            inset: -7px;
-            z-index: 45;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            pointer-events: auto;
-        }
-
-        .module-lock-button {
-            width: 78px;
-            height: 78px;
-            border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid rgba(100,116,139,.76);
-            background:
-                radial-gradient(
-                    circle at 32% 25%,
-                    rgba(255,255,255,.12),
-                    transparent 34%
-                ),
-                linear-gradient(
-                    145deg,
-                    rgba(51,65,85,.96),
-                    rgba(15,23,42,.99)
-                );
-            color: rgba(226,232,240,.96);
-            box-shadow:
-                0 13px 30px rgba(0,0,0,.34),
-                inset 0 2px 0 rgba(255,255,255,.08);
-            cursor: pointer;
-            transition:
-                transform .2s ease,
-                filter .2s ease,
-                box-shadow .2s ease;
-        }
-
-        .module-lock-button:hover {
-            transform: scale(1.045);
-            filter: brightness(1.08);
-        }
-
-        .module-lock-button.has-key {
-            border-color: rgba(250,204,21,.82);
-            color: #fde68a;
-            box-shadow:
-                0 0 0 6px rgba(250,204,21,.07),
-                0 13px 34px rgba(0,0,0,.34),
-                inset 0 2px 0 rgba(255,255,255,.08);
-        }
-
-        .module-lock-overlay.is-rattling .module-lock-button {
-            animation: lock-rattle .55s cubic-bezier(.36,.07,.19,.97);
-        }
-
-        .module-group-locked .module-content {
-            opacity: .72;
-        }
 
         .module-unlock-toast {
             position: fixed;
@@ -570,10 +536,6 @@
                 width: 72px;
                 height: 72px;
                 border-radius: 22px;
-            }
-
-            .module-lock-overlay.is-rattling .module-lock-button {
-                animation: none !important;
             }
 
         }
@@ -1103,66 +1065,6 @@
                         {% endfor %}
 
 
-                        <!-- CADEADO -->
-
-                        {% if papel_efetivo == 'aluno' and modulo.status == 'bloqueado' %}
-
-                            <div
-                                class="module-lock-overlay"
-                                data-module-id="{{ modulo.id }}"
-                                data-has-key="{% if modulo.chave_disponivel %}true{% else %}false{% endif %}"
-                                tabindex="0"
-                                role="button"
-                                aria-label="Módulo {{ modulo.ordem }} bloqueado"
-                            >
-
-                                <button
-                                    type="button"
-                                    class="module-lock-button {% if modulo.chave_disponivel %}has-key{% endif %}"
-                                    title="{% if modulo.chave_disponivel %}Usar chave{% else %}Módulo bloqueado{% endif %}"
-                                >
-
-                                    <svg
-                                        class="w-10 h-10"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        stroke-width="1.9"
-                                    >
-
-                                        <path
-                                            d="M7 10V8a5 5 0 0110 0v2"
-                                        />
-
-                                        <rect
-                                            x="4.5"
-                                            y="10"
-                                            width="15"
-                                            height="10"
-                                            rx="2.5"
-                                        />
-
-                                        <circle
-                                            cx="12"
-                                            cy="15"
-                                            r="1.2"
-                                            fill="currentColor"
-                                            stroke="none"
-                                        />
-
-                                        <path
-                                            d="M12 16.2V18"
-                                        />
-
-                                    </svg>
-
-                                </button>
-
-
-                            </div>
-
-                        {% endif %}
-
                     </div>
 
 
@@ -1174,6 +1076,10 @@
                             class="module-transition"
                             aria-hidden="true"
                         >
+
+                            <div
+                                class="module-transition-divider"
+                            ></div>
 
                             <svg
                                 viewBox="0 0 100 220"
@@ -1312,357 +1218,23 @@
 
 
     <script>
+        const mapa = document.getElementById('mapa-jornada');
 
-        const csrfToken =
-            '{{ csrf_token }}';
-
-        const moduloUnlockUrlTemplate =
-            "{% url 'desbloquear_modulo' 0 %}";
-
-
-        function mostrarToastModulo(
-            mensagem
-        ) {
-
-            const toast =
-                document.getElementById(
-                    'module-unlock-toast'
-                );
-
-            if (!toast) {
-                return;
-            }
-
-            toast.textContent =
-                mensagem;
-
-            toast.classList.add(
-                'show'
-            );
-
-            window.setTimeout(
-                () => {
-                    toast.classList.remove(
-                        'show'
-                    );
+        if (mapa) {
+            mapa.addEventListener(
+                'wheel',
+                (event) => {
+                    if (
+                        Math.abs(event.deltaY)
+                        >
+                        Math.abs(event.deltaX)
+                    ) {
+                        mapa.scrollLeft += event.deltaY;
+                    }
                 },
-                1800
+                { passive: false }
             );
-
         }
-
-
-        function provocarBalanco(
-            overlay,
-            event
-        ) {
-
-            const rect =
-                overlay.getBoundingClientRect();
-
-            const clientX =
-                event?.clientX
-                ??
-                rect.left + (
-                    rect.width / 2
-                );
-
-            const clientY =
-                event?.clientY
-                ??
-                rect.top + (
-                    rect.height / 2
-                );
-
-            const x =
-                Math.max(
-                    0,
-                    Math.min(
-                        100,
-                        (
-                            (
-                                clientX -
-                                rect.left
-                            )
-                            /
-                            rect.width
-                        )
-                        *
-                        100
-                    )
-                );
-
-            const y =
-                Math.max(
-                    0,
-                    Math.min(
-                        100,
-                        (
-                            (
-                                clientY -
-                                rect.top
-                            )
-                            /
-                            rect.height
-                        )
-                        *
-                        100
-                    )
-                );
-
-            overlay.style.setProperty(
-                '--origin-x',
-                x + '%'
-            );
-
-            overlay.style.setProperty(
-                '--origin-y',
-                y + '%'
-            );
-
-            overlay.classList.remove(
-                'is-rattling'
-            );
-
-            void overlay.offsetWidth;
-
-            overlay.classList.add(
-                'is-rattling'
-            );
-
-            window.setTimeout(
-                () => {
-                    overlay.classList.remove(
-                        'is-rattling'
-                    );
-                },
-                600
-            );
-
-        }
-
-
-        async function desbloquearModulo(
-            overlay,
-            event
-        ) {
-
-            const moduloId =
-                overlay.dataset.moduleId;
-
-            if (!moduloId) {
-                return;
-            }
-
-            provocarBalanco(
-                overlay,
-                event
-            );
-
-            const lockButton =
-                overlay.querySelector(
-                    '.module-lock-button'
-                );
-
-            if (lockButton) {
-                lockButton.disabled =
-                    true;
-            }
-
-            mostrarToastModulo(
-                '🔑 Usando a chave...'
-            );
-
-            try {
-
-                const response =
-                    await fetch(
-                        moduloUnlockUrlTemplate.replace(
-                            '/0/',
-                            '/' + moduloId + '/'
-                        ),
-                        {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRFToken':
-                                    csrfToken,
-                            },
-                        }
-                    );
-
-                const data =
-                    await response.json();
-
-                if (
-                    !response.ok
-                    ||
-                    data.status !== 'ok'
-                ) {
-
-                    throw new Error(
-                        data.msg
-                        ||
-                        'Não foi possível desbloquear o módulo.'
-                    );
-
-                }
-
-                mostrarToastModulo(
-                    '🔓 '
-                    +
-                    (
-                        data.modulo_titulo
-                        ||
-                        'Módulo'
-                    )
-                    +
-                    ' desbloqueado!'
-                );
-
-                window.setTimeout(
-                    () => {
-                        window.location.reload();
-                    },
-                    850
-                );
-
-            } catch (error) {
-
-                if (lockButton) {
-                    lockButton.disabled =
-                        false;
-                }
-
-                mostrarToastModulo(
-                    '⚠️ '
-                    +
-                    error.message
-                );
-
-            }
-
-        }
-
-
-        document
-            .querySelectorAll(
-                '.module-lock-overlay'
-            )
-            .forEach(
-                (overlay) => {
-
-                    const lockButton =
-                        overlay.querySelector(
-                            '.module-lock-button'
-                        );
-
-                    overlay.addEventListener(
-                        'click',
-                        (event) => {
-
-                            const hasKey =
-                                overlay.dataset.hasKey
-                                === 'true';
-
-                            if (
-                                hasKey
-                                &&
-                                event.target.closest(
-                                    '.module-lock-button'
-                                )
-                            ) {
-
-                                event.preventDefault();
-                                event.stopPropagation();
-
-                                desbloquearModulo(
-                                    overlay,
-                                    event
-                                );
-
-                                return;
-                            }
-
-                            provocarBalanco(
-                                overlay,
-                                event
-                            );
-
-                            if (hasKey) {
-
-                                mostrarToastModulo(
-                                    '🔑 Você tem a chave. Clique no cadeado para abrir este módulo.'
-                                );
-
-                            } else {
-
-                                mostrarToastModulo(
-                                    '🔒 Complete o módulo anterior para desbloquear este módulo.'
-                                );
-
-                            }
-
-                        }
-                    );
-
-
-                    overlay.addEventListener(
-                        'keydown',
-                        (event) => {
-
-                            if (
-                                event.key !==
-                                    'Enter'
-                                &&
-                                event.key !==
-                                    ' '
-                            ) {
-                                return;
-                            }
-
-                            event.preventDefault();
-
-                            if (
-                                overlay.dataset.hasKey
-                                === 'true'
-                            ) {
-
-                                const lock =
-                                    overlay.querySelector(
-                                        '.module-lock-button'
-                                    );
-
-                                if (lock) {
-                                    lock.click();
-                                }
-
-                                return;
-                            }
-
-                            provocarBalanco(
-                                overlay,
-                                {
-                                    clientX:
-                                        overlay.getBoundingClientRect().left
-                                        +
-                                        overlay.offsetWidth / 2,
-                                    clientY:
-                                        overlay.getBoundingClientRect().top
-                                        +
-                                        overlay.offsetHeight / 2,
-                                }
-                            );
-
-                            mostrarToastModulo(
-                                '🔒 Complete o módulo anterior para desbloquear este módulo.'
-                            );
-
-                        }
-                    );
-
-                }
-            );
-
     </script>
 
 </body>
