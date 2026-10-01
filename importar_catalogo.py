@@ -314,7 +314,9 @@ def atualizar_feedback(
     Atualiza somente o feedback pedagógico das questões existentes.
 
     A correspondência usa o slug do jogo, a ordem do módulo,
-    a ordem da fase e a posição da questão dentro da fase.
+    a ordem da fase e, preferencialmente, o enunciado da questão.
+    A posição dentro da fase é usada apenas como fallback quando
+    o enunciado da mesma posição coincide.
 
     Nenhuma alternativa, fase, módulo, progresso ou recompensa
     é criada, excluída ou alterada.
@@ -322,104 +324,131 @@ def atualizar_feedback(
     atualizadas = 0
     sem_correspondencia = []
 
-    for materia_data in dados['materias']:
-        for jogo_data in materia_data['jogos']:
-            jogo = (
-                Disciplina.objects
-                .filter(slug=jogo_data['slug'])
-                .first()
-            )
+    def processar():
+        nonlocal atualizadas
 
-            if jogo is None:
-                sem_correspondencia.append(
-                    f"{jogo_data['slug']}:jogo"
-                )
-                continue
-
-            for modulo_data in sorted(
-                jogo_data['modulos'],
-                key=lambda item: item['ordem'],
-            ):
-                modulo = (
-                    jogo.modulos
-                    .filter(ordem=modulo_data['ordem'])
-                    .order_by('id')
+        for materia_data in dados['materias']:
+            for jogo_data in materia_data['jogos']:
+                jogo = (
+                    Disciplina.objects
+                    .filter(slug=jogo_data['slug'])
                     .first()
                 )
 
-                if modulo is None:
+                if jogo is None:
                     sem_correspondencia.append(
-                        (
-                            f"{jogo_data['slug']}:"
-                            f"módulo:{modulo_data['ordem']}"
-                        )
+                        f"{jogo_data['slug']}:jogo"
                     )
                     continue
 
-                for fase_data in sorted(
-                    modulo_data['fases'],
+                for modulo_data in sorted(
+                    jogo_data['modulos'],
                     key=lambda item: item['ordem'],
                 ):
-                    fase = (
-                        modulo.fases
-                        .filter(ordem=fase_data['ordem'])
+                    modulo = (
+                        jogo.modulos
+                        .filter(ordem=modulo_data['ordem'])
                         .order_by('id')
                         .first()
                     )
 
-                    if fase is None:
+                    if modulo is None:
                         sem_correspondencia.append(
                             (
                                 f"{jogo_data['slug']}:"
-                                f"módulo:{modulo.ordem}:"
-                                f"fase:{fase_data['ordem']}"
+                                f"módulo:{modulo_data['ordem']}"
                             )
                         )
                         continue
 
-                    questoes = list(
-                        fase.questoes
-                        .order_by('id')
-                    )
-
-                    for indice, questao_data in enumerate(
-                        fase_data['questoes']
+                    for fase_data in sorted(
+                        modulo_data['fases'],
+                        key=lambda item: item['ordem'],
                     ):
-                        if indice >= len(questoes):
+                        fase = (
+                            modulo.fases
+                            .filter(ordem=fase_data['ordem'])
+                            .order_by('id')
+                            .first()
+                        )
+
+                        if fase is None:
                             sem_correspondencia.append(
                                 (
                                     f"{jogo_data['slug']}:"
                                     f"módulo:{modulo.ordem}:"
-                                    f"fase:{fase.ordem}:"
-                                    f"questão:{indice + 1}"
+                                    f"fase:{fase_data['ordem']}"
                                 )
                             )
                             continue
 
-                        questao = questoes[indice]
-                        nova_explicacao = (
-                            questao_data
-                            .get('explicacao_erro', '')
-                            .strip()
+                        questoes = list(
+                            fase.questoes
+                            .order_by('id')
                         )
 
-                        if (
-                            questao.explicacao_erro
-                            == nova_explicacao
+                        for indice, questao_data in enumerate(
+                            fase_data['questoes']
                         ):
-                            continue
+                            questao = None
 
-                        if not dry_run:
-                            questao.explicacao_erro = (
-                                nova_explicacao
-                            )
-                            questao.save(
-                                update_fields=[
-                                    'explicacao_erro'
-                                ]
+                            if (
+                                indice < len(questoes)
+                                and questoes[indice].enunciado.strip()
+                                == questao_data['enunciado'].strip()
+                            ):
+                                questao = questoes[indice]
+                            else:
+                                questao = next(
+                                    (
+                                        item
+                                        for item in questoes
+                                        if item.enunciado.strip()
+                                        == questao_data['enunciado'].strip()
+                                    ),
+                                    None,
+                                )
+
+                            if questao is None:
+                                sem_correspondencia.append(
+                                    (
+                                        f"{jogo_data['slug']}:"
+                                        f"módulo:{modulo.ordem}:"
+                                        f"fase:{fase.ordem}:"
+                                        f"questão:{indice + 1}"
+                                    )
+                                )
+                                continue
+
+                            nova_explicacao = (
+                                questao_data
+                                .get('explicacao_erro', '')
+                                .strip()
                             )
 
-                        atualizadas += 1
+                            if (
+                                questao.explicacao_erro
+                                == nova_explicacao
+                            ):
+                                continue
+
+                            if not dry_run:
+                                questao.explicacao_erro = (
+                                    nova_explicacao
+                                )
+                                questao.save(
+                                    update_fields=[
+                                        'explicacao_erro'
+                                    ]
+                                )
+
+                            atualizadas += 1
+
+    if dry_run:
+        processar()
+    else:
+        with transaction.atomic():
+            processar()
 
     print()
     if dry_run:
