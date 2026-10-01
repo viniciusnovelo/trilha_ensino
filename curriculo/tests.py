@@ -484,6 +484,45 @@ class ProgressaoEVidasTests(AutenticacaoBaseTests):
             "Correta",
         )
 
+    def test_feedback_final_preserva_raciocinio_em_etapas(self):
+        self.questao.explicacao_erro = (
+            "Como pensar: substitua o valor de x na expressão.\n"
+            "Passo a passo:\n"
+            "1. Substitua x pelo valor informado.\n"
+            "2. Faça as operações na ordem.\n"
+            "Conclusão: confira o resultado encontrado."
+        )
+        self.questao.save(
+            update_fields=["explicacao_erro"]
+        )
+
+        response = self._finalizar(
+            self.correta.id
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        feedback = response.json()["feedback_questoes"][0]
+
+        self.assertIn(
+            "Como pensar:",
+            feedback["explicacao"],
+        )
+
+        self.assertIn(
+            "Passo a passo:",
+            feedback["explicacao"],
+        )
+
+        self.assertIn(
+            "Conclusão:",
+            feedback["explicacao"],
+        )
+
+
     def test_tentativa_reprovada_consume_uma_vida_e_gera_historico(self):
         response = self._finalizar(
             self.incorreta.id
