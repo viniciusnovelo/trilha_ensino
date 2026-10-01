@@ -235,15 +235,15 @@
                           "correta": true
                         },
                         {
-                          "texto": "R$ 94",
-                          "correta": false
-                        },
-                        {
-                          "texto": "R$ 114",
+                          "texto": "R$ 104",
                           "correta": false
                         },
                         {
                           "texto": "R$ 84",
+                          "correta": false
+                        },
+                        {
+                          "texto": "R$ 114",
                           "correta": false
                         }
                       ]
@@ -757,6 +757,10 @@
                       "explicacao_erro": "Como pensar: quando x = 0, o termo ax desaparece; sobra o termo independente.\nResolução: f(0) = 3·0 + 3 = 3\nResposta: 3.",
                       "opcoes": [
                         {
+                          "texto": "3",
+                          "correta": true
+                        },
+                        {
                           "texto": "0",
                           "correta": false
                         },
@@ -765,11 +769,7 @@
                           "correta": false
                         },
                         {
-                          "texto": "3",
-                          "correta": true
-                        },
-                        {
-                          "texto": "3",
+                          "texto": "6",
                           "correta": false
                         }
                       ]
@@ -805,7 +805,7 @@
                           "correta": true
                         },
                         {
-                          "texto": "3",
+                          "texto": "1",
                           "correta": false
                         },
                         {
@@ -813,7 +813,7 @@
                           "correta": false
                         },
                         {
-                          "texto": "1",
+                          "texto": "9",
                           "correta": false
                         }
                       ]
@@ -1298,15 +1298,15 @@
                           "correta": true
                         },
                         {
+                          "texto": "0",
+                          "correta": false
+                        },
+                        {
                           "texto": "9",
                           "correta": false
                         },
                         {
-                          "texto": "0",
-                          "correta": false
-                        },
-                        {
-                          "texto": "0",
+                          "texto": "6",
                           "correta": false
                         }
                       ]
@@ -1653,15 +1653,15 @@
                           "correta": true
                         },
                         {
-                          "texto": "R$ 94",
-                          "correta": false
-                        },
-                        {
-                          "texto": "R$ 114",
+                          "texto": "R$ 104",
                           "correta": false
                         },
                         {
                           "texto": "R$ 84",
+                          "correta": false
+                        },
+                        {
+                          "texto": "R$ 114",
                           "correta": false
                         }
                       ]
@@ -2491,15 +2491,15 @@
                           "correta": true
                         },
                         {
-                          "texto": "16 cm",
-                          "correta": false
-                        },
-                        {
                           "texto": "8 cm",
                           "correta": false
                         },
                         {
-                          "texto": "8 cm",
+                          "texto": "4 cm",
+                          "correta": false
+                        },
+                        {
+                          "texto": "12 cm",
                           "correta": false
                         }
                       ]
@@ -2593,11 +2593,11 @@
                           "correta": false
                         },
                         {
-                          "texto": "4 cm",
+                          "texto": "6 cm",
                           "correta": false
                         },
                         {
-                          "texto": "6 cm",
+                          "texto": "12 cm",
                           "correta": false
                         }
                       ]
@@ -2637,11 +2637,11 @@
                           "correta": false
                         },
                         {
-                          "texto": "8 cm²",
+                          "texto": "4 cm²",
                           "correta": false
                         },
                         {
-                          "texto": "4 cm²",
+                          "texto": "6 cm²",
                           "correta": false
                         }
                       ]
@@ -2868,7 +2868,7 @@
                           "correta": true
                         },
                         {
-                          "texto": "R$ 92",
+                          "texto": "R$ 102",
                           "correta": false
                         },
                         {
@@ -3111,10 +3111,6 @@
                       "explicacao_erro": "Como pensar: a área de um triângulo é base vezes altura dividido por 2.\nResolução: A=(12·4)/2=24 cm²\nResposta: 24 cm².",
                       "opcoes": [
                         {
-                          "texto": "48 cm²",
-                          "correta": false
-                        },
-                        {
                           "texto": "24 cm²",
                           "correta": true
                         },
@@ -3123,7 +3119,11 @@
                           "correta": false
                         },
                         {
-                          "texto": "10 cm²",
+                          "texto": "16 cm²",
+                          "correta": false
+                        },
+                        {
+                          "texto": "20 cm²",
                           "correta": false
                         }
                       ]
@@ -3307,19 +3307,19 @@
                       "explicacao_erro": "Como pensar: a área de um triângulo é base vezes altura dividido por 2.\nResolução: A=(10·4)/2=20 cm²\nResposta: 20 cm².",
                       "opcoes": [
                         {
-                          "texto": "9 cm²",
-                          "correta": false
-                        },
-                        {
-                          "texto": "40 cm²",
-                          "correta": false
-                        },
-                        {
                           "texto": "20 cm²",
                           "correta": true
                         },
                         {
                           "texto": "40 cm²",
+                          "correta": false
+                        },
+                        {
+                          "texto": "14 cm²",
+                          "correta": false
+                        },
+                        {
+                          "texto": "24 cm²",
                           "correta": false
                         }
                       ]
@@ -3818,7 +3818,7 @@
                           "correta": false
                         },
                         {
-                          "texto": "6 m/s²",
+                          "texto": "1 m/s²",
                           "correta": false
                         },
                         {
@@ -4593,6 +4593,10 @@
                       "explicacao_erro": "Como pensar: use v = v₀ + at.\nResolução: v=3+2·3=9 m/s\nResposta: 9 m/s.",
                       "opcoes": [
                         {
+                          "texto": "9 m/s",
+                          "correta": true
+                        },
+                        {
                           "texto": "5 m/s",
                           "correta": false
                         },
@@ -4601,12 +4605,8 @@
                           "correta": false
                         },
                         {
-                          "texto": "9 m/s",
+                          "texto": "12 m/s",
                           "correta": false
-                        },
-                        {
-                          "texto": "9 m/s",
-                          "correta": true
                         }
                       ]
                     },
@@ -5508,19 +5508,19 @@
                       "opcoes": [
                         {
                           "texto": "3 m/s²",
-                          "correta": false
+                          "correta": true
                         },
                         {
                           "texto": "9 m/s²",
                           "correta": false
                         },
                         {
-                          "texto": "1 m/s²",
+                          "texto": "6 m/s²",
                           "correta": false
                         },
                         {
-                          "texto": "3 m/s²",
-                          "correta": true
+                          "texto": "1 m/s²",
+                          "correta": false
                         }
                       ]
                     },
