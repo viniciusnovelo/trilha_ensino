@@ -75,6 +75,7 @@ class Modulo(models.Model):
     ordem = models.PositiveIntegerField(default=1)
 
     class Meta:
+        verbose_name_plural = "Módulos"
         ordering = ['ordem']
 
     def __str__(self):
