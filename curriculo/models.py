@@ -151,8 +151,13 @@ class Opcao(models.Model):
     )
     texto = models.CharField(max_length=255)
     e_correta = models.BooleanField(default=False)
+    ordem = models.PositiveIntegerField(
+        default=1,
+        help_text="Posição de exibição da alternativa dentro da questão.",
+    )
 
     class Meta:
+        ordering = ['ordem', 'id']
         verbose_name = "Opção"
         verbose_name_plural = "Opções"
 
