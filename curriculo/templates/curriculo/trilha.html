@@ -256,24 +256,6 @@
             stroke-linecap: round;
         }
 
-        .module-bridge-mark {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-            width: 44px;
-            height: 44px;
-            border-radius: 999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(2,6,23,.38);
-            border: 1px solid rgba(255,255,255,.10);
-            color: rgba(255,255,255,.55);
-            backdrop-filter: blur(6px);
-            box-shadow: 0 9px 22px rgba(0,0,0,.16);
-        }
-
         /* =========================================================
            MÓDULO BLOQUEADO
            ========================================================= */
@@ -455,7 +437,9 @@
 
         @keyframes chain-sway {
             0%,100% {
-                transform: rotate(0deg);
+                transform:
+                    rotate(0deg)
+                    translate3d(0,0,0);
             }
 
             16% {
@@ -1006,12 +990,12 @@
                                                             <svg viewBox="0 0 100 310" preserveAspectRatio="none">
 
                                                                 <path
-                                                                    d="M0 155 C 26 118 44 192 72 155 C 80 145 90 140 100 140"
+                                                                    d="M0 {{ fase.svg_y1|add:'55' }} C 24 {{ fase.svg_y1|add:'20' }} 45 {{ fase.svg_y2|add:'90' }} 72 {{ fase.svg_y2|add:'55' }} C 82 {{ fase.svg_y2|add:'50' }} 92 {{ fase.svg_y2|add:'55' }} 100 {{ fase.svg_y2|add:'55' }}"
                                                                     class="phase-connector-path"
                                                                 />
 
                                                                 <path
-                                                                    d="M0 155 C 26 118 44 192 72 155 C 80 145 90 140 100 140"
+                                                                    d="M0 {{ fase.svg_y1|add:'55' }} C 24 {{ fase.svg_y1|add:'20' }} 45 {{ fase.svg_y2|add:'90' }} 72 {{ fase.svg_y2|add:'55' }} C 82 {{ fase.svg_y2|add:'50' }} 92 {{ fase.svg_y2|add:'55' }} 100 {{ fase.svg_y2|add:'55' }}"
                                                                     class="phase-connector-dash"
                                                                 />
 
@@ -1173,10 +1157,6 @@
                                         />
 
                                     </svg>
-
-                                    <div class="module-bridge-mark">
-                                        →
-                                    </div>
 
                                 </div>
 
