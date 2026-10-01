@@ -93,6 +93,7 @@ def validar_opcoes(questao, contexto):
         )
 
     corretas = 0
+    posicao_correta = None
 
     for indice, opcao in enumerate(opcoes, start=1):
         if not isinstance(opcao, dict):
@@ -107,12 +108,17 @@ def validar_opcoes(questao, contexto):
                 'deve ser true ou false.'
             )
 
+        if opcao['correta']:
+            posicao_correta = indice
+
         corretas += int(opcao['correta'])
 
     if corretas != 1:
         erro(
             f'{contexto}: é necessário exatamente uma opção correta.'
         )
+
+    return posicao_correta
 
 
 def validar_catalogo(dados):
@@ -262,6 +268,8 @@ def validar_catalogo(dados):
                             'exatamente 4 questões.'
                         )
 
+                    posicoes_corretas = []
+
                     for questao_indice, questao in enumerate(questoes, start=1):
                         contexto_questao = (
                             f'{contexto_fase} · Questão #{questao_indice}'
@@ -278,13 +286,24 @@ def validar_catalogo(dados):
                                     f'campo "{campo}" ausente.'
                                 )
 
-                        validar_opcoes(
+                        posicao_correta = validar_opcoes(
                             questao,
                             contexto_questao,
                         )
 
+                        posicoes_corretas.append(
+                            posicao_correta
+                        )
+
                         total_questoes += 1
                         total_opcoes += 4
+
+                    if sorted(posicoes_corretas) != [1, 2, 3, 4]:
+                        erro(
+                            f'{contexto_fase}: a posição da resposta correta '
+                            'deve variar entre as 4 questões, usando uma vez '
+                            'cada posição (1ª, 2ª, 3ª e 4ª alternativa).'
+                        )
 
     print()
     print('✅ Validação do catálogo concluída.')
