@@ -32,7 +32,7 @@
                   "questoes": [
                     {
                       "enunciado": "Em uma função, cada elemento do domínio está associado a:",
-                      "explicacao_erro": "Uma função associa cada elemento do domínio a exatamente um valor.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Uma função associa cada elemento do domínio a exatamente um valor.\nResposta: um único elemento do contradomínio.",
                       "opcoes": [
                         {
                           "texto": "um único elemento do contradomínio",
@@ -54,7 +54,7 @@
                     },
                     {
                       "enunciado": "Considere f(x) = 2x + 0. Qual é f(3)?",
-                      "explicacao_erro": "Substitua x por 3 e calcule 2·3 + v.",
+                      "explicacao_erro": "Como pensar: para calcular f(3), substitua x por 3 na expressão da função.\nResolução: f(3) = 2·3 + 0 = 6.\nResposta: 6.",
                       "opcoes": [
                         {
                           "texto": "6",
@@ -76,7 +76,7 @@
                     },
                     {
                       "enunciado": "Qual é a raiz de f(x) = x - 2?",
-                      "explicacao_erro": "A raiz ocorre quando f(x)=0; portanto x-n=0.",
+                      "explicacao_erro": "Como pensar: a raiz é o valor de x para o qual f(x)=0.\nResolução: x − 2 = 0 → x = 2.\nResposta: 2.",
                       "opcoes": [
                         {
                           "texto": "2",
@@ -98,7 +98,7 @@
                     },
                     {
                       "enunciado": "Em uma função afim f(x)=ax+b, o coeficiente a representa:",
-                      "explicacao_erro": "O coeficiente a indica quanto a função varia quando x aumenta uma unidade.",
+                      "explicacao_erro": "Como pensar: em f(x)=ax+b, o coeficiente a determina a inclinação da reta.\nResolução: a indica quanto o valor de f(x) varia quando x aumenta uma unidade.\nResposta: a taxa de variação.",
                       "opcoes": [
                         {
                           "texto": "a taxa de variação",
@@ -130,7 +130,7 @@
                   "questoes": [
                     {
                       "enunciado": "Em uma função, cada elemento do domínio está associado a:",
-                      "explicacao_erro": "Uma função associa cada elemento do domínio a exatamente um valor.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Uma função associa cada elemento do domínio a exatamente um valor.\nResposta: um único elemento do contradomínio.",
                       "opcoes": [
                         {
                           "texto": "um único elemento do contradomínio",
@@ -152,7 +152,7 @@
                     },
                     {
                       "enunciado": "Considere f(x) = 2x + 1. Qual é f(3)?",
-                      "explicacao_erro": "Substitua x por 3 e calcule 2·3 + v.",
+                      "explicacao_erro": "Como pensar: para calcular f(3), substitua x por 3 na expressão da função.\nResolução: f(3) = 2·3 + 1 = 7.\nResposta: 7.",
                       "opcoes": [
                         {
                           "texto": "7",
@@ -174,7 +174,7 @@
                     },
                     {
                       "enunciado": "Qual é a raiz de f(x) = x - 3?",
-                      "explicacao_erro": "A raiz ocorre quando f(x)=0; portanto x-n=0.",
+                      "explicacao_erro": "Como pensar: a raiz é o valor de x para o qual f(x)=0.\nResolução: x − 3 = 0 → x = 3.\nResposta: 3.",
                       "opcoes": [
                         {
                           "texto": "3",
@@ -196,7 +196,7 @@
                     },
                     {
                       "enunciado": "Em uma função afim f(x)=ax+b, o coeficiente a representa:",
-                      "explicacao_erro": "O coeficiente a indica quanto a função varia quando x aumenta uma unidade.",
+                      "explicacao_erro": "Como pensar: em f(x)=ax+b, o coeficiente a determina a inclinação da reta.\nResolução: a indica quanto o valor de f(x) varia quando x aumenta uma unidade.\nResposta: a taxa de variação.",
                       "opcoes": [
                         {
                           "texto": "a taxa de variação",
@@ -228,7 +228,7 @@
                   "questoes": [
                     {
                       "enunciado": "Um produto de R$ 104 com desconto de 10% passa a custar aproximadamente:",
-                      "explicacao_erro": "Calcule 10% do preço e subtraia do valor original.",
+                      "explicacao_erro": "Como pensar: primeiro calcule a porcentagem do desconto e depois retire esse valor do preço original.\nResolução: 10% de R$104 = R$10,40. Então R$104,00 − R$10,40 = R$93,60. Como a questão pede aproximadamente, a opção mais próxima é R$94.\nResposta: R$ 94.",
                       "opcoes": [
                         {
                           "texto": "R$ 94",
@@ -250,7 +250,7 @@
                     },
                     {
                       "enunciado": "Um valor de 40 aumentado em 20% resulta em:",
-                      "explicacao_erro": "Aumento de 20% equivale a multiplicar por 1,20.",
+                      "explicacao_erro": "Como pensar: aumentar 20% significa multiplicar o valor por 1,20.\nResolução: 40 × 1,20 = 48.\nResposta: 48.",
                       "opcoes": [
                         {
                           "texto": "48",
@@ -272,7 +272,7 @@
                     },
                     {
                       "enunciado": "50% corresponde à fração:",
-                      "explicacao_erro": "50% significa metade do total.",
+                      "explicacao_erro": "Como pensar: porcentagem significa uma razão sobre 100.\nResolução: 50% = 50/100 = 1/2, simplificando a fração por 50.\nResposta: 1/2.",
                       "opcoes": [
                         {
                           "texto": "1/2",
@@ -294,7 +294,7 @@
                     },
                     {
                       "enunciado": "Se 20 alunos representam 100% da turma, 4 alunos representam:",
-                      "explicacao_erro": "Divida a parte pelo total e multiplique por 100.",
+                      "explicacao_erro": "Como pensar: porcentagem de uma parte = (parte ÷ total) × 100.\nResolução: (4 ÷ 20) × 100 = 20%.\nResposta: 20%.",
                       "opcoes": [
                         {
                           "texto": "20%",
@@ -333,7 +333,7 @@
                   "questoes": [
                     {
                       "enunciado": "Em uma função, cada elemento do domínio está associado a:",
-                      "explicacao_erro": "Uma função associa cada elemento do domínio a exatamente um valor.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Uma função associa cada elemento do domínio a exatamente um valor.\nResposta: um único elemento do contradomínio.",
                       "opcoes": [
                         {
                           "texto": "um único elemento do contradomínio",
@@ -355,7 +355,7 @@
                     },
                     {
                       "enunciado": "Considere f(x) = 2x + 0. Qual é f(3)?",
-                      "explicacao_erro": "Substitua x por 3 e calcule 2·3 + v.",
+                      "explicacao_erro": "Como pensar: para calcular f(3), substitua x por 3 na expressão da função.\nResolução: f(3) = 2·3 + 0 = 6.\nResposta: 6.",
                       "opcoes": [
                         {
                           "texto": "6",
@@ -377,7 +377,7 @@
                     },
                     {
                       "enunciado": "Qual é a raiz de f(x) = x - 2?",
-                      "explicacao_erro": "A raiz ocorre quando f(x)=0; portanto x-n=0.",
+                      "explicacao_erro": "Como pensar: a raiz é o valor de x para o qual f(x)=0.\nResolução: x − 2 = 0 → x = 2.\nResposta: 2.",
                       "opcoes": [
                         {
                           "texto": "2",
@@ -399,7 +399,7 @@
                     },
                     {
                       "enunciado": "Em uma função afim f(x)=ax+b, o coeficiente a representa:",
-                      "explicacao_erro": "O coeficiente a indica quanto a função varia quando x aumenta uma unidade.",
+                      "explicacao_erro": "Como pensar: em f(x)=ax+b, o coeficiente a determina a inclinação da reta.\nResolução: a indica quanto o valor de f(x) varia quando x aumenta uma unidade.\nResposta: a taxa de variação.",
                       "opcoes": [
                         {
                           "texto": "a taxa de variação",
@@ -431,7 +431,7 @@
                   "questoes": [
                     {
                       "enunciado": "Se 3 cadernos custam R$ 9, 1 caderno custa:",
-                      "explicacao_erro": "Em uma proporção direta, divida o preço pelo número de cadernos.",
+                      "explicacao_erro": "Como pensar: em uma proporção direta, primeiro descubra o preço de uma unidade.\nResolução: R$9 ÷ 3 = R$3 por caderno.\nResposta: R$ 3.",
                       "opcoes": [
                         {
                           "texto": "R$ 3",
@@ -453,7 +453,7 @@
                     },
                     {
                       "enunciado": "Uma receita usa 2 xícaras para 4 pessoas. Para 6 pessoas, serão usadas:",
-                      "explicacao_erro": "Mantenha a mesma razão entre xícaras e pessoas.",
+                      "explicacao_erro": "Como pensar: mantenha a mesma proporção entre quantidade de xícaras e número de pessoas.\nResolução: 2 xícaras para 4 pessoas equivalem a 0,5 xícara por pessoa. Para 6 pessoas: 6 × 0,5 = 3 xícaras.\nResposta: 3 xícaras.",
                       "opcoes": [
                         {
                           "texto": "3 xícaras",
@@ -475,7 +475,7 @@
                     },
                     {
                       "enunciado": "Em grandezas diretamente proporcionais, quando uma dobra, a outra:",
-                      "explicacao_erro": "A razão entre as grandezas permanece constante.",
+                      "explicacao_erro": "Como pensar: em grandezas diretamente proporcionais, as duas variam na mesma razão.\nResolução: se uma grandeza é multiplicada por 2, a outra também deve ser multiplicada por 2.\nResposta: também dobra.",
                       "opcoes": [
                         {
                           "texto": "também dobra",
@@ -497,7 +497,7 @@
                     },
                     {
                       "enunciado": "20% de 15 é:",
-                      "explicacao_erro": "Converta 20% para 0,20 e multiplique pelo valor.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Converta 20% para 0,20 e multiplique pelo valor.\nResposta: 3.",
                       "opcoes": [
                         {
                           "texto": "3",
@@ -529,7 +529,7 @@
                   "questoes": [
                     {
                       "enunciado": "A média aritmética é obtida:",
-                      "explicacao_erro": "A média é a soma dos dados dividida pela quantidade de dados.",
+                      "explicacao_erro": "Como pensar: média aritmética é uma distribuição equilibrada da soma dos dados.\nResolução: some todos os valores e divida pelo número de valores.\nResposta: somando os valores e dividindo pela quantidade.",
                       "opcoes": [
                         {
                           "texto": "somando os valores e dividindo pela quantidade",
@@ -551,7 +551,7 @@
                     },
                     {
                       "enunciado": "A média de 4, 6 e 8 é:",
-                      "explicacao_erro": "Some os três valores e divida por 3.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Some os três valores e divida por 3.\nResposta: 6.",
                       "opcoes": [
                         {
                           "texto": "6",
@@ -573,7 +573,7 @@
                     },
                     {
                       "enunciado": "A mediana de uma lista ordenada é:",
-                      "explicacao_erro": "A mediana é o elemento central após ordenar os dados.",
+                      "explicacao_erro": "Como pensar: a mediana depende da posição dos dados depois que eles estão ordenados.\nResolução: em uma lista ordenada, localize o valor que ocupa a posição central.\nResposta: o valor central.",
                       "opcoes": [
                         {
                           "texto": "o valor central",
@@ -595,7 +595,7 @@
                     },
                     {
                       "enunciado": "A moda é o valor que:",
-                      "explicacao_erro": "Moda é a frequência mais alta de um valor.",
+                      "explicacao_erro": "Como pensar: a moda é definida pela maior frequência de ocorrência.\nResolução: conte quantas vezes cada valor aparece; o que mais se repete é a moda.\nResposta: mais se repete.",
                       "opcoes": [
                         {
                           "texto": "mais se repete",
@@ -645,7 +645,7 @@
                   "questoes": [
                     {
                       "enunciado": "Qual é a solução de x + 3 = 6?",
-                      "explicacao_erro": "Isole x subtraindo n dos dois lados.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Isole x subtraindo n dos dois lados.\nResposta: 3.",
                       "opcoes": [
                         {
                           "texto": "3",
@@ -667,7 +667,7 @@
                     },
                     {
                       "enunciado": "Resolva 5x = 20.",
-                      "explicacao_erro": "Divida os dois lados pelo coeficiente de x.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Divida os dois lados pelo coeficiente de x.\nResposta: 4.",
                       "opcoes": [
                         {
                           "texto": "4",
@@ -689,7 +689,7 @@
                     },
                     {
                       "enunciado": "Qual valor de x satisfaz 3x - 9 = 0?",
-                      "explicacao_erro": "Leve o termo constante para o outro lado e divida por 3.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Leve o termo constante para o outro lado e divida por 3.\nResposta: 3.",
                       "opcoes": [
                         {
                           "texto": "3",
@@ -711,7 +711,7 @@
                     },
                     {
                       "enunciado": "Em 5x + 10 = 25, o valor de x é:",
-                      "explicacao_erro": "Subtraia 10 e divida o resultado por 5.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Subtraia 10 e divida o resultado por 5.\nResposta: 3.",
                       "opcoes": [
                         {
                           "texto": "3",
@@ -743,7 +743,7 @@
                   "questoes": [
                     {
                       "enunciado": "Qual é a solução de x + 4 = 8?",
-                      "explicacao_erro": "Isole x subtraindo n dos dois lados.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Isole x subtraindo n dos dois lados.\nResposta: 4.",
                       "opcoes": [
                         {
                           "texto": "4",
@@ -765,7 +765,7 @@
                     },
                     {
                       "enunciado": "Resolva 6x = 24.",
-                      "explicacao_erro": "Divida os dois lados pelo coeficiente de x.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Divida os dois lados pelo coeficiente de x.\nResposta: 4.",
                       "opcoes": [
                         {
                           "texto": "4",
@@ -787,7 +787,7 @@
                     },
                     {
                       "enunciado": "Qual valor de x satisfaz 3x - 12 = 0?",
-                      "explicacao_erro": "Leve o termo constante para o outro lado e divida por 3.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Leve o termo constante para o outro lado e divida por 3.\nResposta: 4.",
                       "opcoes": [
                         {
                           "texto": "4",
@@ -809,7 +809,7 @@
                     },
                     {
                       "enunciado": "Em 5x + 10 = 30, o valor de x é:",
-                      "explicacao_erro": "Subtraia 10 e divida o resultado por 5.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Subtraia 10 e divida o resultado por 5.\nResposta: 4.",
                       "opcoes": [
                         {
                           "texto": "4",
@@ -841,7 +841,7 @@
                   "questoes": [
                     {
                       "enunciado": "A solução de um sistema representa:",
-                      "explicacao_erro": "A solução precisa atender às duas equações ao mesmo tempo.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: A solução precisa atender às duas equações ao mesmo tempo.\nResposta: um par ordenado que satisfaz simultaneamente as equações.",
                       "opcoes": [
                         {
                           "texto": "um par ordenado que satisfaz simultaneamente as equações",
@@ -863,15 +863,15 @@
                     },
                     {
                       "enunciado": "No sistema x+y=7 e x-y=1, x vale:",
-                      "explicacao_erro": "Somando as equações, 2x = n+6.",
+                      "explicacao_erro": "Como pensar: somar as duas equações elimina y.\nResolução: (x+y) + (x−y) = 7+1 → 2x=8 → x=4.\nResposta: 4.",
                       "opcoes": [
                         {
                           "texto": "5",
-                          "correta": true
+                          "correta": false
                         },
                         {
                           "texto": "4",
-                          "correta": false
+                          "correta": true
                         },
                         {
                           "texto": "3",
@@ -885,11 +885,11 @@
                     },
                     {
                       "enunciado": "No mesmo sistema x+y=7 e x-y=1, y vale:",
-                      "explicacao_erro": "Depois de encontrar x, substitua em uma das equações.",
+                      "explicacao_erro": "Como pensar: depois de encontrar x=4, substitua esse valor em uma das equações.\nResolução: 4+y=7 → y=3.\nResposta: 3.",
                       "opcoes": [
                         {
                           "texto": "2",
-                          "correta": true
+                          "correta": false
                         },
                         {
                           "texto": "1",
@@ -897,17 +897,17 @@
                         },
                         {
                           "texto": "3",
-                          "correta": false
+                          "correta": true
                         },
                         {
-                          "texto": "2",
+                          "texto": "4",
                           "correta": false
                         }
                       ]
                     },
                     {
                       "enunciado": "Ao usar o método da adição em um sistema, buscamos:",
-                      "explicacao_erro": "A soma das equações pode cancelar uma incógnita.",
+                      "explicacao_erro": "Como pensar: o método da adição procura uma combinação das equações que faça uma incógnita desaparecer.\nResolução: ao eliminar uma das incógnitas, sobra uma equação com apenas a outra variável.\nResposta: eliminar uma das incógnitas.",
                       "opcoes": [
                         {
                           "texto": "eliminar uma das incógnitas",
@@ -946,7 +946,7 @@
                   "questoes": [
                     {
                       "enunciado": "Se 3 cadernos custam R$ 9, 1 caderno custa:",
-                      "explicacao_erro": "Em uma proporção direta, divida o preço pelo número de cadernos.",
+                      "explicacao_erro": "Como pensar: em uma proporção direta, primeiro descubra o preço de uma unidade.\nResolução: R$9 ÷ 3 = R$3 por caderno.\nResposta: R$ 3.",
                       "opcoes": [
                         {
                           "texto": "R$ 3",
@@ -968,7 +968,7 @@
                     },
                     {
                       "enunciado": "Uma receita usa 2 xícaras para 4 pessoas. Para 6 pessoas, serão usadas:",
-                      "explicacao_erro": "Mantenha a mesma razão entre xícaras e pessoas.",
+                      "explicacao_erro": "Como pensar: mantenha a mesma proporção entre quantidade de xícaras e número de pessoas.\nResolução: 2 xícaras para 4 pessoas equivalem a 0,5 xícara por pessoa. Para 6 pessoas: 6 × 0,5 = 3 xícaras.\nResposta: 3 xícaras.",
                       "opcoes": [
                         {
                           "texto": "3 xícaras",
@@ -990,7 +990,7 @@
                     },
                     {
                       "enunciado": "Em grandezas diretamente proporcionais, quando uma dobra, a outra:",
-                      "explicacao_erro": "A razão entre as grandezas permanece constante.",
+                      "explicacao_erro": "Como pensar: em grandezas diretamente proporcionais, as duas variam na mesma razão.\nResolução: se uma grandeza é multiplicada por 2, a outra também deve ser multiplicada por 2.\nResposta: também dobra.",
                       "opcoes": [
                         {
                           "texto": "também dobra",
@@ -1012,7 +1012,7 @@
                     },
                     {
                       "enunciado": "20% de 15 é:",
-                      "explicacao_erro": "Converta 20% para 0,20 e multiplique pelo valor.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Converta 20% para 0,20 e multiplique pelo valor.\nResposta: 3.",
                       "opcoes": [
                         {
                           "texto": "3",
@@ -1044,7 +1044,7 @@
                   "questoes": [
                     {
                       "enunciado": "Um produto de R$ 104 com desconto de 10% passa a custar aproximadamente:",
-                      "explicacao_erro": "Calcule 10% do preço e subtraia do valor original.",
+                      "explicacao_erro": "Como pensar: primeiro calcule a porcentagem do desconto e depois retire esse valor do preço original.\nResolução: 10% de R$104 = R$10,40. Então R$104,00 − R$10,40 = R$93,60. Como a questão pede aproximadamente, a opção mais próxima é R$94.\nResposta: R$ 94.",
                       "opcoes": [
                         {
                           "texto": "R$ 94",
@@ -1066,7 +1066,7 @@
                     },
                     {
                       "enunciado": "Um valor de 40 aumentado em 20% resulta em:",
-                      "explicacao_erro": "Aumento de 20% equivale a multiplicar por 1,20.",
+                      "explicacao_erro": "Como pensar: aumentar 20% significa multiplicar o valor por 1,20.\nResolução: 40 × 1,20 = 48.\nResposta: 48.",
                       "opcoes": [
                         {
                           "texto": "48",
@@ -1088,7 +1088,7 @@
                     },
                     {
                       "enunciado": "50% corresponde à fração:",
-                      "explicacao_erro": "50% significa metade do total.",
+                      "explicacao_erro": "Como pensar: porcentagem significa uma razão sobre 100.\nResolução: 50% = 50/100 = 1/2, simplificando a fração por 50.\nResposta: 1/2.",
                       "opcoes": [
                         {
                           "texto": "1/2",
@@ -1110,7 +1110,7 @@
                     },
                     {
                       "enunciado": "Se 20 alunos representam 100% da turma, 4 alunos representam:",
-                      "explicacao_erro": "Divida a parte pelo total e multiplique por 100.",
+                      "explicacao_erro": "Como pensar: porcentagem de uma parte = (parte ÷ total) × 100.\nResolução: (4 ÷ 20) × 100 = 20%.\nResposta: 20%.",
                       "opcoes": [
                         {
                           "texto": "20%",
@@ -1142,7 +1142,7 @@
                   "questoes": [
                     {
                       "enunciado": "A média aritmética é obtida:",
-                      "explicacao_erro": "A média é a soma dos dados dividida pela quantidade de dados.",
+                      "explicacao_erro": "Como pensar: média aritmética é uma distribuição equilibrada da soma dos dados.\nResolução: some todos os valores e divida pelo número de valores.\nResposta: somando os valores e dividindo pela quantidade.",
                       "opcoes": [
                         {
                           "texto": "somando os valores e dividindo pela quantidade",
@@ -1164,7 +1164,7 @@
                     },
                     {
                       "enunciado": "A média de 2, 4 e 6 é:",
-                      "explicacao_erro": "Some os três valores e divida por 3.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Some os três valores e divida por 3.\nResposta: 4.",
                       "opcoes": [
                         {
                           "texto": "4",
@@ -1186,7 +1186,7 @@
                     },
                     {
                       "enunciado": "A mediana de uma lista ordenada é:",
-                      "explicacao_erro": "A mediana é o elemento central após ordenar os dados.",
+                      "explicacao_erro": "Como pensar: a mediana depende da posição dos dados depois que eles estão ordenados.\nResolução: em uma lista ordenada, localize o valor que ocupa a posição central.\nResposta: o valor central.",
                       "opcoes": [
                         {
                           "texto": "o valor central",
@@ -1208,7 +1208,7 @@
                     },
                     {
                       "enunciado": "A moda é o valor que:",
-                      "explicacao_erro": "Moda é a frequência mais alta de um valor.",
+                      "explicacao_erro": "Como pensar: a moda é definida pela maior frequência de ocorrência.\nResolução: conte quantas vezes cada valor aparece; o que mais se repete é a moda.\nResposta: mais se repete.",
                       "opcoes": [
                         {
                           "texto": "mais se repete",
@@ -1258,7 +1258,7 @@
                   "questoes": [
                     {
                       "enunciado": "Qual é a área de um retângulo de 4 cm por 6 cm?",
-                      "explicacao_erro": "A área do retângulo é base × altura.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: A área do retângulo é base × altura.\nResposta: 24 cm².",
                       "opcoes": [
                         {
                           "texto": "24 cm²",
@@ -1280,7 +1280,7 @@
                     },
                     {
                       "enunciado": "Qual é o perímetro de um quadrado de lado 4 cm?",
-                      "explicacao_erro": "O quadrado possui quatro lados iguais.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: O quadrado possui quatro lados iguais.\nResposta: 16 cm.",
                       "opcoes": [
                         {
                           "texto": "16 cm",
@@ -1302,7 +1302,7 @@
                     },
                     {
                       "enunciado": "A soma dos ângulos internos de um triângulo é:",
-                      "explicacao_erro": "Todo triângulo possui soma dos ângulos internos igual a 180°.",
+                      "explicacao_erro": "Como pensar: todo triângulo plano possui uma propriedade fixa para seus três ângulos internos.\nResolução: a soma dos três ângulos é 180°.\nResposta: 180°.",
                       "opcoes": [
                         {
                           "texto": "180°",
@@ -1324,7 +1324,7 @@
                     },
                     {
                       "enunciado": "Um triângulo com base 6 cm e altura 4 cm tem área:",
-                      "explicacao_erro": "A área é base × altura ÷ 2.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: A área é base × altura ÷ 2.\nResposta: 12 cm².",
                       "opcoes": [
                         {
                           "texto": "12 cm²",
@@ -1356,7 +1356,7 @@
                   "questoes": [
                     {
                       "enunciado": "Qual é a área de um retângulo de 2 cm por 6 cm?",
-                      "explicacao_erro": "A área do retângulo é base × altura.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: A área do retângulo é base × altura.\nResposta: 12 cm².",
                       "opcoes": [
                         {
                           "texto": "12 cm²",
@@ -1378,7 +1378,7 @@
                     },
                     {
                       "enunciado": "Qual é o perímetro de um quadrado de lado 2 cm?",
-                      "explicacao_erro": "O quadrado possui quatro lados iguais.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: O quadrado possui quatro lados iguais.\nResposta: 8 cm.",
                       "opcoes": [
                         {
                           "texto": "8 cm",
@@ -1400,7 +1400,7 @@
                     },
                     {
                       "enunciado": "A soma dos ângulos internos de um triângulo é:",
-                      "explicacao_erro": "Todo triângulo possui soma dos ângulos internos igual a 180°.",
+                      "explicacao_erro": "Como pensar: todo triângulo plano possui uma propriedade fixa para seus três ângulos internos.\nResolução: a soma dos três ângulos é 180°.\nResposta: 180°.",
                       "opcoes": [
                         {
                           "texto": "180°",
@@ -1422,7 +1422,7 @@
                     },
                     {
                       "enunciado": "Um triângulo com base 4 cm e altura 4 cm tem área:",
-                      "explicacao_erro": "A área é base × altura ÷ 2.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: A área é base × altura ÷ 2.\nResposta: 8 cm².",
                       "opcoes": [
                         {
                           "texto": "8 cm²",
@@ -1454,7 +1454,7 @@
                   "questoes": [
                     {
                       "enunciado": "Em uma função, cada elemento do domínio está associado a:",
-                      "explicacao_erro": "Uma função associa cada elemento do domínio a exatamente um valor.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Uma função associa cada elemento do domínio a exatamente um valor.\nResposta: um único elemento do contradomínio.",
                       "opcoes": [
                         {
                           "texto": "um único elemento do contradomínio",
@@ -1476,7 +1476,7 @@
                     },
                     {
                       "enunciado": "Considere f(x) = 2x + 1. Qual é f(3)?",
-                      "explicacao_erro": "Substitua x por 3 e calcule 2·3 + v.",
+                      "explicacao_erro": "Como pensar: para calcular f(3), substitua x por 3 na expressão da função.\nResolução: f(3) = 2·3 + 1 = 7.\nResposta: 7.",
                       "opcoes": [
                         {
                           "texto": "7",
@@ -1498,7 +1498,7 @@
                     },
                     {
                       "enunciado": "Qual é a raiz de f(x) = x - 3?",
-                      "explicacao_erro": "A raiz ocorre quando f(x)=0; portanto x-n=0.",
+                      "explicacao_erro": "Como pensar: a raiz é o valor de x para o qual f(x)=0.\nResolução: x − 3 = 0 → x = 3.\nResposta: 3.",
                       "opcoes": [
                         {
                           "texto": "3",
@@ -1520,7 +1520,7 @@
                     },
                     {
                       "enunciado": "Em uma função afim f(x)=ax+b, o coeficiente a representa:",
-                      "explicacao_erro": "O coeficiente a indica quanto a função varia quando x aumenta uma unidade.",
+                      "explicacao_erro": "Como pensar: em f(x)=ax+b, o coeficiente a determina a inclinação da reta.\nResolução: a indica quanto o valor de f(x) varia quando x aumenta uma unidade.\nResposta: a taxa de variação.",
                       "opcoes": [
                         {
                           "texto": "a taxa de variação",
@@ -1559,7 +1559,7 @@
                   "questoes": [
                     {
                       "enunciado": "Se 3 cadernos custam R$ 12, 1 caderno custa:",
-                      "explicacao_erro": "Em uma proporção direta, divida o preço pelo número de cadernos.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Em uma proporção direta, divida o preço pelo número de cadernos.\nResposta: R$ 4.",
                       "opcoes": [
                         {
                           "texto": "R$ 4",
@@ -1581,7 +1581,7 @@
                     },
                     {
                       "enunciado": "Uma receita usa 2 xícaras para 4 pessoas. Para 8 pessoas, serão usadas:",
-                      "explicacao_erro": "Mantenha a mesma razão entre xícaras e pessoas.",
+                      "explicacao_erro": "Como pensar: mantenha a mesma proporção entre quantidade de xícaras e número de pessoas.\nResolução: 2 xícaras para 4 pessoas equivalem a 0,5 xícara por pessoa. Para 6 pessoas: 6 × 0,5 = 3 xícaras.\nResposta: 3 xícaras.",
                       "opcoes": [
                         {
                           "texto": "4 xícaras",
@@ -1603,7 +1603,7 @@
                     },
                     {
                       "enunciado": "Em grandezas diretamente proporcionais, quando uma dobra, a outra:",
-                      "explicacao_erro": "A razão entre as grandezas permanece constante.",
+                      "explicacao_erro": "Como pensar: em grandezas diretamente proporcionais, as duas variam na mesma razão.\nResolução: se uma grandeza é multiplicada por 2, a outra também deve ser multiplicada por 2.\nResposta: também dobra.",
                       "opcoes": [
                         {
                           "texto": "também dobra",
@@ -1625,7 +1625,7 @@
                     },
                     {
                       "enunciado": "20% de 20 é:",
-                      "explicacao_erro": "Converta 20% para 0,20 e multiplique pelo valor.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Converta 20% para 0,20 e multiplique pelo valor.\nResposta: 4.",
                       "opcoes": [
                         {
                           "texto": "4",
@@ -1657,7 +1657,7 @@
                   "questoes": [
                     {
                       "enunciado": "Um produto de R$ 102 com desconto de 10% passa a custar aproximadamente:",
-                      "explicacao_erro": "Calcule 10% do preço e subtraia do valor original.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Calcule 10% do preço e subtraia do valor original.\nResposta: R$ 92.",
                       "opcoes": [
                         {
                           "texto": "R$ 92",
@@ -1679,7 +1679,7 @@
                     },
                     {
                       "enunciado": "Um valor de 20 aumentado em 20% resulta em:",
-                      "explicacao_erro": "Aumento de 20% equivale a multiplicar por 1,20.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Aumento de 20% equivale a multiplicar por 1,20.\nResposta: 24.",
                       "opcoes": [
                         {
                           "texto": "24",
@@ -1701,7 +1701,7 @@
                     },
                     {
                       "enunciado": "50% corresponde à fração:",
-                      "explicacao_erro": "50% significa metade do total.",
+                      "explicacao_erro": "Como pensar: porcentagem significa uma razão sobre 100.\nResolução: 50% = 50/100 = 1/2, simplificando a fração por 50.\nResposta: 1/2.",
                       "opcoes": [
                         {
                           "texto": "1/2",
@@ -1723,7 +1723,7 @@
                     },
                     {
                       "enunciado": "Se 10 alunos representam 100% da turma, 2 alunos representam:",
-                      "explicacao_erro": "Divida a parte pelo total e multiplique por 100.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Divida a parte pelo total e multiplique por 100.\nResposta: 20%.",
                       "opcoes": [
                         {
                           "texto": "20%",
@@ -1755,7 +1755,7 @@
                   "questoes": [
                     {
                       "enunciado": "A média aritmética é obtida:",
-                      "explicacao_erro": "A média é a soma dos dados dividida pela quantidade de dados.",
+                      "explicacao_erro": "Como pensar: média aritmética é uma distribuição equilibrada da soma dos dados.\nResolução: some todos os valores e divida pelo número de valores.\nResposta: somando os valores e dividindo pela quantidade.",
                       "opcoes": [
                         {
                           "texto": "somando os valores e dividindo pela quantidade",
@@ -1777,7 +1777,7 @@
                     },
                     {
                       "enunciado": "A média de 3, 5 e 7 é:",
-                      "explicacao_erro": "Some os três valores e divida por 3.",
+                      "explicacao_erro": "Como pensar: identifique o conceito pedido, organize os dados da questão e escolha a operação ou propriedade adequada.\nResolução: Some os três valores e divida por 3.\nResposta: 5.",
                       "opcoes": [
                         {
                           "texto": "5",
@@ -1799,7 +1799,7 @@
                     },
                     {
                       "enunciado": "A mediana de uma lista ordenada é:",
-                      "explicacao_erro": "A mediana é o elemento central após ordenar os dados.",
+                      "explicacao_erro": "Como pensar: a mediana depende da posição dos dados depois que eles estão ordenados.\nResolução: em uma lista ordenada, localize o valor que ocupa a posição central.\nResposta: o valor central.",
                       "opcoes": [
                         {
                           "texto": "o valor central",
@@ -1821,7 +1821,7 @@
                     },
                     {
                       "enunciado": "A moda é o valor que:",
-                      "explicacao_erro": "Moda é a frequência mais alta de um valor.",
+                      "explicacao_erro": "Como pensar: a moda é definida pela maior frequência de ocorrência.\nResolução: conte quantas vezes cada valor aparece; o que mais se repete é a moda.\nResposta: mais se repete.",
                       "opcoes": [
                         {
                           "texto": "mais se repete",
