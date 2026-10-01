@@ -1245,6 +1245,20 @@ def editar_trilha(
             fases_modulo
         )
 
+    # As fases do editor vêm do prefetch de cada módulo e são
+    # instâncias diferentes das fases usadas por fases_da_trilha().
+    # A geometria precisa ser preparada nessas mesmas instâncias
+    # que serão renderizadas no mapa do editor.
+    fases_editor = [
+        fase
+        for fases_modulo in fases_por_modulo
+        for fase in fases_modulo
+    ]
+
+    preparar_geometria(
+        fases_editor
+    )
+
     for indice, modulo in enumerate(modulos[:-1]):
 
         fases_atual = fases_por_modulo[indice]
