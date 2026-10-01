@@ -306,6 +306,142 @@ def validar_catalogo(dados):
     }
 
 
+def atualizar_feedback(
+    dados,
+    dry_run=False,
+):
+    """
+    Atualiza somente o feedback pedagógico das questões existentes.
+
+    A correspondência usa o slug do jogo, a ordem do módulo,
+    a ordem da fase e a posição da questão dentro da fase.
+
+    Nenhuma alternativa, fase, módulo, progresso ou recompensa
+    é criada, excluída ou alterada.
+    """
+    atualizadas = 0
+    sem_correspondencia = []
+
+    for materia_data in dados['materias']:
+        for jogo_data in materia_data['jogos']:
+            jogo = (
+                Disciplina.objects
+                .filter(slug=jogo_data['slug'])
+                .first()
+            )
+
+            if jogo is None:
+                sem_correspondencia.append(
+                    f"{jogo_data['slug']}:jogo"
+                )
+                continue
+
+            for modulo_data in sorted(
+                jogo_data['modulos'],
+                key=lambda item: item['ordem'],
+            ):
+                modulo = (
+                    jogo.modulos
+                    .filter(ordem=modulo_data['ordem'])
+                    .order_by('id')
+                    .first()
+                )
+
+                if modulo is None:
+                    sem_correspondencia.append(
+                        (
+                            f"{jogo_data['slug']}:"
+                            f"módulo:{modulo_data['ordem']}"
+                        )
+                    )
+                    continue
+
+                for fase_data in sorted(
+                    modulo_data['fases'],
+                    key=lambda item: item['ordem'],
+                ):
+                    fase = (
+                        modulo.fases
+                        .filter(ordem=fase_data['ordem'])
+                        .order_by('id')
+                        .first()
+                    )
+
+                    if fase is None:
+                        sem_correspondencia.append(
+                            (
+                                f"{jogo_data['slug']}:"
+                                f"módulo:{modulo.ordem}:"
+                                f"fase:{fase_data['ordem']}"
+                            )
+                        )
+                        continue
+
+                    questoes = list(
+                        fase.questoes
+                        .order_by('id')
+                    )
+
+                    for indice, questao_data in enumerate(
+                        fase_data['questoes']
+                    ):
+                        if indice >= len(questoes):
+                            sem_correspondencia.append(
+                                (
+                                    f"{jogo_data['slug']}:"
+                                    f"módulo:{modulo.ordem}:"
+                                    f"fase:{fase.ordem}:"
+                                    f"questão:{indice + 1}"
+                                )
+                            )
+                            continue
+
+                        questao = questoes[indice]
+                        nova_explicacao = (
+                            questao_data
+                            .get('explicacao_erro', '')
+                            .strip()
+                        )
+
+                        if (
+                            questao.explicacao_erro
+                            == nova_explicacao
+                        ):
+                            continue
+
+                        if not dry_run:
+                            questao.explicacao_erro = (
+                                nova_explicacao
+                            )
+                            questao.save(
+                                update_fields=[
+                                    'explicacao_erro'
+                                ]
+                            )
+
+                        atualizadas += 1
+
+    print()
+    if dry_run:
+        print(
+            '🧪 DRY-RUN: nenhuma explicação será alterada.'
+        )
+
+    print(
+        '📖 Explicações '
+        f"{'que seriam ' if dry_run else ''}atualizadas: "
+        f'{atualizadas}'
+    )
+
+    if sem_correspondencia:
+        print(
+            '⚠️ Correspondências não encontradas: '
+            + ', '.join(sem_correspondencia)
+        )
+
+    print()
+
+
 def importar_catalogo(
     dados,
     autor,
@@ -464,6 +600,15 @@ def criar_parser():
         help='Valida o JSON sem alterar o banco.',
     )
 
+    parser.add_argument(
+        '--atualizar-feedback',
+        action='store_true',
+        help=(
+            'Atualiza somente as explicações das questões existentes, '
+            'sem alterar alternativas, estrutura ou progresso.'
+        ),
+    )
+
     return parser
 
 
@@ -473,6 +618,19 @@ def main():
 
     dados = carregar_json(args.arquivo)
     validar_catalogo(dados)
+
+    if args.atualizar_feedback:
+        if args.replace:
+            erro(
+                'Use --atualizar-feedback isoladamente. '
+                'Ele não pode ser combinado com --replace.'
+            )
+
+        atualizar_feedback(
+            dados=dados,
+            dry_run=args.dry_run,
+        )
+        return
 
     autor = obter_autor(args.autor)
 
