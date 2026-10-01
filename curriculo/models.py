@@ -59,8 +59,6 @@ class Disciplina(models.Model):
     class Meta:
         ordering = ['ordem']
 
-        verbose_name = "Jogo"
-        verbose_name_plural = "Jogos"
 
     def __str__(self):
         return self.nome
@@ -78,8 +76,6 @@ class Modulo(models.Model):
 
     class Meta:
         ordering = ['ordem', 'id']
-        verbose_name = "Módulo"
-        verbose_name_plural = "Módulos"
 
     def __str__(self):
         return f"{self.disciplina.nome} - {self.titulo}"
@@ -110,8 +106,6 @@ class Fase(models.Model):
 
     class Meta:
         ordering = ['ordem', 'id']
-        verbose_name = "Fase"
-        verbose_name_plural = "Fases"
 
     def __str__(self):
         return f"{self.modulo.titulo} - Fase {self.ordem}: {self.titulo}"
