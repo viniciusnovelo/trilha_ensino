@@ -1101,6 +1101,9 @@ def dashboard_professor(request):
         .filter(
             autor=request.user
         )
+        .select_related(
+            'materia',
+        )
         .prefetch_related(
             'modulos__fases__questoes'
         )
