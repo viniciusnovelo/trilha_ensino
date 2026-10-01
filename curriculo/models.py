@@ -41,14 +41,22 @@ class Disciplina(models.Model):
         related_name='jogos',
     )
 
-    icone = models.CharField(max_length=50, default="book")
+    icone = models.CharField(
+        max_length=50,
+        default="book",
+        help_text="Nome do ícone ou classe CSS",
+    )
     ordem = models.PositiveIntegerField(default=1)
-    ativo = models.BooleanField(default=True)
+    ativo = models.BooleanField(
+        default=False,
+        help_text="Marque quando o jogo estiver pronto para os alunos jogarem.",
+    )
     autor = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
+        related_name='trilhas_criadas',
     )
     tema = models.CharField(
         max_length=30,
@@ -103,7 +111,10 @@ class Fase(models.Model):
     )
     xp_recompensa = models.PositiveIntegerField(default=50)
     moedas_recompensa = models.PositiveIntegerField(default=10)
-    deslocamento_y = models.IntegerField(default=0)
+    deslocamento_y = models.IntegerField(
+        default=0,
+        help_text="Deslocamento vertical em pixels (Ex: -60 sobe o botão, 80 desce).",
+    )
 
     class Meta:
         ordering = ['ordem']
@@ -119,7 +130,10 @@ class Questao(models.Model):
         related_name='questoes',
     )
     enunciado = models.TextField()
-    explicacao_erro = models.TextField(blank=True)
+    explicacao_erro = models.TextField(
+        blank=True,
+        help_text="Feedback pedagógico exibido se o aluno errar a questão.",
+    )
 
     class Meta:
         verbose_name = "Questão"
