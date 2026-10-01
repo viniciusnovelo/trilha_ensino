@@ -416,8 +416,8 @@ def modulo_esta_desbloqueado(
     Confere o estado persistido do módulo.
 
     O primeiro módulo é sempre liberado. Os demais dependem
-    do ProgressoModulo criado quando o aluno recebe e utiliza
-    a chave.
+    do ProgressoModulo persistido após a conclusão do módulo
+    anterior. A liberação é automática, sem chave manual.
     """
 
     primeira_ordem = (
