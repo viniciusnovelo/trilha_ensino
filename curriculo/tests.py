@@ -1106,6 +1106,12 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             ordem=3,
         )
 
+        self.modulo_4 = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo 4",
+            ordem=4,
+        )
+
         self.fase_1 = Fase.objects.create(
             modulo=self.modulo_1,
             titulo="Fase 1",
@@ -1121,6 +1127,12 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
         self.fase_3 = Fase.objects.create(
             modulo=self.modulo_3,
             titulo="Fase 3",
+            ordem=1,
+        )
+
+        self.fase_4 = Fase.objects.create(
+            modulo=self.modulo_4,
+            titulo="Fase 4",
             ordem=1,
         )
 
@@ -1163,6 +1175,11 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             enunciado="Qual é a resposta da fase 3?",
         )
 
+        self.questao_4 = Questao.objects.create(
+            fase=self.fase_4,
+            enunciado="Qual é a resposta da fase 4?",
+        )
+
         Opcao.objects.create(
             questao=self.questao_3,
             texto="Correta",
@@ -1171,6 +1188,18 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
 
         Opcao.objects.create(
             questao=self.questao_3,
+            texto="Incorreta",
+            e_correta=False,
+        )
+
+        Opcao.objects.create(
+            questao=self.questao_4,
+            texto="Correta",
+            e_correta=True,
+        )
+
+        Opcao.objects.create(
+            questao=self.questao_4,
             texto="Incorreta",
             e_correta=False,
         )
@@ -1398,7 +1427,7 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             modulos[1].desbloqueado,
         )
 
-    def test_conclusao_dos_modulos_em_cadeia_libera_o_modulo_3(self):
+    def test_conclusao_dos_modulos_em_cadeia_libera_o_modulo_4(self):
         self.finalizar_fase(
             self.fase_1,
             self.questao_1,
@@ -1452,6 +1481,48 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
 
         self.assertEqual(
             modulos[2].status,
+            "atual",
+        )
+
+        terceira_opcao_correta = (
+            self.questao_3.opcoes
+            .filter(
+                e_correta=True,
+            )
+            .first()
+        )
+
+        terceira_resposta = self.finalizar_fase(
+            self.fase_3,
+            self.questao_3,
+            terceira_opcao_correta,
+        )
+
+        self.assertEqual(
+            terceira_resposta.status_code,
+            200,
+        )
+
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        modulos = response.context["modulos"]
+
+        self.assertEqual(
+            modulos[2].status,
+            "concluido",
+        )
+
+        self.assertTrue(
+            modulos[3].desbloqueado,
+        )
+
+        self.assertEqual(
+            modulos[3].status,
             "atual",
         )
 
