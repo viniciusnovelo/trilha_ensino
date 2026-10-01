@@ -93,7 +93,8 @@ def validar_opcoes(questao, contexto):
         )
 
     corretas = 0
-    posicao_correta = None
+    posicoes = set()
+    opcoes_validadas = []
 
     for indice, opcao in enumerate(opcoes, start=1):
         if not isinstance(opcao, dict):
@@ -108,17 +109,58 @@ def validar_opcoes(questao, contexto):
                 'deve ser true ou false.'
             )
 
-        if opcao['correta']:
-            posicao_correta = indice
+        ordem = opcao.get('ordem', indice)
 
-        corretas += int(opcao['correta'])
+        if not isinstance(ordem, int) or isinstance(ordem, bool):
+            erro(
+                f'{contexto}: o campo "ordem" da opção #{indice} '
+                'deve ser um número inteiro.'
+            )
+
+        if ordem not in range(1, 5):
+            erro(
+                f'{contexto}: o campo "ordem" da opção #{indice} '
+                'deve estar entre 1 e 4.'
+            )
+
+        if ordem in posicoes:
+            erro(
+                f'{contexto}: a posição {ordem} foi usada mais de uma vez.'
+            )
+
+        posicoes.add(ordem)
+
+        opcoes_validadas.append(
+            (ordem, opcao)
+        )
+
+        if opcao['correta']:
+            corretas += 1
 
     if corretas != 1:
         erro(
             f'{contexto}: é necessário exatamente uma opção correta.'
         )
 
-    return posicao_correta
+    if posicoes != {1, 2, 3, 4}:
+        erro(
+            f'{contexto}: as alternativas devem ocupar exatamente '
+            'as posições 1, 2, 3 e 4.'
+        )
+
+    opcoes_ordenadas = sorted(
+        opcoes_validadas,
+        key=lambda item: item[0],
+    )
+
+    for posicao, (_, opcao) in enumerate(
+        opcoes_ordenadas,
+        start=1,
+    ):
+        if opcao['correta']:
+            return posicao
+
+    return None
 
 
 def validar_catalogo(dados):
@@ -606,8 +648,15 @@ def importar_catalogo(
                                     questao=questao,
                                     texto=opcao_data['texto'].strip(),
                                     e_correta=opcao_data['correta'],
+                                    ordem=opcao_data.get(
+                                        'ordem',
+                                        indice + 1,
+                                    ),
                                 )
-                                for opcao_data in questao_data['opcoes']
+                                for indice, opcao_data
+                                in enumerate(
+                                    questao_data['opcoes']
+                                )
                             ])
 
     print()
