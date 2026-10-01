@@ -2571,6 +2571,7 @@ def trilha_view(
     )
 
     fases = []
+    fases_por_modulo = []
 
     for modulo in modulos:
         fases_modulo = list(
@@ -2581,8 +2582,32 @@ def trilha_view(
             fases_modulo
         )
 
+        fases_por_modulo.append(
+            fases_modulo
+        )
+
         fases.extend(
             fases_modulo
+        )
+
+    # A ligação entre módulos é uma continuação da própria trilha.
+    # Sua curva usa a posição vertical da última fase do módulo atual
+    # e a posição vertical da primeira fase do módulo seguinte.
+    for indice, modulo in enumerate(modulos[:-1]):
+
+        fases_atual = fases_por_modulo[indice]
+        fases_seguinte = fases_por_modulo[indice + 1]
+
+        modulo.transicao_svg_y1 = (
+            fases_atual[-1].svg_y1
+            if fases_atual
+            else 100
+        )
+
+        modulo.transicao_svg_y2 = (
+            fases_seguinte[0].svg_y1
+            if fases_seguinte
+            else 100
         )
 
     papel = papel_efetivo(
