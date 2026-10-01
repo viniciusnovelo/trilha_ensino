@@ -256,12 +256,11 @@ class ProgressoFase(models.Model):
 
 class ProgressoModulo(models.Model):
     """
-    Estado de um módulo para um aluno.
+    Estado persistido de um módulo para um aluno.
 
-    O primeiro módulo é liberado automaticamente. Ao concluir
-    um módulo, o aluno recebe uma chave para o próximo módulo.
-    A chave permanece disponível até que o aluno a utilize no
-    cadeado do módulo correspondente.
+    O primeiro módulo é liberado automaticamente. Os módulos
+    seguintes são liberados quando todas as fases do módulo
+    anterior forem concluídas.
     """
 
     perfil = models.ForeignKey(
@@ -277,10 +276,6 @@ class ProgressoModulo(models.Model):
     )
 
     desbloqueado = models.BooleanField(
-        default=False,
-    )
-
-    chave_disponivel = models.BooleanField(
         default=False,
     )
 
