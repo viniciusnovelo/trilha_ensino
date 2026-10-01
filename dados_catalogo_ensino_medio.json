@@ -1870,24 +1870,24 @@
                       ]
                     },
                     {
-                      "enunciado": "Para x² = 12, considerando a raiz positiva, x vale:",
-                      "explicacao_erro": "Como pensar: extraia a raiz quadrada de ambos os lados e escolha a raiz positiva pedida.\nResolução: x = √12 = 3 no caso apresentado\nResposta:  3.",
+                      "enunciado": "Para x² = 16, considerando a raiz positiva, x vale:",
+                      "explicacao_erro": "Como pensar: extraia a raiz quadrada de ambos os lados e escolha a raiz positiva indicada no enunciado.\nResolução: x = √16 = 4.\nResposta: 4.",
                       "opcoes": [
                         {
-                          "texto": "12",
-                          "correta": false
-                        },
-                        {
-                          "texto": "3",
-                          "correta": false
-                        },
-                        {
                           "texto": "4",
+                          "correta": true
+                        },
+                        {
+                          "texto": "8",
                           "correta": false
                         },
                         {
-                          "texto": "3",
-                          "correta": true
+                          "texto": "2",
+                          "correta": false
+                        },
+                        {
+                          "texto": "16",
+                          "correta": false
                         }
                       ]
                     },
@@ -1968,23 +1968,23 @@
                       ]
                     },
                     {
-                      "enunciado": "Para x² = 6, considerando a raiz positiva, x vale:",
-                      "explicacao_erro": "Como pensar: extraia a raiz quadrada de ambos os lados e escolha a raiz positiva pedida.\nResolução: x = √6 = 2 no caso apresentado\nResposta:  2.",
+                      "enunciado": "Para x² = 25, considerando a raiz positiva, x vale:",
+                      "explicacao_erro": "Como pensar: extraia a raiz quadrada de ambos os lados e escolha a raiz positiva indicada no enunciado.\nResolução: x = √25 = 5.\nResposta: 5.",
                       "opcoes": [
                         {
-                          "texto": "2",
+                          "texto": "5",
                           "correta": true
                         },
                         {
-                          "texto": "6",
+                          "texto": "4",
                           "correta": false
                         },
                         {
-                          "texto": "2",
+                          "texto": "10",
                           "correta": false
                         },
                         {
-                          "texto": "3",
+                          "texto": "25",
                           "correta": false
                         }
                       ]
@@ -2066,23 +2066,23 @@
                       ]
                     },
                     {
-                      "enunciado": "Para x² = 2, considerando a raiz positiva, x vale:",
-                      "explicacao_erro": "Como pensar: extraia a raiz quadrada de ambos os lados e escolha a raiz positiva pedida.\nResolução: x = √2 = 1 no caso apresentado\nResposta:  1.",
+                      "enunciado": "Para x² = 36, considerando a raiz positiva, x vale:",
+                      "explicacao_erro": "Como pensar: extraia a raiz quadrada de ambos os lados e escolha a raiz positiva indicada no enunciado.\nResolução: x = √36 = 6.\nResposta: 6.",
                       "opcoes": [
                         {
-                          "texto": "2",
-                          "correta": false
-                        },
-                        {
-                          "texto": "1",
+                          "texto": "6",
                           "correta": true
                         },
                         {
-                          "texto": "2",
+                          "texto": "5",
                           "correta": false
                         },
                         {
-                          "texto": "1",
+                          "texto": "12",
+                          "correta": false
+                        },
+                        {
+                          "texto": "36",
                           "correta": false
                         }
                       ]
