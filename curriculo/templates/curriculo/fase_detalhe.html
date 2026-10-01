@@ -19,6 +19,8 @@
         .tema-floresta{background:linear-gradient(135deg,#052e16,#14532d,#064e3b);}
         .tema-deserto{background:linear-gradient(135deg,#451a03,#78350f,#92400e);}
         .tema-masmorra{background:linear-gradient(135deg,#020617,#1e1b4b,#171717);}
+        .tema-aurora{background:linear-gradient(135deg,#082f49,#0e7490,#172554);}
+        .tema-oceano{background:linear-gradient(135deg,#082f49,#0369a1,#164e63);}
 
 
         .op-button {
@@ -406,6 +408,16 @@
             );
 
 
+        function escaparHtml(valor) {
+            return String(valor)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+
         // ====================================================
         // FEEDBACK
         // ====================================================
@@ -678,7 +690,7 @@
                         </span>
 
                         <span>
-                            ${opcao.texto}
+                            ${escaparHtml(opcao.texto)}
                         </span>
                     `;
 
@@ -1135,7 +1147,7 @@
                                 Próximo módulo desbloqueado!
                             </p>
                             <p class="text-emerald-100/75 text-sm mt-1">
-                                ${data.proximo_modulo_titulo || 'O próximo módulo'} já está disponível no mapa.
+                                ${escaparHtml(data.proximo_modulo_titulo || 'O próximo módulo')} já está disponível no mapa.
                             </p>
                         </div>
                     `
