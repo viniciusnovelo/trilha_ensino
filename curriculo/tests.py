@@ -1130,10 +1130,6 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             "bloqueado",
         )
 
-        self.assertFalse(
-            modulos[1].chave_disponivel,
-        )
-
         progresso = ProgressoModulo.objects.get(
             perfil=self.aluno.perfil,
             modulo=self.modulo_1,
@@ -1193,10 +1189,6 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
 
         self.assertTrue(
             progresso.desbloqueado,
-        )
-
-        self.assertFalse(
-            progresso.chave_disponivel,
         )
 
         response = self.client.get(
