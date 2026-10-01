@@ -57,8 +57,8 @@ class Disciplina(models.Model):
     )
 
     class Meta:
+        verbose_name_plural = "Disciplinas"
         ordering = ['ordem']
-
 
     def __str__(self):
         return self.nome
