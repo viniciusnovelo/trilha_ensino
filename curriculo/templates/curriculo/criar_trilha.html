@@ -43,6 +43,18 @@
                         {% csrf_token %}
 
                         <div>
+                            <label class="block text-sm font-black mb-2">Matéria</label>
+                            {{ form.materia }}
+                            <p class="text-xs text-white/35 mt-1">
+                                O jogo ficará organizado dentro desta matéria no catálogo dos alunos.
+                            </p>
+                            {% for error in form.materia.errors %}
+                                <p class="text-red-300 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+
+                        <div>
                             <label class="block text-sm font-black mb-2">Nome do jogo</label>
                             {{ form.nome }}
                             {% for error in form.nome.errors %}<p class="text-red-300 text-xs mt-1">{{ error }}</p>{% endfor %}
