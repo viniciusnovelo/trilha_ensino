@@ -219,9 +219,9 @@
         }
 
         .fase-node.current {
-            width: 88px;
-            height: 88px;
-            border-bottom-width: 8px;
+            width: 76px;
+            height: 76px;
+            border-bottom-width: 7px;
             box-shadow:
                 0 12px 28px rgba(0,0,0,.42),
                 0 0 0 7px rgba(255,255,255,.09),
@@ -567,16 +567,6 @@
                 border-radius: 22px;
             }
 
-            .module-lock-label {
-                top: calc(50% + 48px);
-                min-width: 128px;
-            }
-
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-
-            .fase-node.current,
             .module-lock-overlay.is-rattling .module-lock-button {
                 animation: none !important;
             }
@@ -878,7 +868,7 @@
                         {% for fase in modulo.fases.all %}
 
                             <div
-                                class="fase-item {% if forloop.counter0|divisibleby:2 %}offset-up{% else %}offset-down{% endif %}"
+                                class="fase-item"
                                 style="transform: translateY({{ fase.deslocamento_y }}px);"
                             >
 
