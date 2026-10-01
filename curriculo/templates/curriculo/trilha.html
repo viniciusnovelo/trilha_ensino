@@ -37,7 +37,7 @@
         }
 
         /* =====================================================
-           TRILHA PRINCIPAL
+           MAPA
            ===================================================== */
 
         .mapa-scroll {
@@ -53,7 +53,7 @@
             align-items: center;
             width: max-content;
             min-width: 100%;
-            padding: 86px 80px 150px 80px;
+            padding: 80px 70px 125px 70px;
         }
 
         .module-group {
@@ -63,29 +63,84 @@
             flex-shrink: 0;
         }
 
+        /* =====================================================
+           COR DOS MÓDULOS
+           A cor do módulo é herdada pelas fases daquele bloco.
+           ===================================================== */
+
+        .module-group {
+            --module-color: #38bdf8;
+            --module-dark: #0369a1;
+            --module-glow: rgba(56,189,248,.28);
+        }
+
+        .module-group.module-1 {
+            --module-color: #f59e0b;
+            --module-dark: #b45309;
+            --module-glow: rgba(245,158,11,.30);
+        }
+
+        .module-group.module-2 {
+            --module-color: #22c55e;
+            --module-dark: #15803d;
+            --module-glow: rgba(34,197,94,.28);
+        }
+
+        .module-group.module-3 {
+            --module-color: #38bdf8;
+            --module-dark: #0369a1;
+            --module-glow: rgba(56,189,248,.28);
+        }
+
+        .module-group.module-4 {
+            --module-color: #a855f7;
+            --module-dark: #7e22ce;
+            --module-glow: rgba(168,85,247,.28);
+        }
+
+        .module-group.module-5 {
+            --module-color: #ec4899;
+            --module-dark: #be185d;
+            --module-glow: rgba(236,72,153,.28);
+        }
+
+        .module-group.module-6 {
+            --module-color: #14b8a6;
+            --module-dark: #0f766e;
+            --module-glow: rgba(20,184,166,.28);
+        }
+
         .module-title-chip {
             position: absolute;
             left: 50%;
-            top: -62px;
+            top: -57px;
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 9px;
+            gap: 8px;
             white-space: nowrap;
             z-index: 30;
             pointer-events: none;
         }
 
         .module-title-chip .module-number {
-            width: 28px;
-            height: 28px;
-            border-radius: 10px;
+            width: 26px;
+            height: 26px;
+            border-radius: 9px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(2,6,23,.40);
-            border: 1px solid rgba(255,255,255,.12);
-            color: rgba(255,255,255,.72);
+            background: color-mix(
+                in srgb,
+                var(--module-color) 16%,
+                transparent
+            );
+            border: 1px solid color-mix(
+                in srgb,
+                var(--module-color) 38%,
+                transparent
+            );
+            color: var(--module-color);
             font-size: 10px;
             font-weight: 1000;
             backdrop-filter: blur(5px);
@@ -97,8 +152,8 @@
         }
 
         .module-title-chip .module-kicker {
-            color: rgba(255,255,255,.40);
-            font-size: 9px;
+            color: rgba(255,255,255,.38);
+            font-size: 8px;
             font-weight: 1000;
             letter-spacing: .18em;
             text-transform: uppercase;
@@ -107,36 +162,29 @@
 
         .module-title-chip .module-name {
             margin-top: 4px;
-            color: rgba(255,255,255,.84);
+            color: color-mix(
+                in srgb,
+                var(--module-color) 74%,
+                white
+            );
             font-size: 14px;
             font-weight: 1000;
             text-shadow: 0 4px 15px rgba(0,0,0,.35);
         }
 
-        .module-title-chip.complete .module-number {
-            background: rgba(16,185,129,.12);
-            border-color: rgba(52,211,153,.22);
-            color: rgba(167,243,208,.95);
-        }
-
-        .module-title-chip.current .module-number {
-            background: rgba(99,102,241,.15);
-            border-color: rgba(129,140,248,.28);
-            color: rgba(224,231,255,.98);
-        }
-
-        .module-title-chip.locked {
-            opacity: .72;
+        .module-title-chip.locked .module-number,
+        .module-title-chip.locked .module-name {
+            color: rgba(148,163,184,.52);
         }
 
         /* =====================================================
-           FASES + LINHA
+           FASES
            ===================================================== */
 
         .fase-item {
             position: relative;
-            width: 128px;
-            min-width: 128px;
+            width: 78px;
+            min-width: 78px;
             height: 220px;
             display: flex;
             align-items: center;
@@ -146,11 +194,11 @@
         }
 
         .fase-item.offset-up {
-            margin-top: -34px;
+            margin-top: -30px;
         }
 
         .fase-item.offset-down {
-            margin-top: 34px;
+            margin-top: 30px;
         }
 
         .fase-node {
@@ -162,11 +210,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-bottom-width: 7px;
+            background: var(--module-color);
+            border-bottom: 7px solid var(--module-dark);
+            box-shadow:
+                0 10px 22px rgba(0,0,0,.38),
+                0 4px 18px var(--module-glow);
             transition:
-                transform .2s ease,
-                filter .2s ease,
-                box-shadow .2s ease;
+                transform .18s ease,
+                filter .18s ease,
+                box-shadow .18s ease;
         }
 
         .fase-node:hover {
@@ -178,74 +230,64 @@
             width: 88px;
             height: 88px;
             border-bottom-width: 8px;
-        }
-
-        .fase-node.locked {
-            opacity: .68;
-        }
-
-        .fase-node.quiz {
-            background: #f59e0b;
-            border-bottom-color: #b45309;
             box-shadow:
-                0 10px 24px rgba(245,158,11,.22);
-        }
-
-        .fase-node.teoria {
-            background: #3b82f6;
-            border-bottom-color: #1d4ed8;
-            box-shadow:
-                0 10px 24px rgba(59,130,246,.20);
-        }
-
-        .fase-node.desafio {
-            background: #a855f7;
-            border-bottom-color: #7e22ce;
-            box-shadow:
-                0 10px 26px rgba(168,85,247,.23);
-        }
-
-        .fase-node.current {
-            box-shadow:
-                0 12px 28px rgba(255,255,255,.05),
-                0 0 0 7px rgba(255,255,255,.07);
-            animation: fase-pulse 2.3s ease-in-out infinite;
+                0 12px 28px rgba(0,0,0,.42),
+                0 0 0 7px rgba(255,255,255,.09),
+                0 7px 25px var(--module-glow);
+            animation: fase-salto 1.45s ease-in-out infinite;
         }
 
         .fase-node.concluida {
-            background: #10b981;
-            border-bottom-color: #047857;
+            width: 76px;
+            height: 76px;
+            animation: none;
+        }
+
+        .fase-node.locked {
+            width: 76px;
+            height: 76px;
+            background: #334155;
+            border-bottom-color: #1e293b;
+            color: #64748b;
             box-shadow:
-                0 10px 24px rgba(16,185,129,.22);
+                0 9px 20px rgba(0,0,0,.32);
+            opacity: .82;
         }
 
         .fase-name {
             position: absolute;
             left: 50%;
-            top: calc(50% + 52px);
+            top: calc(50% + 53px);
             transform: translateX(-50%);
-            width: 150px;
+            width: 142px;
             text-align: center;
-            color: rgba(255,255,255,.82);
+            color: rgba(255,255,255,.80);
             font-size: 11px;
-            line-height: 1.2;
+            line-height: 1.18;
             font-weight: 1000;
             text-shadow: 0 3px 12px rgba(0,0,0,.45);
             pointer-events: none;
         }
 
         .fase-name.locked {
-            color: rgba(255,255,255,.30);
+            color: rgba(148,163,184,.45);
         }
+
+        /* =====================================================
+           CONECTORES ENTRE TODAS AS FASES
+           O conector começa exatamente na borda de um nó e
+           termina exatamente na borda do nó seguinte.
+           ===================================================== */
 
         .fase-connector {
             position: relative;
-            width: 84px;
-            min-width: 84px;
+            width: 78px;
+            min-width: 78px;
             height: 220px;
-            z-index: 0;
+            z-index: 1;
             pointer-events: none;
             flex-shrink: 0;
+            margin: 0;
         }
 
         .fase-connector svg {
@@ -263,18 +305,19 @@
         }
 
         /* =====================================================
-           CONTINUIDADE ENTRE MÓDULOS
+           LIGAÇÃO ENTRE MÓDULOS
+           Linha sólida, sem tracejado e sem botão intermediário.
            ===================================================== */
 
         .module-transition {
             position: relative;
-            width: 104px;
-            min-width: 104px;
+            width: 92px;
+            min-width: 92px;
             height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 0;
+            z-index: 1;
             pointer-events: none;
             flex-shrink: 0;
         }
@@ -285,31 +328,25 @@
             overflow: visible;
         }
 
-        .module-transition-badge {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-            width: 34px;
-            height: 34px;
-            border-radius: 999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(2,6,23,.36);
-            border: 1px solid rgba(255,255,255,.10);
-            color: rgba(255,255,255,.42);
-            backdrop-filter: blur(4px);
+        .module-transition-line {
+            fill: none;
+            stroke: rgba(255,255,255,.42);
+            stroke-width: 9;
+            stroke-linecap: round;
         }
+
+        /* =====================================================
+           FINAL
+           ===================================================== */
 
         .final-marker {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 6px;
-            margin-left: 20px;
-            margin-right: 4px;
-            opacity: .72;
+            margin-left: 14px;
+            margin-right: 8px;
+            opacity: .70;
             flex-shrink: 0;
         }
 
@@ -319,11 +356,11 @@
             border-radius: 999px;
             border: 2px solid rgba(255,255,255,.50);
             background: rgba(255,255,255,.08);
-            box-shadow: 0 0 18px rgba(255,255,255,.18);
+            box-shadow: 0 0 18px rgba(255,255,255,.16);
         }
 
         .final-marker-label {
-            color: rgba(255,255,255,.52);
+            color: rgba(255,255,255,.48);
             font-size: 9px;
             font-weight: 1000;
             letter-spacing: .20em;
@@ -331,12 +368,12 @@
         }
 
         /* =====================================================
-           CADEADO
+           CADEADO DO MÓDULO
            ===================================================== */
 
         .module-lock-overlay {
             position: absolute;
-            inset: -10px;
+            inset: -7px;
             z-index: 45;
             display: flex;
             align-items: center;
@@ -346,28 +383,28 @@
         }
 
         .module-lock-button {
-            width: 82px;
-            height: 82px;
+            width: 78px;
+            height: 78px;
             border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid rgba(148,163,184,.60);
+            border: 3px solid rgba(100,116,139,.76);
             background:
                 radial-gradient(
                     circle at 32% 25%,
-                    rgba(255,255,255,.14),
+                    rgba(255,255,255,.12),
                     transparent 34%
                 ),
                 linear-gradient(
                     145deg,
-                    rgba(71,85,105,.96),
-                    rgba(15,23,42,.98)
+                    rgba(51,65,85,.96),
+                    rgba(15,23,42,.99)
                 );
-            color: rgba(241,245,249,.96);
+            color: rgba(226,232,240,.96);
             box-shadow:
-                0 14px 32px rgba(0,0,0,.28),
-                inset 0 2px 0 rgba(255,255,255,.10);
+                0 13px 30px rgba(0,0,0,.34),
+                inset 0 2px 0 rgba(255,255,255,.08);
             cursor: pointer;
             transition:
                 transform .2s ease,
@@ -376,29 +413,30 @@
         }
 
         .module-lock-button:hover {
-            transform: scale(1.04);
-            filter: brightness(1.06);
+            transform: scale(1.045);
+            filter: brightness(1.08);
         }
 
         .module-lock-button.has-key {
-            border-color: rgba(250,204,21,.78);
+            border-color: rgba(250,204,21,.82);
             color: #fde68a;
             box-shadow:
                 0 0 0 6px rgba(250,204,21,.07),
-                0 14px 34px rgba(0,0,0,.28);
+                0 13px 34px rgba(0,0,0,.34),
+                inset 0 2px 0 rgba(255,255,255,.08);
         }
 
         .module-lock-label {
             position: absolute;
             top: calc(50% + 52px);
-            min-width: 140px;
-            padding: 7px 11px;
+            min-width: 136px;
+            padding: 6px 10px;
             border-radius: 999px;
-            background: rgba(2,6,23,.38);
+            background: rgba(2,6,23,.34);
             border: 1px solid rgba(255,255,255,.08);
-            color: rgba(255,255,255,.62);
+            color: rgba(148,163,184,.54);
             text-align: center;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 900;
             letter-spacing: .04em;
             backdrop-filter: blur(5px);
@@ -414,40 +452,21 @@
             animation: lock-rattle .55s cubic-bezier(.36,.07,.19,.97);
         }
 
-        @keyframes fase-pulse {
-            0%,100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.045);
-            }
+        .module-group-locked .module-content {
+            opacity: .72;
         }
 
-        @keyframes lock-rattle {
-            0%,100% {
-                transform: translate3d(0,0,0) rotate(0deg);
-            }
-
-            18% {
-                transform: translate3d(3px,-2px,0) rotate(4deg);
-            }
-
-            35% {
-                transform: translate3d(-4px,2px,0) rotate(-4deg);
-            }
-
-            52% {
-                transform: translate3d(3px,0,0) rotate(3deg);
-            }
-
-            69% {
-                transform: translate3d(-2px,1px,0) rotate(-2deg);
-            }
-
-            84% {
-                transform: translate3d(1px,0,0) rotate(1deg);
-            }
+        .module-key-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(250,204,21,.20);
+            background: rgba(250,204,21,.07);
+            color: #fde68a;
+            font-size: 11px;
+            font-weight: 900;
         }
 
         .module-unlock-toast {
@@ -474,68 +493,123 @@
             transform: translate(-50%,0);
         }
 
+        /* =====================================================
+           ANIMAÇÕES
+           ===================================================== */
+
+        @keyframes fase-salto {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+        }
+
+        @keyframes lock-rattle {
+
+            0%, 100% {
+                transform: translate3d(0,0,0) rotate(0deg);
+            }
+
+            18% {
+                transform: translate3d(3px,-2px,0) rotate(4deg);
+            }
+
+            35% {
+                transform: translate3d(-4px,2px,0) rotate(-4deg);
+            }
+
+            52% {
+                transform: translate3d(3px,0,0) rotate(3deg);
+            }
+
+            69% {
+                transform: translate3d(-2px,1px,0) rotate(-2deg);
+            }
+
+            84% {
+                transform: translate3d(1px,0,0) rotate(1deg);
+            }
+
+        }
+
         @media (max-width: 767px) {
 
             .mapa-track {
-                padding: 76px 34px 130px 34px;
+                padding:
+                    72px
+                    38px
+                    115px
+                    38px;
             }
 
             .module-title-chip {
-                top: -56px;
+                top: -53px;
             }
 
             .module-title-chip .module-name {
                 font-size: 12px;
-                max-width: 160px;
+                max-width: 165px;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
 
             .fase-item {
-                width: 108px;
-                min-width: 108px;
+                width: 68px;
+                min-width: 68px;
                 height: 195px;
             }
 
             .fase-connector {
-                width: 58px;
-                min-width: 58px;
+                width: 62px;
+                min-width: 62px;
                 height: 195px;
             }
 
             .module-transition {
-                width: 78px;
-                min-width: 78px;
+                width: 70px;
+                min-width: 70px;
                 height: 195px;
             }
 
-            .final-marker {
-                margin-right: 12px;
-            }
-
-            .fase-name {
-                width: 128px;
-                font-size: 10px;
-                top: calc(50% + 48px);
-            }
-
             .fase-node {
-                width: 68px;
-                height: 68px;
+                width: 66px;
+                height: 66px;
                 border-bottom-width: 6px;
             }
 
             .fase-node.current {
-                width: 80px;
-                height: 80px;
+                width: 78px;
+                height: 78px;
                 border-bottom-width: 7px;
             }
 
+            .fase-node.concluida {
+                width: 66px;
+                height: 66px;
+            }
+
+            .fase-name {
+                width: 122px;
+                font-size: 10px;
+                top: calc(50% + 47px);
+            }
+
             .module-lock-button {
-                width: 74px;
-                height: 74px;
+                width: 72px;
+                height: 72px;
                 border-radius: 22px;
             }
+
+            .module-lock-label {
+                top: calc(50% + 48px);
+                min-width: 128px;
+            }
+
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -558,7 +632,9 @@
 
     {% include 'gamificacao/partials/paisagem_animada.html' %}
 
-    <div class="glass-overlay absolute inset-0 z-0"></div>
+    <div
+        class="glass-overlay absolute inset-0 z-0"
+    ></div>
 
 
     <!-- =====================================================
@@ -571,7 +647,9 @@
 
         <div class="px-5 md:px-8 py-4">
 
-            <div class="flex flex-wrap justify-between items-center gap-4">
+            <div
+                class="flex flex-wrap justify-between items-center gap-4"
+            >
 
                 <a
                     href="{% if papel_efetivo == 'professor' %}{% url 'dashboard_professor' %}{% else %}{% url 'dashboard_aluno' %}{% endif %}"
@@ -601,18 +679,24 @@
 
                 <div class="text-center">
 
-                    <p class="text-[10px] uppercase tracking-[0.3em] text-white/50 font-black">
+                    <p
+                        class="text-[10px] uppercase tracking-[0.3em] text-white/50 font-black"
+                    >
                         Trilha
                     </p>
 
-                    <h1 class="text-2xl md:text-3xl font-black text-yellow-400 drop-shadow-lg">
+                    <h1
+                        class="text-2xl md:text-3xl font-black text-yellow-400 drop-shadow-lg"
+                    >
                         {{ trilha.nome }}
                     </h1>
 
                 </div>
 
 
-                <div class="flex items-center gap-2">
+                <div
+                    class="flex items-center gap-2"
+                >
 
                     {% if papel_efetivo == 'aluno' %}
 
@@ -624,9 +708,13 @@
 
                     {% if modo_teste_ativo %}
 
-                        <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-3 py-2">
+                        <div
+                            class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-3 py-2"
+                        >
 
-                            <span class="text-yellow-300 text-xs font-black">
+                            <span
+                                class="text-yellow-300 text-xs font-black"
+                            >
                                 🧪 TESTE
                             </span>
 
@@ -634,22 +722,43 @@
 
                     {% endif %}
 
-                    <div class="bg-slate-950/45 border border-yellow-500/20 rounded-xl px-3 py-2">
-                        <span class="text-yellow-400 font-black">
+
+                    <div
+                        class="bg-slate-950/45 border border-yellow-500/20 rounded-xl px-3 py-2"
+                    >
+
+                        <span
+                            class="text-yellow-400 font-black"
+                        >
                             Nv. {{ perfil.nivel }}
                         </span>
+
                     </div>
 
-                    <div class="bg-slate-950/45 border border-blue-500/20 rounded-xl px-3 py-2">
-                        <span class="text-blue-400 font-black">
+
+                    <div
+                        class="bg-slate-950/45 border border-blue-500/20 rounded-xl px-3 py-2"
+                    >
+
+                        <span
+                            class="text-blue-400 font-black"
+                        >
                             🪙 {{ perfil.moedas }}
                         </span>
+
                     </div>
 
-                    <div class="bg-slate-950/45 border border-red-500/20 rounded-xl px-3 py-2">
-                        <span class="text-red-400 font-black">
+
+                    <div
+                        class="bg-slate-950/45 border border-red-500/20 rounded-xl px-3 py-2"
+                    >
+
+                        <span
+                            class="text-red-400 font-black"
+                        >
                             ❤️ {{ perfil.vidas }}
                         </span>
+
                     </div>
 
                 </div>
@@ -659,23 +768,41 @@
 
             {% if papel_efetivo == 'aluno' %}
 
-                <div class="max-w-4xl mx-auto mt-4">
+                <div
+                    class="max-w-4xl mx-auto mt-4"
+                >
 
-                    <div class="flex justify-between items-center mb-2 text-xs">
+                    <div
+                        class="flex justify-between items-center mb-2 text-xs"
+                    >
 
-                        <span class="text-white/50 font-bold uppercase tracking-widest">
+                        <span
+                            class="text-white/50 font-bold uppercase tracking-widest"
+                        >
                             Progresso da jornada
                         </span>
 
-                        <span class="text-white/80 font-black">
-                            {{ fases_concluidas }}/{{ total_fases }}
-                            fases ·
+                        <span
+                            class="text-white/80 font-black"
+                        >
+
+                            {{ fases_concluidas }}
+                            /
+                            {{ total_fases }}
+                            fases
+
+                            ·
+
                             {{ percentual_progresso }}%
+
                         </span>
 
                     </div>
 
-                    <div class="h-2 bg-black/30 rounded-full overflow-hidden">
+
+                    <div
+                        class="h-2 bg-black/30 rounded-full overflow-hidden"
+                    >
 
                         <div
                             class="h-full bg-gradient-to-r from-green-400 to-emerald-300 rounded-full transition-all duration-700"
@@ -688,9 +815,19 @@
 
             {% else %}
 
-                <div class="max-w-4xl mx-auto mt-4 text-center text-xs text-yellow-300/80 font-bold">
-                    Modo professor:
-                    todas as fases desta trilha estão disponíveis para visualização.
+                <div
+                    class="max-w-4xl mx-auto mt-4"
+                >
+
+                    <div
+                        class="text-center text-xs text-yellow-300/80 font-bold"
+                    >
+
+                        Modo professor:
+                        todas as fases desta trilha estão disponíveis para visualização.
+
+                    </div>
+
                 </div>
 
             {% endif %}
@@ -704,7 +841,9 @@
          MAPA
          ===================================================== -->
 
-    <main class="relative z-10 flex-1 overflow-hidden">
+    <main
+        class="relative z-10 flex-1 overflow-hidden"
+    >
 
         <div
             id="mapa-jornada"
@@ -714,13 +853,19 @@
             <div class="mapa-track">
 
 
-                <!-- ORIGEM -->
+                <!-- INÍCIO -->
 
-                <div class="mr-10 flex flex-col items-center opacity-70 drop-shadow-md shrink-0">
+                <div
+                    class="mr-10 flex flex-col items-center opacity-70 drop-shadow-md shrink-0"
+                >
 
-                    <div class="w-5 h-5 rounded-full bg-white/50 mb-2 shadow-[0_0_15px_rgba(255,255,255,.5)]"></div>
+                    <div
+                        class="w-5 h-5 rounded-full bg-white/50 mb-2 shadow-[0_0_15px_rgba(255,255,255,.5)]"
+                    ></div>
 
-                    <span class="text-xs font-bold uppercase tracking-widest text-white/80">
+                    <span
+                        class="text-xs font-bold uppercase tracking-widest text-white/80"
+                    >
                         Início
                     </span>
 
@@ -730,11 +875,11 @@
                 {% for modulo in modulos %}
 
                     <div
-                        class="module-group"
+                        class="module-group module-{{ modulo.ordem }}"
                         data-module-id="{{ modulo.id }}"
                     >
 
-                        <!-- IDENTIFICAÇÃO DO MÓDULO -->
+                        <!-- NOME DO MÓDULO -->
 
                         <div
                             class="module-title-chip
@@ -783,10 +928,18 @@
                                         title="{{ fase.titulo }}"
                                     >
 
-                                        <svg class="w-9 h-9 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg
+                                            class="w-9 h-9 text-white"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            stroke-width="2.3"
+                                        >
 
                                             <path
-                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034a1 1 0 00-1.175 0l-2.8 2.034a.9 2.034 0 01-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461c.432 0 .815-.275.951-.69l1.07-3.292z"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M5 13l4 4L19 7"
                                             />
 
                                         </svg>
@@ -803,21 +956,72 @@
 
                                         {% if fase.tipo == 'teoria' %}
 
-                                            <svg class="w-11 h-11 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 014 15.5v-10z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h8M8 10h8M8 13h5"/>
+                                            <svg
+                                                class="w-11 h-11 text-white"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                stroke-width="1.9"
+                                            >
+
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M5 4.5A2.5 2.5 0 017.5 2H20v17H7.5A2.5 2.5 0 005 16.5v-12z"
+                                                />
+
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M9 6h7M9 9h7M9 12h5"
+                                                />
+
                                             </svg>
 
                                         {% elif fase.tipo == 'desafio' %}
 
-                                            <svg class="w-11 h-11 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 2L4 13h6l-1 9 9-13h-6l1-7z"/>
+                                            <svg
+                                                class="w-11 h-11 text-white"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                            >
+
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M13 2L4 13h6l-1 9 9-13h-6l1-7z"
+                                                />
+
                                             </svg>
 
                                         {% else %}
 
-                                            <svg class="w-11 h-11 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1.5 1.5 0 008 8.5v3a1.5 1.5 0 002.333 1.248l3-2a1.5 1.5 0 000-2.496l-3-2z" clip-rule="evenodd"/>
+                                            <svg
+                                                class="w-11 h-11 text-white"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                            >
+
+                                                <rect
+                                                    x="4"
+                                                    y="4"
+                                                    width="16"
+                                                    height="16"
+                                                    rx="4"
+                                                />
+
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M10 8.5l5 3.5-5 3.5v-7z"
+                                                    fill="currentColor"
+                                                    stroke="none"
+                                                />
+
                                             </svg>
 
                                         {% endif %}
@@ -832,9 +1036,25 @@
                                         title="Visualizar fase como professor"
                                     >
 
-                                        <svg class="w-8 h-8 text-white/85" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg
+                                            class="w-8 h-8 text-white/90"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            stroke-width="1.9"
+                                        >
 
-                                            <path d="M10 3C5 3 1.5 10 1.5 10S5 17 10 17s8.5-7 8.5-7S15 3 10 3zm0 11a4 4 0 110-8 4 4 0 010 8z"/>
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"
+                                            />
+
+                                            <circle
+                                                cx="12"
+                                                cy="12"
+                                                r="2.7"
+                                            />
 
                                         </svg>
 
@@ -842,11 +1062,32 @@
 
                                 {% else %}
 
-                                    <div class="fase-node locked">
+                                    <div
+                                        class="fase-node locked"
+                                        title="Fase bloqueada"
+                                    >
 
-                                        <svg class="w-8 h-8 text-slate-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg
+                                            class="w-8 h-8 text-current"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                        >
 
-                                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                                            <rect
+                                                x="5"
+                                                y="10"
+                                                width="14"
+                                                height="10"
+                                                rx="2"
+                                            />
+
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M8 10V7a4 4 0 118 0v3"
+                                            />
 
                                         </svg>
 
@@ -855,9 +1096,11 @@
                                 {% endif %}
 
 
-                                <!-- NOME -->
+                                <!-- NOME DA FASE -->
 
-                                <div class="fase-name {% if fase.status == 'bloqueada' %}locked{% endif %}">
+                                <div
+                                    class="fase-name {% if fase.status == 'bloqueada' %}locked{% endif %}"
+                                >
                                     {{ fase.titulo }}
                                 </div>
 
@@ -868,23 +1111,28 @@
 
                             {% if not forloop.last %}
 
-                                <div class="fase-connector">
+                                <div
+                                    class="fase-connector"
+                                >
 
-                                    <svg viewBox="0 0 100 220" preserveAspectRatio="none">
+                                    <svg
+                                        viewBox="0 0 100 220"
+                                        preserveAspectRatio="none"
+                                    >
 
                                         <path
-                                            d="M 0,{{ fase.svg_y1 }} C 32,{{ fase.svg_y1 }} 68,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}"
+                                            d="M0 {{ fase.svg_y1 }} C 25 {{ fase.svg_y1 }} 75 {{ fase.svg_y2 }} 100 {{ fase.svg_y2 }}"
                                             fill="none"
                                             class="linha-conector"
-                                            stroke-width="14"
+                                            stroke-width="12"
                                             stroke-linecap="round"
                                         />
 
                                         <path
-                                            d="M 0,{{ fase.svg_y1 }} C 32,{{ fase.svg_y1 }} 68,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}"
+                                            d="M0 {{ fase.svg_y1 }} C 25 {{ fase.svg_y1 }} 75 {{ fase.svg_y2 }} 100 {{ fase.svg_y2 }}"
                                             fill="none"
                                             class="linha-tracejada"
-                                            stroke-width="6"
+                                            stroke-width="5"
                                             stroke-dasharray="10 10"
                                             stroke-linecap="round"
                                         />
@@ -898,7 +1146,7 @@
                         {% endfor %}
 
 
-                        <!-- CADEADO DO MÓDULO -->
+                        <!-- CADEADO -->
 
                         {% if papel_efetivo == 'aluno' and modulo.status == 'bloqueado' %}
 
@@ -917,26 +1165,52 @@
                                     title="{% if modulo.chave_disponivel %}Usar chave{% else %}Módulo bloqueado{% endif %}"
                                 >
 
-                                    <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+                                    <svg
+                                        class="w-10 h-10"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="1.9"
+                                    >
 
-                                        <path d="M7 10V8a5 5 0 0110 0v2"/>
+                                        <path
+                                            d="M7 10V8a5 5 0 0110 0v2"
+                                        />
 
-                                        <rect x="4.5" y="10" width="15" height="10" rx="2.5"/>
+                                        <rect
+                                            x="4.5"
+                                            y="10"
+                                            width="15"
+                                            height="10"
+                                            rx="2.5"
+                                        />
 
-                                        <circle cx="12" cy="15" r="1.2" fill="currentColor" stroke="none"/>
+                                        <circle
+                                            cx="12"
+                                            cy="15"
+                                            r="1.2"
+                                            fill="currentColor"
+                                            stroke="none"
+                                        />
 
-                                        <path d="M12 16.2V18"/>
+                                        <path
+                                            d="M12 16.2V18"
+                                        />
 
                                     </svg>
 
                                 </button>
 
-                                <span class="module-lock-label {% if modulo.chave_disponivel %}has-key{% endif %}">
+                                <span
+                                    class="module-lock-label {% if modulo.chave_disponivel %}has-key{% endif %}"
+                                >
+
                                     {% if modulo.chave_disponivel %}
                                         Chave disponível
                                     {% else %}
                                         Módulo bloqueado
                                     {% endif %}
+
                                 </span>
 
                             </div>
@@ -946,36 +1220,26 @@
                     </div>
 
 
-                    <!-- LIGAÇÃO FINAL DO MÓDULO -->
+                    <!-- LINHA NORMAL ENTRE MÓDULOS -->
 
                     {% if not forloop.last %}
 
-                        <div class="module-transition">
+                        <div
+                            class="module-transition"
+                            aria-hidden="true"
+                        >
 
-                            <svg viewBox="0 0 100 220" preserveAspectRatio="none">
-
-                                <path
-                                    d="M0 110 C 28 110 42 78 60 110 C 74 136 84 110 100 110"
-                                    fill="none"
-                                    class="linha-conector"
-                                    stroke-width="14"
-                                    stroke-linecap="round"
-                                />
+                            <svg
+                                viewBox="0 0 100 220"
+                                preserveAspectRatio="none"
+                            >
 
                                 <path
-                                    d="M0 110 C 28 110 42 78 60 110 C 74 136 84 110 100 110"
-                                    fill="none"
-                                    class="linha-tracejada"
-                                    stroke-width="6"
-                                    stroke-dasharray="10 10"
-                                    stroke-linecap="round"
+                                    d="M0 110 C 35 110 65 110 100 110"
+                                    class="module-transition-line"
                                 />
 
                             </svg>
-
-                            <div class="module-transition-badge">
-                                →
-                            </div>
 
                         </div>
 
@@ -984,15 +1248,21 @@
                 {% endfor %}
 
 
-                <!-- FIM EXPLÍCITO -->
+                <!-- FIM -->
 
                 {% if modulos %}
 
-                    <div class="final-marker">
+                    <div
+                        class="final-marker"
+                    >
 
-                        <div class="final-marker-dot"></div>
+                        <div
+                            class="final-marker-dot"
+                        ></div>
 
-                        <div class="final-marker-label">
+                        <div
+                            class="final-marker-label"
+                        >
                             Fim
                         </div>
 
@@ -1002,7 +1272,7 @@
 
 
                 <div
-                    class="w-[32vw] min-w-[260px] shrink-0"
+                    class="w-[24vw] min-w-[220px] shrink-0"
                     aria-hidden="true"
                 ></div>
 
@@ -1021,30 +1291,42 @@
         class="relative z-20 shrink-0 border-t border-white/10 bg-slate-950/30 backdrop-blur-md px-6 py-3"
     >
 
-        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3 text-xs">
+        <div
+            class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3 text-xs"
+        >
 
             {% if papel_efetivo == 'aluno' %}
 
-                <div class="text-slate-500">
+                <div
+                    class="text-slate-500"
+                >
 
                     Próximo nível:
 
                     <strong class="text-slate-300">
-                        {{ perfil.xp_proximo_nivel }} XP
+                        {{ perfil.xp_proximo_nivel }}
+                        XP
                     </strong>
 
                 </div>
 
+
                 {% if fase_atual %}
 
-                    <div class="text-green-400 font-bold">
+                    <div
+                        class="text-green-400 font-bold"
+                    >
+
                         Próxima fase:
                         {{ fase_atual.titulo }}
+
                     </div>
 
                 {% elif total_fases > 0 and fases_concluidas == total_fases %}
 
-                    <div class="text-yellow-400 font-black">
+                    <div
+                        class="text-yellow-400 font-black"
+                    >
                         🏆 Trilha concluída!
                     </div>
 
@@ -1052,11 +1334,16 @@
 
             {% else %}
 
-                <div class="text-indigo-300 font-bold">
-                    🧪 Modo professor · Visualização e testes
+                <div
+                    class="text-indigo-300 font-bold"
+                >
+                    🧪 Modo professor
+                    · Visualização e testes
                 </div>
 
-                <div class="text-slate-500">
+                <div
+                    class="text-slate-500"
+                >
                     Progresso do aluno não é alterado neste modo.
                 </div>
 
