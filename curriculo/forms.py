@@ -2,12 +2,26 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Disciplina, Modulo, Fase, Questao
+from .models import Disciplina, Materia, Modulo, Fase, Questao
 
 class DisciplinaForm(forms.ModelForm):
+    materia = forms.ModelChoiceField(
+        queryset=Materia.objects.filter(ativo=True).order_by('ordem', 'id'),
+        label='Matéria',
+        empty_label='Selecione uma matéria',
+        widget=forms.Select(
+            attrs={
+                'class': (
+                    'w-full bg-slate-100 border border-slate-300 '
+                    'rounded-lg p-3 outline-none'
+                ),
+            }
+        ),
+    )
+
     class Meta:
         model = Disciplina
-        fields = ['nome', 'slug', 'descricao', 'tema']
+        fields = ['materia', 'nome', 'slug', 'descricao', 'tema']
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'w-full bg-slate-100 border border-slate-300 rounded-lg p-3 outline-none'}),
             'slug': forms.TextInput(attrs={'class': 'w-full bg-slate-100 border border-slate-300 rounded-lg p-3 outline-none'}),
