@@ -17,6 +17,14 @@
         isolation: isolate;
     }
 
+    /* A paisagem é uma camada de fundo. Todo conteúdo real da página
+       fica explicitamente acima dela, evitando problemas de empilhamento
+       com elementos posicionados e stacking contexts. */
+    body.has-landscape > :not(.paisagem-animada):not(style):not(script) {
+        position: relative;
+        z-index: 1;
+    }
+
     .paisagem-animada {
         position: fixed;
         inset: 0;
