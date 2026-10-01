@@ -1710,6 +1710,18 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
             password="SenhaForte123!",
         )
 
+        modulo_2 = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Segundo módulo",
+            ordem=2,
+        )
+
+        Fase.objects.create(
+            modulo=modulo_2,
+            titulo="Fase do segundo módulo",
+            ordem=1,
+        )
+
         response = self.client.get(
             reverse(
                 "editar_trilha",
@@ -1730,6 +1742,11 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         self.assertContains(
             response,
             "Segunda fase",
+        )
+
+        self.assertContains(
+            response,
+            "Fase do segundo módulo",
         )
 
         self.assertContains(
