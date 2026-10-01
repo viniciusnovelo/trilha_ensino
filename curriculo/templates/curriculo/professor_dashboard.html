@@ -209,9 +209,17 @@
                             <div class="flex-1 min-w-0">
 
                                 <div class="flex flex-wrap items-center gap-2">
-                                    <h3 class="text-xl font-black truncate">
-                                        {{ trilha.nome }}
-                                    </h3>
+                                    <div class="flex flex-wrap items-center gap-2 min-w-0">
+                                        <h3 class="text-xl font-black truncate">
+                                            {{ trilha.nome }}
+                                        </h3>
+
+                                        {% if trilha.materia %}
+                                            <span class="px-2 py-1 rounded-lg bg-indigo-500/10 text-indigo-200 border border-indigo-400/15 text-[10px] font-black">
+                                                {{ trilha.materia.nome }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
 
                                     {% if trilha.ativo %}
                                         <span class="px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-500/10 text-emerald-300 border border-emerald-400/20 uppercase tracking-wider">
