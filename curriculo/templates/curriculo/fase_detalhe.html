@@ -602,6 +602,121 @@
                 '';
         }
 
+
+        function renderizarExplicacaoPedagogica(
+            valor
+        ) {
+            const texto =
+                String(
+                    valor
+                    || 'Revise o conceito e refaça o raciocínio passo a passo.'
+                ).trim();
+
+            const linhas =
+                texto.split(
+                    /\r?\n/
+                );
+
+            const secoes = [];
+            let secaoAtual = null;
+
+            const nomes = {
+                'como pensar': 'Como pensar',
+                'passo a passo': 'Passo a passo',
+                'resolução': 'Passo a passo',
+                'conclusão': 'Conclusão',
+                'resposta': 'Conclusão',
+                'observação': 'Observação',
+            };
+
+            const icones = {
+                'Como pensar': '💡',
+                'Passo a passo': '🧩',
+                'Conclusão': '✅',
+                'Observação': '📌',
+            };
+
+            linhas.forEach(
+                (linha) => {
+                    const correspondencia =
+                        linha.match(
+                            /^\s*(Como pensar|Passo a passo|Resolução|Conclusão|Resposta|Observação)\s*:\s*(.*)$/i
+                        );
+
+                    if (correspondencia) {
+                        const titulo =
+                            nomes[
+                                correspondencia[1]
+                                    .trim()
+                                    .toLowerCase()
+                            ] || 'Explicação';
+
+                        secaoAtual = {
+                            titulo,
+                            conteudo:
+                                correspondencia[2]
+                                || '',
+                        };
+
+                        secoes.push(
+                            secaoAtual
+                        );
+
+                        return;
+                    }
+
+                    if (!secaoAtual) {
+                        secaoAtual = {
+                            titulo: 'Explicação',
+                            conteudo: '',
+                        };
+
+                        secoes.push(
+                            secaoAtual
+                        );
+                    }
+
+                    secaoAtual.conteudo += (
+                        secaoAtual.conteudo
+                            ? '\n'
+                            : ''
+                    ) + linha;
+                }
+            );
+
+            return secoes
+                .filter(
+                    (secao) =>
+                        secao.conteudo.trim()
+                )
+                .map(
+                    (secao) => {
+                        const icone =
+                            icones[
+                                secao.titulo
+                            ] || '📚';
+
+                        return (
+                            '<div class="rounded-2xl border border-white/7 bg-white/[.025] p-4">'
+                            + '<div class="flex items-center gap-2">'
+                            + '<span class="text-base" aria-hidden="true">'
+                            + icone
+                            + '</span>'
+                            + '<p class="text-[10px] uppercase tracking-[.18em] text-blue-300 font-black">'
+                            + escaparHtml(secao.titulo)
+                            + '</p>'
+                            + '</div>'
+                            + '<div class="text-sm text-white/70 leading-7 mt-2">'
+                            + formatarTextoSeguro(secao.conteudo.trim())
+                            + '</div>'
+                            + '</div>'
+                        );
+                    }
+                )
+                .join('');
+        }
+
+
         function mostrarExplicacaoQuestao(
             questao,
             data
@@ -631,7 +746,11 @@
             }
 
             explicacaoQuestaoTexto.innerHTML =
-                formatarTextoSeguro(explicacao);
+                '<div class="space-y-3">'
+                + renderizarExplicacaoPedagogica(
+                    explicacao
+                )
+                + '</div>';
 
             explicacaoQuestao.classList.remove(
                 'hidden'
@@ -1387,10 +1506,10 @@
                             + '</div>'
                             + '</div>'
                             + '<div class="mt-4 pt-4 border-t border-white/6">'
-                            + '<p class="text-[10px] uppercase tracking-widest text-blue-300 font-black">Como pensar / resolver</p>'
-                            + '<p class="text-sm text-white/65 leading-7 mt-2">'
-                            + formatarTextoSeguro(item.explicacao)
-                            + '</p>'
+                            + '<p class="text-[10px] uppercase tracking-widest text-blue-300 font-black">Como pensar e resolver</p>'
+                            + '<div class="space-y-3 mt-3">'
+                            + renderizarExplicacaoPedagogica(item.explicacao)
+                            + '</div>'
                             + '</div>'
                             + '</article>'
                         );
