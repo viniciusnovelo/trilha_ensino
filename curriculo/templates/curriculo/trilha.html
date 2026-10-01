@@ -223,6 +223,37 @@
             filter: brightness(1.08);
         }
 
+        .module-title-chip.professor .module-number {
+            background: color-mix(
+                in srgb,
+                var(--module-color) 14%,
+                transparent
+            );
+            border-color: color-mix(
+                in srgb,
+                var(--module-color) 32%,
+                transparent
+            );
+            color: var(--module-color);
+        }
+
+        .module-title-chip.professor .module-name {
+            color: color-mix(
+                in srgb,
+                var(--module-color) 78%,
+                white
+            );
+        }
+
+        .fase-node.professor {
+            background: var(--module-color);
+            border-bottom-color: var(--module-dark);
+            box-shadow:
+                0 10px 22px rgba(0,0,0,.34),
+                0 4px 17px var(--module-glow);
+            animation: none;
+        }
+
         .fase-node.current {
             width: 76px;
             height: 76px;
@@ -511,12 +542,6 @@
                 top: calc(50% + 47px);
             }
 
-            .module-lock-button {
-                width: 72px;
-                height: 72px;
-                border-radius: 22px;
-            }
-
         }
 
     </style>
@@ -785,6 +810,8 @@
                                     complete
                                 {% elif modulo.status == 'atual' %}
                                     current
+                                {% elif modulo.status == 'professor' %}
+                                    professor
                                 {% elif modulo.status == 'bloqueado' %}
                                     locked
                                 {% endif %}"
@@ -818,7 +845,23 @@
                                 style="transform: translateY({{ fase.deslocamento_y }}px);"
                             >
 
-                                {% if fase.status == 'concluida' %}
+                                {% if papel_efetivo == 'professor' %}
+
+                                    <a
+                                        href="{% url 'fase_detalhe' fase.id %}"
+                                        class="fase-node professor"
+                                        title="Abrir fase como professor"
+                                    >
+
+                                        <span
+                                            class="text-sm font-black text-white"
+                                        >
+                                            ▶
+                                        </span>
+
+                                    </a>
+
+                                {% elif fase.status == 'concluida' %}
 
                                     <a
                                         href="{% url 'fase_detalhe' fase.id %}"
@@ -1192,25 +1235,7 @@
     ></div>
 
 
-    <script>
-        const mapa = document.getElementById('mapa-jornada');
 
-        if (mapa) {
-            mapa.addEventListener(
-                'wheel',
-                (event) => {
-                    if (
-                        Math.abs(event.deltaY)
-                        >
-                        Math.abs(event.deltaX)
-                    ) {
-                        mapa.scrollLeft += event.deltaY;
-                    }
-                },
-                { passive: false }
-            );
-        }
-    </script>
 
 </body>
 
