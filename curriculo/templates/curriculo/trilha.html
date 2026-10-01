@@ -2,332 +2,42 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ trilha.nome }} - Trilha</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ trilha.nome }} - Trilha
+    </title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        * {
-            box-sizing: border-box;
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
         }
 
-        html {
-            scroll-behavior: smooth;
+        .glass-overlay {
+            background: transparent;
+            backdrop-filter: none;
         }
 
-        body {
-            min-width: 320px;
-        }
-
-        .scrollbar-thin::-webkit-scrollbar {
-            height: 7px;
-        }
-
-        .scrollbar-thin::-webkit-scrollbar-thumb {
-            background: rgba(226, 232, 240, .30);
-            border-radius: 999px;
-        }
-
-        /* =========================================================
-           MAPA PRINCIPAL
-           ========================================================= */
-
-        .journey-scroll {
-            overflow-x: auto;
-            overflow-y: visible;
-            scrollbar-width: thin;
-            padding: 8px 0 18px;
-        }
-
-        .journey-track {
-            display: flex;
-            align-items: center;
-            width: max-content;
-            min-width: 100%;
-            padding: 10px 42px 18px;
-        }
-
-        .module-zone {
-            position: relative;
-            width: max-content;
-            min-width: 700px;
-            flex: 0 0 auto;
-            scroll-snap-align: center;
-        }
-
-        .module-header {
-            position: relative;
-            min-height: 108px;
-            padding: 10px 18px 8px;
-        }
-
-        .module-heading {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 24px;
-        }
-
-        .module-marker {
-            width: 50px;
-            height: 50px;
-            flex: 0 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 17px;
-            border: 1px solid rgba(255,255,255,.15);
-            background: rgba(15,23,42,.22);
-            color: rgba(224,231,255,.95);
-            box-shadow: 0 10px 24px rgba(2,6,23,.16);
-            backdrop-filter: blur(6px);
-        }
-
-        .module-title {
-            min-width: 0;
-        }
-
-        .module-title h3 {
-            text-shadow: 0 5px 18px rgba(0,0,0,.30);
-        }
-
-        .module-progress {
-            width: 205px;
-            flex: 0 0 auto;
-            padding-top: 4px;
-        }
-
-        .module-progress-track {
-            height: 7px;
-            border-radius: 999px;
-            background: rgba(2,6,23,.24);
-            overflow: hidden;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,.24);
-        }
-
-        /* =========================================================
-           LINHA DAS FASES
-           ========================================================= */
-
-        .phase-area {
-            position: relative;
-            height: 350px;
-            min-width: 700px;
-        }
-
-        .phase-track {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: max-content;
-            min-width: 100%;
-            height: 100%;
-            padding: 0 24px;
-        }
-
-        .phase-slot {
-            position: relative;
-            width: 145px;
-            min-width: 145px;
-            height: 310px;
-            flex: 0 0 auto;
-        }
-
-        .phase-slot.offset-up {
-            transform: translateY(-12px);
-        }
-
-        .phase-slot.offset-down {
-            transform: translateY(12px);
-        }
-
-        .phase-node-wrap {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            z-index: 20;
-            transform: translate(-50%, -50%);
-        }
-
-        .phase-node {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 999px;
-            transition: filter .2s ease, transform .2s ease;
-        }
-
-        .phase-node:hover {
-            filter: brightness(1.10);
-        }
-
-        .phase-node-current {
-            animation: node-pulse 2.4s ease-in-out infinite;
-        }
-
-        .phase-label {
-            position: absolute;
-            left: 50%;
-            width: 165px;
-            transform: translateX(-50%);
-            z-index: 12;
-            padding: 9px 10px;
-            border-radius: 14px;
-            text-align: center;
-            background: rgba(2,6,23,.42);
-            border: 1px solid rgba(255,255,255,.075);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 7px 18px rgba(0,0,0,.14);
-        }
-
-        .phase-label.top {
-            bottom: calc(50% + 64px);
-        }
-
-        .phase-label.bottom {
-            top: calc(50% + 64px);
-        }
-
-        .phase-connector {
-            position: relative;
-            width: 72px;
-            min-width: 72px;
-            height: 310px;
-            flex: 0 0 auto;
-            z-index: 6;
-        }
-
-        .phase-connector svg {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-        }
-
-        .phase-connector-path {
-            fill: none;
-            stroke: rgba(148,163,184,.38);
-            stroke-width: 10;
-            stroke-linecap: round;
-        }
-
-        .phase-connector-dash {
-            fill: none;
-            stroke: rgba(226,232,240,.68);
-            stroke-width: 4;
-            stroke-dasharray: 9 9;
-            stroke-linecap: round;
-        }
-
-        /* =========================================================
-           LIGAÇÃO ENTRE MÓDULOS
-           ========================================================= */
-
-        .module-bridge {
-            position: relative;
-            width: 145px;
-            min-width: 145px;
-            height: 458px;
-            flex: 0 0 auto;
-        }
-
-        .module-bridge svg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-        }
-
-        .module-bridge-path {
-            fill: none;
-            stroke: rgba(148,163,184,.38);
-            stroke-width: 11;
-            stroke-linecap: round;
-        }
-
-        .module-bridge-dash {
-            fill: none;
-            stroke: rgba(226,232,240,.65);
-            stroke-width: 4;
-            stroke-dasharray: 9 9;
-            stroke-linecap: round;
-        }
-
-        /* =========================================================
-           MÓDULO BLOQUEADO
-           ========================================================= */
-
-        .module-content-locked {
-            opacity: .56;
-            transition: opacity .35s ease;
-        }
-
-        .locked-module-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 60;
+        .module-lock-button {
+            width: 82px;
+            height: 82px;
             border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            background: rgba(2,6,23,.08);
-        }
-
-        .locked-chain-layer {
-            position: absolute;
-            inset: 8px;
-            z-index: 2;
-            pointer-events: none;
-            filter:
-                drop-shadow(0 9px 10px rgba(0,0,0,.24))
-                drop-shadow(0 1px 1px rgba(255,255,255,.10));
-        }
-
-        .locked-chain-svg {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-        }
-
-        .chain-link {
-            fill: rgba(71,85,105,.62);
-            stroke: rgba(226,232,240,.72);
-            stroke-width: 1.7;
-            vector-effect: non-scaling-stroke;
-        }
-
-        .chain-link-inner {
-            fill: rgba(2,6,23,.14);
-            stroke: rgba(255,255,255,.11);
-            stroke-width: 1;
-            vector-effect: non-scaling-stroke;
-        }
-
-        .locked-lock-layer {
-            position: relative;
-            z-index: 4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            transform-origin: var(--origin-x,50%) var(--origin-y,50%);
-        }
-
-        .locked-lock-button {
-            width: 92px;
-            height: 92px;
-            border-radius: 27px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid rgba(148,163,184,.66);
+            border: 3px solid rgba(148,163,184,.60);
             background:
                 radial-gradient(
-                    circle at 31% 24%,
+                    circle at 32% 25%,
                     rgba(255,255,255,.14),
                     transparent 34%
                 ),
@@ -338,907 +48,760 @@
                 );
             color: rgba(241,245,249,.96);
             box-shadow:
-                0 16px 34px rgba(0,0,0,.30),
+                0 14px 32px rgba(0,0,0,.28),
                 inset 0 2px 0 rgba(255,255,255,.10);
             cursor: pointer;
+            transition:
+                transform .2s ease,
+                filter .2s ease;
         }
 
-        .locked-lock-button.has-key {
+        .module-lock-button:hover {
+            transform: scale(1.04);
+            filter: brightness(1.06);
+        }
+
+        .module-lock-button.has-key {
             border-color: rgba(250,204,21,.78);
             color: #fde68a;
             box-shadow:
-                0 0 0 6px rgba(250,204,21,.08),
-                0 16px 36px rgba(0,0,0,.30),
-                inset 0 2px 0 rgba(255,255,255,.10);
+                0 0 0 6px rgba(250,204,21,.07),
+                0 14px 34px rgba(0,0,0,.28);
         }
 
-        .locked-key-hint {
-            min-width: 195px;
-            padding: 8px 12px;
+        .module-lock-label {
+            position: absolute;
+            top: calc(50% + 54px);
+            min-width: 145px;
+            padding: 7px 11px;
             border-radius: 999px;
-            background: rgba(2,6,23,.72);
-            border: 1px solid rgba(255,255,255,.10);
-            color: rgba(255,255,255,.70);
+            background: rgba(2,6,23,.44);
+            border: 1px solid rgba(255,255,255,.09);
+            color: rgba(255,255,255,.62);
             text-align: center;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 900;
-            box-shadow: 0 8px 20px rgba(0,0,0,.18);
-        }
-
-        .locked-key-hint.has-key {
-            color: #fde68a;
-            border-color: rgba(250,204,21,.24);
-        }
-
-        .locked-module-overlay.is-rattling .locked-chain-layer {
-            animation: chain-sway .62s cubic-bezier(.36,.07,.19,.97);
-        }
-
-        .locked-module-overlay.is-rattling .locked-lock-layer {
-            animation: lock-rattle .62s cubic-bezier(.36,.07,.19,.97);
-        }
-
-        .locked-module-overlay.is-rattling .chain-link {
-            animation: link-rattle .62s ease;
-        }
-
-        .module-key-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 7px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(250,204,21,.20);
-            background: rgba(250,204,21,.07);
-            color: #fde68a;
-            font-size: 11px;
-            font-weight: 900;
-        }
-
-        .module-unlock-toast {
-            position: fixed;
-            left: 50%;
-            bottom: 28px;
-            z-index: 200;
-            transform: translate(-50%,20px);
-            opacity: 0;
+            letter-spacing: .04em;
+            backdrop-filter: blur(5px);
             pointer-events: none;
-            padding: 14px 18px;
-            border-radius: 16px;
-            background: rgba(2,6,23,.92);
-            border: 1px solid rgba(250,204,21,.22);
-            color: #fef3c7;
-            font-size: 13px;
-            font-weight: 900;
-            box-shadow: 0 18px 45px rgba(0,0,0,.30);
-            transition: opacity .25s ease, transform .25s ease;
         }
 
-        .module-unlock-toast.show {
-            opacity: 1;
-            transform: translate(-50%,0);
-        }
-
-        @keyframes node-pulse {
-            0%,100% {
-                transform: scale(1);
-                box-shadow:
-                    0 10px 24px rgba(0,0,0,.24),
-                    0 0 0 6px rgba(129,140,248,.06);
-            }
-
-            50% {
-                transform: scale(1.055);
-                box-shadow:
-                    0 13px 30px rgba(0,0,0,.30),
-                    0 0 0 11px rgba(129,140,248,.10);
-            }
-        }
-
-        @keyframes chain-sway {
-            0%,100% {
-                transform:
-                    rotate(0deg)
-                    translate3d(0,0,0);
-            }
-
-            16% {
-                transform: rotate(1.5deg) translate3d(1px,-1px,0);
-            }
-
-            32% {
-                transform: rotate(-1.7deg) translate3d(-2px,1px,0);
-            }
-
-            50% {
-                transform: rotate(1.15deg) translate3d(2px,0,0);
-            }
-
-            68% {
-                transform: rotate(-.85deg) translate3d(-1px,1px,0);
-            }
-
-            84% {
-                transform: rotate(.35deg);
-            }
-        }
-
-        @keyframes lock-rattle {
-            0%,100% {
-                transform: translate3d(0,0,0) rotate(0deg);
-            }
-
-            18% {
-                transform: translate3d(3px,-2px,0) rotate(4deg);
-            }
-
-            35% {
-                transform: translate3d(-4px,2px,0) rotate(-4deg);
-            }
-
-            52% {
-                transform: translate3d(3px,0,0) rotate(3deg);
-            }
-
-            69% {
-                transform: translate3d(-2px,1px,0) rotate(-2deg);
-            }
-
-            84% {
-                transform: translate3d(1px,0,0) rotate(1deg);
-            }
-        }
-
-        @keyframes link-rattle {
-            0%,100% {
-                opacity: 1;
-            }
-
-            35% {
-                opacity: .88;
-            }
-
-            65% {
-                opacity: 1;
-            }
+        .module-lock-label.has-key {
+            color: #fde68a;
+            border-color: rgba(250,204,21,.20);
         }
 
         @media (max-width: 767px) {
-            .module-zone {
-                min-width: 590px;
+            .module-lock-button {
+                width: 72px;
+                height: 72px;
+                border-radius: 22px;
             }
 
-            .phase-area {
-                min-width: 590px;
-                height: 315px;
-            }
-
-            .phase-slot {
-                width: 120px;
-                min-width: 120px;
-                height: 280px;
-            }
-
-            .phase-connector {
-                width: 54px;
-                min-width: 54px;
-                height: 280px;
-            }
-
-            .module-bridge {
-                width: 88px;
-                min-width: 88px;
-                height: 423px;
-            }
-
-            .module-progress {
-                width: 150px;
-            }
-
-            .phase-label {
-                width: 140px;
-            }
-
-            .locked-lock-button {
-                width: 78px;
-                height: 78px;
-                border-radius: 23px;
+            .module-lock-label {
+                top: calc(50% + 48px);
+                min-width: 132px;
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .phase-node-current,
-            .locked-module-overlay.is-rattling .locked-chain-layer,
-            .locked-module-overlay.is-rattling .locked-lock-layer,
-            .locked-module-overlay.is-rattling .chain-link {
-                animation: none !important;
-            }
+        .mapa-jornada {
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255,255,255,.07),
+                transparent 60%
+            );
         }
+
+        .linha-conector {
+            stroke:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.30
+                );
+        }
+
+        .linha-tracejada {
+            stroke:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.60
+                );
+        }
+
     </style>
+
 </head>
 
-<body class="{{ tema_aplicado }} text-white min-h-screen font-sans relative overflow-x-hidden">
 
+<body
+    class="{{ tema_aplicado }} text-white h-screen flex flex-col font-sans overflow-hidden"
+>
     {% include 'gamificacao/partials/paisagem_animada.html' %}
 
-    <div class="relative z-10 min-h-screen flex flex-col">
 
-        <header class="relative z-30 shrink-0 border-b border-white/10 bg-slate-950/32 backdrop-blur-md">
+    <div
+        class="glass-overlay absolute inset-0 z-0"
+    ></div>
 
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
 
-                <div class="flex flex-wrap justify-between items-center gap-4">
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
 
-                    <a
-                        href="{% if papel_efetivo == 'professor' %}{% url 'dashboard_professor' %}{% else %}{% url 'dashboard_aluno' %}{% endif %}"
-                        class="text-white/65 hover:text-white flex items-center font-bold transition"
+    <header
+        class="relative z-30 shrink-0 border-b border-white/10 bg-slate-950/35 backdrop-blur-md"
+    >
+
+        <div
+            class="px-6 md:px-8 py-4"
+        >
+
+            <div
+                class="flex flex-wrap justify-between items-center gap-4"
+            >
+
+                <a
+                    href="{% if papel_efetivo == 'professor' %}{% url 'dashboard_professor' %}{% else %}{% url 'dashboard_aluno' %}{% endif %}"
+                    class="text-slate-300 hover:text-white flex items-center font-bold transition"
+                >
+
+                    <svg
+                        class="w-5 h-5 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
                     >
-                        <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                        </svg>
-                        Painel
-                    </a>
 
-                    <div class="text-center min-w-0">
-                        <p class="text-[10px] uppercase tracking-[0.3em] text-white/45 font-black">
-                            Trilha
-                        </p>
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                        />
 
-                        <h1 class="text-2xl md:text-3xl font-black text-yellow-400 drop-shadow-lg truncate max-w-[70vw]">
-                            {{ trilha.nome }}
-                        </h1>
+                    </svg>
+
+                    Painel
+
+                </a>
+
+
+                <div
+                    class="text-center"
+                >
+
+                    <p
+                        class="text-[10px] uppercase tracking-[0.3em] text-white/50 font-black"
+                    >
+                        Trilha
+                    </p>
+
+                    <h1
+                        class="text-2xl md:text-3xl font-black text-yellow-400 drop-shadow-lg"
+                    >
+                        {{ trilha.nome }}
+                    </h1>
+
+                </div>
+
+
+                <div
+                    class="flex items-center gap-2"
+                >
+
+                    {% if papel_efetivo == 'aluno' %}
+                        {% include 'gamificacao/partials/controle_aparencia.html' %}
+{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+                    {% endif %}
+
+                    {% if modo_teste_ativo %}
+
+                        <div
+                            class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-3 py-2"
+                        >
+
+                            <span
+                                class="text-yellow-300 text-xs font-black"
+                            >
+                                🧪 TESTE
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div
+                        class="bg-slate-950/45 border border-yellow-500/20 rounded-xl px-3 py-2"
+                    >
+
+                        <span
+                            class="text-yellow-400 font-black"
+                        >
+                            Nv. {{ perfil.nivel }}
+                        </span>
+
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-2 justify-end">
 
-                        {% if papel_efetivo == 'aluno' %}
+                    <div
+                        class="bg-slate-950/45 border border-blue-500/20 rounded-xl px-3 py-2"
+                    >
 
-                            {% include 'gamificacao/partials/controle_aparencia.html' %}
+                        <span
+                            class="text-blue-400 font-black"
+                        >
+                            🪙 {{ perfil.moedas }}
+                        </span>
 
-                            {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+                    </div>
 
-                            {% if chaves_disponiveis %}
-                                <span class="module-key-badge" title="Você ganhou uma chave para desbloquear um módulo.">
-                                    🔑 {{ chaves_disponiveis }} chave
-                                </span>
-                            {% endif %}
 
-                        {% endif %}
+                    <div
+                        class="bg-slate-950/45 border border-red-500/20 rounded-xl px-3 py-2"
+                    >
 
-                        {% if modo_teste_ativo %}
-                            <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-3 py-2">
-                                <span class="text-yellow-300 text-xs font-black">
-                                    🧪 TESTE
-                                </span>
-                            </div>
-                        {% endif %}
-
-                        <div class="bg-slate-950/45 border border-yellow-500/20 rounded-xl px-3 py-2">
-                            <span class="text-yellow-400 font-black">
-                                Nv. {{ perfil.nivel }}
-                            </span>
-                        </div>
-
-                        <div class="bg-slate-950/45 border border-blue-500/20 rounded-xl px-3 py-2">
-                            <span class="text-blue-400 font-black">
-                                🪙 {{ perfil.moedas }}
-                            </span>
-                        </div>
-
-                        <div class="bg-slate-950/45 border border-red-500/20 rounded-xl px-3 py-2">
-                            <span class="text-red-400 font-black">
-                                ❤️ {{ perfil.vidas }}
-                            </span>
-                        </div>
+                        <span
+                            class="text-red-400 font-black"
+                        >
+                            ❤️ {{ perfil.vidas }}
+                        </span>
 
                     </div>
 
                 </div>
 
-                {% if papel_efetivo == 'aluno' %}
-
-                    <div class="max-w-5xl mx-auto mt-5">
-
-                        <div class="flex flex-wrap justify-between items-center gap-2 mb-2 text-xs">
-
-                            <span class="text-white/50 font-bold uppercase tracking-widest">
-                                Progresso da jornada
-                            </span>
-
-                            <span class="text-white/80 font-black">
-                                {{ modulos_concluidos }}/{{ modulos|length }} módulos
-                                ·
-                                {{ fases_concluidas }}/{{ total_fases }} fases
-                                ·
-                                {{ percentual_progresso }}%
-                            </span>
-
-                        </div>
-
-                        <div class="h-2 bg-black/30 rounded-full overflow-hidden">
-
-                            <div
-                                class="h-full bg-gradient-to-r from-indigo-400 to-emerald-300 rounded-full transition-all duration-700"
-                                style="width: {{ percentual_progresso }}%;"
-                            ></div>
-
-                        </div>
-
-                    </div>
-
-                {% else %}
-
-                    <div class="max-w-5xl mx-auto mt-4 text-center text-xs text-yellow-300/80 font-bold">
-                        Modo professor:
-                        toda a jornada da própria trilha está disponível para visualização.
-                    </div>
-
-                {% endif %}
-
             </div>
 
-        </header>
 
-        <main class="relative z-10 flex-1">
+            <!-- =================================================
+                 PROGRESSO
+                 ================================================= -->
 
-            <div class="max-w-[1900px] mx-auto px-3 sm:px-6 py-7 sm:py-9">
+            {% if papel_efetivo == 'aluno' %}
 
-                <section class="mb-5">
+                <div
+                    class="max-w-4xl mx-auto mt-4"
+                >
 
-                    <div class="flex flex-wrap items-end justify-between gap-4">
+                    <div
+                        class="flex justify-between items-center mb-2 text-xs"
+                    >
 
-                        <div>
-                            <p class="text-[11px] uppercase tracking-[0.25em] text-indigo-300 font-black">
-                                Jornada de aprendizagem
-                            </p>
+                        <span
+                            class="text-white/50 font-bold uppercase tracking-widest"
+                        >
+                            Progresso da jornada
+                        </span>
 
-                            <h2 class="text-2xl sm:text-3xl font-black mt-1">
-                                {% if papel_efetivo == 'aluno' %}
-                                    Sua aventura continua
-                                {% else %}
-                                    Visualização da jornada
-                                {% endif %}
-                            </h2>
-
-                            <p class="text-sm text-white/50 mt-2 max-w-3xl">
-                                {% if papel_efetivo == 'aluno' %}
-                                    Avance pelas fases da esquerda para a direita. Conquiste cada módulo para receber a chave do próximo.
-                                {% else %}
-                                    Visualização horizontal da jornada e de todas as fases.
-                                {% endif %}
-                            </p>
-                        </div>
-
-                        <div class="flex items-center gap-2 text-xs font-black">
-
-                            <span class="px-3 py-2 rounded-xl bg-black/10 border border-white/10 text-white/55 backdrop-blur-sm">
-                                {{ modulos|length }} módulos
-                            </span>
-
-                            <span class="px-3 py-2 rounded-xl bg-black/10 border border-white/10 text-white/55 backdrop-blur-sm">
-                                {{ total_fases }} fases
-                            </span>
-
-                        </div>
+                        <span
+                            class="text-white/80 font-black"
+                        >
+                            {{ fases_concluidas }}
+                            /
+                            {{ total_fases }}
+                            fases
+                            ·
+                            {{ percentual_progresso }}%
+                        </span>
 
                     </div>
 
-                </section>
 
-                <section class="journey-scroll scrollbar-thin">
+                    <div
+                        class="h-2 bg-black/30 rounded-full overflow-hidden"
+                    >
 
-                    <div class="journey-track">
+                        <div
+                            class="h-full bg-gradient-to-r from-green-400 to-emerald-300 rounded-full transition-all duration-700"
+                            style="width: {{ percentual_progresso }}%;"
+                        ></div>
 
-                        {% for modulo in modulos %}
+                    </div>
 
-                            <article
-                                class="module-zone
-                                    {% if modulo.status == 'atual' %}
-                                        current
-                                    {% elif modulo.status == 'concluido' %}
-                                        complete
-                                    {% endif %}"
-                                data-module-id="{{ modulo.id }}"
+                </div>
+
+            {% else %}
+
+                <div
+                    class="max-w-4xl mx-auto mt-4"
+                >
+
+                    <div
+                        class="text-center text-xs text-yellow-300/80 font-bold"
+                    >
+                        Modo professor:
+                        todas as fases desta trilha estão disponíveis para visualização.
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAPA DA JORNADA
+         ===================================================== -->
+
+    <main
+        class="relative z-10 flex-1 overflow-hidden flex items-center"
+    >
+
+        <div
+            id="mapa-jornada"
+            class="relative w-full h-full overflow-x-auto overflow-y-visible mapa-jornada scrollbar-hide flex items-center cursor-grab active:cursor-grabbing"
+        >
+
+            <div
+                class="flex flex-row items-center w-max min-h-[430px] px-24 pr-[28vw]"
+            >
+
+                <!-- ORIGEM -->
+
+                <div
+                    class="mr-8 flex flex-col items-center opacity-70 drop-shadow-md shrink-0"
+                >
+
+                    <div
+                        class="w-5 h-5 rounded-full bg-white/50 mb-2 shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+                    ></div>
+
+                    <span
+                        class="text-xs font-bold uppercase tracking-widest text-white/80"
+                    >
+                        Início
+                    </span>
+
+                </div>
+
+
+                {% for modulo in modulos %}
+
+                    <div
+                        class="module-group relative shrink-0 flex items-center {% if papel_efetivo == 'aluno' and modulo.status == 'bloqueado' %}module-group-locked{% endif %}"
+                        data-module-id="{{ modulo.id }}"
+                    >
+
+                        <!-- IDENTIFICAÇÃO DISCRETA DO MÓDULO -->
+
+                        <div
+                            class="absolute left-1/2 -translate-x-1/2 -top-16 z-30 pointer-events-none"
+                        >
+
+                            <div
+                                class="flex items-center gap-2 whitespace-nowrap"
                             >
 
-                                <div class="{% if modulo.status == 'bloqueado' %}module-content-locked{% endif %}">
+                                <span
+                                    class="text-[9px] uppercase tracking-[0.25em] text-white/45 font-black"
+                                >
+                                    Módulo {{ modulo.ordem }}
+                                </span>
 
-                                    <header class="module-header">
+                                <span
+                                    class="text-sm font-black text-white/80 max-w-[220px] truncate drop-shadow-md"
+                                >
+                                    {{ modulo.titulo }}
+                                </span>
 
-                                        <div class="module-heading">
+                            </div>
 
-                                            <div class="flex items-start gap-3 min-w-0">
+                        </div>
 
-                                                <div class="module-marker
-                                                    {% if modulo.status == 'concluido' %}
-                                                        bg-emerald-500/15 text-emerald-200 border-emerald-400/25
-                                                    {% elif modulo.status == 'atual' %}
-                                                        bg-indigo-500/15 text-indigo-100 border-indigo-300/30
-                                                    {% else %}
-                                                        bg-slate-700/20 text-slate-500 border-white/10
-                                                    {% endif %}
-                                                ">
 
-                                                    {% if modulo.status == 'concluido' %}
-                                                        ✓
-                                                    {% elif modulo.status == 'bloqueado' %}
-                                                        <span class="text-lg">M{{ modulo.ordem }}</span>
-                                                    {% else %}
-                                                        {{ modulo.ordem }}
-                                                    {% endif %}
+                        <!-- FASES -->
 
-                                                </div>
+                        <div
+                            class="flex flex-row items-center"
+                        >
 
-                                                <div class="module-title">
+                            {% for fase in modulo.fases.all %}
 
-                                                    <div class="flex flex-wrap items-center gap-2">
+                                <div
+                                    class="relative flex flex-col items-center group z-10 shrink-0"
+                                    style="transform: translateY({{ fase.deslocamento_y }}px);"
+                                >
 
-                                                        <span class="text-[10px] uppercase tracking-[0.2em] text-white/35 font-black">
-                                                            Módulo {{ modulo.ordem }}
-                                                        </span>
+                                    {% if fase.status == 'concluida' %}
 
-                                                        {% if modulo.status == 'concluido' %}
+                                        <a
+                                            href="{% url 'fase_detalhe' fase.id %}"
+                                            class="w-20 h-20 rounded-full border-b-8 border-yellow-700 bg-yellow-500 hover:bg-yellow-400 transition-all flex items-center justify-center shadow-[0_10px_20px_rgba(0,0,0,.45)] active:translate-y-2 active:border-b-0"
+                                            title="{{ fase.titulo }}"
+                                        >
 
-                                                            <span class="px-2 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-300 text-[9px] font-black uppercase tracking-wider">
-                                                                Concluído
-                                                            </span>
+                                            <svg
+                                                class="w-10 h-10 text-white"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
 
-                                                        {% elif modulo.status == 'atual' %}
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034a.9.9 0 01-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461c.432 0 .815-.275.951-.69l1.07-3.292z"
+                                                />
 
-                                                            <span class="px-2 py-1 rounded-full bg-indigo-400/10 border border-indigo-400/20 text-indigo-200 text-[9px] font-black uppercase tracking-wider">
-                                                                Em andamento
-                                                            </span>
+                                            </svg>
 
-                                                        {% else %}
+                                        </a>
 
-                                                            <span class="px-2 py-1 rounded-full bg-slate-500/10 border border-slate-400/10 text-slate-500 text-[9px] font-black uppercase tracking-wider">
-                                                                Bloqueado
-                                                            </span>
+                                    {% elif fase.status == 'atual' and modulo.desbloqueado %}
 
-                                                        {% endif %}
+                                        <a
+                                            href="{% url 'fase_detalhe' fase.id %}"
+                                            class="w-24 h-24 rounded-full border-b-8 border-green-700 bg-green-500 hover:bg-green-400 transition-all flex items-center justify-center shadow-[0_10px_30px_rgba(34,197,94,.55)] active:translate-y-2 active:border-b-0 animate-bounce ring-4 ring-white/30"
+                                            title="{{ fase.titulo }}"
+                                        >
 
-                                                    </div>
+                                            <svg
+                                                class="w-12 h-12 text-white ml-1"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
 
-                                                    <h3 class="text-xl sm:text-2xl font-black mt-1 truncate">
-                                                        {{ modulo.titulo }}
-                                                    </h3>
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1.5 1.5 0 008 8.5v3a1.5 1.5 0 002.333 1.248l3-2a1.5 1.5 0 000-2.496l-3-2z"
+                                                    clip-rule="evenodd"
+                                                />
 
-                                                    {% if modulo.descricao %}
-                                                        <p class="text-xs sm:text-sm text-white/45 mt-1 max-w-md line-clamp-2">
-                                                            {{ modulo.descricao }}
-                                                        </p>
-                                                    {% endif %}
+                                            </svg>
 
-                                                </div>
+                                        </a>
 
-                                            </div>
+                                    {% elif papel_efetivo == 'professor' %}
 
-                                            {% if papel_efetivo == 'aluno' %}
+                                        <a
+                                            href="{% url 'fase_detalhe' fase.id %}"
+                                            class="w-20 h-20 rounded-full border-b-8 border-indigo-900 bg-indigo-700 hover:bg-indigo-600 flex items-center justify-center shadow-[0_10px_20px_rgba(0,0,0,.45)] transition-all"
+                                            title="Visualizar fase como professor"
+                                        >
 
-                                                <div class="module-progress">
+                                            <svg
+                                                class="w-8 h-8 text-white/80"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
 
-                                                    <div class="flex items-center justify-between text-[10px] mb-1.5">
+                                                <path
+                                                    d="M10 3C5 3 1.5 10 1.5 10S5 17 10 17s8.5-7 8.5-7S15 3 10 3zm0 11a4 4 0 110-8 4 4 0 010 8z"
+                                                />
 
-                                                        <span class="text-white/38 font-bold">
-                                                            {{ modulo.fases_concluidas }}/{{ modulo.total_fases }}
-                                                        </span>
+                                            </svg>
 
-                                                        <span class="font-black
-                                                            {% if modulo.status == 'concluido' %}
-                                                                text-emerald-300
-                                                            {% elif modulo.status == 'atual' %}
-                                                                text-indigo-200
-                                                            {% elif modulo.chave_disponivel %}
-                                                                text-yellow-200
-                                                            {% else %}
-                                                                text-white/25
-                                                            {% endif %}
-                                                        ">
-                                                            {{ modulo.percentual_progresso }}%
-                                                        </span>
-
-                                                    </div>
-
-                                                    <div class="module-progress-track">
-
-                                                        <div
-                                                            class="h-full rounded-full transition-all duration-700
-                                                            {% if modulo.status == 'concluido' %}
-                                                                bg-gradient-to-r from-emerald-400 to-cyan-300
-                                                            {% elif modulo.status == 'atual' %}
-                                                                bg-gradient-to-r from-indigo-400 to-sky-300
-                                                            {% elif modulo.chave_disponivel %}
-                                                                bg-gradient-to-r from-yellow-300 to-amber-400
-                                                            {% else %}
-                                                                bg-slate-600/70
-                                                            {% endif %}"
-                                                            style="width: {{ modulo.percentual_progresso }}%;"
-                                                        ></div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            {% endif %}
-
-                                        </div>
-
-                                    </header>
-
-                                    {% if modulo.total_fases > 0 %}
-
-                                        <div class="phase-area">
-
-                                            <div class="phase-track">
-
-                                                {% for fase in modulo.fases.all %}
-
-                                                    <div
-                                                        class="phase-slot {% if forloop.counter0|divisibleby:2 %}offset-up{% else %}offset-down{% endif %}"
-                                                        style="transform: translateY({{ fase.deslocamento_y }}px);"
-                                                    >
-
-                                                        <div class="phase-node-wrap">
-
-                                                            {% if fase.status == 'concluida' %}
-
-                                                                <a
-                                                                    href="{% url 'fase_detalhe' fase.id %}"
-                                                                    class="phase-node w-20 h-20 border-b-8 border-emerald-700 bg-emerald-500 shadow-[0_12px_24px_rgba(0,0,0,.28)]"
-                                                                    title="{{ fase.titulo }}"
-                                                                >
-                                                                    <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034a1 1 0 01-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461c.432 0 .815-.275.951-.69l1.07-3.292z"/>
-                                                                    </svg>
-                                                                </a>
-
-                                                            {% elif fase.status == 'atual' and modulo.desbloqueado %}
-
-                                                                <a
-                                                                    href="{% url 'fase_detalhe' fase.id %}"
-                                                                    class="phase-node phase-node-current w-[92px] h-[92px] border-b-8 border-indigo-700 bg-indigo-500 shadow-[0_15px_30px_rgba(79,70,229,.25)] ring-4 ring-white/10"
-                                                                    title="{{ fase.titulo }}"
-                                                                >
-                                                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1.5 1.5 0 008 8.5v3a1.5 1.5 0 002.333 1.248l3-2a1.5 1.5 0 000-2.496l-3-2z" clip-rule="evenodd"/>
-                                                                    </svg>
-                                                                </a>
-
-                                                            {% elif papel_efetivo == 'professor' %}
-
-                                                                <a
-                                                                    href="{% url 'fase_detalhe' fase.id %}"
-                                                                    class="phase-node w-20 h-20 border-b-8 border-indigo-900 bg-indigo-700 shadow-[0_12px_24px_rgba(0,0,0,.24)]"
-                                                                    title="Visualizar fase como professor"
-                                                                >
-                                                                    <svg class="w-8 h-8 text-white/80" fill="currentColor" viewBox="0 0 20 20">
-                                                                        <path d="M10 3C5 3 1.5 10 1.5 10S5 17 10 17s8.5-7 8.5-7S15 3 10 3zm0 11a4 4 0 110-8 4 4 0 010 8z"/>
-                                                                    </svg>
-                                                                </a>
-
-                                                            {% else %}
-
-                                                                <div
-                                                                    class="phase-node w-20 h-20 border-b-8 border-slate-900 bg-slate-800/85 shadow-[0_12px_24px_rgba(0,0,0,.22)]"
-                                                                    title="Fase bloqueada"
-                                                                >
-                                                                    <svg class="w-8 h-8 text-slate-500" fill="currentColor" viewBox="0 0 20 20">
-                                                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
-                                                                    </svg>
-                                                                </div>
-
-                                                            {% endif %}
-
-                                                        </div>
-
-                                                        {% if forloop.counter0|divisibleby:2 %}
-
-                                                            <div class="phase-label top">
-
-                                                                <p class="text-xs sm:text-sm font-black leading-tight
-                                                                    {% if fase.status == 'bloqueada' %}
-                                                                        text-white/30
-                                                                    {% else %}
-                                                                        text-white/90
-                                                                    {% endif %}
-                                                                ">
-                                                                    {{ fase.titulo }}
-                                                                </p>
-
-                                                                <p class="text-[9px] text-white/30 uppercase tracking-widest mt-1">
-                                                                    {{ fase.get_tipo_display }}
-                                                                </p>
-
-                                                                <p class="text-[9px] text-yellow-400/80 font-bold mt-1">
-                                                                    +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
-                                                                </p>
-
-                                                            </div>
-
-                                                        {% else %}
-
-                                                            <div class="phase-label bottom">
-
-                                                                <p class="text-xs sm:text-sm font-black leading-tight
-                                                                    {% if fase.status == 'bloqueada' %}
-                                                                        text-white/30
-                                                                    {% else %}
-                                                                        text-white/90
-                                                                    {% endif %}
-                                                                ">
-                                                                    {{ fase.titulo }}
-                                                                </p>
-
-                                                                <p class="text-[9px] text-white/30 uppercase tracking-widest mt-1">
-                                                                    {{ fase.get_tipo_display }}
-                                                                </p>
-
-                                                                <p class="text-[9px] text-yellow-400/80 font-bold mt-1">
-                                                                    +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
-                                                                </p>
-
-                                                            </div>
-
-                                                        {% endif %}
-
-                                                    </div>
-
-                                                    {% if not forloop.last %}
-
-                                                        <div class="phase-connector">
-
-                                                            <svg viewBox="0 0 100 310" preserveAspectRatio="none">
-
-                                                                <path
-                                                                    d="M0 {{ fase.svg_y1|add:'55' }} C 24 {{ fase.svg_y1|add:'20' }} 45 {{ fase.svg_y2|add:'90' }} 72 {{ fase.svg_y2|add:'55' }} C 82 {{ fase.svg_y2|add:'50' }} 92 {{ fase.svg_y2|add:'55' }} 100 {{ fase.svg_y2|add:'55' }}"
-                                                                    class="phase-connector-path"
-                                                                />
-
-                                                                <path
-                                                                    d="M0 {{ fase.svg_y1|add:'55' }} C 24 {{ fase.svg_y1|add:'20' }} 45 {{ fase.svg_y2|add:'90' }} 72 {{ fase.svg_y2|add:'55' }} C 82 {{ fase.svg_y2|add:'50' }} 92 {{ fase.svg_y2|add:'55' }} 100 {{ fase.svg_y2|add:'55' }}"
-                                                                    class="phase-connector-dash"
-                                                                />
-
-                                                            </svg>
-
-                                                        </div>
-
-                                                    {% endif %}
-
-                                                {% endfor %}
-
-                                            </div>
-
-                                        </div>
+                                        </a>
 
                                     {% else %}
 
-                                        <div class="px-5 pb-6">
+                                        <div
+                                            class="w-20 h-20 rounded-full border-b-8 border-slate-900 bg-slate-800 flex items-center justify-center opacity-80 cursor-not-allowed shadow-[0_10px_20px_rgba(0,0,0,.45)]"
+                                            title="Fase bloqueada"
+                                        >
 
-                                            <div class="rounded-2xl border border-dashed border-white/10 p-7 text-center bg-black/5">
+                                            <svg
+                                                class="w-8 h-8 text-slate-500"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
 
-                                                <div class="text-3xl">
-                                                    🧩
-                                                </div>
-
-                                                <p class="text-sm font-black text-white/65 mt-2">
-                                                    Nenhuma fase neste módulo ainda.
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-
-                                    {% endif %}
-
-                                </div>
-
-                                {% if modulo.status == 'bloqueado' %}
-
-                                    <div
-                                        class="locked-module-overlay"
-                                        data-module-id="{{ modulo.id }}"
-                                        data-has-key="{% if modulo.chave_disponivel %}true{% else %}false{% endif %}"
-                                        tabindex="0"
-                                        role="button"
-                                        aria-label="Módulo {{ modulo.ordem }} bloqueado"
-                                    >
-
-                                        <div class="locked-chain-layer">
-
-                                            <svg class="locked-chain-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-
-                                                <!-- Quatro correntes físicas, presas nos quatro cantos e pendendo para o centro. -->
-                                                <g class="chain-arm">
-
-                                                    <ellipse cx="18" cy="16" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-26 18 16)"/>
-                                                    <ellipse cx="23" cy="19" rx="3.4" ry="7.2" class="chain-link" transform="rotate(14 23 19)"/>
-                                                    <ellipse cx="28" cy="23" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-28 28 23)"/>
-                                                    <ellipse cx="33" cy="28" rx="3.4" ry="7.2" class="chain-link" transform="rotate(13 33 28)"/>
-                                                    <ellipse cx="38" cy="34" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-28 38 34)"/>
-                                                    <ellipse cx="43" cy="41" rx="3.4" ry="7.2" class="chain-link" transform="rotate(13 43 41)"/>
-
-                                                </g>
-
-                                                <g class="chain-arm">
-
-                                                    <ellipse cx="82" cy="16" rx="3.4" ry="7.2" class="chain-link" transform="rotate(26 82 16)"/>
-                                                    <ellipse cx="77" cy="19" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-14 77 19)"/>
-                                                    <ellipse cx="72" cy="23" rx="3.4" ry="7.2" class="chain-link" transform="rotate(28 72 23)"/>
-                                                    <ellipse cx="67" cy="28" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-13 67 28)"/>
-                                                    <ellipse cx="62" cy="34" rx="3.4" ry="7.2" class="chain-link" transform="rotate(28 62 34)"/>
-                                                    <ellipse cx="57" cy="41" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-13 57 41)"/>
-
-                                                </g>
-
-                                                <g class="chain-arm">
-
-                                                    <ellipse cx="18" cy="84" rx="3.4" ry="7.2" class="chain-link" transform="rotate(26 18 84)"/>
-                                                    <ellipse cx="23" cy="79" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-14 23 79)"/>
-                                                    <ellipse cx="28" cy="74" rx="3.4" ry="7.2" class="chain-link" transform="rotate(28 28 74)"/>
-                                                    <ellipse cx="33" cy="69" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-13 33 69)"/>
-                                                    <ellipse cx="38" cy="64" rx="3.4" ry="7.2" class="chain-link" transform="rotate(28 38 64)"/>
-                                                    <ellipse cx="43" cy="57" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-13 43 57)"/>
-
-                                                </g>
-
-                                                <g class="chain-arm">
-
-                                                    <ellipse cx="82" cy="84" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-26 82 84)"/>
-                                                    <ellipse cx="77" cy="79" rx="3.4" ry="7.2" class="chain-link" transform="rotate(14 77 79)"/>
-                                                    <ellipse cx="72" cy="74" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-28 72 74)"/>
-                                                    <ellipse cx="67" cy="69" rx="3.4" ry="7.2" class="chain-link" transform="rotate(13 67 69)"/>
-                                                    <ellipse cx="62" cy="64" rx="3.4" ry="7.2" class="chain-link" transform="rotate(-28 62 64)"/>
-                                                    <ellipse cx="57" cy="57" rx="3.4" ry="7.2" class="chain-link" transform="rotate(13 57 57)"/>
-
-                                                </g>
-
-                                                <circle cx="12" cy="12" r="3.2" fill="rgba(51,65,85,.96)" stroke="rgba(226,232,240,.65)" stroke-width="1.4"/>
-                                                <circle cx="88" cy="12" r="3.2" fill="rgba(51,65,85,.96)" stroke="rgba(226,232,240,.65)" stroke-width="1.4"/>
-                                                <circle cx="12" cy="88" r="3.2" fill="rgba(51,65,85,.96)" stroke="rgba(226,232,240,.65)" stroke-width="1.4"/>
-                                                <circle cx="88" cy="88" r="3.2" fill="rgba(51,65,85,.96)" stroke="rgba(226,232,240,.65)" stroke-width="1.4"/>
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                                    clip-rule="evenodd"
+                                                />
 
                                             </svg>
 
                                         </div>
 
-                                        <div class="locked-lock-layer">
+                                    {% endif %}
 
-                                            <button
-                                                type="button"
-                                                class="locked-lock-button {% if modulo.chave_disponivel %}has-key{% endif %}"
-                                                title="{% if modulo.chave_disponivel %}Usar chave{% else %}Módulo bloqueado{% endif %}"
-                                            >
 
-                                                <svg class="w-11 h-11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                    <!-- NOME DA FASE -->
 
-                                                    <path d="M7 10V8a5 5 0 0110 0v2"/>
+                                    <div
+                                        class="absolute top-full mt-4 w-36 text-center pointer-events-none"
+                                    >
 
-                                                    <rect x="4.5" y="10" width="15" height="10" rx="2.5"/>
+                                        <p
+                                            class="text-xs font-black leading-tight
+                                            {% if fase.status == 'bloqueada' %}
+                                                text-white/25
+                                            {% else %}
+                                                text-white/85
+                                            {% endif %}"
+                                        >
+                                            {{ fase.titulo }}
+                                        </p>
 
-                                                    <circle cx="12" cy="15" r="1.2" fill="currentColor" stroke="none"/>
+                                    </div>
 
-                                                    <path d="M12 16.2V18"/>
+                                </div>
 
-                                                </svg>
 
-                                            </button>
+                                <!-- CONECTOR ENTRE TODAS AS FASES -->
 
-                                            <div class="locked-key-hint {% if modulo.chave_disponivel %}has-key{% endif %}">
-                                                {% if modulo.chave_disponivel %}
-                                                    🔑 Chave pronta · clique no cadeado
-                                                {% else %}
-                                                    Complete o módulo anterior
-                                                {% endif %}
-                                            </div>
+                                {% if not forloop.last %}
 
-                                        </div>
+                                    <div
+                                        class="w-32 h-[200px] flex-shrink-0 -mx-4 z-[-1] pointer-events-none"
+                                    >
+
+                                        <svg
+                                            viewBox="0 0 100 200"
+                                            class="w-full h-full overflow-visible"
+                                            preserveAspectRatio="none"
+                                        >
+
+                                            <path
+                                                d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}"
+                                                fill="none"
+                                                class="linha-conector"
+                                                stroke-width="14"
+                                                stroke-linecap="round"
+                                            />
+
+                                            <path
+                                                d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}"
+                                                fill="none"
+                                                class="linha-tracejada"
+                                                stroke-width="6"
+                                                stroke-dasharray="10 10"
+                                                stroke-linecap="round"
+                                            />
+
+                                        </svg>
 
                                     </div>
 
                                 {% endif %}
 
-                            </article>
+                            {% endfor %}
 
-                            {% if not forloop.last %}
+                        </div>
 
-                                <div class="module-bridge" aria-hidden="true">
 
-                                    <svg viewBox="0 0 145 458" preserveAspectRatio="none">
+                        <!-- CADEADO DO MÓDULO BLOQUEADO -->
+
+                        {% if papel_efetivo == 'aluno' and modulo.status == 'bloqueado' %}
+
+                            <div
+                                class="module-lock-overlay absolute inset-0 z-40 flex items-center justify-center bg-slate-950/06 backdrop-blur-[1px] cursor-pointer"
+                                data-module-id="{{ modulo.id }}"
+                                data-has-key="{% if modulo.chave_disponivel %}true{% else %}false{% endif %}"
+                                tabindex="0"
+                                role="button"
+                                aria-label="Módulo {{ modulo.ordem }} bloqueado"
+                            >
+
+                                <button
+                                    type="button"
+                                    class="module-lock-button {% if modulo.chave_disponivel %}has-key{% endif %}"
+                                    title="{% if modulo.chave_disponivel %}Usar chave{% else %}Módulo bloqueado{% endif %}"
+                                >
+
+                                    <svg
+                                        class="w-10 h-10"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="1.9"
+                                    >
 
                                         <path
-                                            d="M0 229 C 42 229 56 196 82 196 C 108 196 116 229 145 229"
-                                            class="module-bridge-path"
+                                            d="M7 10V8a5 5 0 0110 0v2"
+                                        />
+
+                                        <rect
+                                            x="4.5"
+                                            y="10"
+                                            width="15"
+                                            height="10"
+                                            rx="2.5"
+                                        />
+
+                                        <circle
+                                            cx="12"
+                                            cy="15"
+                                            r="1.2"
+                                            fill="currentColor"
+                                            stroke="none"
                                         />
 
                                         <path
-                                            d="M0 229 C 42 229 56 196 82 196 C 108 196 116 229 145 229"
-                                            class="module-bridge-dash"
+                                            d="M12 16.2V18"
                                         />
 
                                     </svg>
 
-                                </div>
+                                </button>
 
-                            {% endif %}
-
-                        {% empty %}
-
-                            <div class="module-zone p-10 text-center">
-
-                                <div class="text-5xl">
-                                    🗺️
-                                </div>
-
-                                <h3 class="text-2xl font-black mt-4">
-                                    A jornada ainda está sendo construída
-                                </h3>
-
-                                <p class="text-sm text-white/45 mt-2">
-                                    {% if papel_efetivo == 'professor' %}
-                                        Adicione módulos e fases no Estúdio do Professor.
+                                <span
+                                    class="module-lock-label {% if modulo.chave_disponivel %}has-key{% endif %}"
+                                >
+                                    {% if modulo.chave_disponivel %}
+                                        Chave disponível
                                     {% else %}
-                                        Aguarde o professor publicar o conteúdo desta trilha.
+                                        Módulo bloqueado
                                     {% endif %}
-                                </p>
+                                </span>
 
                             </div>
 
-                        {% endfor %}
+                        {% endif %}
 
                     </div>
 
-                </section>
 
-            </div>
+                    <!-- CONECTOR CONTÍNUO ENTRE MÓDULOS -->
 
-        </main>
+                    {% if not forloop.last %}
 
-        <footer class="relative z-20 shrink-0 border-t border-white/10 bg-slate-950/20 backdrop-blur-md px-4 sm:px-6 py-4">
+                        <div
+                            class="module-transition w-32 h-[220px] shrink-0 pointer-events-none z-0"
+                        >
 
-            <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3 text-xs">
+                            <svg
+                                viewBox="0 0 100 220"
+                                class="w-full h-full overflow-visible"
+                                preserveAspectRatio="none"
+                            >
 
-                {% if papel_efetivo == 'aluno' %}
+                                <path
+                                    d="M0 110 C 32 110 46 75 65 110 C 78 132 88 110 100 110"
+                                    fill="none"
+                                    class="linha-conector"
+                                    stroke-width="14"
+                                    stroke-linecap="round"
+                                />
 
-                    <div class="text-white/40">
-                        Próximo nível:
-                        <strong class="text-white/70">
-                            {{ perfil.xp_proximo_nivel }} XP
-                        </strong>
-                    </div>
+                                <path
+                                    d="M0 110 C 32 110 46 75 65 110 C 78 132 88 110 100 110"
+                                    fill="none"
+                                    class="linha-tracejada"
+                                    stroke-width="6"
+                                    stroke-dasharray="10 10"
+                                    stroke-linecap="round"
+                                />
 
-                    {% if fase_atual %}
+                            </svg>
 
-                        <div class="text-indigo-200 font-bold">
-                            Próxima fase:
-                            {{ fase_atual.titulo }}
-                        </div>
-
-                    {% elif total_fases > 0 and fases_concluidas == total_fases %}
-
-                        <div class="text-yellow-400 font-black">
-                            🏆 Trilha concluída!
                         </div>
 
                     {% endif %}
 
-                {% else %}
+                {% empty %}
 
-                    <div class="text-indigo-300 font-bold">
-                        🧪 Modo professor · Visualização e testes
+                    <div
+                        class="flex flex-col items-center opacity-70 drop-shadow-md"
+                    >
+
+                        <div
+                            class="w-5 h-5 rounded-full bg-white/50 mb-2"
+                        ></div>
+
+                        <span
+                            class="text-xs font-bold uppercase tracking-widest text-white/80"
+                        >
+                            Jornada vazia
+                        </span>
+
                     </div>
 
-                    <div class="text-white/35">
-                        O progresso do aluno não é alterado neste modo.
+                {% endfor %}
+
+
+                <!-- RESPIRO FINAL -->
+                <div
+                    class="w-[30vw] min-w-[260px] shrink-0"
+                    aria-hidden="true"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         RODAPÉ
+         ===================================================== -->
+
+    <footer
+        class="relative z-20 shrink-0 border-t border-white/10 bg-slate-950/30 backdrop-blur-md px-6 py-3"
+    >
+
+        <div
+            class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3 text-xs"
+        >
+
+            {% if papel_efetivo == 'aluno' %}
+
+                <div
+                    class="text-slate-500"
+                >
+
+                    Próximo nível:
+
+                    <strong class="text-slate-300">
+                        {{ perfil.xp_proximo_nivel }}
+                        XP
+                    </strong>
+
+                </div>
+
+
+                {% if fase_atual %}
+
+                    <div
+                        class="text-green-400 font-bold"
+                    >
+
+                        Próxima fase:
+                        {{ fase_atual.titulo }}
+
+                    </div>
+
+                {% elif total_fases > 0 and fases_concluidas == total_fases %}
+
+                    <div
+                        class="text-yellow-400 font-black"
+                    >
+                        🏆 Trilha concluída!
                     </div>
 
                 {% endif %}
 
-            </div>
+            {% else %}
 
-        </footer>
+                <div
+                    class="text-indigo-300 font-bold"
+                >
+                    🧪 Modo professor
+                    · Visualização e testes
+                </div>
 
-    </div>
+                <div
+                    class="text-slate-500"
+                >
+                    Progresso do aluno não é alterado neste modo.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </footer>
+
+
 
     <div id="module-unlock-toast" class="module-unlock-toast"></div>
 
