@@ -37,6 +37,9 @@ venv.bak/
 # DJANGO
 # ============================================================
 *.log
+# O banco principal e versionado intencionalmente.
+# Backups locais do banco permanecem ignorados.
+db.sqlite3.*
 local_settings.py
 db.sqlite3-journal
 media/
