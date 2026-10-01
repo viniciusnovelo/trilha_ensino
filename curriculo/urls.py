@@ -151,12 +151,6 @@ urlpatterns = [
     # ========================================================
 
     path(
-        'modulo/<int:modulo_id>/desbloquear/',
-        views.desbloquear_modulo,
-        name='desbloquear_modulo',
-    ),
-
-    path(
         'trilha/<int:trilha_id>/',
         views.trilha_view,
         name='trilha',
