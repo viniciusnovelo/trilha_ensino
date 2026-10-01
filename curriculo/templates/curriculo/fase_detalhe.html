@@ -547,6 +547,26 @@
                 'sem-questoes'
             );
 
+        const explicacaoQuestao =
+            document.getElementById(
+                'explicacao-questao'
+            );
+
+        const explicacaoQuestaoTitulo =
+            document.getElementById(
+                'explicacao-questao-titulo'
+            );
+
+        const explicacaoQuestaoResposta =
+            document.getElementById(
+                'explicacao-questao-resposta'
+            );
+
+        const explicacaoQuestaoTexto =
+            document.getElementById(
+                'explicacao-questao-texto'
+            );
+
 
         function escaparHtml(valor) {
             return String(valor)
@@ -556,6 +576,68 @@
                 .replaceAll('"', '&quot;')
                 .replaceAll("'", '&#039;');
         }
+
+        function formatarTextoSeguro(valor) {
+            return escaparHtml(
+                valor || ''
+            ).replace(/\r?\n/g, '<br>');
+        }
+
+        function esconderExplicacaoQuestao() {
+            if (!explicacaoQuestao) {
+                return;
+            }
+
+            explicacaoQuestao.classList.add(
+                'hidden'
+            );
+
+            explicacaoQuestaoTitulo.innerText =
+                'Como resolver';
+
+            explicacaoQuestaoResposta.innerText =
+                '';
+
+            explicacaoQuestaoTexto.innerHTML =
+                '';
+        }
+
+        function mostrarExplicacaoQuestao(
+            questao,
+            data
+        ) {
+            if (!explicacaoQuestao) {
+                return;
+            }
+
+            const explicacao =
+                data.explicacao
+                || data.explicacao_erro
+                || questao.explicacao_erro
+                || 'Revise o conceito e refaça o raciocínio passo a passo.';
+
+            explicacaoQuestaoTitulo.innerText =
+                data.correta
+                ? 'Por que essa resposta está certa?'
+                : 'Como resolver esta questão';
+
+            if (data.opcao_correta) {
+                explicacaoQuestaoResposta.innerHTML =
+                    '<strong class="text-white">Resposta correta:</strong> '
+                    + escaparHtml(data.opcao_correta.texto);
+            } else {
+                explicacaoQuestaoResposta.innerText =
+                    '';
+            }
+
+            explicacaoQuestaoTexto.innerHTML =
+                formatarTextoSeguro(explicacao);
+
+            explicacaoQuestao.classList.remove(
+                'hidden'
+            );
+        }
+
 
 
         // ====================================================
@@ -789,6 +871,8 @@
 
 
             esconderFeedback();
+
+            esconderExplicacaoQuestao();
 
 
             footerArea.className =
@@ -1037,6 +1121,12 @@
                 }
 
 
+                mostrarExplicacaoQuestao(
+                    questaoAtual,
+                    data
+                );
+
+
                 if (data.correta) {
 
                     mostrarFeedback(
@@ -1270,6 +1360,8 @@
 
             containerOpcoes.innerHTML =
                 "";
+
+            esconderExplicacaoQuestao();
 
 
             if (data.concluida) {
