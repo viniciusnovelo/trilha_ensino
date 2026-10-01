@@ -2367,7 +2367,7 @@ def ajax_criar_questao(
             explicacao_erro=explicacao,
         )
 
-        for opcao in opcoes:
+        for ordem, opcao in enumerate(opcoes, start=1):
 
             Opcao.objects.create(
                 questao=questao,
@@ -2376,6 +2376,7 @@ def ajax_criar_questao(
                     opcao['indice']
                     == correta_idx
                 ),
+                ordem=ordem,
             )
 
     return JsonResponse(
@@ -2518,10 +2519,12 @@ def ajax_editar_questao(request, questao_id):
                 objeto = opcoes_existentes[posicao]
                 objeto.texto = opcao['texto']
                 objeto.e_correta = correta
+                objeto.ordem = posicao + 1
                 objeto.save(
                     update_fields=[
                         'texto',
                         'e_correta',
+                        'ordem',
                     ]
                 )
             else:
@@ -2529,6 +2532,7 @@ def ajax_editar_questao(request, questao_id):
                     questao=questao,
                     texto=opcao['texto'],
                     e_correta=correta,
+                    ordem=posicao + 1,
                 )
 
         for objeto in opcoes_existentes[len(opcoes):]:
