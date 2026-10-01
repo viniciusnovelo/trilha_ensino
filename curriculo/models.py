@@ -75,7 +75,7 @@ class Modulo(models.Model):
     ordem = models.PositiveIntegerField(default=1)
 
     class Meta:
-        ordering = ['ordem', 'id']
+        ordering = ['ordem']
 
     def __str__(self):
         return f"{self.disciplina.nome} - {self.titulo}"
@@ -105,7 +105,7 @@ class Fase(models.Model):
     deslocamento_y = models.IntegerField(default=0)
 
     class Meta:
-        ordering = ['ordem', 'id']
+        ordering = ['ordem']
 
     def __str__(self):
         return f"{self.modulo.titulo} - Fase {self.ordem}: {self.titulo}"
