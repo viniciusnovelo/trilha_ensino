@@ -1689,7 +1689,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
 
         questao = Questao.objects.create(
             fase=self.fase_1,
-            enunciado="Questão de interface",
+            enunciado="Questao de interface",
         )
 
         Opcao.objects.create(
@@ -1830,7 +1830,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
 
         self.assertContains(
             response,
-            "Questão de interface",
+            "Questao de interface",
         )
 
         self.assertContains(
