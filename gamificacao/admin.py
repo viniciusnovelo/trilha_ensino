@@ -171,7 +171,6 @@ class ProgressoModuloAdmin(admin.ModelAdmin):
         'perfil',
         'modulo',
         'desbloqueado',
-        'chave_disponivel',
         'concluido',
         'data_desbloqueio',
         'data_conclusao',
@@ -179,7 +178,6 @@ class ProgressoModuloAdmin(admin.ModelAdmin):
 
     list_filter = (
         'desbloqueado',
-        'chave_disponivel',
         'concluido',
         'modulo__disciplina',
     )
