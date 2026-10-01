@@ -1126,17 +1126,16 @@
                     "Fase concluída!";
 
 
-                const chaveModuloHtml =
-                    data.chave_proximo_modulo
+                const proximoModuloHtml =
+                    data.proximo_modulo_desbloqueado
                     ? `
-                        <div class="mt-5 bg-yellow-500/10 border border-yellow-400/30 rounded-2xl p-5">
-                            <div class="text-4xl mb-2">🔑</div>
-                            <p class="text-yellow-300 font-black text-lg">
-                                Você encontrou a chave do próximo módulo!
+                        <div class="mt-5 bg-emerald-500/10 border border-emerald-400/25 rounded-2xl p-5">
+                            <div class="text-4xl mb-2">✓</div>
+                            <p class="text-emerald-300 font-black text-lg">
+                                Próximo módulo desbloqueado!
                             </p>
-                            <p class="text-yellow-100/75 text-sm mt-1">
-                                Volte ao mapa e clique no cadeado para desbloquear
-                                ${data.proximo_modulo_titulo || 'a próxima área'}.
+                            <p class="text-emerald-100/75 text-sm mt-1">
+                                ${data.proximo_modulo_titulo || 'O próximo módulo'} já está disponível no mapa.
                             </p>
                         </div>
                     `
@@ -1201,7 +1200,7 @@
 
                         ${recompensa}
 
-                        ${chaveModuloHtml}
+                        ${proximoModuloHtml}
 
                         <div class="mt-6 flex justify-center gap-3 flex-wrap">
 
@@ -1245,8 +1244,8 @@
 
 
                 feedbackDesc.innerText =
-                    data.chave_proximo_modulo
-                    ? "Você recebeu uma chave. Volte ao mapa para abrir o próximo módulo."
+                    data.proximo_modulo_desbloqueado
+                    ? "O próximo módulo foi liberado para você."
                     : "A próxima etapa da trilha está disponível.";
 
 
