@@ -10,12 +10,12 @@ O catálogo inicial possui:
 
 - 4 matérias: Matemática, Física, Geografia e Biologia.
 - 3 jogos por matéria.
-- 4 módulos por jogo.
+- 2 módulos por jogo.
 - 3 fases por módulo.
 - 4 questões por fase.
-- 12 fases e 48 questões por jogo.
+- 6 fases e 24 questões por jogo.
 
-Total: **4 matérias, 12 jogos, 48 módulos, 144 fases, 576 questões e 2.304 alternativas**.
+Total: **4 matérias, 12 jogos, 24 módulos, 72 fases, 288 questões e 1.152 alternativas**.
 
 ## Importação
 
@@ -40,6 +40,12 @@ python importar_catalogo.py dados_catalogo_ensino_medio.json --autor vilel --rep
 O parâmetro `--replace` apaga e recria apenas os jogos que possuem os slugs presentes no JSON. As matérias são criadas ou atualizadas automaticamente.
 
 O importador individual `importar_trilha.py` continua funcionando para arquivos como `dados_funcoes.json`.
+
+## Alternativas das questões
+
+As questões do catálogo possuem quatro alternativas e cada fase utiliza as quatro posições de resposta correta de forma equilibrada: uma questão com a correta na 1ª posição, uma na 2ª, uma na 3ª e uma na 4ª.
+
+O campo `ordem` registra explicitamente a posição de exibição da alternativa. O importador valida essa distribuição para evitar que o catálogo volte a usar sempre a primeira alternativa como resposta correta.
 
 ## Atualização de feedback
 
