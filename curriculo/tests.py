@@ -1338,14 +1338,31 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             self.opcao_correta_1,
         )
 
-        self.finalizar_fase(
+        segunda_opcao_correta = (
+            self.questao_2.opcoes
+            .filter(
+                e_correta=True,
+            )
+            .first()
+        )
+
+        self.assertIsNotNone(
+            segunda_opcao_correta,
+        )
+
+        segunda_resposta = self.finalizar_fase(
             self.fase_2,
             self.questao_2,
-            next(
-                opcao
-                for opcao in self.questao_2.opcoes.all()
-                if opcao.e_correta
-            ),
+            segunda_opcao_correta,
+        )
+
+        self.assertEqual(
+            segunda_resposta.status_code,
+            200,
+        )
+
+        self.assertTrue(
+            segunda_resposta.json()["modulo_concluido"],
         )
 
         response = self.client.get(
@@ -1433,7 +1450,12 @@ class PreviewProfessorTests(AutenticacaoBaseTests):
 
         self.assertContains(
             response,
-            "Questão disponível no preview",
+            'id="questoes-data"',
+        )
+
+        self.assertContains(
+            response,
+            "Resposta correta",
         )
 
     def test_preview_do_professor_reproduz_inicio_da_jornada_do_aluno(self):
