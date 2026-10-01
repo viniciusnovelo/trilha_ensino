@@ -1643,3 +1643,218 @@ class AcessoAlunoFaseTests(AutenticacaoBaseTests):
             200,
         )
 
+
+
+
+class InterfaceVisualTests(AutenticacaoBaseTests):
+
+    def setUp(self):
+        self.professor = self.criar_usuario(
+            username="professor_interface",
+        )
+
+        self.professor.perfil.tipo = "professor"
+        self.professor.perfil.save(
+            update_fields=["tipo"]
+        )
+
+        self.aluno = self.criar_usuario(
+            username="aluno_interface",
+        )
+
+        self.trilha = Disciplina.objects.create(
+            nome="Trilha Interface",
+            slug="trilha-interface-testes",
+            ativo=True,
+            autor=self.professor,
+        )
+
+        self.modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo Interface",
+            ordem=1,
+        )
+
+        self.fase_1 = Fase.objects.create(
+            modulo=self.modulo,
+            titulo="Primeira fase",
+            ordem=1,
+        )
+
+        self.fase_2 = Fase.objects.create(
+            modulo=self.modulo,
+            titulo="Segunda fase",
+            ordem=2,
+        )
+
+        questao = Questao.objects.create(
+            fase=self.fase_1,
+            enunciado="Questão de interface",
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="Resposta correta",
+            e_correta=True,
+        )
+
+        Opcao.objects.create(
+            questao=questao,
+            texto="Resposta incorreta",
+            e_correta=False,
+        )
+
+    def test_editor_carrega_preview_com_multiplas_fases(self):
+        self.client.login(
+            username=self.professor.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.get(
+            reverse(
+                "editar_trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            "Primeira fase",
+        )
+
+        self.assertContains(
+            response,
+            "Segunda fase",
+        )
+
+        self.assertContains(
+            response,
+            reverse(
+                "fase_detalhe",
+                args=[self.fase_1.id],
+            ),
+        )
+
+    def test_mapa_do_aluno_exibe_hud_e_controles(self):
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            'id="controle-aparencia"',
+        )
+
+        self.assertContains(
+            response,
+            'id="seletor-tema-usuario"',
+        )
+
+        self.assertContains(
+            response,
+            "Nv.",
+        )
+
+        self.assertContains(
+            response,
+            str(self.aluno.perfil.moedas),
+        )
+
+        self.assertContains(
+            response,
+            str(self.aluno.perfil.vidas),
+        )
+
+    def test_fase_do_aluno_exibe_hud_e_dados_da_questao(self):
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.get(
+            reverse(
+                "fase_detalhe",
+                args=[self.fase_1.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            'id="controle-aparencia"',
+        )
+
+        self.assertContains(
+            response,
+            'id="seletor-tema-usuario"',
+        )
+
+        self.assertContains(
+            response,
+            "Questão de interface",
+        )
+
+        self.assertContains(
+            response,
+            str(self.aluno.perfil.moedas),
+        )
+
+        self.assertContains(
+            response,
+            str(self.aluno.perfil.vidas),
+        )
+
+    def test_mapa_do_professor_usa_icone_play_vetorial(self):
+        self.client.login(
+            username=self.professor.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            'title="Abrir fase como professor"',
+        )
+
+        self.assertContains(
+            response,
+            'viewBox="0 0 24 24"',
+        )
+
+        self.assertNotContains(
+            response,
+            ">▶<",
+        )
