@@ -1041,7 +1041,7 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             enunciado="Qual é a resposta da fase 2?",
         )
 
-        self.opcao_correta_2 = Opcao.objects.create(
+        Opcao.objects.create(
             questao=self.questao_2,
             texto="Correta",
             e_correta=True,
@@ -1075,7 +1075,12 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             password="SenhaForte123!",
         )
 
-    def finalizar_fase(self, fase, questao, opcao):
+    def finalizar_fase(
+        self,
+        fase,
+        questao,
+        opcao,
+    ):
         return self.client.post(
             reverse(
                 "finalizar_fase",
@@ -1120,13 +1125,13 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             modulos[1].desbloqueado,
         )
 
-        self.assertFalse(
-            modulos[1].chave_disponivel,
-        )
-
         self.assertEqual(
             modulos[1].status,
             "bloqueado",
+        )
+
+        self.assertFalse(
+            modulos[1].chave_disponivel,
         )
 
         progresso = ProgressoModulo.objects.get(
@@ -1154,7 +1159,7 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
             ),
         )
 
-    def test_conclusao_do_modulo_entrega_chave_sem_desbloquear_automaticamente(self):
+    def test_conclusao_do_modulo_desbloqueia_automaticamente_o_proximo(self):
         response = self.finalizar_fase(
             self.fase_1,
             self.questao_1,
@@ -1173,7 +1178,7 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
         )
 
         self.assertTrue(
-            dados["chave_proximo_modulo"],
+            dados["proximo_modulo_desbloqueado"],
         )
 
         self.assertEqual(
@@ -1187,11 +1192,11 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
         )
 
         self.assertTrue(
-            progresso.chave_disponivel,
+            progresso.desbloqueado,
         )
 
         self.assertFalse(
-            progresso.desbloqueado,
+            progresso.chave_disponivel,
         )
 
         response = self.client.get(
@@ -1210,53 +1215,21 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
 
         self.assertEqual(
             modulos[1].status,
-            "bloqueado",
+            "atual",
         )
 
         self.assertTrue(
-            modulos[1].chave_disponivel,
+            modulos[1].desbloqueado,
         )
 
-    def test_modulo_seguinte_so_e_desbloqueado_ao_usar_a_chave(self):
-        self.finalizar_fase(
-            self.fase_1,
-            self.questao_1,
-            self.opcao_correta_1,
-        )
-
-        response = self.client.post(
-            reverse(
-                "desbloquear_modulo",
-                args=[self.modulo_2.id],
-            )
+        fase_2 = next(
+            fase
+            for fase in modulos[1].fases.all()
         )
 
         self.assertEqual(
-            response.status_code,
-            200,
-        )
-
-        dados = response.json()
-
-        self.assertTrue(
-            dados["desbloqueado"],
-        )
-
-        self.assertFalse(
-            dados["ja_estava_desbloqueado"],
-        )
-
-        progresso = ProgressoModulo.objects.get(
-            perfil=self.aluno.perfil,
-            modulo=self.modulo_2,
-        )
-
-        self.assertTrue(
-            progresso.desbloqueado,
-        )
-
-        self.assertFalse(
-            progresso.chave_disponivel,
+            fase_2.status,
+            "atual",
         )
 
         response = self.client.get(
@@ -1269,63 +1242,6 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
         self.assertEqual(
             response.status_code,
             200,
-        )
-
-    def test_nao_e_possivel_desbloquear_modulo_sem_chave(self):
-        response = self.client.post(
-            reverse(
-                "desbloquear_modulo",
-                args=[self.modulo_2.id],
-            )
-        )
-
-        self.assertEqual(
-            response.status_code,
-            409,
-        )
-
-        self.assertIn(
-            "chave",
-            response.json()["msg"].lower(),
-        )
-
-    def test_chave_nao_e_consumida_novamente_apos_desbloqueio(self):
-        self.finalizar_fase(
-            self.fase_1,
-            self.questao_1,
-            self.opcao_correta_1,
-        )
-
-        self.client.post(
-            reverse(
-                "desbloquear_modulo",
-                args=[self.modulo_2.id],
-            )
-        )
-
-        progresso = ProgressoModulo.objects.get(
-            perfil=self.aluno.perfil,
-            modulo=self.modulo_2,
-        )
-
-        self.assertFalse(
-            progresso.chave_disponivel,
-        )
-
-        response = self.client.post(
-            reverse(
-                "desbloquear_modulo",
-                args=[self.modulo_2.id],
-            )
-        )
-
-        self.assertEqual(
-            response.status_code,
-            200,
-        )
-
-        self.assertTrue(
-            response.json()["ja_estava_desbloqueado"],
         )
 
     def test_modulo_seguinte_permanece_bloqueado_apos_conclusao_parcial(self):
@@ -1382,6 +1298,214 @@ class ProgressaoPorModulosTests(AutenticacaoBaseTests):
         )
 
         self.assertFalse(
-            modulos[1].chave_disponivel,
+            modulos[1].desbloqueado,
+        )
+
+    def test_conclusao_dos_modulos_em_cadeia_libera_o_modulo_3(self):
+        self.finalizar_fase(
+            self.fase_1,
+            self.questao_1,
+            self.opcao_correta_1,
+        )
+
+        self.finalizar_fase(
+            self.fase_2,
+            self.questao_2,
+            next(
+                opcao
+                for opcao in self.questao_2.opcoes.all()
+                if opcao.e_correta
+            ),
+        )
+
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        modulos = response.context["modulos"]
+
+        self.assertEqual(
+            modulos[1].status,
+            "concluido",
+        )
+
+        self.assertTrue(
+            modulos[2].desbloqueado,
+        )
+
+        self.assertEqual(
+            modulos[2].status,
+            "atual",
+        )
+
+
+class PreviewProfessorTests(AutenticacaoBaseTests):
+    def setUp(self):
+        self.professor = self.criar_usuario(
+            username="professor_preview",
+        )
+
+        self.professor.perfil.tipo = "professor"
+        self.professor.perfil.save(
+            update_fields=["tipo"]
+        )
+
+        self.trilha = Disciplina.objects.create(
+            nome="Trilha de Preview",
+            slug="trilha-de-preview",
+            ativo=False,
+            autor=self.professor,
+        )
+
+        self.modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo Preview",
+            ordem=1,
+        )
+
+        self.fase = Fase.objects.create(
+            modulo=self.modulo,
+            titulo="Fase Preview",
+            ordem=1,
+        )
+
+        self.questao = Questao.objects.create(
+            fase=self.fase,
+            enunciado="Questão disponível no preview",
+        )
+
+        self.opcao = Opcao.objects.create(
+            questao=self.questao,
+            texto="Resposta correta",
+            e_correta=True,
+        )
+
+        self.client.login(
+            username=self.professor.username,
+            password="SenhaForte123!",
+        )
+
+    def test_professor_abre_sua_fase_diretamente(self):
+        response = self.client.get(
+            reverse(
+                "fase_detalhe",
+                args=[self.fase.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            "Questão disponível no preview",
+        )
+
+    def test_preview_do_professor_nao_marca_todas_as_fases_como_atuais(self):
+        segunda = Fase.objects.create(
+            modulo=self.modulo,
+            titulo="Segunda fase",
+            ordem=2,
+        )
+
+        response = self.client.get(
+            reverse(
+                "trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        modulos = response.context["modulos"]
+
+        self.assertEqual(
+            modulos[0].status,
+            "professor",
+        )
+
+        fases = list(
+            modulos[0].fases.all()
+        )
+
+        self.assertEqual(
+            fases[0].status,
+            "professor",
+        )
+
+        self.assertEqual(
+            fases[1].status,
+            "professor",
+        )
+
+        self.assertContains(
+            response,
+            'title="Abrir fase como professor"',
+        )
+
+
+class AcessoAlunoFaseTests(AutenticacaoBaseTests):
+    def setUp(self):
+        self.professor = self.criar_usuario(
+            username="professor_fase",
+        )
+
+        self.professor.perfil.tipo = "professor"
+        self.professor.perfil.save(
+            update_fields=["tipo"]
+        )
+
+        self.aluno = self.criar_usuario(
+            username="aluno_fase",
+        )
+
+        self.trilha = Disciplina.objects.create(
+            nome="Trilha Fase",
+            slug="trilha-fase",
+            ativo=True,
+            autor=self.professor,
+        )
+
+        self.modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo Fase",
+            ordem=1,
+        )
+
+        self.fase = Fase.objects.create(
+            modulo=self.modulo,
+            titulo="Fase Inicial",
+            ordem=1,
+        )
+
+        Questao.objects.create(
+            fase=self.fase,
+            enunciado="Questão inicial",
+        )
+
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+    def test_aluno_consegue_abrir_primeira_fase_da_trilha(self):
+        response = self.client.get(
+            reverse(
+                "fase_detalhe",
+                args=[self.fase.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
         )
 
