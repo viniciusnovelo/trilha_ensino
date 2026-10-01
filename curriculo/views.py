@@ -281,7 +281,6 @@ def preparar_progressao_modulos(
                         primeiro_modulo
                         or modulo_anterior_concluido
                     ),
-                    chave_disponivel=False,
                     concluido=False,
                     data_desbloqueio=(
                         agora
@@ -318,15 +317,6 @@ def preparar_progressao_modulos(
                     'data_desbloqueio',
                 ])
 
-            if (
-                progresso_modulo.chave_disponivel
-                and progresso_modulo.desbloqueado
-            ):
-                progresso_modulo.chave_disponivel = False
-                atualizacoes.append(
-                    'chave_disponivel'
-                )
-
             if atualizacoes:
                 progresso_modulo.save(
                     update_fields=(
@@ -341,8 +331,6 @@ def preparar_progressao_modulos(
         modulo.desbloqueado = bool(
             progresso_modulo.desbloqueado
         )
-
-        modulo.chave_disponivel = False
 
         modulo.data_desbloqueio = (
             progresso_modulo.data_desbloqueio
@@ -564,12 +552,6 @@ def desbloquear_proximo_modulo(
             'desbloqueado',
             'data_desbloqueio',
         ])
-
-    if progresso_modulo.chave_disponivel:
-        progresso_modulo.chave_disponivel = False
-        atualizacoes.append(
-            'chave_disponivel'
-        )
 
     if atualizacoes:
         progresso_modulo.save(
@@ -2524,7 +2506,6 @@ def trilha_view(
             modulo.percentual_progresso = 0
             modulo.status = 'professor'
             modulo.desbloqueado = True
-            modulo.chave_disponivel = False
 
             for fase in fases_modulo:
                 fase.status = 'professor'
