@@ -575,7 +575,7 @@
             >
 
                 <a
-                    href="{% if papel_efetivo == 'professor' %}{% url 'dashboard_professor' %}{% else %}{% url 'dashboard_aluno' %}{% endif %}"
+                    href="{% if modo_preview_aluno %}{% url 'editar_trilha' trilha.id %}{% elif papel_efetivo == 'professor' %}{% url 'dashboard_professor' %}{% else %}{% url 'dashboard_aluno' %}{% endif %}"
                     class="text-slate-300 hover:text-white flex items-center font-bold transition"
                 >
 
@@ -595,7 +595,11 @@
 
                     </svg>
 
-                    Painel
+                    {% if modo_preview_aluno %}
+                        Voltar ao editor
+                    {% else %}
+                        Painel
+                    {% endif %}
 
                 </a>
 
@@ -623,74 +627,6 @@
 
                     {% if papel_efetivo == 'aluno' %}
 
-                        {% include 'gamificacao/partials/controle_aparencia.html' %}
-
-                        {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
-
-                    {% endif %}
-
-                    {% if modo_teste_ativo %}
-
-                        <div
-                            class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-3 py-2"
-                        >
-
-                            <span
-                                class="text-yellow-300 text-xs font-black"
-                            >
-                                🧪 TESTE
-                            </span>
-
-                        </div>
-
-                    {% endif %}
-
-
-                    <div
-                        class="bg-slate-950/45 border border-yellow-500/20 rounded-xl px-3 py-2"
-                    >
-
-                        <span
-                            class="text-yellow-400 font-black"
-                        >
-                            Nv. {{ perfil.nivel }}
-                        </span>
-
-                    </div>
-
-
-                    <div
-                        class="bg-slate-950/45 border border-blue-500/20 rounded-xl px-3 py-2"
-                    >
-
-                        <span
-                            class="text-blue-400 font-black"
-                        >
-                            🪙 {{ perfil.moedas }}
-                        </span>
-
-                    </div>
-
-
-                    <div
-                        class="bg-slate-950/45 border border-red-500/20 rounded-xl px-3 py-2"
-                    >
-
-                        <span
-                            class="text-red-400 font-black"
-                        >
-                            ❤️ {{ perfil.vidas }}
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            {% if papel_efetivo == 'aluno' %}
-
                 <div
                     class="max-w-4xl mx-auto mt-4"
                 >
@@ -708,20 +644,15 @@
                         <span
                             class="text-white/80 font-black"
                         >
-
                             {{ fases_concluidas }}
                             /
                             {{ total_fases }}
                             fases
-
                             ·
-
                             {{ percentual_progresso }}%
-
                         </span>
 
                     </div>
-
 
                     <div
                         class="h-2 bg-black/30 rounded-full overflow-hidden"
@@ -736,21 +667,22 @@
 
                 </div>
 
+            {% elif modo_preview_aluno %}
+
+                <div
+                    class="max-w-4xl mx-auto mt-4 text-center text-xs text-yellow-300/85 font-black uppercase tracking-widest"
+                >
+                    Pré-visualização como aluno
+                    · progresso real não é alterado
+                </div>
+
             {% else %}
 
                 <div
-                    class="max-w-4xl mx-auto mt-4"
+                    class="max-w-4xl mx-auto mt-4 text-center text-xs text-yellow-300/80 font-bold"
                 >
-
-                    <div
-                        class="text-center text-xs text-yellow-300/80 font-bold"
-                    >
-
-                        Modo professor:
-                        todas as fases desta trilha estão disponíveis para visualização.
-
-                    </div>
-
+                    Modo professor:
+                    todas as fases desta trilha estão disponíveis para visualização.
                 </div>
 
             {% endif %}
@@ -845,7 +777,7 @@
                                 style="transform: translateY({{ fase.deslocamento_y }}px);"
                             >
 
-                                {% if papel_efetivo == 'professor' %}
+                                {% if papel_exibicao == 'professor' %}
 
                                     <a
                                         href="{% url 'fase_detalhe' fase.id %}"
@@ -1170,7 +1102,7 @@
             class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3 text-xs"
         >
 
-            {% if papel_efetivo == 'aluno' %}
+            {% if papel_exibicao == 'aluno' and not modo_preview_aluno %}
 
                 <div
                     class="text-slate-500"
@@ -1186,7 +1118,13 @@
                 </div>
 
 
-                {% if fase_atual %}
+                {% if modo_preview_aluno %}
+
+                    <div class="text-yellow-300 font-black">
+                        Prévia do início da jornada
+                    </div>
+
+                {% elif fase_atual %}
 
                     <div
                         class="text-green-400 font-bold"
