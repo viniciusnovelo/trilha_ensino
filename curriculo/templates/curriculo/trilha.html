@@ -10,13 +10,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-width: 320px;
         }
 
         .scrollbar-thin::-webkit-scrollbar {
             height: 7px;
-            width: 7px;
         }
 
         .scrollbar-thin::-webkit-scrollbar-thumb {
@@ -24,168 +31,252 @@
             border-radius: 999px;
         }
 
-        .phase-section {
-            background: rgba(2, 6, 23, .23);
-            border: 1px solid rgba(255, 255, 255, .08);
-            backdrop-filter: blur(9px);
-        }
-
-        .journey-horizontal {
-            display: flex;
-            align-items: stretch;
-            width: max-content;
-            min-width: 100%;
-        }
-
-        .module-card.horizontal-module {
-            width: min(900px, 82vw);
-            min-width: min(900px, 82vw);
-            flex: 0 0 auto;
-        }
-
-        .phase-map {
-            position: relative;
+        .journey-scroll {
             overflow-x: auto;
             overflow-y: visible;
+            padding-bottom: 12px;
+            scrollbar-width: thin;
+            scroll-snap-type: x proximity;
+        }
+
+        .journey-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            min-width: 100%;
+            padding: 12px 22px 34px;
+        }
+
+        .module-zone {
+            position: relative;
+            width: 680px;
+            min-width: 680px;
+            min-height: 430px;
+            scroll-snap-align: start;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(2, 6, 23, .66),
+                    rgba(2, 6, 23, .48)
+                );
+            border: 1px solid rgba(255, 255, 255, .10);
+            border-radius: 32px;
+            box-shadow:
+                0 18px 55px rgba(2, 6, 23, .20),
+                inset 0 1px 0 rgba(255, 255, 255, .035);
+            backdrop-filter: blur(12px);
+        }
+
+        .module-zone.current {
+            border-color: rgba(99, 102, 241, .46);
+            box-shadow:
+                0 18px 55px rgba(2, 6, 23, .24),
+                0 0 0 1px rgba(99, 102, 241, .08),
+                inset 0 1px 0 rgba(255, 255, 255, .035);
+        }
+
+        .module-zone.complete {
+            border-color: rgba(16, 185, 129, .34);
+        }
+
+        .module-header {
+            min-height: 112px;
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,.025),
+                    transparent
+                );
+        }
+
+        .module-marker {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 1000;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(99,102,241,.12);
+            color: #e0e7ff;
+        }
+
+        .module-progress {
+            width: 220px;
+            max-width: 35vw;
+        }
+
+        .phase-area {
+            position: relative;
+            height: 310px;
+            padding: 0 20px;
+            overflow: hidden;
         }
 
         .phase-track {
             position: relative;
             display: flex;
             align-items: center;
+            height: 100%;
             width: max-content;
             min-width: 100%;
-            padding: 56px 60px 64px;
+            padding: 8px 8px 0;
         }
 
-        .phase-rail {
+        .phase-slot {
+            position: relative;
+            width: 120px;
+            min-width: 120px;
+            height: 278px;
+        }
+
+        .phase-node-wrap {
             position: absolute;
-            left: 60px;
-            right: 60px;
+            left: 50%;
             top: 50%;
-            height: 8px;
-            transform: translateY(-50%);
+            z-index: 12;
+            transform: translate(-50%, -50%);
+        }
+
+        .phase-node {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 999px;
-            background:
-                repeating-linear-gradient(
-                    to right,
-                    rgba(148, 163, 184, .22) 0 12px,
-                    transparent 12px 23px
-                );
-            pointer-events: none;
+            transition:
+                transform .22s ease,
+                filter .22s ease;
         }
 
-        .phase-row {
-            position: relative;
-            width: 185px;
-            min-width: 185px;
-            min-height: 260px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .phase-node:hover {
+            filter: brightness(1.08);
         }
 
-        .phase-node-shadow {
-            box-shadow:
-                0 10px 28px rgba(0, 0, 0, .32),
-                0 0 0 6px rgba(255, 255, 255, .025);
-        }
-
-        .phase-description {
-            background: rgba(2, 6, 23, .66);
-            border: 1px solid rgba(255, 255, 255, .08);
+        .phase-label {
+            position: absolute;
+            left: 50%;
+            width: 148px;
+            transform: translateX(-50%);
+            z-index: 10;
+            padding: 9px 11px;
+            border-radius: 15px;
+            text-align: center;
+            background: rgba(2, 6, 23, .78);
+            border: 1px solid rgba(255,255,255,.09);
             backdrop-filter: blur(8px);
+            box-shadow: 0 9px 22px rgba(0,0,0,.20);
         }
 
-        .phase-node-current {
-            animation: node-pulse 2.4s ease-in-out infinite;
+        .phase-label.top {
+            bottom: calc(50% + 62px);
         }
 
-        .module-divider {
+        .phase-label.bottom {
+            top: calc(50% + 62px);
+        }
+
+        .phase-connector {
             position: relative;
-            width: 110px;
-            min-width: 110px;
+            width: 72px;
+            min-width: 72px;
+            height: 278px;
+            flex-shrink: 0;
+        }
+
+        .phase-connector svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .phase-connector-path {
+            fill: none;
+            stroke: rgba(148, 163, 184, .36);
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+
+        .phase-connector-dash {
+            fill: none;
+            stroke: rgba(226, 232, 240, .62);
+            stroke-width: 4;
+            stroke-dasharray: 9 8;
+            stroke-linecap: round;
+        }
+
+        .module-bridge {
+            position: relative;
+            width: 125px;
+            min-width: 125px;
+            height: 430px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .module-divider::before {
+        .module-bridge::before {
             content: "";
             position: absolute;
             left: 0;
             right: 0;
             top: 50%;
-            height: 5px;
+            height: 7px;
             transform: translateY(-50%);
             border-radius: 999px;
             background:
                 repeating-linear-gradient(
                     to right,
-                    rgba(148, 163, 184, .28) 0 11px,
-                    transparent 11px 20px
+                    rgba(148, 163, 184, .38) 0 12px,
+                    transparent 12px 22px
                 );
         }
 
-        .module-divider-core {
+        .module-bridge-core {
             position: relative;
-            z-index: 2;
-            width: 44px;
-            height: 44px;
-            border-radius: 999px;
+            z-index: 5;
+            width: 54px;
+            height: 54px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(2, 6, 23, .82);
+            font-size: 24px;
+            color: rgba(255,255,255,.55);
+            background: rgba(2,6,23,.82);
             border: 1px solid rgba(255,255,255,.10);
-            color: rgba(255,255,255,.48);
+            box-shadow: 0 12px 26px rgba(0,0,0,.28);
             backdrop-filter: blur(12px);
-            box-shadow: 0 10px 24px rgba(0,0,0,.28);
-        }
-
-        .module-card {
-            position: relative;
-            overflow: hidden;
-            background: rgba(2, 6, 23, .52);
-            border: 1px solid rgba(255, 255, 255, .11);
-            backdrop-filter: blur(14px);
-        }
-
-        .module-card.is-current {
-            border-color: rgba(99, 102, 241, .44);
-            box-shadow: 0 22px 70px rgba(30, 41, 59, .22);
-        }
-
-        .module-card.is-complete {
-            border-color: rgba(16, 185, 129, .28);
-        }
-
-        .module-card.is-locked {
-            border-color: rgba(148, 163, 184, .12);
-        }
-
-        .module-content-locked {
-            filter: blur(3.5px);
-            opacity: .36;
-            transform: scale(.995);
-            transition: filter .4s ease, opacity .4s ease;
         }
 
         .locked-module-overlay {
             position: absolute;
             inset: 0;
-            z-index: 50;
+            z-index: 60;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            border-radius: 32px;
             background:
                 radial-gradient(
-                    circle at 50% 50%,
-                    rgba(15, 23, 42, .06),
-                    rgba(2, 6, 23, .18) 62%,
-                    rgba(2, 6, 23, .26)
+                    circle at center,
+                    rgba(15, 23, 42, .02),
+                    rgba(2, 6, 23, .18) 58%,
+                    rgba(2, 6, 23, .32)
                 );
+        }
+
+        .module-content-locked {
+            filter: blur(2.5px);
+            opacity: .32;
+            transform: scale(.997);
+            transition: filter .35s ease, opacity .35s ease;
         }
 
         .locked-chain-layer,
@@ -195,106 +286,117 @@
 
         .locked-chain-layer {
             position: absolute;
-            inset: 13px;
-            border-radius: 25px;
-            filter: drop-shadow(0 14px 32px rgba(0,0,0,.35));
+            inset: 12px;
+            filter: drop-shadow(0 16px 28px rgba(0,0,0,.35));
         }
 
         .locked-chain-svg {
             width: 100%;
             height: 100%;
-            overflow: visible;
         }
 
         .locked-chain-path {
             fill: none;
-            stroke: rgba(226, 232, 240, .62);
-            stroke-width: 2.8;
+            stroke: rgba(226, 232, 240, .60);
+            stroke-width: 2.9;
             stroke-dasharray: 7 6;
             stroke-linecap: round;
             vector-effect: non-scaling-stroke;
         }
 
         .locked-chain-corner {
-            fill: rgba(51, 65, 85, .94);
-            stroke: rgba(226, 232, 240, .58);
+            fill: rgba(51, 65, 85, .95);
+            stroke: rgba(226, 232, 240, .60);
             stroke-width: 1.5;
         }
 
         .locked-lock-layer {
             position: relative;
-            z-index: 4;
-            width: 128px;
+            z-index: 5;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 9px;
+            gap: 10px;
         }
 
         .locked-lock-button {
-            width: 84px;
-            height: 84px;
-            border-radius: 25px;
-            border: 3px solid rgba(148, 163, 184, .55);
-            background:
-                radial-gradient(
-                    circle at 35% 28%,
-                    rgba(255,255,255,.12),
-                    transparent 34%
-                ),
-                linear-gradient(
-                    145deg,
-                    rgba(51, 65, 85, .98),
-                    rgba(15, 23, 42, .98)
-                );
-            color: rgba(226, 232, 240, .96);
+            width: 90px;
+            height: 90px;
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 3px solid rgba(148, 163, 184, .55);
+            background:
+                radial-gradient(
+                    circle at 32% 25%,
+                    rgba(255,255,255,.13),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    145deg,
+                    rgba(51,65,85,.98),
+                    rgba(15,23,42,.98)
+                );
+            color: rgba(226,232,240,.96);
             box-shadow:
-                0 18px 36px rgba(0,0,0,.42),
+                0 18px 38px rgba(0,0,0,.44),
                 inset 0 1px 0 rgba(255,255,255,.10);
-            cursor: pointer;
         }
 
         .locked-lock-button.has-key {
-            border-color: rgba(250, 204, 21, .72);
-            box-shadow:
-                0 0 0 5px rgba(250,204,21,.08),
-                0 18px 42px rgba(0,0,0,.42),
-                inset 0 1px 0 rgba(255,255,255,.12);
+            border-color: rgba(250,204,21,.75);
             color: #fde68a;
+            box-shadow:
+                0 0 0 6px rgba(250,204,21,.08),
+                0 18px 44px rgba(0,0,0,.44);
         }
 
         .locked-key-hint {
-            min-width: 145px;
-            text-align: center;
-            padding: 8px 11px;
+            min-width: 190px;
+            padding: 9px 12px;
             border-radius: 999px;
-            background: rgba(2, 6, 23, .85);
-            border: 1px solid rgba(255,255,255,.10);
-            color: rgba(255,255,255,.64);
+            text-align: center;
             font-size: 11px;
             font-weight: 900;
-            letter-spacing: .04em;
-            box-shadow: 0 10px 25px rgba(0,0,0,.28);
+            background: rgba(2,6,23,.88);
+            border: 1px solid rgba(255,255,255,.10);
+            color: rgba(255,255,255,.66);
+            box-shadow: 0 10px 25px rgba(0,0,0,.25);
         }
 
         .locked-key-hint.has-key {
             color: #fde68a;
-            border-color: rgba(250, 204, 21, .20);
+            border-color: rgba(250,204,21,.24);
         }
 
         .locked-module-overlay.is-rattling .locked-chain-layer {
-            animation: chain-rattle .52s cubic-bezier(.36,.07,.19,.97);
+            animation: chain-rattle .54s cubic-bezier(.36,.07,.19,.97);
         }
 
         .locked-module-overlay.is-rattling .locked-lock-layer {
-            animation: lock-rattle .52s cubic-bezier(.36,.07,.19,.97);
+            animation: lock-rattle .54s cubic-bezier(.36,.07,.19,.97);
         }
 
         .locked-module-overlay.is-rattling .locked-chain-path {
-            stroke-dashoffset: -14;
+            animation: chain-dash .54s ease;
+        }
+
+        .phase-node-current {
+            animation: node-pulse 2.3s ease-in-out infinite;
+        }
+
+        .module-key-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(250, 204, 21, .20);
+            background: rgba(250, 204, 21, .07);
+            color: #fde68a;
+            font-size: 11px;
+            font-weight: 900;
         }
 
         .module-unlock-toast {
@@ -321,29 +423,16 @@
             transform: translate(-50%, 0);
         }
 
-        .module-key-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 7px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(250, 204, 21, .20);
-            background: rgba(250, 204, 21, .07);
-            color: #fde68a;
-            font-size: 11px;
-            font-weight: 900;
-        }
-
         @keyframes node-pulse {
             0%, 100% {
                 transform: scale(1);
                 box-shadow:
-                    0 10px 28px rgba(0,0,0,.32),
+                    0 10px 28px rgba(0,0,0,.30),
                     0 0 0 6px rgba(129,140,248,.07);
             }
 
             50% {
-                transform: scale(1.05);
+                transform: scale(1.055);
                 box-shadow:
                     0 14px 34px rgba(0,0,0,.38),
                     0 0 0 11px rgba(129,140,248,.10);
@@ -356,23 +445,23 @@
             }
 
             15% {
-                transform: rotate(1.6deg) translate3d(1px, -1px, 0);
+                transform: rotate(1.5deg) translate3d(1px, -1px, 0);
             }
 
             30% {
-                transform: rotate(-1.8deg) translate3d(-2px, 1px, 0);
+                transform: rotate(-1.7deg) translate3d(-2px, 1px, 0);
             }
 
             45% {
-                transform: rotate(1.2deg) translate3d(2px, 0, 0);
+                transform: rotate(1.15deg) translate3d(2px, 0, 0);
             }
 
             60% {
-                transform: rotate(-1deg) translate3d(-1px, 1px, 0);
+                transform: rotate(-.9deg) translate3d(-1px, 1px, 0);
             }
 
             78% {
-                transform: rotate(.45deg);
+                transform: rotate(.35deg);
             }
         }
 
@@ -402,52 +491,77 @@
             }
         }
 
+        @keyframes chain-dash {
+            from {
+                stroke-dashoffset: 0;
+            }
+
+            to {
+                stroke-dashoffset: -26;
+            }
+        }
+
         @media (max-width: 767px) {
-            .module-card.horizontal-module {
-                width: 88vw;
-                min-width: 88vw;
+            .module-zone {
+                width: 86vw;
+                min-width: 86vw;
+                min-height: 390px;
             }
 
-            .phase-track {
-                padding: 46px 34px 54px;
+            .module-header {
+                padding: 17px 18px 14px;
             }
 
-            .phase-rail {
-                left: 34px;
-                right: 34px;
-                height: 6px;
+            .module-progress {
+                width: 145px;
+                max-width: 42vw;
             }
 
-            .phase-row {
-                width: 155px;
-                min-width: 155px;
-                min-height: 230px;
+            .phase-area {
+                height: 285px;
+                padding: 0 12px;
             }
 
-            .module-divider {
-                width: 70px;
-                min-width: 70px;
+            .phase-slot {
+                width: 104px;
+                min-width: 104px;
+                height: 250px;
             }
 
-            .locked-chain-layer {
-                inset: 10px;
+            .phase-connector {
+                width: 54px;
+                min-width: 54px;
+                height: 250px;
+            }
+
+            .phase-label {
+                width: 130px;
+                font-size: 12px;
             }
 
             .locked-lock-button {
-                width: 74px;
-                height: 74px;
+                width: 76px;
+                height: 76px;
+                border-radius: 24px;
+            }
+
+            .locked-key-hint {
+                min-width: 170px;
+            }
+
+            .module-bridge {
+                width: 84px;
+                min-width: 84px;
+                height: 390px;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
             .phase-node-current,
             .locked-module-overlay.is-rattling .locked-chain-layer,
-            .locked-module-overlay.is-rattling .locked-lock-layer {
+            .locked-module-overlay.is-rattling .locked-lock-layer,
+            .locked-module-overlay.is-rattling .locked-chain-path {
                 animation: none !important;
-            }
-
-            .locked-chain-path {
-                transition: none !important;
             }
         }
     </style>
@@ -488,7 +602,9 @@
                     <div class="flex flex-wrap items-center gap-2 justify-end">
 
                         {% if papel_efetivo == 'aluno' %}
+
                             {% include 'gamificacao/partials/controle_aparencia.html' %}
+
                             {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
 
                             {% if chaves_disponiveis %}
@@ -496,27 +612,37 @@
                                     🔑 {{ chaves_disponiveis }} chave
                                 </span>
                             {% endif %}
+
                         {% endif %}
 
                         {% if modo_teste_ativo %}
                             <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-3 py-2">
-                                <span class="text-yellow-300 text-xs font-black">🧪 TESTE</span>
+                                <span class="text-yellow-300 text-xs font-black">
+                                    🧪 TESTE
+                                </span>
                             </div>
                         {% endif %}
 
                         <div class="bg-slate-950/45 border border-yellow-500/20 rounded-xl px-3 py-2">
-                            <span class="text-yellow-400 font-black">Nv. {{ perfil.nivel }}</span>
+                            <span class="text-yellow-400 font-black">
+                                Nv. {{ perfil.nivel }}
+                            </span>
                         </div>
 
                         <div class="bg-slate-950/45 border border-blue-500/20 rounded-xl px-3 py-2">
-                            <span class="text-blue-400 font-black">🪙 {{ perfil.moedas }}</span>
+                            <span class="text-blue-400 font-black">
+                                🪙 {{ perfil.moedas }}
+                            </span>
                         </div>
 
                         <div class="bg-slate-950/45 border border-red-500/20 rounded-xl px-3 py-2">
-                            <span class="text-red-400 font-black">❤️ {{ perfil.vidas }}</span>
+                            <span class="text-red-400 font-black">
+                                ❤️ {{ perfil.vidas }}
+                            </span>
                         </div>
 
                     </div>
+
                 </div>
 
                 {% if papel_efetivo == 'aluno' %}
@@ -524,25 +650,30 @@
                     <div class="max-w-5xl mx-auto mt-5">
 
                         <div class="flex flex-wrap justify-between items-center gap-2 mb-2 text-xs">
+
                             <span class="text-white/50 font-bold uppercase tracking-widest">
                                 Progresso da jornada
                             </span>
 
                             <span class="text-white/80 font-black">
-                                {{ modulos_concluidos }}/{{ modulos|length }} módulos concluídos
+                                {{ modulos_concluidos }}/{{ modulos|length }} módulos
                                 ·
                                 {{ fases_concluidas }}/{{ total_fases }} fases
                                 ·
                                 {{ percentual_progresso }}%
                             </span>
+
                         </div>
 
                         <div class="h-2 bg-black/30 rounded-full overflow-hidden">
+
                             <div
                                 class="h-full bg-gradient-to-r from-indigo-400 to-emerald-300 rounded-full transition-all duration-700"
                                 style="width: {{ percentual_progresso }}%;"
                             ></div>
+
                         </div>
+
                     </div>
 
                 {% else %}
@@ -560,9 +691,9 @@
 
         <main class="relative z-10 flex-1">
 
-            <div class="max-w-[1700px] mx-auto px-3 sm:px-6 py-7 sm:py-10">
+            <div class="max-w-[1800px] mx-auto px-3 sm:px-6 py-7 sm:py-9">
 
-                <section class="mb-8">
+                <section class="mb-6">
 
                     <div class="flex flex-wrap items-end justify-between gap-4">
 
@@ -579,9 +710,9 @@
                                 {% endif %}
                             </h2>
 
-                            <p class="text-sm text-white/50 mt-2 max-w-2xl">
+                            <p class="text-sm text-white/50 mt-2 max-w-3xl">
                                 {% if papel_efetivo == 'aluno' %}
-                                    Avance pelas fases em linha horizontal. Ao concluir um módulo, uma chave aparece para abrir o próximo.
+                                    Avance pelas fases da esquerda para a direita. Cada módulo é uma nova etapa da aventura.
                                 {% else %}
                                     Visualize a sequência horizontal dos módulos e todas as fases disponíveis.
                                 {% endif %}
@@ -589,6 +720,7 @@
                         </div>
 
                         <div class="flex flex-wrap items-center gap-2 text-xs font-black">
+
                             <span class="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white/55">
                                 {{ modulos|length }} módulos
                             </span>
@@ -596,162 +728,142 @@
                             <span class="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white/55">
                                 {{ total_fases }} fases
                             </span>
+
                         </div>
 
                     </div>
 
                 </section>
 
-                <section class="overflow-x-auto scrollbar-thin pb-4">
+                <section class="journey-scroll scrollbar-thin">
 
-                    <div class="journey-horizontal">
+                    <div class="journey-track">
 
-                    {% for modulo in modulos %}
+                        {% for modulo in modulos %}
 
-                        <article
-                            class="module-card horizontal-module rounded-[30px] {% if modulo.status == 'atual' %}is-current{% endif %} {% if modulo.status == 'concluido' %}is-complete{% endif %} {% if modulo.status == 'bloqueado' %}is-locked{% endif %}"
-                            data-module-id="{{ modulo.id }}"
-                        >
+                            <article
+                                class="module-zone
+                                    {% if modulo.status == 'atual' %}
+                                        current
+                                    {% elif modulo.status == 'concluido' %}
+                                        complete
+                                    {% endif %}"
+                                data-module-id="{{ modulo.id }}"
+                            >
 
-                            <div class="{% if modulo.status == 'bloqueado' %}module-content-locked{% endif %}">
+                                <div class="{% if modulo.status == 'bloqueado' %}module-content-locked{% endif %}">
 
-                                <div class="relative z-10 p-5 sm:p-7">
+                                    <div class="module-header">
 
-                                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-5">
+                                        <div class="flex items-start justify-between gap-5">
 
-                                        <div class="flex items-start gap-4 min-w-0">
+                                            <div class="flex items-start gap-3 min-w-0">
 
-                                            <div class="
-                                                w-14 h-14 shrink-0 rounded-2xl
-                                                flex items-center justify-center
-                                                text-xl font-black border
-                                                {% if modulo.status == 'concluido' %}
-                                                    bg-emerald-500/15 text-emerald-200 border-emerald-400/25
-                                                {% elif modulo.status == 'atual' or modulo.status == 'disponivel-professor' %}
-                                                    bg-indigo-500/15 text-indigo-100 border-indigo-300/30
-                                                {% else %}
-                                                    bg-slate-700/25 text-slate-500 border-white/10
-                                                {% endif %}
-                                            ">
-                                                {% if modulo.status == 'concluido' %}
-                                                    ✓
-                                                {% elif modulo.status == 'bloqueado' %}
-                                                    🔒
-                                                {% else %}
-                                                    {{ modulo.ordem }}
-                                                {% endif %}
-                                            </div>
-
-                                            <div class="min-w-0">
-
-                                                <div class="flex flex-wrap items-center gap-2">
-
-                                                    <p class="text-[10px] uppercase tracking-[0.2em] text-white/35 font-black">
-                                                        Módulo {{ modulo.ordem }}
-                                                    </p>
-
+                                                <div class="module-marker
                                                     {% if modulo.status == 'concluido' %}
-
-                                                        <span class="px-2.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider">
-                                                            Concluído
-                                                        </span>
-
+                                                        bg-emerald-500/15 text-emerald-200 border-emerald-400/25
                                                     {% elif modulo.status == 'atual' %}
-
-                                                        <span class="px-2.5 py-1 rounded-full bg-indigo-400/10 border border-indigo-400/20 text-indigo-200 text-[10px] font-black uppercase tracking-wider">
-                                                            Em andamento
-                                                        </span>
-
-                                                    {% elif modulo.status == 'disponivel-professor' %}
-
-                                                        <span class="px-2.5 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-200 text-[10px] font-black uppercase tracking-wider">
-                                                            Visualização
-                                                        </span>
-
+                                                        bg-indigo-500/15 text-indigo-100 border-indigo-300/30
                                                     {% else %}
+                                                        bg-slate-700/25 text-slate-500 border-white/10
+                                                    {% endif %}
+                                                ">
+                                                    {% if modulo.status == 'concluido' %}
+                                                        ✓
+                                                    {% elif modulo.status == 'bloqueado' %}
+                                                        🔒
+                                                    {% else %}
+                                                        {{ modulo.ordem }}
+                                                    {% endif %}
+                                                </div>
 
-                                                        <span class="px-2.5 py-1 rounded-full bg-slate-500/10 border border-slate-400/10 text-slate-500 text-[10px] font-black uppercase tracking-wider">
-                                                            Bloqueado
+                                                <div class="min-w-0">
+
+                                                    <div class="flex flex-wrap items-center gap-2">
+
+                                                        <span class="text-[10px] uppercase tracking-[0.2em] text-white/35 font-black">
+                                                            Módulo {{ modulo.ordem }}
                                                         </span>
 
+                                                        {% if modulo.status == 'concluido' %}
+
+                                                            <span class="px-2 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-300 text-[9px] font-black uppercase tracking-wider">
+                                                                Concluído
+                                                            </span>
+
+                                                        {% elif modulo.status == 'atual' %}
+
+                                                            <span class="px-2 py-1 rounded-full bg-indigo-400/10 border border-indigo-400/20 text-indigo-200 text-[9px] font-black uppercase tracking-wider">
+                                                                Em andamento
+                                                            </span>
+
+                                                        {% elif modulo.status == 'bloqueado' %}
+
+                                                            <span class="px-2 py-1 rounded-full bg-slate-500/10 border border-slate-400/10 text-slate-500 text-[9px] font-black uppercase tracking-wider">
+                                                                Bloqueado
+                                                            </span>
+
+                                                        {% endif %}
+
+                                                    </div>
+
+                                                    <h3 class="text-xl sm:text-2xl font-black mt-1 truncate">
+                                                        {{ modulo.titulo }}
+                                                    </h3>
+
+                                                    {% if modulo.descricao %}
+                                                        <p class="text-xs sm:text-sm text-white/42 mt-1 line-clamp-2 max-w-md">
+                                                            {{ modulo.descricao }}
+                                                        </p>
                                                     {% endif %}
 
                                                 </div>
 
-                                                <h3 class="text-xl sm:text-2xl font-black mt-1">
-                                                    {{ modulo.titulo }}
-                                                </h3>
-
-                                                {% if modulo.descricao %}
-                                                    <p class="text-sm text-white/45 mt-1 max-w-2xl">
-                                                        {{ modulo.descricao }}
-                                                    </p>
-                                                {% endif %}
-
                                             </div>
-                                        </div>
 
-                                        <div class="w-full md:max-w-xs shrink-0">
+                                            {% if papel_efetivo == 'aluno' %}
 
-                                            {% if papel_efetivo == 'professor' %}
+                                                <div class="module-progress shrink-0">
 
-                                                <div class="flex items-center justify-end">
-                                                    <span class="px-3 py-2 rounded-xl bg-white/5 border border-white/8 text-xs text-white/45 font-black">
-                                                        {{ modulo.total_fases }} fases disponíveis
-                                                    </span>
+                                                    <div class="flex items-center justify-between text-[10px] mb-1.5">
+                                                        <span class="text-white/38 font-bold">
+                                                            {{ modulo.fases_concluidas }}/{{ modulo.total_fases }}
+                                                        </span>
+
+                                                        <span class="font-black
+                                                            {% if modulo.status == 'concluido' %}
+                                                                text-emerald-300
+                                                            {% elif modulo.status == 'atual' %}
+                                                                text-indigo-200
+                                                            {% elif modulo.chave_disponivel %}
+                                                                text-yellow-200
+                                                            {% else %}
+                                                                text-white/25
+                                                            {% endif %}
+                                                        ">
+                                                            {{ modulo.percentual_progresso }}%
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="h-2 rounded-full bg-black/25 overflow-hidden">
+
+                                                        <div
+                                                            class="h-full rounded-full transition-all duration-700
+                                                            {% if modulo.status == 'concluido' %}
+                                                                bg-gradient-to-r from-emerald-400 to-cyan-300
+                                                            {% elif modulo.status == 'atual' %}
+                                                                bg-gradient-to-r from-indigo-400 to-sky-300
+                                                            {% elif modulo.chave_disponivel %}
+                                                                bg-gradient-to-r from-yellow-300 to-amber-400
+                                                            {% else %}
+                                                                bg-slate-700
+                                                            {% endif %}"
+                                                            style="width: {{ modulo.percentual_progresso }}%;"
+                                                        ></div>
+
+                                                    </div>
+
                                                 </div>
-
-                                            {% else %}
-
-                                                <div class="flex items-center justify-between text-xs mb-2">
-                                                    <span class="text-white/40 font-bold">
-                                                        {{ modulo.fases_concluidas }}/{{ modulo.total_fases }} fases
-                                                    </span>
-
-                                                    <span class="font-black
-                                                        {% if modulo.status == 'concluido' %}
-                                                            text-emerald-300
-                                                        {% elif modulo.status == 'atual' %}
-                                                            text-indigo-200
-                                                        {% elif modulo.chave_disponivel %}
-                                                            text-yellow-200
-                                                        {% else %}
-                                                            text-white/25
-                                                        {% endif %}
-                                                    ">
-                                                        {{ modulo.percentual_progresso }}%
-                                                    </span>
-                                                </div>
-
-                                                <div class="h-2 bg-black/25 rounded-full overflow-hidden">
-                                                    <div
-                                                        class="h-full rounded-full transition-all duration-700
-                                                        {% if modulo.status == 'concluido' %}
-                                                            bg-gradient-to-r from-emerald-400 to-cyan-300
-                                                        {% elif modulo.status == 'atual' %}
-                                                            bg-gradient-to-r from-indigo-400 to-sky-300
-                                                        {% elif modulo.chave_disponivel %}
-                                                            bg-gradient-to-r from-yellow-300 to-amber-400
-                                                        {% else %}
-                                                            bg-slate-700
-                                                        {% endif %}"
-                                                        style="width: {{ modulo.percentual_progresso }}%;"
-                                                    ></div>
-                                                </div>
-
-                                                {% if modulo.chave_disponivel %}
-                                                    <p class="text-[11px] text-yellow-200 font-black mt-2 text-right">
-                                                        🔑 Chave disponível · clique no cadeado.
-                                                    </p>
-                                                {% elif modulo.status == 'bloqueado' %}
-                                                    <p class="text-[11px] text-white/30 font-bold mt-2 text-right">
-                                                        Complete o módulo anterior para encontrar a chave.
-                                                    </p>
-                                                {% elif modulo.status == 'atual' and modulo.total_fases == 0 %}
-                                                    <p class="text-[11px] text-amber-300/70 font-bold mt-2 text-right">
-                                                        O conteúdo deste módulo ainda está sendo preparado.
-                                                    </p>
-                                                {% endif %}
 
                                             {% endif %}
 
@@ -761,28 +873,24 @@
 
                                     {% if modulo.total_fases > 0 %}
 
-                                        <div class="phase-section mt-6 rounded-3xl overflow-hidden">
+                                        <div class="phase-area">
 
-                                            <div class="phase-map">
+                                            <div class="phase-track">
 
-                                                <div class="phase-track">
+                                                {% for fase in modulo.fases.all %}
 
-                                                    <div class="phase-rail"></div>
+                                                    <div
+                                                        class="phase-slot"
+                                                        style="transform: translateY({{ fase.deslocamento_y }}px);"
+                                                    >
 
-                                                    {% for fase in modulo.fases.all %}
-
-                                                        <div
-                                                            class="phase-row"
-                                                            style="transform: translateY({{ fase.deslocamento_y }}px);"
-                                                        >
-
-                                                        <div class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center z-20">
+                                                        <div class="phase-node-wrap">
 
                                                             {% if fase.status == 'concluida' %}
 
                                                                 <a
                                                                     href="{% url 'fase_detalhe' fase.id %}"
-                                                                    class="phase-node-shadow w-20 h-20 rounded-full border-b-8 border-emerald-700 bg-emerald-500 hover:bg-emerald-400 transition-all flex items-center justify-center active:translate-y-2 active:border-b-0"
+                                                                    class="phase-node w-20 h-20 border-b-8 border-emerald-700 bg-emerald-500 phase-node-shadow"
                                                                     title="{{ fase.titulo }}"
                                                                 >
                                                                     <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -794,11 +902,11 @@
 
                                                                 <a
                                                                     href="{% url 'fase_detalhe' fase.id %}"
-                                                                    class="phase-node-current phase-node-shadow w-24 h-24 rounded-full border-b-8 border-indigo-700 bg-indigo-500 hover:bg-indigo-400 transition-all flex items-center justify-center active:translate-y-2 active:border-b-0 ring-4 ring-white/15"
+                                                                    class="phase-node phase-node-current w-[88px] h-[88px] border-b-8 border-indigo-700 bg-indigo-500"
                                                                     title="{{ fase.titulo }}"
                                                                 >
-                                                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1.5 1.5 0 008 8.5v3M9.555 7.168A1.5 1.5 1.5 0 008 8.5v3a1.5 1.5 0 002.333 1.248l3-2a1.5 1.5 0 000-2.496l-3-2z" clip-rule="evenodd"/>
+                                                                    <svg class="w-11 h-11 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1.5 1.5 0 008 8.5v3a1.5 1.5 0 002.333 1.248l3-2a1.5 1.5 0 000-2.496l-3-2z" clip-rule="evenodd"/>
                                                                     </svg>
                                                                 </a>
 
@@ -806,7 +914,7 @@
 
                                                                 <a
                                                                     href="{% url 'fase_detalhe' fase.id %}"
-                                                                    class="phase-node-shadow w-20 h-20 rounded-full border-b-8 border-indigo-900 bg-indigo-700 hover:bg-indigo-600 flex items-center justify-center transition-all"
+                                                                    class="phase-node w-20 h-20 border-b-8 border-indigo-900 bg-indigo-700 phase-node-shadow"
                                                                     title="Visualizar fase como professor"
                                                                 >
                                                                     <svg class="w-8 h-8 text-white/80" fill="currentColor" viewBox="0 0 20 20">
@@ -817,7 +925,7 @@
                                                             {% else %}
 
                                                                 <div
-                                                                    class="phase-node-shadow w-20 h-20 rounded-full border-b-8 border-slate-900 bg-slate-800 flex items-center justify-center opacity-75"
+                                                                    class="phase-node w-20 h-20 border-b-8 border-slate-900 bg-slate-800 opacity-75 phase-node-shadow"
                                                                     title="Fase bloqueada"
                                                                 >
                                                                     <svg class="w-8 h-8 text-slate-500" fill="currentColor" viewBox="0 0 20 20">
@@ -829,83 +937,78 @@
 
                                                         </div>
 
-                                                    </div>
+                                                        {% if forloop.counter0|divisibleby:2 %}
 
-                                                            {% if forloop.counter0|divisibleby:2 %}
+                                                            <div class="phase-label top">
 
-                                                                <div class="absolute left-1/2 -translate-x-1/2 bottom-2 w-44 px-2 text-center z-10">
+                                                                <p class="text-xs sm:text-sm font-black leading-tight
+                                                                    {% if fase.status == 'bloqueada' %}
+                                                                        text-white/28
+                                                                    {% else %}
+                                                                        text-white/88
+                                                                    {% endif %}
+                                                                ">
+                                                                    {{ fase.titulo }}
+                                                                </p>
 
-                                                                    <div class="phase-description rounded-2xl p-3">
+                                                                <p class="text-[9px] text-white/30 uppercase tracking-widest mt-1">
+                                                                    {{ fase.get_tipo_display }}
+                                                                </p>
 
-                                                                        <p class="text-sm font-black leading-tight
-                                                                            {% if fase.status == 'bloqueada' %}
-                                                                                text-white/28
-                                                                            {% else %}
-                                                                                text-white/90
-                                                                            {% endif %}
-                                                                        ">
-                                                                            {{ fase.titulo }}
-                                                                        </p>
+                                                                <p class="text-[9px] text-yellow-400/80 font-bold mt-1">
+                                                                    +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
+                                                                </p>
 
-                                                                        <p class="text-[10px] text-white/35 uppercase tracking-widest mt-1">
-                                                                            {{ fase.get_tipo_display }}
-                                                                        </p>
+                                                            </div>
 
-                                                                        <p class="text-[10px] text-yellow-400/80 font-bold mt-1">
-                                                                            +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
-                                                                        </p>
+                                                        {% else %}
 
-                                                                    </div>
+                                                            <div class="phase-label bottom">
 
-                                                                </div>
+                                                                <p class="text-xs sm:text-sm font-black leading-tight
+                                                                    {% if fase.status == 'bloqueada' %}
+                                                                        text-white/28
+                                                                    {% else %}
+                                                                        text-white/88
+                                                                    {% endif %}
+                                                                ">
+                                                                    {{ fase.titulo }}
+                                                                </p>
 
-                                                            {% else %}
+                                                                <p class="text-[9px] text-white/30 uppercase tracking-widest mt-1">
+                                                                    {{ fase.get_tipo_display }}
+                                                                </p>
 
-                                                                <div class="absolute left-1/2 -translate-x-1/2 top-2 w-44 px-2 text-center z-10">
-
-                                                                    <div class="phase-description rounded-2xl p-3">
-
-                                                                        <p class="text-sm font-black leading-tight
-                                                                            {% if fase.status == 'bloqueada' %}
-                                                                                text-white/28
-                                                                            {% else %}
-                                                                                text-white/90
-                                                                            {% endif %}
-                                                                        ">
-                                                                            {{ fase.titulo }}
-                                                                        </p>
-
-                                                                        <p class="text-[10px] text-white/35 uppercase tracking-widest mt-1">
-                                                                            {{ fase.get_tipo_display }}
-                                                                        </p>
-
-                                                                        <p class="text-[10px] text-yellow-400/80 font-bold mt-1">
-                                                                            +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
-                                                                        </p>
-
-                                                                    </div>
-
-                                                                </div>
-
-                                                            {% endif %}
-
-                                                        </div>
-
-                                                        {% if not forloop.last %}
-
-                                                            <div class="w-32 min-w-[128px] h-2 shrink-0 relative z-0">
-
-                                                                <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[8px] rounded-full bg-slate-500/40"></div>
-
-                                                                <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[4px] rounded-full border-t-4 border-dashed border-slate-300/55"></div>
+                                                                <p class="text-[9px] text-yellow-400/80 font-bold mt-1">
+                                                                    +{{ fase.xp_recompensa }} XP · +{{ fase.moedas_recompensa }} 🪙
+                                                                </p>
 
                                                             </div>
 
                                                         {% endif %}
 
-                                                    {% endfor %}
+                                                    </div>
 
-                                                </div>
+                                                    {% if not forloop.last %}
+
+                                                        <div class="phase-connector">
+
+                                                            <svg viewBox="0 0 100 278" preserveAspectRatio="none">
+                                                                <path
+                                                                    d="M0 {{ fase.svg_y1 }} C 35 {{ fase.svg_y1 }} 65 {{ fase.svg_y2 }} 100 {{ fase.svg_y2 }}"
+                                                                    class="phase-connector-path"
+                                                                />
+                                                                <path
+                                                                    d="M0 {{ fase.svg_y1 }} C 35 {{ fase.svg_y1 }} 65 {{ fase.svg_y2 }} 100 {{ fase.svg_y2 }}"
+                                                                    class="phase-connector-dash"
+                                                                />
+                                                            </svg>
+
+                                                        </div>
+
+                                                    {% endif %}
+
+                                                {% endfor %}
 
                                             </div>
 
@@ -913,21 +1016,27 @@
 
                                     {% else %}
 
-                                        <div class="mt-6 rounded-2xl border border-dashed border-white/10 p-6 text-center bg-black/10">
+                                        <div class="px-6 pb-6">
 
-                                            <div class="text-3xl">🧩</div>
+                                            <div class="rounded-2xl border border-dashed border-white/10 p-7 text-center bg-black/10">
 
-                                            <p class="text-sm font-black text-white/65 mt-2">
-                                                Nenhuma fase neste módulo ainda.
-                                            </p>
+                                                <div class="text-3xl">
+                                                    🧩
+                                                </div>
 
-                                            <p class="text-xs text-white/35 mt-1">
-                                                {% if papel_efetivo == 'professor' %}
-                                                    Volte ao Estúdio para adicionar fases.
-                                                {% else %}
-                                                    Aguarde o professor preparar este conteúdo.
-                                                {% endif %}
-                                            </p>
+                                                <p class="text-sm font-black text-white/65 mt-2">
+                                                    Nenhuma fase neste módulo ainda.
+                                                </p>
+
+                                                <p class="text-xs text-white/35 mt-1">
+                                                    {% if papel_efetivo == 'professor' %}
+                                                        Volte ao Estúdio para adicionar fases.
+                                                    {% else %}
+                                                        Aguarde o professor preparar este conteúdo.
+                                                    {% endif %}
+                                                </p>
+
+                                            </div>
 
                                         </div>
 
@@ -935,106 +1044,107 @@
 
                                 </div>
 
-                            </div>
+                                {% if modulo.status == 'bloqueado' %}
 
-                            {% if modulo.status == 'bloqueado' %}
+                                    <div
+                                        class="locked-module-overlay"
+                                        data-module-id="{{ modulo.id }}"
+                                        data-has-key="{% if modulo.chave_disponivel %}true{% else %}false{% endif %}"
+                                        tabindex="0"
+                                        role="button"
+                                        aria-label="Módulo {{ modulo.ordem }} bloqueado"
+                                    >
 
-                                <div
-                                    class="locked-module-overlay"
-                                    data-module-id="{{ modulo.id }}"
-                                    data-has-key="{% if modulo.chave_disponivel %}true{% else %}false{% endif %}"
-                                    tabindex="0"
-                                    role="button"
-                                    aria-label="Módulo {{ modulo.ordem }} bloqueado"
-                                    data-rattle-origin="50 50"
-                                >
+                                        <div class="locked-chain-layer">
 
-                                    <div class="locked-chain-layer">
+                                            <svg class="locked-chain-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
 
-                                        <svg class="locked-chain-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                                                <rect
+                                                    x="2.5"
+                                                    y="2.5"
+                                                    width="95"
+                                                    height="95"
+                                                    rx="7"
+                                                    class="locked-chain-path"
+                                                />
 
-                                            <rect
-                                                x="2.5"
-                                                y="2.5"
-                                                width="95"
-                                                height="95"
-                                                rx="7"
-                                                class="locked-chain-path"
-                                            />
+                                                <circle cx="4.5" cy="4.5" r="2.6" class="locked-chain-corner"/>
+                                                <circle cx="95.5" cy="4.5" r="2.6" class="locked-chain-corner"/>
+                                                <circle cx="4.5" cy="95.5" r="2.6" class="locked-chain-corner"/>
+                                                <circle cx="95.5" cy="95.5" r="2.6" class="locked-chain-corner"/>
 
-                                            <circle cx="4.5" cy="4.5" r="2.6" class="locked-chain-corner"/>
-                                            <circle cx="95.5" cy="4.5" r="2.6" class="locked-chain-corner"/>
-                                            <circle cx="4.5" cy="95.5" r="2.6" class="locked-chain-corner"/>
-                                            <circle cx="95.5" cy="95.5" r="2.6" class="locked-chain-corner"/>
+                                            </svg>
 
-                                        </svg>
+                                        </div>
+
+                                        <div class="locked-lock-layer">
+
+                                            <button
+                                                type="button"
+                                                class="locked-lock-button {% if modulo.chave_disponivel %}has-key{% endif %}"
+                                                title="{% if modulo.chave_disponivel %}Usar chave{% else %}Módulo bloqueado{% endif %}"
+                                            >
+
+                                                <svg class="w-11 h-11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                    <path d="M7 10V8a5 5 0 0110 0v2"/>
+                                                    <rect x="4.5" y="10" width="15" height="10" rx="2.5"/>
+                                                    <circle cx="12" cy="15" r="1.2" fill="currentColor" stroke="none"/>
+                                                    <path d="M12 16.2V18"/>
+                                                </svg>
+
+                                            </button>
+
+                                            <div class="locked-key-hint {% if modulo.chave_disponivel %}has-key{% endif %}">
+                                                {% if modulo.chave_disponivel %}
+                                                    🔑 Chave pronta · clique no cadeado
+                                                {% else %}
+                                                    Complete o módulo anterior
+                                                {% endif %}
+                                            </div>
+
+                                        </div>
 
                                     </div>
 
-                                    <div class="locked-lock-layer">
+                                {% endif %}
 
-                                        <button
-                                            type="button"
-                                            class="locked-lock-button {% if modulo.chave_disponivel %}has-key{% endif %}"
-                                            title="{% if modulo.chave_disponivel %}Usar chave{% else %}Módulo bloqueado{% endif %}"
-                                        >
-                                            <svg class="w-11 h-11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M7 10V8a5 5 0 0110 0v2"/>
-                                                <rect x="4.5" y="10" width="15" height="10" rx="2.5"/>
-                                                <circle cx="12" cy="15" r="1.2" fill="currentColor" stroke="none"/>
-                                                <path d="M12 16.2V18"/>
-                                            </svg>
-                                        </button>
+                            </article>
 
-                                        <div class="locked-key-hint {% if modulo.chave_disponivel %}has-key{% endif %}">
-                                            {% if modulo.chave_disponivel %}
-                                                🔑 Chave pronta · toque no cadeado
-                                            {% else %}
-                                                Complete o módulo anterior
-                                            {% endif %}
-                                        </div>
+                            {% if not forloop.last %}
 
+                                <div class="module-bridge" aria-hidden="true">
+
+                                    <div class="module-bridge-core">
+                                        →
                                     </div>
 
                                 </div>
 
                             {% endif %}
 
-                        </article>
+                        {% empty %}
 
-                        {% if not forloop.last %}
+                            <div class="module-zone p-10 text-center">
 
-                            <div class="module-divider">
-
-                                <div class="module-divider-core">
-                                    →
+                                <div class="text-5xl">
+                                    🗺️
                                 </div>
+
+                                <h3 class="text-2xl font-black mt-4">
+                                    A jornada ainda está sendo construída
+                                </h3>
+
+                                <p class="text-sm text-white/45 mt-2">
+                                    {% if papel_efetivo == 'professor' %}
+                                        Adicione módulos e fases no Estúdio do Professor.
+                                    {% else %}
+                                        Aguarde o professor publicar o conteúdo desta trilha.
+                                    {% endif %}
+                                </p>
 
                             </div>
 
-                        {% endif %}
-
-                    {% empty %}
-
-                        <div class="module-card rounded-[30px] p-10 text-center">
-
-                            <div class="text-5xl">🗺️</div>
-
-                            <h3 class="text-2xl font-black mt-4">
-                                A jornada ainda está sendo construída
-                            </h3>
-
-                            <p class="text-sm text-white/45 mt-2">
-                                {% if papel_efetivo == 'professor' %}
-                                    Adicione módulos e fases no Estúdio do Professor.
-                                {% else %}
-                                    Aguarde o professor publicar o conteúdo desta trilha.
-                                {% endif %}
-                            </p>
-
-                        </div>
-
-                    {% endfor %}
+                        {% endfor %}
 
                     </div>
 
@@ -1114,11 +1224,17 @@
         function provocarBalanco(overlay, event) {
             const rect = overlay.getBoundingClientRect();
 
+            const clientX = event?.clientX
+                ?? rect.left + (rect.width / 2);
+
+            const clientY = event?.clientY
+                ?? rect.top + (rect.height / 2);
+
             const x = Math.max(
                 0,
                 Math.min(
                     100,
-                    ((event.clientX - rect.left) / rect.width) * 100
+                    ((clientX - rect.left) / rect.width) * 100
                 )
             );
 
@@ -1126,62 +1242,108 @@
                 0,
                 Math.min(
                     100,
-                    ((event.clientY - rect.top) / rect.height) * 100
+                    ((clientY - rect.top) / rect.height) * 100
                 )
             );
 
-            overlay.style.setProperty('--origin-x', x + '%');
-            overlay.style.setProperty('--origin-y', y + '%');
+            overlay.style.setProperty(
+                '--origin-x',
+                x + '%'
+            );
 
-            overlay.classList.remove('is-rattling');
+            overlay.style.setProperty(
+                '--origin-y',
+                y + '%'
+            );
+
+            overlay.classList.remove(
+                'is-rattling'
+            );
+
             void overlay.offsetWidth;
-            overlay.classList.add('is-rattling');
+
+            overlay.classList.add(
+                'is-rattling'
+            );
 
             window.setTimeout(() => {
-                overlay.classList.remove('is-rattling');
+                overlay.classList.remove(
+                    'is-rattling'
+                );
             }, 600);
         }
 
-        async function desbloquearModulo(overlay, event) {
-            const moduloId = overlay.dataset.moduleId;
+        async function desbloquearModulo(
+            overlay,
+            event
+        ) {
+            const moduloId =
+                overlay.dataset.moduleId;
 
             if (!moduloId) {
                 return;
             }
 
-            provocarBalanco(overlay, event);
+            provocarBalanco(
+                overlay,
+                event
+            );
 
-            const lockButton = overlay.querySelector('.locked-lock-button');
+            const lockButton =
+                overlay.querySelector(
+                    '.locked-lock-button'
+                );
+
             if (lockButton) {
                 lockButton.disabled = true;
             }
 
-            mostrarToastModulo('🔑 Usando a chave...');
+            mostrarToastModulo(
+                '🔑 Usando a chave...'
+            );
 
             try {
-                const response = await fetch(
-                    moduloUnlockUrlTemplate.replace(
-                        '/0/',
-                        '/' + moduloId + '/'
-                    ),
-                    {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': csrfToken,
-                        },
-                    }
-                );
+                const response =
+                    await fetch(
+                        moduloUnlockUrlTemplate.replace(
+                            '/0/',
+                            '/' + moduloId + '/'
+                        ),
+                        {
+                            method: 'POST',
 
-                const data = await response.json();
+                            headers: {
+                                'X-CSRFToken':
+                                    csrfToken,
+                            },
+                        }
+                    );
 
-                if (!response.ok || data.status !== 'ok') {
+                const data =
+                    await response.json();
+
+                if (
+                    !response.ok
+                    ||
+                    data.status !== 'ok'
+                ) {
                     throw new Error(
-                        data.msg || 'Não foi possível desbloquear o módulo.'
+                        data.msg
+                        ||
+                        'Não foi possível desbloquear o módulo.'
                     );
                 }
 
                 mostrarToastModulo(
-                    '🔓 ' + (data.modulo_titulo || 'Módulo') + ' desbloqueado!'
+                    '🔓 '
+                    +
+                    (
+                        data.modulo_titulo
+                        ||
+                        'Módulo'
+                    )
+                    +
+                    ' desbloqueado!'
                 );
 
                 window.setTimeout(() => {
@@ -1189,73 +1351,131 @@
                 }, 850);
 
             } catch (error) {
+
                 if (lockButton) {
                     lockButton.disabled = false;
                 }
 
                 mostrarToastModulo(
-                    '⚠️ ' + error.message
+                    '⚠️ '
+                    +
+                    error.message
                 );
             }
         }
 
-        document.querySelectorAll('.locked-module-overlay').forEach((overlay) => {
-            const lockButton = overlay.querySelector('.locked-lock-button');
+        document
+            .querySelectorAll(
+                '.locked-module-overlay'
+            )
+            .forEach(
+                (overlay) => {
 
-            overlay.addEventListener('click', (event) => {
-                const hasKey = overlay.dataset.hasKey === 'true';
+                    const lockButton =
+                        overlay.querySelector(
+                            '.locked-lock-button'
+                        );
 
-                if (
-                    hasKey
-                    && event.target.closest('.locked-lock-button')
-                ) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    desbloquearModulo(overlay, event);
-                    return;
-                }
+                    overlay.addEventListener(
+                        'click',
+                        (event) => {
 
-                provocarBalanco(overlay, event);
+                            const hasKey =
+                                overlay.dataset.hasKey
+                                === 'true';
 
-                if (hasKey) {
-                    mostrarToastModulo(
-                        '🔑 Você tem a chave. Clique no cadeado para abrir este módulo.'
-                    );
-                } else {
-                    mostrarToastModulo(
-                        '🔒 Módulo bloqueado. Complete o módulo anterior para conseguir a chave.'
-                    );
-                }
-            });
+                            if (
+                                hasKey
+                                &&
+                                event.target.closest(
+                                    '.locked-lock-button'
+                                )
+                            ) {
 
-            overlay.addEventListener('keydown', (event) => {
-                if (event.key !== 'Enter' && event.key !== ' ') {
-                    return;
-                }
+                                event.preventDefault();
+                                event.stopPropagation();
 
-                event.preventDefault();
+                                desbloquearModulo(
+                                    overlay,
+                                    event
+                                );
 
-                if (overlay.dataset.hasKey === 'true') {
-                    const lock = overlay.querySelector('.locked-lock-button');
+                                return;
+                            }
 
-                    if (lock) {
-                        lock.click();
-                    }
-                } else {
-                    provocarBalanco(
-                        overlay,
-                        {
-                            clientX: overlay.getBoundingClientRect().left + overlay.offsetWidth / 2,
-                            clientY: overlay.getBoundingClientRect().top + overlay.offsetHeight / 2,
+                            provocarBalanco(
+                                overlay,
+                                event
+                            );
+
+                            if (hasKey) {
+
+                                mostrarToastModulo(
+                                    '🔑 Você tem a chave. Clique no cadeado para abrir este módulo.'
+                                );
+
+                            } else {
+
+                                mostrarToastModulo(
+                                    '🔒 Módulo bloqueado. Complete o módulo anterior para conseguir a chave.'
+                                );
+                            }
                         }
                     );
 
-                    mostrarToastModulo(
-                        '🔒 Módulo bloqueado. Complete o módulo anterior para conseguir a chave.'
+                    overlay.addEventListener(
+                        'keydown',
+                        (event) => {
+
+                            if (
+                                event.key !== 'Enter'
+                                &&
+                                event.key !== ' '
+                            ) {
+                                return;
+                            }
+
+                            event.preventDefault();
+
+                            if (
+                                overlay.dataset.hasKey
+                                === 'true'
+                            ) {
+
+                                const lock =
+                                    overlay.querySelector(
+                                        '.locked-lock-button'
+                                    );
+
+                                if (lock) {
+                                    lock.click();
+                                }
+
+                                return;
+                            }
+
+                            provocarBalanco(
+                                overlay,
+                                {
+                                    clientX:
+                                        overlay.getBoundingClientRect().left
+                                        +
+                                        overlay.offsetWidth / 2,
+
+                                    clientY:
+                                        overlay.getBoundingClientRect().top
+                                        +
+                                        overlay.offsetHeight / 2,
+                                }
+                            );
+
+                            mostrarToastModulo(
+                                '🔒 Módulo bloqueado. Complete o módulo anterior para conseguir a chave.'
+                            );
+                        }
                     );
                 }
-            });
-        });
+            );
     </script>
 
 </body>
