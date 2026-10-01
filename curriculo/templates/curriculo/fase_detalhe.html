@@ -199,7 +199,7 @@
 
         </div>
 
-    </header>der>
+    </header>
 
 
     <!-- =====================================================
@@ -212,16 +212,26 @@
             class="max-w-4xl mx-auto flex flex-wrap justify-between items-center gap-3 text-sm"
         >
 
-            <div
-                class="text-slate-500 font-bold uppercase tracking-widest"
-            >
-                {{ fase.get_tipo_display }}
+            <div class="flex flex-wrap items-center gap-2">
+
+                <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white/55 text-xs font-black uppercase tracking-wider">
+                    {{ fase.get_tipo_display }}
+                </span>
+
+                <span class="px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-400/15 text-yellow-300 text-xs font-black">
+                    +{{ fase.xp_recompensa }} XP
+                </span>
+
+                <span class="px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-400/15 text-blue-300 text-xs font-black">
+                    +{{ fase.moedas_recompensa }} 🪙
+                </span>
+
             </div>
 
 
             {% if progresso %}
 
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-4 text-xs">
 
                     <span class="text-slate-400">
                         Tentativas:
@@ -236,6 +246,13 @@
                             {{ progresso.melhor_aproveitamento }}%
                         </strong>
                     </span>
+
+                    <a
+                        href="{% url 'historico_fase' fase.id %}"
+                        class="text-slate-400 hover:text-white transition font-black"
+                    >
+                        Histórico
+                    </a>
 
                 </div>
 
