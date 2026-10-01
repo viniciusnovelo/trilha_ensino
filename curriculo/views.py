@@ -3066,16 +3066,32 @@ def verificar_resposta(
         == opcao_correta_id
     )
 
+    opcao_correta = (
+        questao.opcoes
+        .filter(
+            id=opcao_correta_id
+        )
+        .first()
+    )
+
+    explicacao = (
+        questao.explicacao_erro
+        or 'Revise o conceito e refaça o raciocínio passo a passo.'
+    )
+
     return JsonResponse(
         {
             'status': 'ok',
             'correta': correta,
-            'explicacao_erro': (
-                ''
-                if correta
-                else (
-                    questao.explicacao_erro
-                )
+            'explicacao': explicacao,
+            'explicacao_erro': explicacao,
+            'opcao_correta': (
+                {
+                    'id': opcao_correta.id,
+                    'texto': opcao_correta.texto,
+                }
+                if opcao_correta
+                else None
             ),
         }
     )
@@ -3377,6 +3393,38 @@ def finalizar_fase(
         )
     )
 
+    feedback_questoes = []
+
+    for resposta in respostas_validadas:
+        questao = resposta['questao']
+
+        opcao_correta = next(
+            (
+                opcao
+                for opcao in questao.opcoes.all()
+                if opcao.e_correta
+            ),
+            None,
+        )
+
+        feedback_questoes.append(
+            {
+                'questao_id': questao.id,
+                'enunciado': questao.enunciado,
+                'resposta_aluno': resposta['opcao'].texto,
+                'resposta_correta': (
+                    opcao_correta.texto
+                    if opcao_correta
+                    else ''
+                ),
+                'correta': resposta['correta'],
+                'explicacao': (
+                    questao.explicacao_erro
+                    or 'Revise o conceito e refaça o raciocínio passo a passo.'
+                ),
+            }
+        )
+
     perfil = obter_perfil(
         request.user
     )
@@ -3426,6 +3474,7 @@ def finalizar_fase(
                 'proximo_modulo_desbloqueado': False,
                 'proximo_modulo_id': None,
                 'proximo_modulo_titulo': None,
+                'feedback_questoes': feedback_questoes,
             }
         )
 
@@ -3683,6 +3732,7 @@ def finalizar_fase(
             'tentativa_id': (
                 tentativa.id
             ),
+            'feedback_questoes': feedback_questoes,
             'proximo_minimo': int(
                 APROVEITAMENTO_MINIMO
                 * 100
