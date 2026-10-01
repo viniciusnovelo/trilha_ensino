@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
@@ -2197,6 +2198,43 @@ class CatalogoMateriaTests(AutenticacaoBaseTests):
             response,
             "Rascunho de Matemática",
         )
+
+    def test_catalogo_json_distribui_respostas_corretas_por_posicao(self):
+        caminho_catalogo = (
+            Path(__file__).resolve().parent.parent
+            / "dados_catalogo_ensino_medio.json"
+        )
+
+        with caminho_catalogo.open(
+            "r",
+            encoding="utf-8",
+        ) as arquivo:
+            dados = json.load(arquivo)
+
+        for materia in dados["materias"]:
+            for jogo in materia["jogos"]:
+                for modulo in jogo["modulos"]:
+                    for fase in modulo["fases"]:
+                        posicoes = [
+                            next(
+                                indice
+                                for indice, opcao in enumerate(
+                                    questao["opcoes"],
+                                    start=1,
+                                )
+                                if opcao["correta"]
+                            )
+                            for questao in fase["questoes"]
+                        ]
+
+                        self.assertEqual(
+                            sorted(posicoes),
+                            [1, 2, 3, 4],
+                            msg=(
+                                "Respostas corretas precisam ocupar "
+                                "as posições 1, 2, 3 e 4 em cada fase."
+                            ),
+                        )
 
     def test_professor_cria_jogo_associado_a_materia(self):
         self.client.login(
