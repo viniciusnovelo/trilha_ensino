@@ -1045,11 +1045,15 @@ def materia_detalhe(request, materia_slug):
         )
     )
 
-    preparar_progresso_materia = dados_materias_aluno(
+    materia.jogos_publicados = jogos
+
+    dados_materias_aluno(
         perfil,
         [materia],
         fases_concluidas_ids,
-    )[0]
+    )
+
+    jogos = materia.jogos_lista
 
     jogo_em_andamento = next(
         (
