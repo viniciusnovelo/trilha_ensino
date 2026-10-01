@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
+from django.db import Prefetch, transaction
 from django.http import JsonResponse
 from django.shortcuts import (
     get_object_or_404,
@@ -844,7 +844,7 @@ def dados_materias_aluno(
 ):
     for materia in materias:
         jogos = list(
-            materia.jogos.all()
+            getattr(materia, 'jogos_publicados', [])
         )
 
         for trilha in jogos:
@@ -918,7 +918,18 @@ def dashboard_aluno(request):
             jogos__ativo=True,
         )
         .prefetch_related(
-            'jogos__modulos__fases',
+            Prefetch(
+                'jogos',
+                queryset=(
+                    Disciplina.objects
+                    .filter(ativo=True)
+                    .prefetch_related(
+                        'modulos__fases',
+                    )
+                    .order_by('ordem', 'id', 'nome')
+                ),
+                to_attr='jogos_publicados',
+            ),
         )
         .order_by(
             'ordem',
