@@ -391,6 +391,7 @@ def preparar_progressao_modulos(
 
     return modulos
 
+
 def modulos_da_trilha(trilha):
     return list(
         Modulo.objects
@@ -564,10 +565,34 @@ def desbloquear_proximo_modulo(
             )
         )
 
-    return proximo_modulo_da_trilha(
+    proximo_modulo = proximo_modulo_da_trilha(
         modulo
     )
 
+    if proximo_modulo is not None:
+        proximo_progresso, criado = (
+            ProgressoModulo.objects.get_or_create(
+                perfil=perfil,
+                modulo=proximo_modulo,
+            )
+        )
+
+        if (
+            not proximo_progresso.desbloqueado
+        ):
+            proximo_progresso.desbloqueado = True
+            proximo_progresso.data_desbloqueio = (
+                proximo_progresso.data_desbloqueio
+                or agora
+            )
+            proximo_progresso.save(
+                update_fields=[
+                    'desbloqueado',
+                    'data_desbloqueio',
+                ]
+            )
+
+    return proximo_modulo
 
 
 def fase_esta_liberada(
@@ -2415,12 +2440,6 @@ def ajax_excluir_questao(request, questao_id):
         }
     )
 
-
-# ============================================================
-# 12. DESBLOQUEIO MANUAL DO MÓDULO
-# ============================================================
-
-@login_required
 
 # ============================================================
 # 12. MAPA DA TRILHA
