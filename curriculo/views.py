@@ -1227,10 +1227,48 @@ def editar_trilha(
         fases
     )
 
+    fases_por_modulo = []
+
+    for modulo in modulos:
+        fases_modulo = list(
+            modulo.fases.all()
+        )
+
+        fases_por_modulo.append(
+            fases_modulo
+        )
+
+    for indice, modulo in enumerate(modulos[:-1]):
+
+        fases_atual = fases_por_modulo[indice]
+        fases_seguinte = fases_por_modulo[indice + 1]
+
+        modulo.transicao_svg_y1 = (
+            fases_atual[-1].svg_y1
+            if fases_atual
+            else 100
+        )
+
+        modulo.transicao_svg_y2 = (
+            fases_seguinte[0].svg_y1
+            if fases_seguinte
+            else 100
+        )
+
     total_questoes = sum(
         fase.questoes.count()
         for fase in fases
     )
+
+    modulo_anterior_id = None
+
+    for fase in fases:
+        fase.primeira_do_modulo = (
+            fase.modulo_id != modulo_anterior_id
+        )
+
+        if fase.primeira_do_modulo:
+            modulo_anterior_id = fase.modulo_id
 
     return render(
         request,
@@ -1239,6 +1277,7 @@ def editar_trilha(
             'trilha': trilha,
             'modulos': modulos,
             'fases': fases,
+            'visualizacao_professor': True,
             'total_questoes': total_questoes,
             'perfil': obter_perfil(request.user),
             'tema_aplicado': trilha.tema,
@@ -2400,154 +2439,6 @@ def ajax_excluir_questao(request, questao_id):
 # ============================================================
 
 @login_required
-def desbloquear_modulo(
-    request,
-    modulo_id,
-):
-    if request.method != 'POST':
-        return JsonResponse(
-            {
-                'status': 'erro',
-                'msg': 'Método não permitido.',
-            },
-            status=405,
-        )
-
-    if not usuario_e_aluno(request):
-        return JsonResponse(
-            {
-                'status': 'erro',
-                'msg': 'Apenas alunos podem desbloquear módulos.',
-            },
-            status=403,
-        )
-
-    modulo = get_object_or_404(
-        Modulo.objects.select_related(
-            'disciplina'
-        ),
-        id=modulo_id,
-        disciplina__ativo=True,
-    )
-
-    perfil = obter_perfil(
-        request.user
-    )
-
-    primeiro_modulo_id = (
-        Modulo.objects
-        .filter(
-            disciplina=modulo.disciplina,
-        )
-        .order_by(
-            'ordem',
-            'id',
-        )
-        .values_list(
-            'id',
-            flat=True,
-        )
-        .first()
-    )
-
-    if modulo.id == primeiro_modulo_id:
-        return JsonResponse(
-            {
-                'status': 'ok',
-                'desbloqueado': True,
-                'ja_estava_desbloqueado': True,
-            }
-        )
-
-    anterior = None
-    modulos = list(
-        Modulo.objects
-        .filter(
-            disciplina=modulo.disciplina,
-        )
-        .order_by(
-            'ordem',
-            'id',
-        )
-    )
-
-    for indice, modulo_atual in enumerate(modulos):
-        if modulo_atual.id == modulo.id:
-            if indice > 0:
-                anterior = modulos[indice - 1]
-            break
-
-    if anterior is None:
-        return JsonResponse(
-            {
-                'status': 'erro',
-                'msg': 'Não foi possível identificar o módulo anterior.',
-            },
-            status=400,
-        )
-
-    if not modulo_esta_completo_para_aluno(
-        perfil,
-        anterior,
-    ):
-        return JsonResponse(
-            {
-                'status': 'erro',
-                'msg': 'Complete o módulo anterior para receber a chave.',
-            },
-            status=409,
-        )
-
-    with transaction.atomic():
-        progresso_modulo, _ = (
-            ProgressoModulo.objects
-            .select_for_update()
-            .get_or_create(
-                perfil=perfil,
-                modulo=modulo,
-            )
-        )
-
-        if progresso_modulo.desbloqueado:
-            return JsonResponse(
-                {
-                    'status': 'ok',
-                    'desbloqueado': True,
-                    'ja_estava_desbloqueado': True,
-                }
-            )
-
-        if not progresso_modulo.chave_disponivel:
-            progresso_modulo.chave_disponivel = True
-            progresso_modulo.save(
-                update_fields=[
-                    'chave_disponivel',
-                ]
-            )
-
-        agora = timezone.now()
-
-        progresso_modulo.desbloqueado = True
-        progresso_modulo.chave_disponivel = False
-        progresso_modulo.data_desbloqueio = agora
-        progresso_modulo.save(
-            update_fields=[
-                'desbloqueado',
-                'chave_disponivel',
-                'data_desbloqueio',
-            ]
-        )
-
-    return JsonResponse(
-        {
-            'status': 'ok',
-            'desbloqueado': True,
-            'ja_estava_desbloqueado': False,
-            'modulo_id': modulo.id,
-            'modulo_titulo': modulo.titulo,
-        }
-    )
-
 
 # ============================================================
 # 12. MAPA DA TRILHA
