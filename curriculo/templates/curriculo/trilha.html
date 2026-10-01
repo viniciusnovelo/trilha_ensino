@@ -1237,6 +1237,82 @@
 
 
 
+    <script>
+        const mapaJornada = document.getElementById('mapa-jornada');
+
+        if (mapaJornada) {
+            let arrastandoMapa = false;
+            let inicioX = 0;
+            let scrollInicial = 0;
+
+            mapaJornada.addEventListener('pointerdown', (event) => {
+                if (
+                    event.target.closest('a, button, input, select, textarea')
+                    || event.button !== 0
+                ) {
+                    return;
+                }
+
+                arrastandoMapa = true;
+                inicioX = event.clientX;
+                scrollInicial = mapaJornada.scrollLeft;
+
+                mapaJornada.setPointerCapture?.(
+                    event.pointerId
+                );
+
+                mapaJornada.classList.add(
+                    'active:cursor-grabbing'
+                );
+            });
+
+            mapaJornada.addEventListener('pointermove', (event) => {
+                if (!arrastandoMapa) {
+                    return;
+                }
+
+                const deslocamento =
+                    event.clientX - inicioX;
+
+                mapaJornada.scrollLeft =
+                    scrollInicial - deslocamento;
+
+                event.preventDefault();
+            });
+
+            const finalizarArrasto = (event) => {
+                if (!arrastandoMapa) {
+                    return;
+                }
+
+                arrastandoMapa = false;
+
+                try {
+                    mapaJornada.releasePointerCapture?.(
+                        event.pointerId
+                    );
+                } catch (erro) {
+                    // O ponteiro pode já ter sido liberado pelo navegador.
+                }
+            };
+
+            mapaJornada.addEventListener(
+                'pointerup',
+                finalizarArrasto
+            );
+
+            mapaJornada.addEventListener(
+                'pointercancel',
+                finalizarArrasto
+            );
+
+            mapaJornada.addEventListener(
+                'pointerleave',
+                finalizarArrasto
+            );
+        }
+    </script>
+
 </body>
 
 </html>
