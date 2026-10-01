@@ -450,6 +450,40 @@ class ProgressaoEVidasTests(AutenticacaoBaseTests):
             content_type="application/json",
         )
 
+    def test_resposta_incorreta_retorna_explicacao_e_resposta_correta(self):
+        response = self.client.post(
+            reverse(
+                "verificar_resposta",
+                args=[self.fase.id],
+            ),
+            data=json.dumps({
+                "questao_id": self.questao.id,
+                "opcao_id": self.incorreta.id,
+            }),
+            content_type="application/json",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        dados = response.json()
+
+        self.assertFalse(
+            dados["correta"],
+        )
+
+        self.assertEqual(
+            dados["explicacao"],
+            "Revise o conceito.",
+        )
+
+        self.assertEqual(
+            dados["opcao_correta"]["texto"],
+            "Correta",
+        )
+
     def test_tentativa_reprovada_consume_uma_vida_e_gera_historico(self):
         response = self._finalizar(
             self.incorreta.id
@@ -516,6 +550,39 @@ class ProgressaoEVidasTests(AutenticacaoBaseTests):
                 perfil=self.aluno.perfil,
                 fase=self.fase,
             ).concluida
+        )
+
+        dados = response.json()
+
+        self.assertIn(
+            "feedback_questoes",
+            dados,
+        )
+
+        self.assertEqual(
+            len(dados["feedback_questoes"]),
+            1,
+        )
+
+        feedback = dados["feedback_questoes"][0]
+
+        self.assertTrue(
+            feedback["correta"],
+        )
+
+        self.assertEqual(
+            feedback["resposta_aluno"],
+            "Correta",
+        )
+
+        self.assertEqual(
+            feedback["resposta_correta"],
+            "Correta",
+        )
+
+        self.assertEqual(
+            feedback["explicacao"],
+            "Revise o conceito.",
         )
 
     def test_sem_vidas_bloqueia_nova_tentativa(self):
