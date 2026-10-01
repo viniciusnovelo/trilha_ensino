@@ -19,6 +19,150 @@
         .fase-node .fase-actions { opacity:0; transform:translateY(6px); }
         .fase-node:hover .fase-actions,
         .fase-node:focus-within .fase-actions { opacity:1; transform:translateY(0); }
+        .editor-mapa-track {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-width: max-content;
+            width: max-content;
+            min-height: 520px;
+            padding: 80px 55px 130px;
+        }
+
+        .editor-inicio {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: .70;
+        }
+
+        .editor-module-label {
+            position: relative;
+            width: 0;
+            min-width: 0;
+            z-index: 40;
+            top: -150px;
+            margin-right: -18px;
+            flex: 0 0 auto;
+        }
+
+        .editor-module-number {
+            width: 25px;
+            height: 25px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,.12);
+            color: var(--editor-module-color, #a5b4fc);
+            background: rgba(2,6,23,.40);
+            font-size: 9px;
+            font-weight: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .editor-fase-node {
+            position: relative;
+            width: 76px;
+            min-width: 76px;
+            height: 200px;
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .editor-fase-circle {
+            position: relative;
+            z-index: 20;
+            width: 70px;
+            height: 70px;
+            border-radius: 999px;
+            border-bottom: 6px solid var(--editor-module-dark, #3730a3);
+            background: var(--editor-module-color, #6366f1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 10px 24px rgba(0,0,0,.30),
+                0 5px 16px var(--editor-module-glow, rgba(99,102,241,.22));
+            transition: transform .18s ease, filter .18s ease;
+        }
+
+        .editor-fase-circle:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+
+        .editor-phase-title {
+            position: absolute;
+            top: calc(50% + 48px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 145px;
+            text-align: center;
+            color: rgba(255,255,255,.76);
+            font-size: 10px;
+            line-height: 1.2;
+            font-weight: 900;
+            text-shadow: 0 3px 10px rgba(0,0,0,.40);
+            pointer-events: none;
+        }
+
+        .editor-connector {
+            position: relative;
+            width: 76px;
+            min-width: 76px;
+            height: 200px;
+            flex: 0 0 auto;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .editor-connector svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .editor-module-1 {
+            --editor-module-color: #f59e0b;
+            --editor-module-dark: #b45309;
+            --editor-module-glow: rgba(245,158,11,.25);
+        }
+
+        .editor-module-2 {
+            --editor-module-color: #22c55e;
+            --editor-module-dark: #15803d;
+            --editor-module-glow: rgba(34,197,94,.24);
+        }
+
+        .editor-module-3 {
+            --editor-module-color: #38bdf8;
+            --editor-module-dark: #0369a1;
+            --editor-module-glow: rgba(56,189,248,.24);
+        }
+
+        .editor-module-4 {
+            --editor-module-color: #a855f7;
+            --editor-module-dark: #7e22ce;
+            --editor-module-glow: rgba(168,85,247,.24);
+        }
+
+        .editor-module-5 {
+            --editor-module-color: #ec4899;
+            --editor-module-dark: #be185d;
+            --editor-module-glow: rgba(236,72,153,.24);
+        }
+
+        .editor-module-6 {
+            --editor-module-color: #14b8a6;
+            --editor-module-dark: #0f766e;
+            --editor-module-glow: rgba(20,184,166,.24);
+        }
+
         @media (max-width: 767px) {
             .fase-node .fase-actions { opacity:1; transform:none; }
         }
@@ -216,65 +360,210 @@
                 </aside>
 
                 <section class="glass-card rounded-3xl overflow-hidden min-w-0 flex flex-col">
+
                     <div class="p-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
+
                         <div>
-                            <p class="text-[11px] uppercase tracking-widest text-emerald-300 font-black">Pré-visualização</p>
-                            <h2 class="text-lg font-black mt-1">Mapa da jornada</h2>
+                            <p class="text-[11px] uppercase tracking-widest text-emerald-300 font-black">
+                                Pré-visualização
+                            </p>
+
+                            <h2 class="text-lg font-black mt-1">
+                                Mapa da jornada
+                            </h2>
+
+                            <p class="text-xs text-white/40 mt-1">
+                                A mesma organização visual que o aluno verá. Clique em uma fase para abri-la.
+                            </p>
                         </div>
+
                         <div class="flex items-center gap-2 text-xs text-white/40">
-                            <span class="inline-flex items-center gap-1">● fase</span>
-                            <span class="inline-flex items-center gap-1">↕ arraste verticalmente</span>
-                            <button type="button" onclick="window.location.reload()" class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white/65">Atualizar</button>
+
+                            <span class="inline-flex items-center gap-1">
+                                ● arraste
+                            </span>
+
+                            <button
+                                type="button"
+                                onclick="window.location.reload()"
+                                class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white/65"
+                            >
+                                Atualizar
+                            </button>
+
                         </div>
+
                     </div>
 
-                    <div class="flex-1 overflow-auto scrollbar-thin">
-                        <div class="min-w-max min-h-[560px] flex items-center px-12 sm:px-20 py-16">
-                            <div class="mr-6 flex flex-col items-center opacity-70">
-                                <div class="w-6 h-6 rounded-full bg-white/55 shadow-lg shadow-white/10"></div>
-                                <span class="text-[11px] font-black uppercase tracking-widest text-white/65 mt-2">Início</span>
+
+                    <div class="flex-1 overflow-auto scrollbar-hide">
+
+                        <div class="editor-mapa-track">
+
+                            <div class="editor-inicio shrink-0 mr-8">
+
+                                <div class="w-5 h-5 rounded-full bg-white/55 shadow-lg shadow-white/10"></div>
+
+                                <span class="text-[10px] font-black uppercase tracking-widest text-white/55 mt-2">
+                                    Início
+                                </span>
+
                             </div>
 
+
                             {% for fase in fases %}
+
+                                {% if fase.primeira_do_modulo %}
+
+                                    <div class="editor-module-label">
+
+                                        <span class="editor-module-number editor-module-{{ fase.modulo.ordem }}">
+                                            {{ fase.modulo.ordem }}
+                                        </span>
+
+                                        <div>
+                                            <span class="block text-[8px] uppercase tracking-[.18em] text-white/35 font-black">
+                                                Módulo {{ fase.modulo.ordem }}
+                                            </span>
+
+                                            <span class="block text-xs font-black text-white/75 mt-1">
+                                                {{ fase.modulo.titulo }}
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                {% endif %}
+
+
                                 <div
-                                    class="fase-node relative flex flex-col items-center group z-10 w-24 h-24 transition-transform duration-75"
+                                    class="fase-node editor-fase-node editor-module-{{ fase.modulo.ordem }}"
                                     data-id="{{ fase.id }}"
                                     data-index="{{ forloop.counter0 }}"
                                     data-y="{{ fase.deslocamento_y }}"
                                     style="transform:translateY({{ fase.deslocamento_y }}px);"
                                     tabindex="0"
                                 >
-                                    <div class="w-20 h-20 rounded-full border-b-8 border-indigo-950 bg-indigo-500 flex items-center justify-center shadow-2xl relative z-20 ring-4 ring-white/5">
-                                        <span class="text-xl font-black">{{ forloop.counter }}</span>
+
+                                    <a
+                                        href="{% url 'fase_detalhe' fase.id %}"
+                                        class="editor-fase-circle"
+                                        title="Abrir {{ fase.titulo }}"
+                                    >
+
+                                        {% if fase.tipo == 'teoria' %}
+
+                                            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5.5A3.5 3.5 0 018.5 2H20v18H8.5A3.5 3.5 0 015 16.5v-11z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h7M9 10.5h7M9 14h5"/>
+                                            </svg>
+
+                                        {% elif fase.tipo == 'desafio' %}
+
+                                            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 2L4 13h6l-1 9 9-13h-6l1-7z"/>
+                                            </svg>
+
+                                        {% else %}
+
+                                            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <rect x="4" y="4" width="16" height="16" rx="4"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 8.5l5 3.5-5 3.5v-7z" fill="currentColor" stroke="none"/>
+                                            </svg>
+
+                                        {% endif %}
+
+                                    </a>
+
+
+                                    <div class="editor-phase-title">
+                                        {{ fase.titulo }}
                                     </div>
-                                    <span class="absolute -top-11 max-w-[180px] truncate whitespace-nowrap text-xs font-bold text-white bg-slate-950/85 border border-white/10 px-3 py-1.5 rounded-xl shadow-lg pointer-events-none">{{ fase.titulo }}</span>
-                                    <div class="fase-actions absolute top-20 flex items-center gap-2 mt-4 z-50 transition">
-                                        <button type="button" class="drag-handle bg-slate-900/90 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] cursor-grab border border-white/10" title="Arrastar verticalmente">↕</button>
-                                        <button type="button" onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] border border-emerald-300/10">＋ Questão ({{ fase.questoes.count }})</button>
+
+
+                                    <div class="fase-actions absolute top-full mt-4 flex items-center gap-2 z-50">
+
+                                        <button
+                                            type="button"
+                                            class="drag-handle bg-slate-900/90 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] cursor-grab border border-white/10"
+                                            title="Arrastar verticalmente"
+                                        >
+                                            ↕
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')"
+                                            class="bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] border border-emerald-300/10"
+                                        >
+                                            ＋ Questão ({{ fase.questoes.count }})
+                                        </button>
+
                                     </div>
+
                                 </div>
+
 
                                 {% if not forloop.last %}
-                                    <div class="w-32 h-[200px] flex-shrink-0 -mx-4 z-0 pointer-events-none">
-                                        <svg viewBox="0 0 100 200" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-                                            <path id="path-base-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-conector" stroke-width="14" stroke-linecap="round"/>
-                                            <path id="path-dash-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-tracejada" stroke-width="5" stroke-dasharray="9 9" stroke-linecap="round"/>
+
+                                    <div class="editor-connector">
+
+                                        <svg
+                                            viewBox="0 0 100 200"
+                                            preserveAspectRatio="none"
+                                        >
+
+                                            <path
+                                                id="path-base-{{ forloop.counter0 }}"
+                                                d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}"
+                                                fill="none"
+                                                class="linha-conector"
+                                                stroke-width="12"
+                                                stroke-linecap="round"
+                                            />
+
+                                            <path
+                                                id="path-dash-{{ forloop.counter0 }}"
+                                                d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}"
+                                                fill="none"
+                                                class="linha-tracejada"
+                                                stroke-width="5"
+                                                stroke-dasharray="9 9"
+                                                stroke-linecap="round"
+                                            />
+
                                         </svg>
+
                                     </div>
+
                                 {% endif %}
+
                             {% empty %}
-                                <div class="w-full text-center text-white/40">
-                                    <div class="text-5xl">🗺️</div>
-                                    <p class="font-black mt-3">O mapa ainda está vazio.</p>
-                                    <p class="text-sm mt-1">Crie um módulo e depois uma fase para começar a desenhar a jornada.</p>
+
+                                <div class="w-full text-center text-white/40 py-16">
+
+                                    <div class="text-5xl">
+                                        🗺️
+                                    </div>
+
+                                    <p class="font-black mt-3">
+                                        O mapa ainda está vazio.
+                                    </p>
+
+                                    <p class="text-sm mt-1">
+                                        Crie um módulo e uma fase para começar a desenhar a jornada.
+                                    </p>
+
                                 </div>
+
                             {% endfor %}
 
-                            <div class="w-48"></div>
-                        </div>
-                    </div>
 
-                    <div class="sm:hidden border-t border-white/10 p-3 flex gap-2">
+                            <div class="w-48 shrink-0"></div>
+
+                        </div>
+
+                    </div>                    <div class="sm:hidden border-t border-white/10 p-3 flex gap-2">
                         <button type="button" onclick="openModal('modal-modulo')" class="flex-1 px-3 py-2 rounded-xl bg-white/10 border border-white/10 font-black text-sm">＋ Módulo</button>
                         <button type="button" onclick="openModal('modal-fase')" class="flex-1 px-3 py-2 rounded-xl bg-indigo-500 font-black text-sm">＋ Fase</button>
                     </div>
