@@ -2491,8 +2491,55 @@ def trilha_view(
         request
     )
 
+    modo_preview_aluno = (
+        papel == 'professor'
+        and request.GET.get('preview') == 'aluno'
+        and trilha.autor_id == request.user.id
+    )
+
+    papel_exibicao = (
+        'aluno'
+        if modo_preview_aluno
+        else papel
+    )
+
+    # Prévia como aluno usa a própria tela final da trilha, com uma
+    # jornada inicial simulada. Ela não altera ProgressoFase/ProgressoModulo.
+    if modo_preview_aluno:
+
+        for indice, modulo in enumerate(modulos):
+
+            fases_modulo = list(
+                modulo.fases.all()
+            )
+
+            modulo.total_fases = len(
+                fases_modulo
+            )
+            modulo.fases_concluidas = 0
+            modulo.percentual_progresso = 0
+
+            modulo.desbloqueado = (
+                indice == 0
+            )
+
+            modulo.status = (
+                'atual'
+                if indice == 0
+                else 'bloqueado'
+            )
+
+            for fase_indice, fase in enumerate(
+                fases_modulo
+            ):
+
+                if indice == 0 and fase_indice == 0:
+                    fase.status = 'atual'
+                else:
+                    fase.status = 'bloqueada'
+
     # Professores visualizam todo o conteúdo da própria trilha.
-    if papel == 'professor':
+    elif papel == 'professor':
 
         for modulo in modulos:
             fases_modulo = list(
@@ -2570,7 +2617,10 @@ def trilha_view(
         'trilha': trilha,
         'visualizacao_professor': (
             papel == 'professor'
+            and not modo_preview_aluno
         ),
+        'modo_preview_aluno': modo_preview_aluno,
+        'papel_exibicao': papel_exibicao,
         'modulos': modulos,
         'modulos_concluidos': (
             modulos_concluidos
