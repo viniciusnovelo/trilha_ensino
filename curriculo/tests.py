@@ -1956,6 +1956,11 @@ class CatalogoMateriaTests(AutenticacaoBaseTests):
             username="professor_catalogo",
         )
 
+        self.professor.perfil.tipo = "professor"
+        self.professor.perfil.save(
+            update_fields=["tipo"]
+        )
+
         self.trilha = Disciplina.objects.create(
             nome="Jogo de Matemática",
             slug="jogo-matematica-catalogo",
