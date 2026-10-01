@@ -48,6 +48,17 @@
             pointer-events: none;
         }
 
+        .explicacao-card {
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(96, 165, 250, 0.18);
+            backdrop-filter: blur(16px);
+        }
+
+        .resolucao-card {
+            background: rgba(2, 6, 23, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
     </style>
 
 </head>
@@ -296,6 +307,44 @@
             class="w-full space-y-4"
         >
         </div>
+
+        <section
+            id="explicacao-questao"
+            class="hidden w-full mt-6 explicacao-card rounded-2xl p-5 text-left"
+            aria-live="polite"
+        >
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-400/15 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <circle cx="12" cy="12" r="8.5"/>
+                        <path stroke-linecap="round" d="M12 10v6M12 7.5v.2"/>
+                    </svg>
+                </div>
+
+                <div class="min-w-0">
+                    <p class="text-[10px] uppercase tracking-[.22em] text-blue-300 font-black">
+                        Entenda a questão
+                    </p>
+
+                    <h3
+                        id="explicacao-questao-titulo"
+                        class="text-lg font-black text-white mt-1"
+                    >
+                        Como resolver
+                    </h3>
+
+                    <p
+                        id="explicacao-questao-resposta"
+                        class="text-sm text-white/55 mt-2"
+                    ></p>
+
+                    <div
+                        id="explicacao-questao-texto"
+                        class="text-sm text-white/75 leading-7 mt-3"
+                    ></div>
+                </div>
+            </div>
+        </section>
 
 
         <div
