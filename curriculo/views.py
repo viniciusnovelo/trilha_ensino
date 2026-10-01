@@ -843,9 +843,25 @@ def dados_materias_aluno(
     fases_concluidas_ids,
 ):
     for materia in materias:
-        jogos = list(
-            getattr(materia, 'jogos_publicados', [])
+        jogos = getattr(
+            materia,
+            'jogos_publicados',
+            None,
         )
+
+        if jogos is None:
+            jogos = list(
+                materia.jogos
+                .filter(ativo=True)
+                .prefetch_related(
+                    'modulos__fases',
+                )
+                .order_by(
+                    'ordem',
+                    'id',
+                    'nome',
+                )
+            )
 
         for trilha in jogos:
             preparar_progresso_trilha_aluno(
