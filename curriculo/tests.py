@@ -2228,13 +2228,89 @@ class CatalogoMateriaTests(AutenticacaoBaseTests):
                         ]
 
                         self.assertEqual(
-                            sorted(posicoes),
-                            [1, 2, 3, 4],
+                            len(posicoes),
+                            3,
                             msg=(
-                                "Respostas corretas precisam ocupar "
-                                "as posições 1, 2, 3 e 4 em cada fase."
+                                "Cada fase do catálogo deve possuir "
+                                "exatamente 3 questões."
                             ),
                         )
+
+                        self.assertEqual(
+                            sorted(posicoes),
+                            [1, 2, 3],
+                            msg=(
+                                "Respostas corretas precisam ocupar "
+                                "as posições 1, 2 e 3 em cada fase."
+                            ),
+                        )
+
+    def test_catalogo_json_possui_quatro_modulos_e_doze_questoes_por_jogo(self):
+        caminho_catalogo = (
+            Path(__file__).resolve().parent.parent
+            / "dados_catalogo_ensino_medio.json"
+        )
+
+        with caminho_catalogo.open(
+            "r",
+            encoding="utf-8",
+        ) as arquivo:
+            dados = json.load(arquivo)
+
+        total_jogos = 0
+        total_modulos = 0
+        total_fases = 0
+        total_questoes = 0
+
+        for materia in dados["materias"]:
+            for jogo in materia["jogos"]:
+                total_jogos += 1
+
+                self.assertEqual(
+                    len(jogo["modulos"]),
+                    4,
+                    msg=f'{jogo["slug"]} deve possuir 4 módulos.',
+                )
+
+                questoes_jogo = 0
+
+                for modulo in jogo["modulos"]:
+                    self.assertEqual(
+                        len(modulo["fases"]),
+                        1,
+                        msg=(
+                            f'{jogo["slug"]} · módulo {modulo["ordem"]} '
+                            "deve possuir 1 fase."
+                        ),
+                    )
+
+                    total_modulos += 1
+                    total_fases += len(modulo["fases"])
+
+                    for fase in modulo["fases"]:
+                        self.assertEqual(
+                            len(fase["questoes"]),
+                            3,
+                            msg=(
+                                f'{jogo["slug"]} · módulo {modulo["ordem"]} '
+                                "deve possuir 3 questões."
+                            ),
+                        )
+
+                        questoes_jogo += len(fase["questoes"])
+                        total_questoes += len(fase["questoes"])
+
+                self.assertEqual(
+                    questoes_jogo,
+                    12,
+                    msg=f'{jogo["slug"]} deve possuir 12 questões.',
+                )
+
+        self.assertEqual(total_jogos, 12)
+        self.assertEqual(total_modulos, 48)
+        self.assertEqual(total_fases, 48)
+        self.assertEqual(total_questoes, 144)
+
 
     def test_professor_cria_jogo_associado_a_materia(self):
         self.client.login(
