@@ -328,7 +328,7 @@
                                             </div>
                                             <div class="flex items-center gap-1 shrink-0">
                                                 <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" data-editor-action="editar-modulo" data-modulo-id="{{ modulo.id }}" title="Editar módulo">✎</button>
-                                                <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" data-editor-action="excluir-modulo" data-modulo-id="{{ modulo.id }}" data-modulo-titulo="{{ modulo.titulo|escapejs }}" title="Excluir módulo">×</button>
+                                                <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" data-editor-action="excluir-modulo" data-modulo-id="{{ modulo.id }}" data-modulo-titulo="{{ modulo.titulo|escape }}" title="Excluir módulo">×</button>
                                             </div>
                                         </div>
                                     </div>
@@ -345,10 +345,10 @@
                                                 </div>
                                                 <div class="flex gap-1">
                                                     <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" data-editor-action="editar-fase" data-fase-id="{{ fase.id }}" title="Editar fase">✎</button>
-                                                    <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" data-editor-action="excluir-fase" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escapejs }}" title="Excluir fase">×</button>
+                                                    <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" data-editor-action="excluir-fase" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" title="Excluir fase">×</button>
                                                 </div>
                                             </div>
-                                            <button type="button" data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escapejs }}" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
+                                            <button type="button" data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
                                     {% for questao in fase.questoes.all %}
                                         <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-3" data-editor-type="questao" data-editor-id="{{ questao.id }}" data-editor-select="questao">
                                             <div class="flex items-start gap-3">
@@ -368,7 +368,7 @@
                                                     >✎</button>
                                                     <button
                                                         type="button"
-                                                        data-editor-action="excluir-questao" data-questao-id="{{ questao.id }}" data-questao-enunciado="{{ questao.enunciado|escapejs }}"
+                                                        data-editor-action="excluir-questao" data-questao-id="{{ questao.id }}" data-questao-enunciado="{{ questao.enunciado|escape }}"
                                                         class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200"
                                                         title="Excluir questão"
                                                     >×</button>
@@ -536,7 +536,7 @@
 
                                         <button
                                             type="button"
-                                            data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escapejs }}"
+                                            data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}"
                                             class="bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] border border-emerald-300/10"
                                         >
                                             ＋ Questão ({{ fase.questoes.count }})
