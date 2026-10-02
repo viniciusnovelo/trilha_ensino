@@ -235,9 +235,10 @@ def validar_catalogo(dados):
 
             modulos = jogo['modulos']
 
-            if not isinstance(modulos, list) or not modulos:
+            if not isinstance(modulos, list) or len(modulos) != 4:
                 erro(
-                    f'{contexto_jogo}: o jogo precisa possuir módulos.'
+                    f'{contexto_jogo}: cada jogo deve possuir '
+                    'exatamente 4 módulos.'
                 )
 
             ordens_modulos = set()
@@ -264,13 +265,20 @@ def validar_catalogo(dados):
                     )
 
                 ordens_modulos.add(modulo['ordem'])
+
+                if modulo['ordem'] not in (1, 2, 3, 4):
+                    erro(
+                        f'{contexto_modulo}: a ordem deve estar entre 1 e 4.'
+                    )
+
                 total_modulos += 1
 
                 fases = modulo['fases']
 
-                if not isinstance(fases, list) or not fases:
+                if not isinstance(fases, list) or len(fases) != 1:
                     erro(
-                        f'{contexto_modulo}: sem fases.'
+                        f'{contexto_modulo}: cada módulo deve possuir '
+                        'exatamente 1 fase.'
                     )
 
                 ordens_fases = set()
@@ -300,14 +308,21 @@ def validar_catalogo(dados):
                         )
 
                     ordens_fases.add(fase['ordem'])
+
+                    if fase['ordem'] != 1:
+                        erro(
+                            f'{contexto_fase}: a única fase do módulo '
+                            'deve ter ordem 1.'
+                        )
+
                     total_fases += 1
 
                     questoes = fase['questoes']
 
-                    if not isinstance(questoes, list) or len(questoes) != 4:
+                    if not isinstance(questoes, list) or len(questoes) != 3:
                         erro(
                             f'{contexto_fase}: cada fase deve possuir '
-                            'exatamente 4 questões.'
+                            'exatamente 3 questões.'
                         )
 
                     posicoes_corretas = []
@@ -328,6 +343,27 @@ def validar_catalogo(dados):
                                     f'campo "{campo}" ausente.'
                                 )
 
+                        explicacao = questao.get(
+                            'explicacao_erro',
+                            '',
+                        )
+
+                        if not isinstance(explicacao, str) or not explicacao.strip():
+                            erro(
+                                f'{contexto_questao}: explicação pedagógica ausente.'
+                            )
+
+                        for marcador in (
+                            'Como pensar:',
+                            'Passo a passo:',
+                            'Conclusão:',
+                        ):
+                            if marcador not in explicacao:
+                                erro(
+                                    f'{contexto_questao}: a explicação deve '
+                                    f'conter "{marcador}".'
+                                )
+
                         posicao_correta = validar_opcoes(
                             questao,
                             contexto_questao,
@@ -340,11 +376,10 @@ def validar_catalogo(dados):
                         total_questoes += 1
                         total_opcoes += 4
 
-                    if sorted(posicoes_corretas) != [1, 2, 3, 4]:
+                    if len(set(posicoes_corretas)) != len(posicoes_corretas):
                         erro(
                             f'{contexto_fase}: a posição da resposta correta '
-                            'deve variar entre as 4 questões, usando uma vez '
-                            'cada posição (1ª, 2ª, 3ª e 4ª alternativa).'
+                            'deve variar entre as 3 questões da fase.'
                         )
 
     print()
@@ -356,6 +391,26 @@ def validar_catalogo(dados):
     print(f'   Questões: {total_questoes}')
     print(f'   Alternativas: {total_opcoes}')
     print()
+
+    if total_modulos != total_jogos * 4:
+        erro(
+            'A estrutura final deveria possuir 4 módulos por jogo.'
+        )
+
+    if total_fases != total_jogos * 4:
+        erro(
+            'A estrutura final deveria possuir 1 fase por módulo.'
+        )
+
+    if total_questoes != total_jogos * 12:
+        erro(
+            'A estrutura final deveria possuir 12 questões por jogo.'
+        )
+
+    if total_opcoes != total_questoes * 4:
+        erro(
+            'Cada questão deve possuir exatamente 4 alternativas.'
+        )
 
     return {
         'materias': len(materias),
