@@ -15,8 +15,18 @@
         .editor-main { min-height:0; overflow:hidden; display:flex; flex-direction:column; }
         .editor-workspace { min-height:0; flex:1 1 auto; }
         .editor-workspace-panel { min-height:0; height:100%; }
-        .editor-map-viewport { min-height:0; overflow:auto; }
+        .editor-map-viewport { min-height:0; overflow:auto; position:relative; }
         .editor-structure-viewport { min-height:0; overflow-y:auto; }
+        .editor-details-viewport { min-height:0; overflow-y:auto; }
+        .editor-selectable { transition:background .18s ease, border-color .18s ease, box-shadow .18s ease; cursor:pointer; }
+        .editor-selectable.editor-selected { background:rgba(99,102,241,.14); border-color:rgba(129,140,248,.55); box-shadow:0 0 0 1px rgba(129,140,248,.18), 0 10px 30px rgba(30,41,59,.22); }
+        .editor-fase-circle.editor-selected { box-shadow:0 0 0 5px rgba(255,255,255,.18), 0 0 0 9px var(--editor-module-glow, rgba(99,102,241,.28)), 0 12px 30px rgba(0,0,0,.35); filter:brightness(1.1); }
+        .editor-phase-title.editor-selected { color:#fff; text-shadow:0 0 16px rgba(255,255,255,.28), 0 3px 10px rgba(0,0,0,.5); }
+        .editor-module-label.editor-selected .editor-module-number { box-shadow:0 0 0 4px rgba(255,255,255,.12), 0 0 22px var(--editor-module-glow, rgba(99,102,241,.25)); border-color:rgba(255,255,255,.45); }
+        .editor-map-canvas { transform-origin:top left; will-change:transform; }
+        .editor-details-empty { background:rgba(2,6,23,.18); border:1px dashed rgba(255,255,255,.10); }
+        .editor-details-action { min-height:40px; }
+        @media (max-width: 1279px) and (min-width: 1024px) { .editor-workspace { grid-template-columns:300px minmax(0,1fr) 270px; } }
         @media (max-width: 1023px) {
             body.editor-page { height:auto; min-height:100vh; overflow:auto; }
             .editor-shell { height:auto; min-height:100vh; overflow:visible; }
@@ -24,6 +34,7 @@
             .editor-workspace { height:auto; min-height:0; }
             .editor-workspace-panel { height:auto; min-height:420px; }
             .editor-map-viewport { min-height:520px; }
+            .editor-details-viewport { max-height:520px; }
         }
         .cursor-grab { cursor:grab; }
         .cursor-grabbing { cursor:grabbing !important; }
@@ -289,7 +300,7 @@
                 </div>
             </section>
 
-            <div class="editor-workspace grid lg:grid-cols-[360px_minmax(0,1fr)] gap-5">
+            <div class="editor-workspace grid lg:grid-cols-[300px_minmax(0,1fr)_300px] gap-4 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
                 <aside class="editor-workspace-panel glass-card rounded-3xl overflow-hidden flex flex-col">
                     <div class="p-4 border-b border-white/10">
                         <div class="flex items-center justify-between gap-3">
@@ -304,7 +315,7 @@
 
                     <div class="editor-structure-viewport flex-1 scrollbar-thin p-3 space-y-3">
                         {% for modulo in modulos %}
-                            <article class="rounded-2xl bg-black/15 border border-white/10 overflow-hidden">
+                            <article class="editor-selectable rounded-2xl bg-black/15 border border-white/10 overflow-hidden" data-editor-type="modulo" data-editor-id="{{ modulo.id }}" onclick="selectEditorItem('modulo', {{ modulo.id }})">
                                 <div class="p-3 flex items-start gap-3">
                                     <div class="w-9 h-9 shrink-0 rounded-xl bg-sky-400/10 text-sky-200 border border-sky-300/10 flex items-center justify-center font-black">{{ modulo.ordem }}</div>
                                     <div class="min-w-0 flex-1">
@@ -325,7 +336,7 @@
 
                                 <div class="px-3 pb-3 space-y-2">
                                     {% for fase in modulo.fases.all %}
-                                        <div class="rounded-xl bg-slate-950/35 border border-white/7 p-3">
+                                        <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-3" data-editor-type="fase" data-editor-id="{{ fase.id }}" onclick="selectEditorItem('fase', {{ fase.id }})">
                                             <div class="flex items-start gap-3">
                                                 <div class="w-8 h-8 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-300/20 flex items-center justify-center text-xs font-black text-indigo-200">{{ fase.ordem }}</div>
                                                 <div class="min-w-0 flex-1">
@@ -339,7 +350,7 @@
                                             </div>
                                             <button type="button" onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
                                     {% for questao in fase.questoes.all %}
-                                        <article id="questao-card-{{ questao.id }}" class="mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-3">
+                                        <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-3" data-editor-type="questao" data-editor-id="{{ questao.id }}" onclick="selectEditorItem('questao', {{ questao.id }})">
                                             <div class="flex items-start gap-3">
                                                 <div class="w-7 h-7 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[11px] font-black">
                                                     Q
@@ -405,11 +416,13 @@
                         </div>
 
                         <div class="flex items-center gap-2 text-xs text-white/40">
-
-                            <span class="inline-flex items-center gap-1">
-                                ● arraste
-                            </span>
-
+                            <span class="hidden sm:inline-flex items-center gap-1">● arraste</span>
+                            <div class="inline-flex items-center rounded-xl bg-black/20 border border-white/10 p-1">
+                                <button type="button" onclick="changeMapZoom(-0.1)" class="w-8 h-8 rounded-lg hover:bg-white/10 font-black" title="Diminuir zoom">−</button>
+                                <span id="map-zoom-value" class="w-12 text-center font-black text-white/65">100%</span>
+                                <button type="button" onclick="changeMapZoom(0.1)" class="w-8 h-8 rounded-lg hover:bg-white/10 font-black" title="Aumentar zoom">＋</button>
+                            </div>
+                            <button type="button" onclick="fitMapToViewport()" class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white/65">Ajustar</button>
                             <button
                                 type="button"
                                 onclick="window.location.reload()"
@@ -425,7 +438,7 @@
 
                     <div class="editor-map-viewport flex-1 scrollbar-thin">
 
-                        <div class="editor-mapa-track">
+                        <div id="editor-map-canvas" class="editor-mapa-track">
 
                             <div class="editor-inicio shrink-0 mr-8">
 
@@ -442,7 +455,7 @@
 
                                 {% if fase.primeira_do_modulo %}
 
-                                    <div class="editor-module-label">
+                                    <div class="editor-module-label editor-selectable" data-editor-type="modulo" data-editor-id="{{ fase.modulo.id }}" onclick="selectEditorItem('modulo', {{ fase.modulo.id }})">
 
                                         <span class="editor-module-number editor-module-{{ fase.modulo.ordem }}">
                                             {{ fase.modulo.ordem }}
@@ -474,6 +487,7 @@
 
                                     <a
                                         href="{% url 'fase_detalhe' fase.id %}"
+                                        onclick="selectEditorItem('fase', {{ fase.id }}, event)"
                                         class="editor-fase-circle"
                                         title="Abrir {{ fase.titulo }}"
                                     >
@@ -503,7 +517,7 @@
                                     </a>
 
 
-                                    <div class="editor-phase-title">
+                                    <div class="editor-phase-title" data-editor-phase-title="{{ fase.id }}">
                                         {{ fase.titulo }}
                                     </div>
 
@@ -595,6 +609,22 @@
                         <button type="button" onclick="openModal('modal-fase')" class="flex-1 px-3 py-2 rounded-xl bg-indigo-500 font-black text-sm">＋ Fase</button>
                     </div>
                 </section>
+
+                <aside id="editor-details-panel" class="editor-workspace-panel glass-card rounded-3xl overflow-hidden flex flex-col">
+                    <div class="p-4 border-b border-white/10">
+                        <p class="text-[11px] uppercase tracking-widest text-violet-300 font-black">Seleção</p>
+                        <h2 class="text-lg font-black mt-1">Detalhes</h2>
+                        <p id="editor-details-context" class="text-xs text-white/40 mt-1">Selecione um módulo, fase ou questão.</p>
+                    </div>
+                    <div id="editor-details-viewport" class="editor-details-viewport flex-1 p-4">
+                        <div id="editor-details-empty" class="editor-details-empty rounded-2xl p-5 text-center mt-2">
+                            <div class="text-3xl">✦</div>
+                            <p class="font-black mt-3">Nada selecionado</p>
+                            <p class="text-xs text-white/40 mt-1">Clique em um item da estrutura ou em um nó do mapa para ver seus detalhes.</p>
+                        </div>
+                        <div id="editor-details-content" class="hidden space-y-4"></div>
+                    </div>
+                </aside>
             </div>
         </main>
     </div>
@@ -880,6 +910,20 @@
             {% endfor %}
         };
 
+        const editorModulos = {
+            {% for modulo in modulos %}
+                '{{ modulo.id }}': { id: {{ modulo.id }}, titulo: '{{ modulo.titulo|escapejs }}', descricao: '{{ modulo.descricao|default_if_none:""|escapejs }}', ordem: {{ modulo.ordem }}, fases: {{ modulo.fases.count }} },
+            {% endfor %}
+        };
+
+        const editorFases = {
+            {% for modulo in modulos %}
+                {% for fase in modulo.fases.all %}
+                    '{{ fase.id }}': { id: {{ fase.id }}, titulo: '{{ fase.titulo|escapejs }}', moduloId: {{ fase.modulo_id }}, moduloTitulo: '{{ fase.modulo.titulo|escapejs }}', tipo: '{{ fase.get_tipo_display|escapejs }}', tipoCodigo: '{{ fase.tipo }}', ordem: {{ fase.ordem }}, xp: {{ fase.xp_recompensa }}, moedas: {{ fase.moedas_recompensa }}, questoes: {{ fase.questoes.count }}, url: '{% url "fase_detalhe" fase.id %}' },
+                {% endfor %}
+            {% endfor %}
+        };
+
         const csrfToken = '{{ csrf_token }}';
         const trilhaId = {{ trilha.id }};
         const temasTrilha = ['tema-padrao','tema-floresta','tema-deserto','tema-masmorra','tema-aurora','tema-oceano'];
@@ -1130,6 +1174,56 @@
                 }
             });
         });
+
+        let selectedEditorType = null;
+        let selectedEditorId = null;
+        let mapScale = 1;
+
+        function escapeEditorHtml(value) {
+            return String(value ?? '').replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
+        }
+
+        function selectEditorItem(type,id,event=null) {
+            if(event) event.preventDefault();
+            selectedEditorType=type;
+            selectedEditorId=String(id);
+            document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
+            document.querySelectorAll('[data-editor-type="'+type+'"][data-editor-id="'+id+'"]').forEach((element)=>element.classList.add('editor-selected'));
+            if(type==='fase') document.querySelectorAll('[data-editor-phase-title="'+id+'"]').forEach((element)=>element.classList.add('editor-selected'));
+            renderEditorDetails(type,String(id));
+        }
+
+        function renderEditorDetails(type,id) {
+            const empty=document.getElementById('editor-details-empty');
+            const content=document.getElementById('editor-details-content');
+            const context=document.getElementById('editor-details-context');
+            if(!empty||!content||!context)return;
+            let html='';
+            if(type==='modulo') {
+                const modulo=editorModulos[id]; if(!modulo)return;
+                context.textContent='Módulo selecionado';
+                html='<div class="rounded-2xl bg-sky-400/10 border border-sky-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-sky-300 font-black">MÓDULO '+escapeEditorHtml(modulo.ordem)+'</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(modulo.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(modulo.descricao||'Sem descrição cadastrada.')+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Fases</p><p class="text-xl font-black mt-1">'+modulo.fases+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Ordem</p><p class="text-xl font-black mt-1">'+modulo.ordem+'</p></div></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-4 py-3" onclick="openSelectedModulo()">Editar módulo</button><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" onclick="deleteSelectedModulo()">Excluir módulo</button></div>';
+            } else if(type==='fase') {
+                const fase=editorFases[id]; if(!fase)return;
+                context.textContent='Fase selecionada';
+                html='<div class="rounded-2xl bg-indigo-400/10 border border-indigo-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">FASE</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(fase.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(fase.moduloTitulo)+' · '+escapeEditorHtml(fase.tipo)+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Questões</p><p class="text-xl font-black mt-1">'+fase.questoes+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">XP</p><p class="text-xl font-black mt-1">'+fase.xp+'</p></div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3 text-xs text-white/55">Recompensa: <strong class="text-white">'+fase.moedas+' moedas</strong></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black px-4 py-3" onclick="openSelectedFase()">Editar fase</button><a href="'+fase.url+'" class="editor-details-action flex items-center justify-center w-full rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-black px-4 py-3">Abrir fase</a><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" onclick="deleteSelectedFase()">Excluir fase</button></div>';
+            } else if(type==='questao') {
+                const questao=questoesEditor[id]; if(!questao)return;
+                context.textContent='Questão selecionada';
+                const opcoes=(questao.opcoes||[]).map((opcao,index)=>'<div class="rounded-xl border '+(opcao.correta?'border-emerald-400/35 bg-emerald-400/10':'border-white/10 bg-white/[0.03]')+' p-3"><div class="flex gap-2"><span class="text-[10px] font-black '+(opcao.correta?'text-emerald-300':'text-white/35')+'">'+(index+1)+'</span><span class="text-xs text-white/75">'+escapeEditorHtml(opcao.texto||'Alternativa vazia')+(opcao.correta?' <strong class="text-emerald-300">· correta</strong>':'')+'</span></div></div>').join('');
+                html='<div class="rounded-2xl bg-emerald-400/10 border border-emerald-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-emerald-300 font-black">QUESTÃO</span><p class="text-sm font-black leading-relaxed mt-2">'+escapeEditorHtml(questao.enunciado)+'</p></div><div><p class="text-[10px] uppercase tracking-widest text-white/35 font-black mb-2">Alternativas</p><div class="space-y-2">'+(opcoes||'<p class="text-xs text-white/35">Nenhuma alternativa cadastrada.</p>')+'</div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-widest text-white/35 font-black">Feedback</p><p class="text-xs text-white/55 mt-2">'+escapeEditorHtml(questao.explicacao||'Sem feedback cadastrado.')+'</p></div><button type="button" class="editor-details-action w-full rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-3" onclick="openEditQuestao('+id+')">Editar questão</button>';
+            }
+            empty.classList.add('hidden'); content.classList.remove('hidden'); content.innerHTML=html;
+        }
+
+        function openSelectedModulo(){const modulo=editorModulos[selectedEditorId];if(modulo)openEditModulo(modulo.id,modulo.titulo,modulo.descricao,modulo.ordem);}
+        function openSelectedFase(){const fase=editorFases[selectedEditorId];if(!fase)return;const node=document.querySelector('.fase-node[data-id="'+fase.id+'"]');openEditFase(fase.id,fase.moduloId,fase.titulo,fase.ordem,fase.tipoCodigo,fase.xp,fase.moedas,node?.getAttribute('data-y')||0);}
+        function deleteSelectedModulo(){const modulo=editorModulos[selectedEditorId];if(modulo)deleteModulo(modulo.id,modulo.titulo);}
+        function deleteSelectedFase(){const fase=editorFases[selectedEditorId];if(fase)deleteFase(fase.id,fase.titulo);}
+        function applyMapScale(){const canvas=document.getElementById('editor-map-canvas');const label=document.getElementById('map-zoom-value');if(!canvas)return;canvas.style.transform='scale('+mapScale+')';if(label)label.textContent=Math.round(mapScale*100)+'%';}
+        function changeMapZoom(delta){mapScale=Math.max(0.65,Math.min(1.35,Math.round((mapScale+delta)*100)/100));applyMapScale();}
+        function fitMapToViewport(){const viewport=document.querySelector('.editor-map-viewport');const canvas=document.getElementById('editor-map-canvas');if(!viewport||!canvas)return;const availableHeight=Math.max(320,viewport.clientHeight-40);mapScale=Math.max(0.65,Math.min(1.05,availableHeight/canvas.offsetHeight));mapScale=Math.round(mapScale*100)/100;applyMapScale();requestAnimationFrame(()=>{viewport.scrollLeft=Math.max(0,(canvas.offsetWidth*mapScale-viewport.clientWidth)/2);viewport.scrollTop=Math.max(0,(canvas.offsetHeight*mapScale-viewport.clientHeight)/2);});}
+        applyMapScale();
 
         let isDragging=false;
         let activeNode=null;
