@@ -37,22 +37,22 @@
                         {
                           "texto": "um único elemento do contradomínio",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "vários elementos obrigatoriamente",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "nenhum elemento",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "dois valores obrigatoriamente",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -63,22 +63,22 @@
                         {
                           "texto": "0",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "6",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "3",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "9",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -89,22 +89,22 @@
                         {
                           "texto": "1",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "3",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "2",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "-2",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -428,22 +428,22 @@
                         {
                           "texto": "3",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "6",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "4",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "2",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -454,22 +454,22 @@
                         {
                           "texto": "8",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "4",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "2",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "6",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -480,22 +480,22 @@
                         {
                           "texto": "0",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "0",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "3",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "9",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -523,22 +523,22 @@
                         {
                           "texto": "R$ 3",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "R$ 9",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "R$ 6",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "R$ 1.5",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -549,22 +549,22 @@
                         {
                           "texto": "6 xícaras",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "3 xícaras",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "5 xícaras",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "1.5 xícaras",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -575,22 +575,22 @@
                         {
                           "texto": "não muda",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "zera",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "também dobra",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "fica pela metade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -819,22 +819,22 @@
                         {
                           "texto": "24 cm²",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "10 cm²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "12 cm²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "48 cm²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -845,22 +845,22 @@
                         {
                           "texto": "8 cm",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "16 cm",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "16 cm",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "8 cm",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -871,22 +871,22 @@
                         {
                           "texto": "270°",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "360°",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "180°",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "90°",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -914,22 +914,22 @@
                         {
                           "texto": "R$ 4",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "R$ 12",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "R$ 7",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "R$ 2",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -940,22 +940,22 @@
                         {
                           "texto": "8 xícaras",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "4 xícaras",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "6 xícaras",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "2 xícaras",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -966,22 +966,22 @@
                         {
                           "texto": "não muda",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "zera",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "também dobra",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "fica pela metade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -1220,22 +1220,22 @@
                         {
                           "texto": "deslocamento e intervalo de tempo",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "massa e volume",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "força e massa",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "energia e potência",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -1246,22 +1246,22 @@
                         {
                           "texto": "1 m/s",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "10 m/s",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "2 m/s",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "20 m/s",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -1272,22 +1272,22 @@
                         {
                           "texto": "J",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "W",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "m/s",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "N",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -1315,22 +1315,22 @@
                         {
                           "texto": "velocidade ao longo do tempo",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "massa",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "energia potencial",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "distância ao centro",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -1341,22 +1341,22 @@
                         {
                           "texto": "5 m/s²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "2 m/s²",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "3 m/s²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "6 m/s²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -1367,22 +1367,22 @@
                         {
                           "texto": "N",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "kg",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "m/s²",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "m/s",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -1611,22 +1611,22 @@
                         {
                           "texto": "F = m·a",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "F = m/v",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "F = a/m",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "F = m+a",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -1637,22 +1637,22 @@
                         {
                           "texto": "1 m/s²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "10 m/s²",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "30 m/s²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "3 m/s²",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -1663,22 +1663,22 @@
                         {
                           "texto": "watt",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "pascal",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "newton",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "joule",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -1706,22 +1706,22 @@
                         {
                           "texto": "deslocamento",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "aumento de massa",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "redução da gravidade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "mudança de temperatura obrigatória",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -1732,22 +1732,22 @@
                         {
                           "texto": "15 J",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "45 J",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "18 J",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "9 J",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -1758,22 +1758,22 @@
                         {
                           "texto": "watt",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "metro",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "joule",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "newton",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -2002,22 +2002,22 @@
                         {
                           "texto": "deslocamento",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "aumento de massa",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "redução da gravidade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "mudança de temperatura obrigatória",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2028,22 +2028,22 @@
                         {
                           "texto": "20 J",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "80 J",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "24 J",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "16 J",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2054,22 +2054,22 @@
                         {
                           "texto": "watt",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "metro",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "joule",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "newton",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -2097,22 +2097,22 @@
                         {
                           "texto": "realizado",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "anulado",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "armazenado em massa",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "transformado em volume",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2123,22 +2123,22 @@
                         {
                           "texto": "100 W",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "10 W",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "40 W",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "400 W",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2149,22 +2149,22 @@
                         {
                           "texto": "newton",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "tesla",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "watt",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "joule",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -2403,22 +2403,22 @@
                         {
                           "texto": "representar o espaço geográfico",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "medir a temperatura do ar",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "estudar apenas os oceanos",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "calcular a densidade de materiais",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2429,22 +2429,22 @@
                         {
                           "texto": "definir a altitude real de todos os pontos",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "explicar símbolos e cores",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "indicar apenas a escala",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "mostrar o norte sempre",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2455,22 +2455,22 @@
                         {
                           "texto": "meridianos apenas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "fusos horários",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "pontos cardeais",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "paralelos",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -2498,22 +2498,22 @@
                         {
                           "texto": "às formas da superfície terrestre",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "às correntes oceânicas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "às fronteiras políticas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "à densidade urbana",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2524,22 +2524,22 @@
                         {
                           "texto": "salinização oceânica",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "erosão",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "acúmulo exclusivo de água",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "urbanização",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2550,22 +2550,22 @@
                         {
                           "texto": "atividade urbana",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "longitude",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "deposição de sedimentos",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "erosão glacial exclusiva",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -2794,22 +2794,22 @@
                         {
                           "texto": "ao comportamento médio das condições atmosféricas ao longo do tempo",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "ao estado da atmosfera em um instante",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "apenas à temperatura de hoje",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "ao relevo de uma região",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2820,22 +2820,22 @@
                         {
                           "texto": "densidade demográfica",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "temperatura",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "latitude apenas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "relevo apenas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2846,22 +2846,22 @@
                         {
                           "texto": "elimina a umidade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "torna o ar mais denso",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "em áreas mais altas a temperatura tende a ser menor",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "aumenta a radiação solar diretamente",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -2889,22 +2889,22 @@
                         {
                           "texto": "em áreas urbanas",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "somente no campo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "apenas em áreas litorâneas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "exclusivamente em áreas industriais",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2915,22 +2915,22 @@
                         {
                           "texto": "desaparecimento dos rios",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "expansão de problemas de mobilidade e infraestrutura",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "redução automática do trânsito",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "fim da desigualdade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -2941,22 +2941,22 @@
                         {
                           "texto": "uma população deixa o campo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "uma cidade perde todos os habitantes",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "áreas urbanas de municípios próximos se expandem e se unem",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "um país muda de continente",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -3185,22 +3185,22 @@
                         {
                           "texto": "intensificação das conexões econômicas, culturais e informacionais",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "isolamento total dos países",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "fim das trocas comerciais",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "desaparecimento das fronteiras físicas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -3211,22 +3211,22 @@
                         {
                           "texto": "formação de montanhas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "circulação internacional de mercadorias",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "rotação da Terra",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "erosão de uma encosta",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -3237,22 +3237,22 @@
                         {
                           "texto": "apenas em áreas rurais",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "sem relação com comércio",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "em diferentes países",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "somente em uma cidade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -3280,22 +3280,22 @@
                         {
                           "texto": "em áreas urbanas",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "somente no campo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "apenas em áreas litorâneas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "exclusivamente em áreas industriais",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -3306,22 +3306,22 @@
                         {
                           "texto": "desaparecimento dos rios",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "expansão de problemas de mobilidade e infraestrutura",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "redução automática do trânsito",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "fim da desigualdade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -3332,22 +3332,22 @@
                         {
                           "texto": "uma população deixa o campo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "uma cidade perde todos os habitantes",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "áreas urbanas de municípios próximos se expandem e se unem",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "um país muda de continente",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -3586,22 +3586,22 @@
                         {
                           "texto": "a unidade básica da vida",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "um tipo de tecido",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "um órgão completo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "uma molécula simples",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -3612,22 +3612,22 @@
                         {
                           "texto": "no vacúolo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "no núcleo",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "na parede celular",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "no lisossomo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -3638,22 +3638,22 @@
                         {
                           "texto": "ribossomos",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "membrana plasmática",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "núcleo delimitado por membrana",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "DNA",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -3681,22 +3681,22 @@
                         {
                           "texto": "luz",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "gravidade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "pressão",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "radioatividade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -3707,22 +3707,22 @@
                         {
                           "texto": "amônia",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "oxigênio",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "nitrogênio",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "gás carbônico",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -3733,22 +3733,22 @@
                         {
                           "texto": "sementes",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "frutos",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "estruturas estomáticas das folhas",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "raízes apenas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -3977,22 +3977,22 @@
                         {
                           "texto": "DNA",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "água",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "ATP",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "glicose",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -4003,22 +4003,22 @@
                         {
                           "texto": "a organelas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "a formas alternativas de um gene",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "a tipos de células",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "a moléculas de ATP",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -4029,22 +4029,22 @@
                         {
                           "texto": "75%",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "100%",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "25%",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "50%",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -4072,22 +4072,22 @@
                         {
                           "texto": "a unidade básica da vida",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "um tipo de tecido",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "um órgão completo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "uma molécula simples",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -4098,22 +4098,22 @@
                         {
                           "texto": "no vacúolo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "no núcleo",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "na parede celular",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "no lisossomo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -4124,22 +4124,22 @@
                         {
                           "texto": "ribossomos",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "membrana plasmática",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "núcleo delimitado por membrana",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "DNA",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -4368,22 +4368,22 @@
                         {
                           "texto": "componentes bióticos e abióticos em interação",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "apenas animais",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "apenas plantas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "apenas o clima",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -4394,22 +4394,22 @@
                         {
                           "texto": "vivem sem energia",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "produzem matéria orgânica a partir de recursos do ambiente",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "alimentam-se somente de outros animais",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "não realizam metabolismo",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -4420,22 +4420,22 @@
                         {
                           "texto": "absorvendo minerais apenas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "realizando erosão",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "alimentando-se de outros organismos",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "produzindo luz",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
@@ -4463,22 +4463,22 @@
                         {
                           "texto": "luz",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "gravidade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "pressão",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "radioatividade",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -4489,22 +4489,22 @@
                         {
                           "texto": "amônia",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "oxigênio",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "nitrogênio",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "gás carbônico",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     },
@@ -4515,22 +4515,22 @@
                         {
                           "texto": "sementes",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 1
                         },
                         {
                           "texto": "frutos",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 2
                         },
                         {
                           "texto": "estruturas estomáticas das folhas",
                           "correta": true,
-                          "ordem": 0
+                          "ordem": 3
                         },
                         {
                           "texto": "raízes apenas",
                           "correta": false,
-                          "ordem": 0
+                          "ordem": 4
                         }
                       ]
                     }
