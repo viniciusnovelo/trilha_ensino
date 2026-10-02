@@ -2229,23 +2229,23 @@ class CatalogoMateriaTests(AutenticacaoBaseTests):
 
                         self.assertEqual(
                             len(posicoes),
-                            3,
+                            4,
                             msg=(
                                 "Cada fase do catálogo deve possuir "
-                                "exatamente 3 questões."
+                                "exatamente 4 questões."
                             ),
                         )
 
                         self.assertEqual(
                             sorted(posicoes),
-                            [1, 2, 3],
+                            [1, 2, 3, 4],
                             msg=(
                                 "Respostas corretas precisam ocupar "
-                                "as posições 1, 2 e 3 em cada fase."
+                                "as quatro posições em cada fase."
                             ),
                         )
 
-    def test_catalogo_json_possui_quatro_modulos_e_doze_questoes_por_jogo(self):
+    def test_catalogo_json_possui_quatro_modulos_doze_fases_e_quarenta_e_oito_questoes_por_jogo(self):
         caminho_catalogo = (
             Path(__file__).resolve().parent.parent
             / "dados_catalogo_ensino_medio.json"
@@ -2277,10 +2277,10 @@ class CatalogoMateriaTests(AutenticacaoBaseTests):
                 for modulo in jogo["modulos"]:
                     self.assertEqual(
                         len(modulo["fases"]),
-                        1,
+                        3,
                         msg=(
                             f'{jogo["slug"]} · módulo {modulo["ordem"]} '
-                            "deve possuir 1 fase."
+                            "deve possuir 3 fases."
                         ),
                     )
 
@@ -2290,10 +2290,10 @@ class CatalogoMateriaTests(AutenticacaoBaseTests):
                     for fase in modulo["fases"]:
                         self.assertEqual(
                             len(fase["questoes"]),
-                            3,
+                            4,
                             msg=(
                                 f'{jogo["slug"]} · módulo {modulo["ordem"]} '
-                                "deve possuir 3 questões."
+                                "deve possuir 4 questões."
                             ),
                         )
 
@@ -2302,14 +2302,14 @@ class CatalogoMateriaTests(AutenticacaoBaseTests):
 
                 self.assertEqual(
                     questoes_jogo,
-                    12,
-                    msg=f'{jogo["slug"]} deve possuir 12 questões.',
+                    48,
+                    msg=f'{jogo["slug"]} deve possuir 48 questões.',
                 )
 
         self.assertEqual(total_jogos, 12)
         self.assertEqual(total_modulos, 48)
-        self.assertEqual(total_fases, 48)
-        self.assertEqual(total_questoes, 144)
+        self.assertEqual(total_fases, 144)
+        self.assertEqual(total_questoes, 576)
 
 
     def test_professor_cria_jogo_associado_a_materia(self):
