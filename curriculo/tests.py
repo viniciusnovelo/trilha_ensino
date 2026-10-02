@@ -1935,6 +1935,60 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
             ),
         )
 
+    def test_editor_exibe_painel_contextual_e_controles_do_mapa(self):
+        self.client.login(
+            username=self.professor.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.get(
+            reverse(
+                "editar_trilha",
+                args=[self.trilha.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            'id="editor-details-panel"',
+        )
+
+        self.assertContains(
+            response,
+            "Detalhes",
+        )
+
+        self.assertContains(
+            response,
+            "Ajustar",
+        )
+
+        self.assertContains(
+            response,
+            'id="map-zoom-value"',
+        )
+
+        self.assertContains(
+            response,
+            "editorModulos",
+        )
+
+        self.assertContains(
+            response,
+            "editorFases",
+        )
+
+        self.assertContains(
+            response,
+            "Questao de interface",
+        )
+
+
     def test_mapa_do_aluno_exibe_hud_e_controles(self):
         self.client.login(
             username=self.aluno.username,
