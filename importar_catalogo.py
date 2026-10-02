@@ -401,14 +401,14 @@ def validar_catalogo(dados):
             'A estrutura final deveria possuir 4 módulos por jogo.'
         )
 
-    if total_fases != total_jogos * 4:
+    if total_fases != total_jogos * 12:
         erro(
-            'A estrutura final deveria possuir 1 fase por módulo.'
+            'A estrutura final deveria possuir 12 fases por jogo (3 por módulo).'
         )
 
-    if total_questoes != total_jogos * 12:
+    if total_questoes != total_jogos * 48:
         erro(
-            'A estrutura final deveria possuir 12 questões por jogo.'
+            'A estrutura final deveria possuir 48 questões por jogo (4 por fase).'
         )
 
     if total_opcoes != total_questoes * 4:
