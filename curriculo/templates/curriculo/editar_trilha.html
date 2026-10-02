@@ -9,6 +9,22 @@
         .scrollbar-hide::-webkit-scrollbar { display:none; }
         .scrollbar-thin::-webkit-scrollbar { height:7px; width:7px; }
         .scrollbar-thin::-webkit-scrollbar-thumb { background:rgba(148,163,184,.28); border-radius:999px; }
+        html, body { min-height:100%; }
+        body.editor-page { height:100vh; min-height:100vh; overflow:hidden; }
+        .editor-shell { height:100vh; min-height:0; overflow:hidden; }
+        .editor-main { min-height:0; overflow:hidden; }
+        .editor-workspace { min-height:0; height:calc(100vh - 245px); }
+        .editor-workspace-panel { min-height:0; height:100%; }
+        .editor-map-viewport { min-height:0; overflow:auto; }
+        .editor-structure-viewport { min-height:0; overflow-y:auto; }
+        @media (max-width: 1023px) {
+            body.editor-page { height:auto; min-height:100vh; overflow:auto; }
+            .editor-shell { height:auto; min-height:100vh; overflow:visible; }
+            .editor-main { overflow:visible; }
+            .editor-workspace { height:auto; min-height:0; }
+            .editor-workspace-panel { height:auto; min-height:420px; }
+            .editor-map-viewport { min-height:520px; }
+        }
         .cursor-grab { cursor:grab; }
         .cursor-grabbing { cursor:grabbing !important; }
         .modal-bg { display:none; background:rgba(2,6,23,.72); backdrop-filter:blur(10px); }
@@ -169,10 +185,10 @@
     </style>
 </head>
 
-<body class="{{ trilha.tema }} text-white min-h-screen font-sans relative">
+<body class="{{ trilha.tema }} editor-page text-white font-sans relative">
     {% include 'gamificacao/partials/paisagem_animada.html' %}
 
-    <div class="relative z-10 min-h-screen flex flex-col">
+    <div class="editor-shell relative z-10 flex flex-col">
         <header class="shrink-0 border-b border-white/10 bg-slate-950/75 backdrop-blur-2xl">
             <div class="max-w-[1500px] mx-auto w-full px-4 sm:px-6 py-4">
                 <div class="flex flex-wrap items-center justify-between gap-3">
@@ -237,7 +253,7 @@
             </div>
         </header>
 
-        <main class="max-w-[1500px] mx-auto w-full flex-1 min-h-0 px-4 sm:px-6 py-5 sm:py-6">
+        <main class="editor-main max-w-[1500px] mx-auto w-full flex-1 min-h-0 px-4 sm:px-6 py-5 sm:py-6">
             <section class="glass-card rounded-3xl p-4 sm:p-5 mb-5">
                 <div class="flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[.16em] text-white/45">
                     <span class="px-3 py-1.5 rounded-full bg-indigo-400/10 text-indigo-200 border border-indigo-300/10">1 · Jogo</span>
@@ -273,8 +289,8 @@
                 </div>
             </section>
 
-            <div class="grid lg:grid-cols-[360px_minmax(0,1fr)] gap-5 min-h-[calc(100vh-245px)]">
-                <aside class="glass-card rounded-3xl overflow-hidden flex flex-col min-h-[420px] lg:min-h-0">
+            <div class="editor-workspace grid lg:grid-cols-[360px_minmax(0,1fr)] gap-5">
+                <aside class="editor-workspace-panel glass-card rounded-3xl overflow-hidden flex flex-col">
                     <div class="p-4 border-b border-white/10">
                         <div class="flex items-center justify-between gap-3">
                             <div>
@@ -286,7 +302,7 @@
                         <p class="text-xs text-white/45 mt-2">Cada módulo agrupa fases. Cada fase pode receber suas questões.</p>
                     </div>
 
-                    <div class="flex-1 overflow-y-auto scrollbar-thin p-3 space-y-3">
+                    <div class="editor-structure-viewport flex-1 scrollbar-thin p-3 space-y-3">
                         {% for modulo in modulos %}
                             <article class="rounded-2xl bg-black/15 border border-white/10 overflow-hidden">
                                 <div class="p-3 flex items-start gap-3">
@@ -370,7 +386,7 @@
                     </div>
                 </aside>
 
-                <section class="glass-card rounded-3xl overflow-hidden min-w-0 flex flex-col">
+                <section class="editor-workspace-panel glass-card rounded-3xl overflow-hidden min-w-0 flex flex-col">
 
                     <div class="p-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
 
@@ -407,7 +423,7 @@
                     </div>
 
 
-                    <div class="flex-1 overflow-auto scrollbar-hide">
+                    <div class="editor-map-viewport flex-1 scrollbar-thin">
 
                         <div class="editor-mapa-track">
 
