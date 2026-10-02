@@ -2086,7 +2086,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            f'url: "{reverse("fase_detalhe", args=[self.fase_1.id])}"',
+            f"url: '{reverse('fase_detalhe', args=[self.fase_1.id])}'",
         )
 
         # As URLs AJAX usadas pelo JavaScript são derivadas dos nomes das
