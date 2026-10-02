@@ -2389,9 +2389,9 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · cartografia",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
                   "deslocamento_y": 0,
@@ -2403,22 +2403,22 @@
                         {
                           "texto": "representar o espaço geográfico",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "medir a temperatura do ar",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "estudar apenas os oceanos",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "calcular a densidade de materiais",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -2429,22 +2429,22 @@
                         {
                           "texto": "definir a altitude real de todos os pontos",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "explicar símbolos e cores",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "indicar apenas a escala",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "mostrar o norte sempre",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -2455,276 +2455,22 @@
                         {
                           "texto": "meridianos apenas",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "fusos horários",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "pontos cardeais",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "paralelos",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um mapa temático destaca principalmente:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: um fenômeno ou tema específico.\nObservação: Mapas temáticos representam temas como população, clima ou economia.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas rios",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "somente fronteiras",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "sempre relevo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "um fenômeno ou tema específico",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · coordenadas",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "Latitude é medida a partir:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: da linha do Equador.\nObservação: Latitude indica a distância angular em relação ao Equador.",
-                      "opcoes": [
-                        {
-                          "texto": "da linha do Equador",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "do Meridiano de Greenwich",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "dos polos simultaneamente",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "do Trópico de Capricórnio apenas",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Longitude é medida a partir:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: do Meridiano de Greenwich.\nObservação: Longitude usa Greenwich como meridiano de referência.",
-                      "opcoes": [
-                        {
-                          "texto": "do nível do mar",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "do Meridiano de Greenwich",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "do Equador",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "dos trópicos",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Paralelos são linhas imaginárias usadas para determinar:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: latitude.\nObservação: Paralelos são associados à latitude.",
-                      "opcoes": [
-                        {
-                          "texto": "altitude",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "escala",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "latitude",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "longitude",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Meridianos são linhas imaginárias usadas para determinar:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: longitude.\nObservação: Meridianos são associados à longitude.",
-                      "opcoes": [
-                        {
-                          "texto": "latitude",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "temperatura",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "vegetação",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "longitude",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · escala",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "A escala de um mapa relaciona:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: distância no mapa e distância real.\nObservação: A escala permite comparar medidas representadas com a realidade.",
-                      "opcoes": [
-                        {
-                          "texto": "distância no mapa e distância real",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "altitude e temperatura",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "massa e volume",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "latitude e chuva",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma escala 1:100000 significa que 1 cm no mapa representa:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: 1 km na realidade.\nObservação: 100000 cm correspondem a 1 km.",
-                      "opcoes": [
-                        {
-                          "texto": "10 km",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "1 km na realidade",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "100000 km",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "100 m",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Mapas em grande escala normalmente apresentam:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: maior detalhamento de áreas menores.\nObservação: Quanto maior a escala cartográfica, maior tende a ser o detalhamento local.",
-                      "opcoes": [
-                        {
-                          "texto": "somente continentes",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas oceanos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "maior detalhamento de áreas menores",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "menos detalhes de áreas maiores",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em uma escala gráfica, a distância é indicada por:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: uma barra graduada.\nObservação: A escala gráfica usa uma representação visual graduada.",
-                      "opcoes": [
-                        {
-                          "texto": "uma equação química",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "uma rosa dos ventos apenas",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "um gráfico climático",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "uma barra graduada",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -2738,9 +2484,9 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · relevo",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
                   "deslocamento_y": 0,
@@ -2752,22 +2498,22 @@
                         {
                           "texto": "às formas da superfície terrestre",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "às correntes oceânicas",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "às fronteiras políticas",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "à densidade urbana",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -2778,22 +2524,22 @@
                         {
                           "texto": "salinização oceânica",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "erosão",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "acúmulo exclusivo de água",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "urbanização",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -2804,275 +2550,211 @@
                         {
                           "texto": "atividade urbana",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "longitude",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "deposição de sedimentos",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "erosão glacial exclusiva",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A ação de rios pode modificar o relevo por meio de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: erosão e deposição.\nObservação: Rios podem remover e transportar sedimentos e também depositá-los.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas vulcanismo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas terremotos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "somente urbanização",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "erosão e deposição",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Cartografia e escala",
+              "descricao": "Conteúdo de cartografia e escala com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · clima",
-                  "ordem": 2,
+                  "titulo": "Prática · Cartografia e escala",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Clima corresponde:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: ao comportamento médio das condições atmosféricas ao longo do tempo.\nObservação: Clima é analisado em períodos longos; tempo atmosférico descreve condições momentâneas.",
+                      "enunciado": "Em uma escala 1:100.000, 3 cm no mapa representam:",
+                      "explicacao_erro": "Como pensar: Na escala 1:100.000, 1 cm no mapa corresponde a 100.000 cm na realidade.\nPasso a passo:\n1. 100.000 cm correspondem a 1 km.\n2. Multiplique por 3 cm.\n3. Obtenha 3 km.\nConclusão: Os 3 cm representam 3 km.",
                       "opcoes": [
                         {
-                          "texto": "ao comportamento médio das condições atmosféricas ao longo do tempo",
+                          "texto": "3 km",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "ao estado da atmosfera em um instante",
+                          "texto": "300 m",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "apenas à temperatura de hoje",
+                          "texto": "30 km",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "ao relevo de uma região",
+                          "texto": "300 km",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Entre os elementos climáticos está:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: temperatura.\nObservação: Temperatura, umidade e pressão são exemplos de elementos climáticos.",
+                      "enunciado": "Em um mapa, a legenda é usada para:",
+                      "explicacao_erro": "Como pensar: A legenda é a chave de leitura dos símbolos cartográficos.\nPasso a passo:\n1. Observe que mapas usam cores e símbolos.\n2. A legenda explica o significado deles.\n3. Isso permite interpretar a representação.\nConclusão: A legenda explica símbolos e cores.",
                       "opcoes": [
                         {
-                          "texto": "densidade demográfica",
+                          "texto": "medir o tempo",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "temperatura",
+                          "texto": "explicar símbolos e cores",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "latitude apenas",
+                          "texto": "calcular a massa",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "relevo apenas",
+                          "texto": "indicar apenas o norte",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A altitude geralmente influencia a temperatura porque:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: em áreas mais altas a temperatura tende a ser menor.\nObservação: A temperatura tende a diminuir com o aumento da altitude na baixa atmosfera.",
+                      "enunciado": "As curvas de nível em um mapa representam:",
+                      "explicacao_erro": "Como pensar: Curvas de nível unem pontos que têm a mesma altitude.\nPasso a passo:\n1. Identifique o valor que permanece constante.\n2. A altitude é constante na mesma curva.\n3. As linhas ajudam a visualizar o relevo.\nConclusão: Curvas de nível representam altitudes iguais.",
                       "opcoes": [
                         {
-                          "texto": "elimina a umidade",
+                          "texto": "temperaturas iguais",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "torna o ar mais denso",
+                          "texto": "chuvas iguais",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "em áreas mais altas a temperatura tende a ser menor",
+                          "texto": "altitudes iguais",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "aumenta a radiação solar diretamente",
+                          "texto": "populações iguais",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Massas de ar podem transportar:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: calor e umidade.\nObservação: Massas de ar deslocam características atmosféricas.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas relevo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "minérios",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "solo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "calor e umidade",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Coordenadas e orientação",
+              "descricao": "Conteúdo de coordenadas e orientação com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Desafio final · populacao",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": -35,
+                  "titulo": "Prática · Coordenadas e orientação",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Densidade demográfica é a relação entre:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: população e área.\nObservação: Densidade demográfica indica quantas pessoas vivem, em média, por unidade de área.",
+                      "enunciado": "A latitude mede a posição em relação:",
+                      "explicacao_erro": "Como pensar: Latitude é medida a partir do Equador.\nPasso a passo:\n1. O Equador é a referência de latitude zero.\n2. Valores indicam posição ao Norte ou ao Sul.\n3. Por isso, a referência é o Equador.\nConclusão: Latitude é medida em relação ao Equador.",
                       "opcoes": [
                         {
-                          "texto": "população e área",
+                          "texto": "ao Equador",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "PIB e renda",
+                          "texto": "ao meridiano de Greenwich",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "clima e relevo",
+                          "texto": "ao Polo Norte apenas",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "exportação e importação",
+                          "texto": "ao Trópico de Capricórnio apenas",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Êxodo rural é o deslocamento:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: do campo para a cidade.\nObservação: Êxodo rural é a saída de população das áreas rurais para urbanas.",
+                      "enunciado": "A longitude é medida a partir de qual referência?",
+                      "explicacao_erro": "Como pensar: Longitude localiza pontos a leste ou oeste de um meridiano de origem.\nPasso a passo:\n1. A referência internacional é Greenwich.\n2. Os valores são lidos para Leste ou Oeste.\n3. Logo, Greenwich é a origem.\nConclusão: A referência é o Meridiano de Greenwich.",
                       "opcoes": [
                         {
-                          "texto": "entre continentes apenas",
+                          "texto": "Equador",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "do campo para a cidade",
+                          "texto": "Meridiano de Greenwich",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "da cidade para o campo",
+                          "texto": "Trópico de Câncer",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "entre países somente",
+                          "texto": "Círculo Polar Ártico",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Taxa de natalidade está relacionada ao número de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: nascimentos.\nObservação: Natalidade mede a ocorrência de nascimentos em uma população.",
+                      "enunciado": "A coordenada 15°S, 47°W localiza um ponto nos hemisférios:",
+                      "explicacao_erro": "Como pensar: Leia separadamente a indicação de latitude e longitude.\nPasso a passo:\n1. 15°S indica hemisfério Sul.\n2. 47°W indica hemisfério Oeste.\n3. Combine as duas informações.\nConclusão: O ponto está nos hemisférios Sul e Oeste.",
                       "opcoes": [
                         {
-                          "texto": "migrações",
+                          "texto": "Norte e Leste",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "empregos",
+                          "texto": "Norte e Oeste",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "nascimentos",
+                          "texto": "Sul e Oeste",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "óbitos",
+                          "texto": "Sul e Leste",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma população envelhece quando aumenta a participação relativa de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: idosos.\nObservação: O envelhecimento demográfico está ligado ao aumento da proporção de pessoas idosas.",
-                      "opcoes": [
-                        {
-                          "texto": "crianças",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "recém-nascidos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "adolescentes apenas",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "idosos",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
@@ -3098,12 +2780,12 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · clima",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Clima corresponde:",
@@ -3112,22 +2794,22 @@
                         {
                           "texto": "ao comportamento médio das condições atmosféricas ao longo do tempo",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "ao estado da atmosfera em um instante",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "apenas à temperatura de hoje",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "ao relevo de uma região",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3138,22 +2820,22 @@
                         {
                           "texto": "densidade demográfica",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "temperatura",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "latitude apenas",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "relevo apenas",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3164,276 +2846,22 @@
                         {
                           "texto": "elimina a umidade",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "torna o ar mais denso",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "em áreas mais altas a temperatura tende a ser menor",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "aumenta a radiação solar diretamente",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Massas de ar podem transportar:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: calor e umidade.\nObservação: Massas de ar deslocam características atmosféricas.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas relevo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "minérios",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "solo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "calor e umidade",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · relevo",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "O relevo corresponde:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: às formas da superfície terrestre.\nObservação: Montanhas, planaltos e planícies são formas de relevo.",
-                      "opcoes": [
-                        {
-                          "texto": "às formas da superfície terrestre",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "às correntes oceânicas",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "às fronteiras políticas",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "à densidade urbana",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Planaltos são áreas em que predominam processos de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: erosão.\nObservação: Planaltos são associados ao predomínio relativo da erosão.",
-                      "opcoes": [
-                        {
-                          "texto": "salinização oceânica",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "erosão",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "acúmulo exclusivo de água",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "urbanização",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Planícies são formas de relevo associadas principalmente à:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: deposição de sedimentos.\nObservação: Nas planícies, a deposição de sedimentos tem papel importante.",
-                      "opcoes": [
-                        {
-                          "texto": "atividade urbana",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "longitude",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "deposição de sedimentos",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "erosão glacial exclusiva",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A ação de rios pode modificar o relevo por meio de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: erosão e deposição.\nObservação: Rios podem remover e transportar sedimentos e também depositá-los.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas vulcanismo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas terremotos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "somente urbanização",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "erosão e deposição",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · populacao",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 0,
-                  "questoes": [
-                    {
-                      "enunciado": "Densidade demográfica é a relação entre:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: população e área.\nObservação: Densidade demográfica indica quantas pessoas vivem, em média, por unidade de área.",
-                      "opcoes": [
-                        {
-                          "texto": "população e área",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "PIB e renda",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "clima e relevo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "exportação e importação",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Êxodo rural é o deslocamento:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: do campo para a cidade.\nObservação: Êxodo rural é a saída de população das áreas rurais para urbanas.",
-                      "opcoes": [
-                        {
-                          "texto": "entre continentes apenas",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "do campo para a cidade",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "da cidade para o campo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "entre países somente",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Taxa de natalidade está relacionada ao número de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: nascimentos.\nObservação: Natalidade mede a ocorrência de nascimentos em uma população.",
-                      "opcoes": [
-                        {
-                          "texto": "migrações",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "empregos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "nascimentos",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "óbitos",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma população envelhece quando aumenta a participação relativa de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: idosos.\nObservação: O envelhecimento demográfico está ligado ao aumento da proporção de pessoas idosas.",
-                      "opcoes": [
-                        {
-                          "texto": "crianças",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "recém-nascidos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "adolescentes apenas",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "idosos",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -3447,12 +2875,12 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · urbanizacao",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Urbanização corresponde ao aumento da população vivendo:",
@@ -3461,22 +2889,22 @@
                         {
                           "texto": "em áreas urbanas",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "somente no campo",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "apenas em áreas litorâneas",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "exclusivamente em áreas industriais",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3487,22 +2915,22 @@
                         {
                           "texto": "desaparecimento dos rios",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "expansão de problemas de mobilidade e infraestrutura",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "redução automática do trânsito",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "fim da desigualdade",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3513,275 +2941,211 @@
                         {
                           "texto": "uma população deixa o campo",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "uma cidade perde todos os habitantes",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "áreas urbanas de municípios próximos se expandem e se unem",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "um país muda de continente",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Saneamento básico inclui:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: abastecimento de água e tratamento de esgoto.\nObservação: Saneamento inclui água, esgoto, resíduos e drenagem.",
-                      "opcoes": [
-                        {
-                          "texto": "somente iluminação pública",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas transporte aéreo",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "somente internet",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "abastecimento de água e tratamento de esgoto",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Clima e relevo",
+              "descricao": "Conteúdo de clima e relevo com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · cartografia",
-                  "ordem": 2,
+                  "titulo": "Prática · Clima e relevo",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "A cartografia é responsável principalmente por:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: representar o espaço geográfico.\nObservação: Mapas e outras representações espaciais são objetos centrais da cartografia.",
-                      "opcoes": [
-                        {
-                          "texto": "representar o espaço geográfico",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "medir a temperatura do ar",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "estudar apenas os oceanos",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "calcular a densidade de materiais",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em um mapa, a legenda serve para:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: explicar símbolos e cores.\nObservação: A legenda traduz os símbolos usados no mapa.",
-                      "opcoes": [
-                        {
-                          "texto": "definir a altitude real de todos os pontos",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "explicar símbolos e cores",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "indicar apenas a escala",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "mostrar o norte sempre",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A orientação norte-sul-leste-oeste é representada por:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: pontos cardeais.\nObservação: Pontos cardeais indicam direções principais.",
-                      "opcoes": [
-                        {
-                          "texto": "meridianos apenas",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "fusos horários",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "pontos cardeais",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "paralelos",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um mapa temático destaca principalmente:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: um fenômeno ou tema específico.\nObservação: Mapas temáticos representam temas como população, clima ou economia.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas rios",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "somente fronteiras",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "sempre relevo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "um fenômeno ou tema específico",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Desafio final · escala",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A escala de um mapa relaciona:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: distância no mapa e distância real.\nObservação: A escala permite comparar medidas representadas com a realidade.",
+                      "enunciado": "Clima e tempo atmosférico são diferentes porque:",
+                      "explicacao_erro": "Como pensar: Tempo descreve condições momentâneas; clima trata de padrões de longo prazo.\nPasso a passo:\n1. Procure a alternativa relacionada ao longo prazo.\n2. Padrões médios caracterizam o clima.\n3. Condições de hoje caracterizam o tempo.\nConclusão: Clima considera padrões de longo prazo.",
                       "opcoes": [
                         {
-                          "texto": "distância no mapa e distância real",
+                          "texto": "clima considera padrões de longo prazo",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "altitude e temperatura",
+                          "texto": "clima descreve condições momentâneas",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "massa e volume",
+                          "texto": "tempo é uma média de décadas",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "latitude e chuva",
+                          "texto": "não existe diferença",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Uma escala 1:100000 significa que 1 cm no mapa representa:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: 1 km na realidade.\nObservação: 100000 cm correspondem a 1 km.",
+                      "enunciado": "Qual exemplo é um elemento climático?",
+                      "explicacao_erro": "Como pensar: Elementos climáticos são grandezas observadas na atmosfera.\nPasso a passo:\n1. Temperatura pode ser medida diretamente.\n2. Latitude e altitude são fatores do clima.\n3. Vegetação é uma característica da paisagem.\nConclusão: Temperatura é um elemento climático.",
                       "opcoes": [
                         {
-                          "texto": "10 km",
+                          "texto": "latitude",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "1 km na realidade",
+                          "texto": "temperatura",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "100000 km",
+                          "texto": "altitude",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "100 m",
+                          "texto": "vegetação",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Mapas em grande escala normalmente apresentam:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: maior detalhamento de áreas menores.\nObservação: Quanto maior a escala cartográfica, maior tende a ser o detalhamento local.",
+                      "enunciado": "Em um relevo de planalto, tende a predominar o processo de:",
+                      "explicacao_erro": "Como pensar: Na classificação geomorfológica brasileira, planaltos são áreas onde predominam processos erosivos.\nPasso a passo:\n1. Identifique o processo de remoção e transporte de materiais.\n2. Esse processo caracteriza a erosão.\n3. Compare com a deposição, mais associada às planícies.\nConclusão: Predomina a erosão.",
                       "opcoes": [
                         {
-                          "texto": "somente continentes",
+                          "texto": "acumulação de sedimentos",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "apenas oceanos",
+                          "texto": "formação de oceanos",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "maior detalhamento de áreas menores",
+                          "texto": "erosão",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "menos detalhes de áreas maiores",
+                          "texto": "vulcanismo obrigatório",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "titulo": "População e urbanização",
+              "descricao": "Conteúdo de população e urbanização com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
+                {
+                  "titulo": "Prática · População e urbanização",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
+                  "questoes": [
+                    {
+                      "enunciado": "Uma cidade possui 1.000 habitantes em 200 km². Sua densidade demográfica é:",
+                      "explicacao_erro": "Como pensar: Densidade demográfica é população dividida pela área.\nPasso a passo:\n1. Calcule 1.000 ÷ 200.\n2. O resultado é 5.\n3. Use a unidade hab/km².\nConclusão: A densidade é 5 hab/km².",
+                      "opcoes": [
+                        {
+                          "texto": "5 hab/km²",
+                          "correta": true,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "2 hab/km²",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "20 hab/km²",
+                          "correta": false,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "200 hab/km²",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Em uma escala gráfica, a distância é indicada por:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: uma barra graduada.\nObservação: A escala gráfica usa uma representação visual graduada.",
+                      "enunciado": "Migração é o deslocamento de pessoas entre:",
+                      "explicacao_erro": "Como pensar: Migração envolve deslocamento com mudança do local de residência.\nPasso a passo:\n1. O deslocamento pode ocorrer em diferentes escalas.\n2. Pode ser interno ou internacional.\n3. Logo, não está limitado a um único tipo de lugar.\nConclusão: Migração pode envolver cidades, estados ou países.",
                       "opcoes": [
                         {
-                          "texto": "uma equação química",
+                          "texto": "apenas bairros da mesma rua",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "uma rosa dos ventos apenas",
-                          "correta": false,
+                          "texto": "lugares, podendo envolver cidades, estados ou países",
+                          "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "um gráfico climático",
+                          "texto": "somente países",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "uma barra graduada",
+                          "texto": "apenas áreas rurais",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    },
+                    {
+                      "enunciado": "Urbanização corresponde ao crescimento da população vivendo:",
+                      "explicacao_erro": "Como pensar: Urbanização está ligada ao aumento da população e da participação das áreas urbanas.\nPasso a passo:\n1. Observe onde a população passa a se concentrar.\n2. O crescimento da parcela urbana caracteriza urbanização.\n3. O conceito não depende do tamanho da cidade.\nConclusão: Urbanização corresponde ao crescimento da população em áreas urbanas.",
+                      "opcoes": [
+                        {
+                          "texto": "em áreas rurais",
+                          "correta": false,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "somente em áreas industriais",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "em áreas urbanas",
                           "correta": true,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "apenas em pequenas cidades",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
@@ -3807,125 +3171,11 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · globalizacao",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "Globalização envolve principalmente:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: intensificação das conexões econômicas, culturais e informacionais.\nObservação: Globalização aumenta fluxos e interdependências entre lugares.",
-                      "opcoes": [
-                        {
-                          "texto": "intensificação das conexões econômicas, culturais e informacionais",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "isolamento total dos países",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "fim das trocas comerciais",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "desaparecimento das fronteiras físicas",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um exemplo de fluxo global é:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: circulação internacional de mercadorias.\nObservação: Mercadorias, capitais, pessoas e informações circulam em redes globais.",
-                      "opcoes": [
-                        {
-                          "texto": "formação de montanhas",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "circulação internacional de mercadorias",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "rotação da Terra",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "erosão de uma encosta",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Empresas transnacionais atuam:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: em diferentes países.\nObservação: Essas empresas distribuem atividades por vários territórios.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas em áreas rurais",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "sem relação com comércio",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "em diferentes países",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "somente em uma cidade",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma possível consequência da globalização é:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: maior interdependência entre economias.\nObservação: As economias tornam-se mais conectadas e interdependentes.",
-                      "opcoes": [
-                        {
-                          "texto": "fim de toda desigualdade",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "redução obrigatória dos fluxos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "isolamento tecnológico",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "maior interdependência entre economias",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · globalizacao",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
@@ -3935,22 +3185,22 @@
                         {
                           "texto": "intensificação das conexões econômicas, culturais e informacionais",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "isolamento total dos países",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "fim das trocas comerciais",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "desaparecimento das fronteiras físicas",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3961,22 +3211,22 @@
                         {
                           "texto": "formação de montanhas",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "circulação internacional de mercadorias",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "rotação da Terra",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "erosão de uma encosta",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3987,162 +3237,22 @@
                         {
                           "texto": "apenas em áreas rurais",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "sem relação com comércio",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "em diferentes países",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "somente em uma cidade",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma possível consequência da globalização é:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: maior interdependência entre economias.\nObservação: As economias tornam-se mais conectadas e interdependentes.",
-                      "opcoes": [
-                        {
-                          "texto": "fim de toda desigualdade",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "redução obrigatória dos fluxos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "isolamento tecnológico",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "maior interdependência entre economias",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · populacao",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "Densidade demográfica é a relação entre:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: população e área.\nObservação: Densidade demográfica indica quantas pessoas vivem, em média, por unidade de área.",
-                      "opcoes": [
-                        {
-                          "texto": "população e área",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "PIB e renda",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "clima e relevo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "exportação e importação",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Êxodo rural é o deslocamento:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: do campo para a cidade.\nObservação: Êxodo rural é a saída de população das áreas rurais para urbanas.",
-                      "opcoes": [
-                        {
-                          "texto": "entre continentes apenas",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "do campo para a cidade",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "da cidade para o campo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "entre países somente",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Taxa de natalidade está relacionada ao número de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: nascimentos.\nObservação: Natalidade mede a ocorrência de nascimentos em uma população.",
-                      "opcoes": [
-                        {
-                          "texto": "migrações",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "empregos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "nascimentos",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "óbitos",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma população envelhece quando aumenta a participação relativa de:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: idosos.\nObservação: O envelhecimento demográfico está ligado ao aumento da proporção de pessoas idosas.",
-                      "opcoes": [
-                        {
-                          "texto": "crianças",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "recém-nascidos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "adolescentes apenas",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "idosos",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -4156,12 +3266,12 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · urbanizacao",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": -35,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Urbanização corresponde ao aumento da população vivendo:",
@@ -4170,22 +3280,22 @@
                         {
                           "texto": "em áreas urbanas",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "somente no campo",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "apenas em áreas litorâneas",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "exclusivamente em áreas industriais",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -4196,22 +3306,22 @@
                         {
                           "texto": "desaparecimento dos rios",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "expansão de problemas de mobilidade e infraestrutura",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "redução automática do trânsito",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "fim da desigualdade",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -4222,275 +3332,211 @@
                         {
                           "texto": "uma população deixa o campo",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "uma cidade perde todos os habitantes",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "áreas urbanas de municípios próximos se expandem e se unem",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "um país muda de continente",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Saneamento básico inclui:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: abastecimento de água e tratamento de esgoto.\nObservação: Saneamento inclui água, esgoto, resíduos e drenagem.",
-                      "opcoes": [
-                        {
-                          "texto": "somente iluminação pública",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas transporte aéreo",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "somente internet",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "abastecimento de água e tratamento de esgoto",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Globalização e redes",
+              "descricao": "Conteúdo de globalização e redes com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · coordenadas",
-                  "ordem": 2,
+                  "titulo": "Prática · Globalização e redes",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Latitude é medida a partir:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: da linha do Equador.\nObservação: Latitude indica a distância angular em relação ao Equador.",
+                      "enunciado": "Um exemplo de fluxo global é:",
+                      "explicacao_erro": "Como pensar: Fluxos globais são movimentos que conectam diferentes territórios.\nPasso a passo:\n1. Mercadorias podem atravessar fronteiras.\n2. Isso cria conexões econômicas entre países.\n3. As outras alternativas não representam esse fluxo.\nConclusão: Um exemplo é a circulação internacional de mercadorias.",
                       "opcoes": [
                         {
-                          "texto": "da linha do Equador",
+                          "texto": "circulação internacional de mercadorias",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "do Meridiano de Greenwich",
+                          "texto": "apenas chuva",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "dos polos simultaneamente",
+                          "texto": "rotação da Terra",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "do Trópico de Capricórnio apenas",
+                          "texto": "formação de montanhas",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Longitude é medida a partir:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: do Meridiano de Greenwich.\nObservação: Longitude usa Greenwich como meridiano de referência.",
+                      "enunciado": "Empresas transnacionais são caracterizadas por:",
+                      "explicacao_erro": "Como pensar: O termo transnacional destaca a atuação empresarial através de fronteiras nacionais.\nPasso a passo:\n1. Procure a alternativa que menciona vários países.\n2. A atuação pode envolver produção, serviços ou investimentos.\n3. Isso não significa que sejam necessariamente estatais.\nConclusão: Elas atuam em diferentes países.",
                       "opcoes": [
                         {
-                          "texto": "do nível do mar",
+                          "texto": "atuarem em uma única cidade",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "do Meridiano de Greenwich",
+                          "texto": "atuarem em diferentes países",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "do Equador",
+                          "texto": "não realizarem comércio",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "dos trópicos",
+                          "texto": "serem sempre estatais",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Paralelos são linhas imaginárias usadas para determinar:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: latitude.\nObservação: Paralelos são associados à latitude.",
+                      "enunciado": "Uma característica da globalização é a intensificação:",
+                      "explicacao_erro": "Como pensar: Globalização está associada à ampliação de fluxos e redes entre lugares.\nPasso a passo:\n1. Observe a ideia de conexão.\n2. Transporte e comunicação ampliam os fluxos.\n3. Isso aumenta a interdependência entre territórios.\nConclusão: A globalização intensifica as conexões entre lugares.",
                       "opcoes": [
                         {
-                          "texto": "altitude",
+                          "texto": "do isolamento completo",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "escala",
+                          "texto": "da ausência de comércio",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "latitude",
+                          "texto": "das conexões entre lugares",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "longitude",
+                          "texto": "da redução das comunicações",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Meridianos são linhas imaginárias usadas para determinar:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: longitude.\nObservação: Meridianos são associados à longitude.",
-                      "opcoes": [
-                        {
-                          "texto": "latitude",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "temperatura",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "vegetação",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "longitude",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Blocos e relações internacionais",
+              "descricao": "Conteúdo de blocos e relações internacionais com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Desafio final · cartografia",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 55,
+                  "titulo": "Prática · Blocos e relações internacionais",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A cartografia é responsável principalmente por:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: representar o espaço geográfico.\nObservação: Mapas e outras representações espaciais são objetos centrais da cartografia.",
+                      "enunciado": "Um bloco econômico busca, entre outros objetivos:",
+                      "explicacao_erro": "Como pensar: Blocos econômicos são formas de integração entre países.\nPasso a passo:\n1. Procure a alternativa relacionada à cooperação econômica.\n2. A integração pode facilitar comércio e investimentos.\n3. Ela não significa o fim dos Estados nacionais.\nConclusão: Um objetivo é ampliar a cooperação econômica entre países.",
                       "opcoes": [
                         {
-                          "texto": "representar o espaço geográfico",
+                          "texto": "ampliar a cooperação econômica entre países",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "medir a temperatura do ar",
+                          "texto": "eliminar todas as fronteiras físicas do planeta",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "estudar apenas os oceanos",
+                          "texto": "proibir o comércio internacional",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "calcular a densidade de materiais",
+                          "texto": "substituir todos os governos nacionais",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Em um mapa, a legenda serve para:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: explicar símbolos e cores.\nObservação: A legenda traduz os símbolos usados no mapa.",
+                      "enunciado": "Uma fronteira internacional é, principalmente:",
+                      "explicacao_erro": "Como pensar: Fronteiras têm função política e territorial.\nPasso a passo:\n1. Identifique a ideia de soberania.\n2. A fronteira separa territórios submetidos a diferentes autoridades.\n3. Ela não é uma coordenada geográfica.\nConclusão: É uma área ou linha que separa territórios sob diferentes soberanias.",
                       "opcoes": [
                         {
-                          "texto": "definir a altitude real de todos os pontos",
+                          "texto": "um tipo de clima",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "explicar símbolos e cores",
+                          "texto": "uma área ou linha que separa territórios sob diferentes soberanias",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "indicar apenas a escala",
+                          "texto": "uma linha de latitude",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "mostrar o norte sempre",
+                          "texto": "uma área sem qualquer controle",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A orientação norte-sul-leste-oeste é representada por:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: pontos cardeais.\nObservação: Pontos cardeais indicam direções principais.",
+                      "enunciado": "Sanções econômicas entre países são medidas que podem:",
+                      "explicacao_erro": "Como pensar: Sanções são instrumentos de política internacional que podem impor restrições econômicas.\nPasso a passo:\n1. Observe os efeitos ligados a comércio e finanças.\n2. As restrições podem atingir setores ou agentes específicos.\n3. Sanções não garantem por si só o fim de um conflito.\nConclusão: Podem restringir relações comerciais ou financeiras.",
                       "opcoes": [
                         {
-                          "texto": "meridianos apenas",
+                          "texto": "aumentar automaticamente a produção de todos os países",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "fusos horários",
+                          "texto": "eliminar qualquer conflito imediatamente",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "pontos cardeais",
+                          "texto": "restringir relações comerciais ou financeiras",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "paralelos",
+                          "texto": "substituir eleições",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um mapa temático destaca principalmente:",
-                      "explicacao_erro": "Como pensar: identifique o conceito geográfico central e compare sua definição com as alternativas.\nPasso a passo:\n1. Localize a palavra-chave do enunciado.\n2. Relacione-a à definição estudada.\n3. Elimine alternativas que descrevam outro conceito.\nConclusão: um fenômeno ou tema específico.\nObservação: Mapas temáticos representam temas como população, clima ou economia.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas rios",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "somente fronteiras",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "sempre relevo",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "um fenômeno ou tema específico",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
