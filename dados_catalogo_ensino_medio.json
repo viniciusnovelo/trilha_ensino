@@ -23,9 +23,9 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · funcoes",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
                   "deslocamento_y": 0,
@@ -37,22 +37,22 @@
                         {
                           "texto": "um único elemento do contradomínio",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "vários elementos obrigatoriamente",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "nenhum elemento",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "dois valores obrigatoriamente",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -63,22 +63,22 @@
                         {
                           "texto": "0",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "6",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "3",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "9",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -89,276 +89,22 @@
                         {
                           "texto": "1",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "3",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "2",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "-2",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em uma função afim f(x)=ax+b, o coeficiente a representa:",
-                      "explicacao_erro": "Como pensar: na função afim f(x)=ax+b, compare a expressão com a forma padrão e observe o número que multiplica x.\nPasso a passo:\n1. O coeficiente a acompanha x.\n2. Ele indica quanto a função varia quando x aumenta uma unidade.\n3. Geometricamente, a determina a inclinação da reta.\nConclusão: a representa a taxa de variação (ou inclinação) da função.",
-                      "opcoes": [
-                        {
-                          "texto": "o valor da raiz sempre",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "o domínio",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "o contradomínio",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "a taxa de variação",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · funcoes",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "Em uma função, cada elemento do domínio está associado a:",
-                      "explicacao_erro": "Como pensar: identifique o que o enunciado está pedindo e escolha a propriedade ou fórmula que relaciona os dados ao resultado.\nPasso a passo:\n1. Relacione os dados ao conceito matemático envolvido.\n2. Aplique a regra adequada.\nConclusão: um único elemento do contradomínio.",
-                      "opcoes": [
-                        {
-                          "texto": "um único elemento do contradomínio",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "vários elementos obrigatoriamente",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "nenhum elemento",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "dois valores obrigatoriamente",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Considere f(x) = 2x + 1. Qual é f(3)?",
-                      "explicacao_erro": "Como pensar: calcular f(3) significa descobrir a saída da função quando x=3. Basta substituir x pelo valor dado e fazer as operações na ordem.\nPasso a passo:\n1. Substitua x por 3: f(3) = 2·3 +1.\n2. Calcule a multiplicação: 2·3 = 6.\n3. Faça a soma algébrica: 6 +1 = 7.\nConclusão: f(3) = 7.",
-                      "opcoes": [
-                        {
-                          "texto": "6",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "7",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "4",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "10",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Qual é a raiz de f(x) = x - 3?",
-                      "explicacao_erro": "Como pensar: a raiz é o valor de x que faz a função valer zero. Portanto, comece fazendo f(x)=0.\nPasso a passo:\n1. Monte a equação: x -3 = 0.\n2. Isole o termo com x: x = 3.\n3. Divida por 1: x = 3.\nConclusão: a raiz é 3.",
-                      "opcoes": [
-                        {
-                          "texto": "1",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "4",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "3",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "-3",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em uma função afim f(x)=ax+b, o coeficiente a representa:",
-                      "explicacao_erro": "Como pensar: na função afim f(x)=ax+b, compare a expressão com a forma padrão e observe o número que multiplica x.\nPasso a passo:\n1. O coeficiente a acompanha x.\n2. Ele indica quanto a função varia quando x aumenta uma unidade.\n3. Geometricamente, a determina a inclinação da reta.\nConclusão: a representa a taxa de variação (ou inclinação) da função.",
-                      "opcoes": [
-                        {
-                          "texto": "o valor da raiz sempre",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "o domínio",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "o contradomínio",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "a taxa de variação",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · porcentagem",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "Um produto de R$ 104 com desconto de 10% passa a custar aproximadamente:",
-                      "explicacao_erro": "Como pensar: desconto percentual é uma parte do preço original que será retirada.\nPasso a passo:\n1. Calcule 10% de R$ 104: 104 × 10/100 = R$ 10,4.\n2. Subtraia o desconto do preço original: R$ 104 − R$ 10,4 = R$ 93,6.\nConclusão: o produto passa a custar aproximadamente R$ 93,6.",
-                      "opcoes": [
-                        {
-                          "texto": "R$ 94",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "R$ 94",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "R$ 114",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "R$ 84",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um valor de 40 aumentado em 20% resulta em:",
-                      "explicacao_erro": "Como pensar: aumentar um valor em p% significa adicionar p% do valor original.\nPasso a passo:\n1. Calcule 20% de 40: 40 × 20/100 = 8.\n2. Some o aumento ao valor original: 40 + 8 = 48.\nConclusão: o novo valor é 48.",
-                      "opcoes": [
-                        {
-                          "texto": "56",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "48",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "60",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "32",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "50% corresponde à fração:",
-                      "explicacao_erro": "Como pensar: porcentagem significa uma quantidade em cada 100.\nPasso a passo:\n1. Escreva 50% como 50/100.\n2. Simplifique a fração pelo máximo divisor comum.\nConclusão: 50% = 1/2.",
-                      "opcoes": [
-                        {
-                          "texto": "2/3",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "3/4",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "1/2",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "1/5",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Se 20 alunos representam 100% da turma, 4 alunos representam:",
-                      "explicacao_erro": "Como pensar: compare a parte com o total para descobrir a porcentagem.\nPasso a passo:\n1. Forme a razão: 4/20.\n2. Multiplique por 100: (4/20) × 100 = 20%.\nConclusão: 4 alunos representam 20% da turma.",
-                      "opcoes": [
-                        {
-                          "texto": "25%",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "10%",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "50%",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "20%",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -372,139 +118,51 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · funcoes",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Em uma função, cada elemento do domínio está associado a:",
-                      "explicacao_erro": "Como pensar: identifique o que o enunciado está pedindo e escolha a propriedade ou fórmula que relaciona os dados ao resultado.\nPasso a passo:\n1. Relacione os dados ao conceito matemático envolvido.\n2. Aplique a regra adequada.\nConclusão: um único elemento do contradomínio.",
-                      "opcoes": [
-                        {
-                          "texto": "um único elemento do contradomínio",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "vários elementos obrigatoriamente",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "nenhum elemento",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "dois valores obrigatoriamente",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Considere f(x) = 2x + 0. Qual é f(3)?",
-                      "explicacao_erro": "Como pensar: calcular f(3) significa descobrir a saída da função quando x=3. Basta substituir x pelo valor dado e fazer as operações na ordem.\nPasso a passo:\n1. Substitua x por 3: f(3) = 2·3 +0.\n2. Calcule a multiplicação: 2·3 = 6.\n3. Faça a soma algébrica: 6 +0 = 6.\nConclusão: f(3) = 6.",
-                      "opcoes": [
-                        {
-                          "texto": "0",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "6",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "3",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "9",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Qual é a raiz de f(x) = x - 2?",
-                      "explicacao_erro": "Como pensar: a raiz é o valor de x que faz a função valer zero. Portanto, comece fazendo f(x)=0.\nPasso a passo:\n1. Monte a equação: x -2 = 0.\n2. Isole o termo com x: x = 2.\n3. Divida por 1: x = 2.\nConclusão: a raiz é 2.",
-                      "opcoes": [
-                        {
-                          "texto": "1",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "3",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "2",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "-2",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
                       "enunciado": "Em uma função afim f(x)=ax+b, o coeficiente a representa:",
                       "explicacao_erro": "Como pensar: na função afim f(x)=ax+b, compare a expressão com a forma padrão e observe o número que multiplica x.\nPasso a passo:\n1. O coeficiente a acompanha x.\n2. Ele indica quanto a função varia quando x aumenta uma unidade.\n3. Geometricamente, a determina a inclinação da reta.\nConclusão: a representa a taxa de variação (ou inclinação) da função.",
                       "opcoes": [
                         {
-                          "texto": "o valor da raiz sempre",
-                          "correta": false,
+                          "texto": "a taxa de variação",
+                          "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "o domínio",
+                          "texto": "o valor da raiz sempre",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "o contradomínio",
+                          "texto": "o domínio",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "a taxa de variação",
-                          "correta": true,
+                          "texto": "o contradomínio",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Raciocínio aplicado · proporcao",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": 55,
-                  "questoes": [
+                    },
                     {
                       "enunciado": "Se 3 cadernos custam R$ 9, 1 caderno custa:",
                       "explicacao_erro": "Como pensar: o preço unitário é o preço total dividido pela quantidade.\nPasso a passo:\n1. R$ 9 correspondem a 3 cadernos.\n2. R$ 9 ÷ 3 = R$ 3 por caderno.\nConclusão: cada caderno custa R$ 3.",
                       "opcoes": [
                         {
-                          "texto": "R$ 3",
-                          "correta": true,
+                          "texto": "R$ 9",
+                          "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "R$ 9",
-                          "correta": false,
+                          "texto": "R$ 3",
+                          "correta": true,
                           "ordem": 2
                         },
                         {
@@ -529,13 +187,13 @@
                           "ordem": 1
                         },
                         {
-                          "texto": "3 xícaras",
-                          "correta": true,
+                          "texto": "5 xícaras",
+                          "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "5 xícaras",
-                          "correta": false,
+                          "texto": "3 xícaras",
+                          "correta": true,
                           "ordem": 3
                         },
                         {
@@ -544,169 +202,193 @@
                           "ordem": 4
                         }
                       ]
-                    },
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "titulo": "Função afim na prática",
+              "descricao": "Conteúdo de função afim na prática com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
+                {
+                  "titulo": "Prática · Função afim na prática",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
+                  "questoes": [
                     {
-                      "enunciado": "Em grandezas diretamente proporcionais, quando uma dobra, a outra:",
-                      "explicacao_erro": "Como pensar: em uma proporção direta, as grandezas variam pelo mesmo fator.\nPasso a passo:\n1. Uma grandeza é multiplicada por 2.\n2. Para manter a razão constante, a outra também é multiplicada por 2.\nConclusão: a outra grandeza também dobra.",
+                      "enunciado": "Na função f(x) = 3x - 2, qual é o coeficiente angular?",
+                      "explicacao_erro": "Como pensar: Na forma f(x)=ax+b, o coeficiente angular é o número que multiplica x.\nPasso a passo:\n1. Identifique a forma ax+b.\n2. Compare com 3x-2.\n3. O coeficiente de x é 3.\nConclusão: O coeficiente angular é 3.",
                       "opcoes": [
                         {
-                          "texto": "não muda",
-                          "correta": false,
+                          "texto": "3",
+                          "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "zera",
+                          "texto": "-2",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "também dobra",
-                          "correta": true,
+                          "texto": "2",
+                          "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "fica pela metade",
+                          "texto": "5",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "20% de 15 é:",
-                      "explicacao_erro": "Como pensar: transforme a porcentagem em uma fração sobre 100 e multiplique pelo valor.\nPasso a passo:\n1. 20% = 20/100.\n2. 20/100 × 15 = 3.\nConclusão: 20% de 15 é 3.",
+                      "enunciado": "Considere f(x) = 2x + 1. Qual é f(4)?",
+                      "explicacao_erro": "Como pensar: Calcular f(4) significa substituir x por 4 na lei da função.\nPasso a passo:\n1. Troque x por 4: f(4)=2·4+1.\n2. Calcule 2·4=8.\n3. Some 1: 8+1=9.\nConclusão: f(4)=9.",
                       "opcoes": [
                         {
-                          "texto": "6",
+                          "texto": "7",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "8",
-                          "correta": false,
+                          "texto": "9",
+                          "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "97",
+                          "texto": "8",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "3",
+                          "texto": "6",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    },
+                    {
+                      "enunciado": "Na função f(x) = -2x + 5, qual é o valor de f(0)?",
+                      "explicacao_erro": "Como pensar: Quando x=0, substitua diretamente esse valor na expressão.\nPasso a passo:\n1. Escreva f(0)=-2·0+5.\n2. O termo -2·0 vale 0.\n3. Resta 5.\nConclusão: f(0)=5.",
+                      "opcoes": [
+                        {
+                          "texto": "-2",
+                          "correta": false,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "0",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "5",
                           "correta": true,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "7",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Gráficos e raízes",
+              "descricao": "Conteúdo de gráficos e raízes com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Desafio final · estatistica",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": -35,
+                  "titulo": "Prática · Gráficos e raízes",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A média aritmética é obtida:",
-                      "explicacao_erro": "Como pensar: a média representa uma distribuição igual do total entre os dados.\nPasso a passo:\n1. Some os valores.\n2. Conte quantos valores existem.\n3. Divida a soma pela quantidade.\nConclusão: média = soma dos dados ÷ quantidade de dados.",
+                      "enunciado": "Qual é a raiz da função f(x) = 2x - 6?",
+                      "explicacao_erro": "Como pensar: A raiz é o valor de x que faz a função valer zero.\nPasso a passo:\n1. Faça 2x-6=0.\n2. Some 6 aos dois lados: 2x=6.\n3. Divida por 2: x=3.\nConclusão: A raiz é 3.",
                       "opcoes": [
                         {
-                          "texto": "somando os valores e dividindo pela quantidade",
+                          "texto": "3",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "subtraindo o maior do menor",
+                          "texto": "-3",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "multiplicando todos os valores",
+                          "texto": "0",
                           "correta": false,
                           "ordem": 3
-                        },
-                        {
-                          "texto": "escolhendo sempre o menor valor",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A média de 4, 6 e 8 é:",
-                      "explicacao_erro": "Como pensar: some os valores e divida pelo número de valores.\nPasso a passo:\n1. 4 + 6 + 8 = 18.\n2. 18 ÷ 3 = 6.\nConclusão: a média é 6.",
-                      "opcoes": [
-                        {
-                          "texto": "4",
-                          "correta": false,
-                          "ordem": 1
                         },
                         {
                           "texto": "6",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "7",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "8",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A mediana de uma lista ordenada é:",
-                      "explicacao_erro": "Como pensar: a mediana depende da posição central dos dados ordenados.\nPasso a passo:\n1. Ordene os valores do menor para o maior.\n2. Identifique a posição central.\n3. Com quantidade par de dados, faça a média dos dois valores centrais.\nConclusão: mediana é o valor central (ou a média dos dois centrais).",
+                      "enunciado": "A função f(x) = 4x + 1 é crescente ou decrescente?",
+                      "explicacao_erro": "Como pensar: Em uma função afim, o sinal do coeficiente angular determina a inclinação da reta.\nPasso a passo:\n1. Observe o coeficiente de x: a=4.\n2. Como a>0, a reta sobe para a direita.\n3. Reta com a>0 é crescente.\nConclusão: A função é crescente.",
                       "opcoes": [
                         {
-                          "texto": "o menor valor",
+                          "texto": "Decrescente",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "a soma dos extremos",
-                          "correta": false,
+                          "texto": "Crescente",
+                          "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "o valor central",
-                          "correta": true,
+                          "texto": "Constante",
+                          "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "o maior valor",
+                          "texto": "Não é função",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A moda é o valor que:",
-                      "explicacao_erro": "Como pensar: a moda depende de frequência, não de tamanho ou ordem.\nPasso a passo:\n1. Conte quantas vezes cada valor aparece.\n2. Encontre a maior frequência.\nConclusão: a moda é o valor que aparece mais vezes.",
+                      "enunciado": "Qual ponto pertence ao gráfico de f(x) = x + 2?",
+                      "explicacao_erro": "Como pensar: Um ponto pertence ao gráfico quando suas coordenadas satisfazem a lei da função.\nPasso a passo:\n1. Teste x=3 na função.\n2. f(3)=3+2=5.\n3. O par (3,5) satisfaz a equação.\nConclusão: O ponto correto é (3,5).",
                       "opcoes": [
                         {
-                          "texto": "é sempre o maior",
+                          "texto": "(1,1)",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "fica no centro",
+                          "texto": "(2,2)",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "é sempre inteiro",
-                          "correta": false,
+                          "texto": "(3,5)",
+                          "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "mais se repete",
-                          "correta": true,
+                          "texto": "(4,5)",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
@@ -732,12 +414,12 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · equacoes",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Qual é a solução de x + 3 = 6?",
@@ -746,22 +428,22 @@
                         {
                           "texto": "3",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "6",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "4",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "2",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -772,22 +454,22 @@
                         {
                           "texto": "8",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "4",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "2",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "6",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -798,276 +480,22 @@
                         {
                           "texto": "0",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "0",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "3",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "9",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em 5x + 10 = 25, o valor de x é:",
-                      "explicacao_erro": "Como pensar: a equação pede o valor de x que torna os dois lados iguais.\nPasso a passo:\n1. Isole o termo com x: 5x = 15.\n2. Divida pelo coeficiente de x (5): x = 3.\nConclusão: x = 3.",
-                      "opcoes": [
-                        {
-                          "texto": "5",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "1",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "6",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "3",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · equacoes",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "Qual é a solução de x + 4 = 8?",
-                      "explicacao_erro": "Como pensar: a equação pede o valor de x que torna os dois lados iguais.\nPasso a passo:\n1. Isole o termo com x: x = 4.\n2. Divida pelo coeficiente de x (1): x = 4.\nConclusão: x = 4.",
-                      "opcoes": [
-                        {
-                          "texto": "4",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "8",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "5",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "3",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Resolva 6x = 24.",
-                      "explicacao_erro": "Como pensar: identifique o que o enunciado está pedindo e escolha a propriedade ou fórmula que relaciona os dados ao resultado.\nPasso a passo:\n1. Relacione os dados ao conceito matemático envolvido.\n2. Aplique a regra adequada.\nConclusão: 4.",
-                      "opcoes": [
-                        {
-                          "texto": "8",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "4",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "2",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "6",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Qual valor de x satisfaz 3x - 12 = 0?",
-                      "explicacao_erro": "Como pensar: a equação pede o valor de x que torna os dois lados iguais.\nPasso a passo:\n1. Isole o termo com x: 3x = 12.\n2. Divida pelo coeficiente de x (3): x = 4.\nConclusão: x = 4.",
-                      "opcoes": [
-                        {
-                          "texto": "1",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "0",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "4",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "12",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em 5x + 10 = 30, o valor de x é:",
-                      "explicacao_erro": "Como pensar: a equação pede o valor de x que torna os dois lados iguais.\nPasso a passo:\n1. Isole o termo com x: 5x = 20.\n2. Divida pelo coeficiente de x (5): x = 4.\nConclusão: x = 4.",
-                      "opcoes": [
-                        {
-                          "texto": "6",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "2",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "8",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "4",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · sistemas",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 0,
-                  "questoes": [
-                    {
-                      "enunciado": "A solução de um sistema representa:",
-                      "explicacao_erro": "Como pensar: identifique o que o enunciado está pedindo e escolha a propriedade ou fórmula que relaciona os dados ao resultado.\nPasso a passo:\n1. Relacione os dados ao conceito matemático envolvido.\n2. Aplique a regra adequada.\nConclusão: um par ordenado que satisfaz simultaneamente as equações.",
-                      "opcoes": [
-                        {
-                          "texto": "um par ordenado que satisfaz simultaneamente as equações",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas a primeira equação",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "apenas a segunda equação",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "qualquer valor do domínio",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "No sistema x+y=7 e x-y=1, x vale:",
-                      "explicacao_erro": "Como pensar: some as duas equações para eliminar y.\nPasso a passo:\n1. (x+y)+(x−y)=7+1.\n2. +y e −y se cancelam: 2x=8.\n3. x=8÷2=4.\nConclusão: x=4.",
-                      "opcoes": [
-                        {
-                          "texto": "6",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "5",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "4",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "3",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "No mesmo sistema x+y=7 e x-y=1, y vale:",
-                      "explicacao_erro": "Como pensar: depois de encontrar x, substitua esse valor em uma equação.\nPasso a passo:\n1. x=4.\n2. 4+y=7.\n3. y=7−4=3.\nConclusão: y=3.",
-                      "opcoes": [
-                        {
-                          "texto": "3",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "2",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "2",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "1",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Ao usar o método da adição em um sistema, buscamos:",
-                      "explicacao_erro": "Como pensar: o método da adição busca eliminar uma incógnita.\nPasso a passo:\n1. Observe os coeficientes das incógnitas.\n2. Some ou subtraia as equações para cancelar uma delas.\n3. Resolva a equação restante e depois encontre a outra incógnita.\nConclusão: o objetivo é cancelar uma incógnita.",
-                      "opcoes": [
-                        {
-                          "texto": "aumentar o número de incógnitas",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "eliminar todas as equações",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "trocar o sinal de todas as constantes",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "eliminar uma das incógnitas",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -1081,12 +509,12 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · proporcao",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Se 3 cadernos custam R$ 9, 1 caderno custa:",
@@ -1095,22 +523,22 @@
                         {
                           "texto": "R$ 3",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "R$ 9",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "R$ 6",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "R$ 1.5",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1121,22 +549,22 @@
                         {
                           "texto": "6 xícaras",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "3 xícaras",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "5 xícaras",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "1.5 xícaras",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1147,204 +575,166 @@
                         {
                           "texto": "não muda",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "zera",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "também dobra",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "fica pela metade",
                           "correta": false,
+                          "ordem": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "titulo": "Equações do 2º grau",
+              "descricao": "Conteúdo de equações do 2º grau com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
+                {
+                  "titulo": "Prática · Equações do 2º grau",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
+                  "questoes": [
+                    {
+                      "enunciado": "Quais são as raízes de x² - 5x + 6 = 0?",
+                      "explicacao_erro": "Como pensar: Procure dois números cujo produto seja 6 e cuja soma seja 5.\nPasso a passo:\n1. Fatore: x²-5x+6=(x-2)(x-3).\n2. Iguale cada fator a zero.\n3. Obtenha x=2 e x=3.\nConclusão: As raízes são 2 e 3.",
+                      "opcoes": [
+                        {
+                          "texto": "2 e 3",
+                          "correta": true,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "1 e 6",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "-2 e -3",
+                          "correta": false,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "0 e 5",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "20% de 15 é:",
-                      "explicacao_erro": "Como pensar: transforme a porcentagem em uma fração sobre 100 e multiplique pelo valor.\nPasso a passo:\n1. 20% = 20/100.\n2. 20/100 × 15 = 3.\nConclusão: 20% de 15 é 3.",
+                      "enunciado": "Qual é o discriminante de x² + 4x + 4 = 0?",
+                      "explicacao_erro": "Como pensar: Use Δ=b²-4ac e identifique a, b e c.\nPasso a passo:\n1. a=1, b=4 e c=4.\n2. Δ=4²-4·1·4.\n3. Δ=16-16=0.\nConclusão: O discriminante é 0.",
                       "opcoes": [
                         {
-                          "texto": "6",
+                          "texto": "4",
                           "correta": false,
                           "ordem": 1
+                        },
+                        {
+                          "texto": "0",
+                          "correta": true,
+                          "ordem": 2
                         },
                         {
                           "texto": "8",
                           "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "97",
-                          "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "3",
+                          "texto": "16",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    },
+                    {
+                      "enunciado": "As soluções de 2x² - 8 = 0 são:",
+                      "explicacao_erro": "Como pensar: Isole x² e considere os dois sinais da raiz quadrada.\nPasso a passo:\n1. 2x²=8.\n2. x²=4.\n3. x=±2.\nConclusão: As soluções são x=2 e x=-2.",
+                      "opcoes": [
+                        {
+                          "texto": "x=4",
+                          "correta": false,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "x=-4",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "x=±2",
                           "correta": true,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "x=±4",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Sistemas e aplicações",
+              "descricao": "Conteúdo de sistemas e aplicações com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · porcentagem",
-                  "ordem": 2,
+                  "titulo": "Prática · Sistemas e aplicações",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "Um produto de R$ 104 com desconto de 10% passa a custar aproximadamente:",
-                      "explicacao_erro": "Como pensar: desconto percentual é uma parte do preço original que será retirada.\nPasso a passo:\n1. Calcule 10% de R$ 104: 104 × 10/100 = R$ 10,4.\n2. Subtraia o desconto do preço original: R$ 104 − R$ 10,4 = R$ 93,6.\nConclusão: o produto passa a custar aproximadamente R$ 93,6.",
-                      "opcoes": [
-                        {
-                          "texto": "R$ 94",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "R$ 94",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "R$ 114",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "R$ 84",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um valor de 40 aumentado em 20% resulta em:",
-                      "explicacao_erro": "Como pensar: aumentar um valor em p% significa adicionar p% do valor original.\nPasso a passo:\n1. Calcule 20% de 40: 40 × 20/100 = 8.\n2. Some o aumento ao valor original: 40 + 8 = 48.\nConclusão: o novo valor é 48.",
-                      "opcoes": [
-                        {
-                          "texto": "56",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "48",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "60",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "32",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "50% corresponde à fração:",
-                      "explicacao_erro": "Como pensar: porcentagem significa uma quantidade em cada 100.\nPasso a passo:\n1. Escreva 50% como 50/100.\n2. Simplifique a fração pelo máximo divisor comum.\nConclusão: 50% = 1/2.",
-                      "opcoes": [
-                        {
-                          "texto": "2/3",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "3/4",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "1/2",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "1/5",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Se 20 alunos representam 100% da turma, 4 alunos representam:",
-                      "explicacao_erro": "Como pensar: compare a parte com o total para descobrir a porcentagem.\nPasso a passo:\n1. Forme a razão: 4/20.\n2. Multiplique por 100: (4/20) × 100 = 20%.\nConclusão: 4 alunos representam 20% da turma.",
-                      "opcoes": [
-                        {
-                          "texto": "25%",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "10%",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "50%",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "20%",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Desafio final · estatistica",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A média aritmética é obtida:",
-                      "explicacao_erro": "Como pensar: a média representa uma distribuição igual do total entre os dados.\nPasso a passo:\n1. Some os valores.\n2. Conte quantos valores existem.\n3. Divida a soma pela quantidade.\nConclusão: média = soma dos dados ÷ quantidade de dados.",
+                      "enunciado": "No sistema x+y=10 e x-y=2, qual é o valor de x?",
+                      "explicacao_erro": "Como pensar: Some as equações para eliminar y.\nPasso a passo:\n1. (x+y)+(x-y)=10+2.\n2. 2x=12.\n3. x=6.\nConclusão: O valor de x é 6.",
                       "opcoes": [
                         {
-                          "texto": "somando os valores e dividindo pela quantidade",
+                          "texto": "6",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "subtraindo o maior do menor",
+                          "texto": "4",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "multiplicando todos os valores",
+                          "texto": "5",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "escolhendo sempre o menor valor",
+                          "texto": "8",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A média de 2, 4 e 6 é:",
-                      "explicacao_erro": "Como pensar: some os valores e divida pelo número de valores.\nPasso a passo:\n1. 2 + 4 + 6 = 12.\n2. 12 ÷ 3 = 4.\nConclusão: a média é 4.",
+                      "enunciado": "No sistema x+y=10 e x-y=2, qual é o valor de y?",
+                      "explicacao_erro": "Como pensar: Depois de encontrar x, substitua o valor em uma das equações.\nPasso a passo:\n1. Use x+y=10.\n2. Substitua x=6: 6+y=10.\n3. Logo y=4.\nConclusão: O valor de y é 4.",
                       "opcoes": [
                         {
                           "texto": "2",
@@ -1357,65 +747,39 @@
                           "ordem": 2
                         },
                         {
-                          "texto": "5",
+                          "texto": "6",
                           "correta": false,
                           "ordem": 3
+                        },
+                        {
+                          "texto": "8",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    },
+                    {
+                      "enunciado": "Um número mais seu dobro é 18. Qual é esse número?",
+                      "explicacao_erro": "Como pensar: Transforme o enunciado em uma equação.\nPasso a passo:\n1. Chame o número de x.\n2. x+2x=18, então 3x=18.\n3. Divida por 3: x=6.\nConclusão: O número é 6.",
+                      "opcoes": [
+                        {
+                          "texto": "9",
+                          "correta": false,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "12",
+                          "correta": false,
+                          "ordem": 2
                         },
                         {
                           "texto": "6",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A mediana de uma lista ordenada é:",
-                      "explicacao_erro": "Como pensar: a mediana depende da posição central dos dados ordenados.\nPasso a passo:\n1. Ordene os valores do menor para o maior.\n2. Identifique a posição central.\n3. Com quantidade par de dados, faça a média dos dois valores centrais.\nConclusão: mediana é o valor central (ou a média dos dois centrais).",
-                      "opcoes": [
-                        {
-                          "texto": "o menor valor",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "a soma dos extremos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "o valor central",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "o maior valor",
+                          "texto": "18",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A moda é o valor que:",
-                      "explicacao_erro": "Como pensar: a moda depende de frequência, não de tamanho ou ordem.\nPasso a passo:\n1. Conte quantas vezes cada valor aparece.\n2. Encontre a maior frequência.\nConclusão: a moda é o valor que aparece mais vezes.",
-                      "opcoes": [
-                        {
-                          "texto": "é sempre o maior",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "fica no centro",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "é sempre inteiro",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "mais se repete",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
@@ -1441,12 +805,12 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · geometria",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": -35,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Qual é a área de um retângulo de 4 cm por 6 cm?",
@@ -1455,22 +819,22 @@
                         {
                           "texto": "24 cm²",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "10 cm²",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "12 cm²",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "48 cm²",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1481,22 +845,22 @@
                         {
                           "texto": "8 cm",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "16 cm",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "16 cm",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "8 cm",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1507,276 +871,22 @@
                         {
                           "texto": "270°",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "360°",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "180°",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "90°",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um triângulo com base 6 cm e altura 4 cm tem área:",
-                      "explicacao_erro": "Como pensar: a área do triângulo é metade da área de um retângulo com a mesma base e altura.\nPasso a passo:\n1. A = (base × altura) ÷ 2.\n2. A = (6 × 4) ÷ 2 = 12 cm².\nConclusão: a área é 12 cm².",
-                      "opcoes": [
-                        {
-                          "texto": "24 cm²",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "10 cm²",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "6 cm²",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "12 cm²",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · geometria",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": 0,
-                  "questoes": [
-                    {
-                      "enunciado": "Qual é a área de um retângulo de 2 cm por 6 cm?",
-                      "explicacao_erro": "Como pensar: a área do retângulo é base × altura.\nPasso a passo:\n1. Base = 2 cm e altura = 6 cm.\n2. A = 2 × 6 = 12 cm².\nConclusão: a área é 12 cm².",
-                      "opcoes": [
-                        {
-                          "texto": "12 cm²",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "8 cm²",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "6 cm²",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "24 cm²",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Qual é o perímetro de um quadrado de lado 2 cm?",
-                      "explicacao_erro": "Como pensar: os quatro lados do quadrado têm o mesmo comprimento.\nPasso a passo:\n1. P = 4 × lado.\n2. P = 4 × 2 = 8 cm.\nConclusão: o perímetro é 8 cm.",
-                      "opcoes": [
-                        {
-                          "texto": "6 cm",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "8 cm",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "4 cm",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "4 cm",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A soma dos ângulos internos de um triângulo é:",
-                      "explicacao_erro": "Como pensar: a soma dos ângulos internos é uma propriedade de todo triângulo.\nPasso a passo:\n1. Considere os três ângulos internos.\n2. A soma deles é constante: 180°.\nConclusão: a soma é 180°.",
-                      "opcoes": [
-                        {
-                          "texto": "270°",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "360°",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "180°",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "90°",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um triângulo com base 4 cm e altura 4 cm tem área:",
-                      "explicacao_erro": "Como pensar: a área do triângulo é metade da área de um retângulo com a mesma base e altura.\nPasso a passo:\n1. A = (base × altura) ÷ 2.\n2. A = (4 × 4) ÷ 2 = 8 cm².\nConclusão: a área é 8 cm².",
-                      "opcoes": [
-                        {
-                          "texto": "16 cm²",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "8 cm²",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "4 cm²",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "8 cm²",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · funcoes",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "Em uma função, cada elemento do domínio está associado a:",
-                      "explicacao_erro": "Como pensar: identifique o que o enunciado está pedindo e escolha a propriedade ou fórmula que relaciona os dados ao resultado.\nPasso a passo:\n1. Relacione os dados ao conceito matemático envolvido.\n2. Aplique a regra adequada.\nConclusão: um único elemento do contradomínio.",
-                      "opcoes": [
-                        {
-                          "texto": "um único elemento do contradomínio",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "vários elementos obrigatoriamente",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "nenhum elemento",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "dois valores obrigatoriamente",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Considere f(x) = 2x + 1. Qual é f(3)?",
-                      "explicacao_erro": "Como pensar: calcular f(3) significa descobrir a saída da função quando x=3. Basta substituir x pelo valor dado e fazer as operações na ordem.\nPasso a passo:\n1. Substitua x por 3: f(3) = 2·3 +1.\n2. Calcule a multiplicação: 2·3 = 6.\n3. Faça a soma algébrica: 6 +1 = 7.\nConclusão: f(3) = 7.",
-                      "opcoes": [
-                        {
-                          "texto": "6",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "7",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "4",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "10",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Qual é a raiz de f(x) = x - 3?",
-                      "explicacao_erro": "Como pensar: a raiz é o valor de x que faz a função valer zero. Portanto, comece fazendo f(x)=0.\nPasso a passo:\n1. Monte a equação: x -3 = 0.\n2. Isole o termo com x: x = 3.\n3. Divida por 1: x = 3.\nConclusão: a raiz é 3.",
-                      "opcoes": [
-                        {
-                          "texto": "1",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "4",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "3",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "-3",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em uma função afim f(x)=ax+b, o coeficiente a representa:",
-                      "explicacao_erro": "Como pensar: na função afim f(x)=ax+b, compare a expressão com a forma padrão e observe o número que multiplica x.\nPasso a passo:\n1. O coeficiente a acompanha x.\n2. Ele indica quanto a função varia quando x aumenta uma unidade.\n3. Geometricamente, a determina a inclinação da reta.\nConclusão: a representa a taxa de variação (ou inclinação) da função.",
-                      "opcoes": [
-                        {
-                          "texto": "o valor da raiz sempre",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "o domínio",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "o contradomínio",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "a taxa de variação",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -1790,12 +900,12 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · proporcao",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": -35,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Se 3 cadernos custam R$ 12, 1 caderno custa:",
@@ -1804,22 +914,22 @@
                         {
                           "texto": "R$ 4",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "R$ 12",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "R$ 7",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "R$ 2",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1830,22 +940,22 @@
                         {
                           "texto": "8 xícaras",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "4 xícaras",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "6 xícaras",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "2 xícaras",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1856,275 +966,211 @@
                         {
                           "texto": "não muda",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "zera",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "também dobra",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "fica pela metade",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "20% de 20 é:",
-                      "explicacao_erro": "Como pensar: transforme a porcentagem em uma fração sobre 100 e multiplique pelo valor.\nPasso a passo:\n1. 20% = 20/100.\n2. 20/100 × 20 = 4.\nConclusão: 20% de 20 é 4.",
-                      "opcoes": [
-                        {
-                          "texto": "8",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "9",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "96",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "4",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Teorema de Pitágoras",
+              "descricao": "Conteúdo de teorema de pitágoras com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · porcentagem",
-                  "ordem": 2,
+                  "titulo": "Prática · Teorema de Pitágoras",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Um produto de R$ 102 com desconto de 10% passa a custar aproximadamente:",
-                      "explicacao_erro": "Como pensar: desconto percentual é uma parte do preço original que será retirada.\nPasso a passo:\n1. Calcule 10% de R$ 102: 102 × 10/100 = R$ 10,2.\n2. Subtraia o desconto do preço original: R$ 102 − R$ 10,2 = R$ 91,8.\nConclusão: o produto passa a custar aproximadamente R$ 91,8.",
+                      "enunciado": "Um triângulo retângulo tem catetos 3 cm e 4 cm. A hipotenusa mede:",
+                      "explicacao_erro": "Como pensar: Em um triângulo retângulo, a²+b²=c².\nPasso a passo:\n1. Calcule 3²+4²=c².\n2. 9+16=25.\n3. c=√25=5.\nConclusão: A hipotenusa mede 5 cm.",
                       "opcoes": [
                         {
-                          "texto": "R$ 92",
+                          "texto": "5 cm",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "R$ 92",
+                          "texto": "6 cm",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "R$ 112",
+                          "texto": "7 cm",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "R$ 82",
+                          "texto": "12 cm",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Um valor de 20 aumentado em 20% resulta em:",
-                      "explicacao_erro": "Como pensar: aumentar um valor em p% significa adicionar p% do valor original.\nPasso a passo:\n1. Calcule 20% de 20: 20 × 20/100 = 4.\n2. Some o aumento ao valor original: 20 + 4 = 24.\nConclusão: o novo valor é 24.",
+                      "enunciado": "A diagonal de um quadrado de lado 6 cm é:",
+                      "explicacao_erro": "Como pensar: A diagonal forma um triângulo retângulo com dois lados do quadrado.\nPasso a passo:\n1. Use d²=6²+6².\n2. d²=72.\n3. d=6√2.\nConclusão: A diagonal mede 6√2 cm.",
                       "opcoes": [
                         {
-                          "texto": "28",
+                          "texto": "6 cm",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "24",
+                          "texto": "6√2 cm",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "40",
+                          "texto": "12 cm",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "16",
+                          "texto": "36 cm",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "50% corresponde à fração:",
-                      "explicacao_erro": "Como pensar: porcentagem significa uma quantidade em cada 100.\nPasso a passo:\n1. Escreva 50% como 50/100.\n2. Simplifique a fração pelo máximo divisor comum.\nConclusão: 50% = 1/2.",
+                      "enunciado": "Um triângulo retângulo possui hipotenusa 10 cm e um cateto 6 cm. O outro cateto mede:",
+                      "explicacao_erro": "Como pensar: Use Pitágoras para encontrar o cateto desconhecido.\nPasso a passo:\n1. 6²+b²=10².\n2. 36+b²=100.\n3. b²=64 e b=8.\nConclusão: O outro cateto mede 8 cm.",
                       "opcoes": [
                         {
-                          "texto": "2/3",
+                          "texto": "4 cm",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "3/4",
+                          "texto": "6 cm",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "1/2",
+                          "texto": "8 cm",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "1/5",
+                          "texto": "16 cm",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Se 10 alunos representam 100% da turma, 2 alunos representam:",
-                      "explicacao_erro": "Como pensar: compare a parte com o total para descobrir a porcentagem.\nPasso a passo:\n1. Forme a razão: 2/10.\n2. Multiplique por 100: (2/10) × 100 = 20%.\nConclusão: 2 alunos representam 20% da turma.",
-                      "opcoes": [
-                        {
-                          "texto": "25%",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "10%",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "50%",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "20%",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Áreas e sólidos",
+              "descricao": "Conteúdo de áreas e sólidos com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Desafio final · estatistica",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 55,
+                  "titulo": "Prática · Áreas e sólidos",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A média aritmética é obtida:",
-                      "explicacao_erro": "Como pensar: a média representa uma distribuição igual do total entre os dados.\nPasso a passo:\n1. Some os valores.\n2. Conte quantos valores existem.\n3. Divida a soma pela quantidade.\nConclusão: média = soma dos dados ÷ quantidade de dados.",
+                      "enunciado": "Qual é a área de um triângulo de base 8 cm e altura 5 cm?",
+                      "explicacao_erro": "Como pensar: A área do triângulo é metade do produto da base pela altura.\nPasso a passo:\n1. A=(b·h)/2.\n2. A=(8·5)/2.\n3. A=40/2=20.\nConclusão: A área é 20 cm².",
                       "opcoes": [
                         {
-                          "texto": "somando os valores e dividindo pela quantidade",
+                          "texto": "20 cm²",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "subtraindo o maior do menor",
+                          "texto": "13 cm²",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "multiplicando todos os valores",
+                          "texto": "40 cm²",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "escolhendo sempre o menor valor",
+                          "texto": "80 cm²",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A média de 3, 5 e 7 é:",
-                      "explicacao_erro": "Como pensar: some os valores e divida pelo número de valores.\nPasso a passo:\n1. 3 + 5 + 7 = 15.\n2. 15 ÷ 3 = 5.\nConclusão: a média é 5.",
+                      "enunciado": "Qual é a área de um círculo de raio 3 cm?",
+                      "explicacao_erro": "Como pensar: A área do círculo é A=πr².\nPasso a passo:\n1. r=3, então r²=9.\n2. A=π·9.\n3. A=9π cm².\nConclusão: A área é 9π cm².",
                       "opcoes": [
                         {
-                          "texto": "3",
+                          "texto": "3π cm²",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "5",
+                          "texto": "9π cm²",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "6",
+                          "texto": "6π cm²",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "7",
+                          "texto": "18π cm²",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A mediana de uma lista ordenada é:",
-                      "explicacao_erro": "Como pensar: a mediana depende da posição central dos dados ordenados.\nPasso a passo:\n1. Ordene os valores do menor para o maior.\n2. Identifique a posição central.\n3. Com quantidade par de dados, faça a média dos dois valores centrais.\nConclusão: mediana é o valor central (ou a média dos dois centrais).",
+                      "enunciado": "Qual é o volume de um bloco retangular de 2 cm × 3 cm × 4 cm?",
+                      "explicacao_erro": "Como pensar: O volume é o produto das três dimensões.\nPasso a passo:\n1. V=2·3·4.\n2. 2·3=6.\n3. 6·4=24.\nConclusão: O volume é 24 cm³.",
                       "opcoes": [
                         {
-                          "texto": "o menor valor",
+                          "texto": "9 cm³",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "a soma dos extremos",
+                          "texto": "12 cm³",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "o valor central",
+                          "texto": "24 cm³",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "o maior valor",
+                          "texto": "48 cm³",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A moda é o valor que:",
-                      "explicacao_erro": "Como pensar: a moda depende de frequência, não de tamanho ou ordem.\nPasso a passo:\n1. Conte quantas vezes cada valor aparece.\n2. Encontre a maior frequência.\nConclusão: a moda é o valor que aparece mais vezes.",
-                      "opcoes": [
-                        {
-                          "texto": "é sempre o maior",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "fica no centro",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "é sempre inteiro",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "mais se repete",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
