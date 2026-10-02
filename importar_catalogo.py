@@ -601,7 +601,108 @@ def importar_catalogo(
         print('🧪 DRY-RUN: nenhuma alteração será feita.')
         return
 
-    with transaction.atomic():
+    def sincronizar_questao(fase, questao_data):
+        enunciado = questao_data['enunciado'].strip()
+
+        questao = (
+            fase.questoes
+            .filter(enunciado=enunciado)
+            .order_by('id')
+            .first()
+        )
+
+        if questao is None:
+            questao = Questao.objects.create(
+                fase=fase,
+                enunciado=enunciado,
+                explicacao_erro=questao_data.get(
+                    'explicacao_erro',
+                    '',
+                ).strip(),
+            )
+            print(
+                f'      + Questão criada: {enunciado[:70]}'
+            )
+        else:
+            nova_explicacao = questao_data.get(
+                'explicacao_erro',
+                '',
+            ).strip()
+
+            campos_alterados = []
+
+            if questao.explicacao_erro != nova_explicacao:
+                questao.explicacao_erro = nova_explicacao
+                campos_alterados.append(
+                    'explicacao_erro'
+                )
+
+            if campos_alterados:
+                questao.save(
+                    update_fields=campos_alterados
+                )
+
+        opcoes_existentes = list(
+            questao.opcoes
+            .order_by('ordem', 'id')
+        )
+
+        for indice, opcao_data in enumerate(
+            questao_data['opcoes'],
+            start=1,
+        ):
+            ordem = opcao_data.get(
+                'ordem',
+                indice,
+            )
+
+            opcao = next(
+                (
+                    item
+                    for item in opcoes_existentes
+                    if item.ordem == ordem
+                ),
+                None,
+            )
+
+            if opcao is None and indice <= len(
+                opcoes_existentes
+            ):
+                opcao = opcoes_existentes[
+                    indice - 1
+                ]
+
+            if opcao is None:
+                opcao = Opcao.objects.create(
+                    questao=questao,
+                    texto=opcao_data[
+                        'texto'
+                    ].strip(),
+                    e_correta=opcao_data[
+                        'correta'
+                    ],
+                    ordem=ordem,
+                )
+            else:
+                opcao.texto = opcao_data[
+                    'texto'
+                ].strip()
+
+                opcao.e_correta = opcao_data[
+                    'correta'
+                ]
+
+                opcao.ordem = ordem
+
+                opcao.save(
+                    update_fields=[
+                        'texto',
+                        'e_correta',
+                        'ordem',
+                    ]
+                )
+
+    def sincronizar():
         for materia_data in sorted(
             dados['materias'],
             key=lambda item: item['ordem'],
@@ -610,10 +711,22 @@ def importar_catalogo(
                 slug=materia_data['slug'],
                 defaults={
                     'nome': materia_data['nome'].strip(),
-                    'descricao': materia_data.get('descricao', '').strip(),
-                    'icone': materia_data.get('icone', 'book'),
-                    'ordem': materia_data.get('ordem', 1),
-                    'ativo': materia_data.get('ativo', True),
+                    'descricao': materia_data.get(
+                        'descricao',
+                        '',
+                    ).strip(),
+                    'icone': materia_data.get(
+                        'icone',
+                        'book',
+                    ),
+                    'ordem': materia_data.get(
+                        'ordem',
+                        1,
+                    ),
+                    'ativo': materia_data.get(
+                        'ativo',
+                        True,
+                    ),
                 },
             )
 
@@ -627,7 +740,9 @@ def importar_catalogo(
             ):
                 existente = (
                     Disciplina.objects
-                    .filter(slug=jogo_data['slug'])
+                    .filter(
+                        slug=jogo_data['slug']
+                    )
                     .first()
                 )
 
@@ -635,93 +750,130 @@ def importar_catalogo(
                     existente.delete()
                     existente = None
 
-                if existente:
+                if existente is None:
+                    jogo = Disciplina.objects.create(
+                        materia=materia,
+                        autor=autor,
+                        nome=jogo_data['nome'].strip(),
+                        slug=jogo_data['slug'],
+                        descricao=jogo_data.get(
+                            'descricao',
+                            '',
+                        ).strip(),
+                        icone=jogo_data.get(
+                            'icone',
+                            'book',
+                        ),
+                        ordem=jogo_data.get(
+                            'ordem',
+                            1,
+                        ),
+                        ativo=jogo_data.get(
+                            'ativo',
+                            True,
+                        ),
+                        tema=jogo_data.get(
+                            'tema',
+                            'tema-padrao',
+                        ),
+                    )
+                    print(
+                        f'   🎮 Jogo criado: {jogo.nome}'
+                    )
+                else:
                     jogo = existente
                     jogo.materia = materia
                     jogo.autor = autor
                     jogo.nome = jogo_data['nome'].strip()
-                    jogo.descricao = jogo_data.get('descricao', '').strip()
-                    jogo.icone = jogo_data.get('icone', 'book')
-                    jogo.ordem = jogo_data.get('ordem', 1)
-                    jogo.ativo = jogo_data.get('ativo', True)
-                    jogo.tema = jogo_data.get('tema', 'tema-padrao')
+                    jogo.descricao = jogo_data.get(
+                        'descricao',
+                        '',
+                    ).strip()
+                    jogo.icone = jogo_data.get(
+                        'icone',
+                        'book',
+                    )
+                    jogo.ordem = jogo_data.get(
+                        'ordem',
+                        1,
+                    )
+                    jogo.ativo = jogo_data.get(
+                        'ativo',
+                        True,
+                    )
+                    jogo.tema = jogo_data.get(
+                        'tema',
+                        'tema-padrao',
+                    )
                     jogo.save()
+
                     print(
                         f'   ↻ Jogo atualizado: {jogo.nome}'
                     )
-                    continue
-
-                jogo = Disciplina.objects.create(
-                    materia=materia,
-                    autor=autor,
-                    nome=jogo_data['nome'].strip(),
-                    slug=jogo_data['slug'],
-                    descricao=jogo_data.get('descricao', '').strip(),
-                    icone=jogo_data.get('icone', 'book'),
-                    ordem=jogo_data.get('ordem', 1),
-                    ativo=jogo_data.get('ativo', True),
-                    tema=jogo_data.get('tema', 'tema-padrao'),
-                )
-
-                print(
-                    f'   🎮 Jogo criado: {jogo.nome}'
-                )
 
                 for modulo_data in sorted(
                     jogo_data['modulos'],
                     key=lambda item: item['ordem'],
                 ):
-                    modulo = Modulo.objects.create(
+                    modulo, _ = Modulo.objects.update_or_create(
                         disciplina=jogo,
-                        titulo=modulo_data['titulo'].strip(),
-                        descricao=modulo_data.get('descricao', '').strip(),
                         ordem=modulo_data['ordem'],
+                        defaults={
+                            'titulo': modulo_data['titulo'].strip(),
+                            'descricao': modulo_data.get(
+                                'descricao',
+                                '',
+                            ).strip(),
+                        },
+                    )
+
+                    print(
+                        f'      📦 Módulo {modulo.ordem}: '
+                        f'{modulo.titulo}'
                     )
 
                     for fase_data in sorted(
                         modulo_data['fases'],
                         key=lambda item: item['ordem'],
                     ):
-                        fase = Fase.objects.create(
+                        fase, _ = Fase.objects.update_or_create(
                             modulo=modulo,
-                            titulo=fase_data['titulo'].strip(),
                             ordem=fase_data['ordem'],
-                            tipo=fase_data.get('tipo', 'quiz'),
-                            xp_recompensa=fase_data.get('xp_recompensa', 50),
-                            moedas_recompensa=fase_data.get('moedas_recompensa', 10),
-                            deslocamento_y=fase_data.get('deslocamento_y', 0),
+                            defaults={
+                                'titulo': fase_data['titulo'].strip(),
+                                'tipo': fase_data.get(
+                                    'tipo',
+                                    'quiz',
+                                ),
+                                'xp_recompensa': fase_data.get(
+                                    'xp_recompensa',
+                                    50,
+                                ),
+                                'moedas_recompensa': fase_data.get(
+                                    'moedas_recompensa',
+                                    10,
+                                ),
+                                'deslocamento_y': fase_data.get(
+                                    'deslocamento_y',
+                                    0,
+                                ),
+                            },
                         )
 
-                        for questao_data in fase_data['questoes']:
-                            questao = Questao.objects.create(
-                                fase=fase,
-                                enunciado=questao_data['enunciado'].strip(),
-                                explicacao_erro=questao_data.get(
-                                    'explicacao_erro',
-                                    '',
-                                ).strip(),
+                        for questao_data in fase_data[
+                            'questoes'
+                        ]:
+                            sincronizar_questao(
+                                fase,
+                                questao_data,
                             )
 
-                            Opcao.objects.bulk_create([
-                                Opcao(
-                                    questao=questao,
-                                    texto=opcao_data['texto'].strip(),
-                                    e_correta=opcao_data['correta'],
-                                    ordem=opcao_data.get(
-                                        'ordem',
-                                        indice + 1,
-                                    ),
-                                )
-                                for indice, opcao_data
-                                in enumerate(
-                                    questao_data['opcoes']
-                                )
-                            ])
+    with transaction.atomic():
+        sincronizar()
 
     print()
-    print('🎉 CATÁLOGO IMPORTADO COM SUCESSO!')
+    print('🎉 CATÁLOGO SINCRONIZADO COM SUCESSO!')
     print()
-
 
 def criar_parser():
     parser = argparse.ArgumentParser(
