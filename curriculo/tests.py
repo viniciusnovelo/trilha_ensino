@@ -2123,6 +2123,58 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
             response,
             'document.addEventListener(\'click\', handleEditorInteraction);',
         )
+        self.assertContains(
+            response,
+            'function editorAjaxUrl(name, id)',
+        )
+        self.assertContains(
+            response,
+            'function openEditModulo(id,titulo,descricao,ordem)',
+        )
+        self.assertContains(
+            response,
+            'openModal(\'modal-editar-modulo\')',
+        )
+        self.assertContains(
+            response,
+            'function openEditFase(id,moduloId,titulo,ordem,tipo,xp,moedas,y)',
+        )
+        self.assertContains(
+            response,
+            'openModal(\'modal-editar-fase\')',
+        )
+        self.assertContains(
+            response,
+            'function openEditQuestao(questaoId)',
+        )
+        self.assertContains(
+            response,
+            'openModal(\'modal-editar-questao\')',
+        )
+        self.assertContains(
+            response,
+            "document.getElementById('form-editar-modulo').addEventListener('submit'",
+        )
+        self.assertContains(
+            response,
+            "document.getElementById('form-editar-fase').addEventListener('submit'",
+        )
+        self.assertContains(
+            response,
+            "document.getElementById('form-editar-questao').addEventListener('submit'",
+        )
+        self.assertNotContains(
+            response,
+            'onclick="event.stopPropagation(); openEditModulo(',
+        )
+        self.assertNotContains(
+            response,
+            'onclick="event.stopPropagation(); openEditFase(',
+        )
+        self.assertNotContains(
+            response,
+            'onclick="event.stopPropagation(); openEditQuestao(',
+        )
 
 
     def test_mapa_do_aluno_exibe_hud_e_controles(self):
