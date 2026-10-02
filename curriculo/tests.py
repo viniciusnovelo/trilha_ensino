@@ -1988,6 +1988,41 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
             "Questao de interface",
         )
 
+        # Ações do editor devem continuar ligadas aos modais existentes,
+        # sem deixar o clique das ações internas selecionar o card pai.
+        self.assertContains(
+            response,
+            'id="modal-editar-modulo"',
+        )
+        self.assertContains(
+            response,
+            'id="modal-editar-fase"',
+        )
+        self.assertContains(
+            response,
+            'id="modal-editar-questao"',
+        )
+        self.assertContains(
+            response,
+            'onclick="event.stopPropagation(); openEditModulo(',
+        )
+        self.assertContains(
+            response,
+            'onclick="event.stopPropagation(); openEditFase(',
+        )
+        self.assertContains(
+            response,
+            'onclick="event.stopPropagation(); openEditQuestao(',
+        )
+        self.assertContains(
+            response,
+            'onclick="event.stopPropagation(); openSelectedModulo()"',
+        )
+        self.assertContains(
+            response,
+            'onclick="event.stopPropagation(); openSelectedFase()"',
+        )
+
 
     def test_mapa_do_aluno_exibe_hud_e_controles(self):
         self.client.login(
