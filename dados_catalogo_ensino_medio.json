@@ -3572,9 +3572,9 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · celula",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
                   "deslocamento_y": 0,
@@ -3586,22 +3586,22 @@
                         {
                           "texto": "a unidade básica da vida",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "um tipo de tecido",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "um órgão completo",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "uma molécula simples",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3612,22 +3612,22 @@
                         {
                           "texto": "no vacúolo",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "no núcleo",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "na parede celular",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "no lisossomo",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3638,276 +3638,22 @@
                         {
                           "texto": "ribossomos",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "membrana plasmática",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "núcleo delimitado por membrana",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "DNA",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A membrana plasmática atua principalmente no:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: controle da entrada e saída de substâncias.\nObservação: A membrana funciona como barreira seletiva.",
-                      "opcoes": [
-                        {
-                          "texto": "armazenamento de ossos",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "movimento dos cromossomos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "transporte de sangue",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "controle da entrada e saída de substâncias",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · organelas",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "As mitocôndrias estão associadas à:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: respiração celular e produção de ATP.\nObservação: Mitocôndrias produzem grande parte do ATP celular.",
-                      "opcoes": [
-                        {
-                          "texto": "respiração celular e produção de ATP",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "digestão extracorpórea",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "fotossíntese em animais",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "síntese de DNA no núcleo",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Ribossomos participam principalmente da:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: síntese de proteínas.\nObservação: Ribossomos traduzem RNA mensageiro em proteínas.",
-                      "opcoes": [
-                        {
-                          "texto": "formação de ossos",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "síntese de proteínas",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "digestão de lipídios no sangue",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "produção de oxigênio atmosférico",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Lisossomos possuem enzimas relacionadas à:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: digestão intracelular.\nObservação: Lisossomos contêm enzimas digestivas.",
-                      "opcoes": [
-                        {
-                          "texto": "fotossíntese",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "replicação do DNA",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "digestão intracelular",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "produção de ATP",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em células vegetais, os cloroplastos realizam:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: fotossíntese.\nObservação: Cloroplastos contêm estruturas que captam energia luminosa.",
-                      "opcoes": [
-                        {
-                          "texto": "respiração exclusivamente",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "mitose exclusivamente",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "digestão de proteínas",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "fotossíntese",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · mitose",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "A mitose normalmente gera:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: duas células geneticamente semelhantes.\nObservação: A mitose conserva o número de cromossomos e gera duas células-filhas.",
-                      "opcoes": [
-                        {
-                          "texto": "duas células geneticamente semelhantes",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "quatro células diferentes",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "uma célula sem DNA",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "apenas gametas",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A duplicação do DNA ocorre antes da mitose, durante:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: a interfase.\nObservação: A duplicação acontece antes da divisão celular.",
-                      "opcoes": [
-                        {
-                          "texto": "a prófase somente",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "a interfase",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "a telófase",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "a citocinese final",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A função central da mitose em organismos multicelulares inclui:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: crescimento e reparo de tecidos.\nObservação: A mitose repõe e multiplica células somáticas.",
-                      "opcoes": [
-                        {
-                          "texto": "digestão",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "respiração pulmonar",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "crescimento e reparo de tecidos",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "produção exclusiva de gametas",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Na metáfase, os cromossomos ficam:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: alinhados na região equatorial.\nObservação: Na metáfase, cromossomos condensados se alinham no plano equatorial.",
-                      "opcoes": [
-                        {
-                          "texto": "duplicados no núcleo sem condensação",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "fora da célula",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "destruídos",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "alinhados na região equatorial",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -3921,9 +3667,9 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · fotossintese",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
                   "deslocamento_y": 0,
@@ -3935,22 +3681,22 @@
                         {
                           "texto": "luz",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "gravidade",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "pressão",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "radioatividade",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3961,22 +3707,22 @@
                         {
                           "texto": "amônia",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "oxigênio",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "nitrogênio",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "gás carbônico",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3987,275 +3733,211 @@
                         {
                           "texto": "sementes",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "frutos",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "estruturas estomáticas das folhas",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "raízes apenas",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A matéria orgânica produzida na fotossíntese é sintetizada a partir de:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: CO₂ e água.\nObservação: Carbono e hidrogênio da glicose vêm, respectivamente, do CO₂ e da água.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas oxigênio",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas nitrogênio",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "proteínas prontas",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "CO₂ e água",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Organelas e transporte celular",
+              "descricao": "Conteúdo de organelas e transporte celular com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · respiracao",
-                  "ordem": 2,
+                  "titulo": "Prática · Organelas e transporte celular",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A respiração celular tem como função principal:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: liberar energia dos nutrientes para uso celular.\nObservação: A respiração celular produz ATP a partir de moléculas orgânicas.",
+                      "enunciado": "Qual organela é diretamente associada à produção de ATP na respiração celular?",
+                      "explicacao_erro": "Como pensar: Relacione a produção de grande parte do ATP à organela responsável pela respiração celular aeróbica.\nPasso a passo:\n1. Identifique a função pedida.\n2. Mitocôndrias são centrais na respiração celular.\n3. As demais organelas têm outras funções.\nConclusão: A organela é a mitocôndria.",
                       "opcoes": [
                         {
-                          "texto": "liberar energia dos nutrientes para uso celular",
+                          "texto": "mitocôndria",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "produzir luz",
+                          "texto": "ribossomo",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "fabricar ossos",
+                          "texto": "lisossomo",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "eliminar todo o CO₂ do organismo",
+                          "texto": "complexo golgiense",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Na respiração aeróbia, o oxigênio atua como:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: aceptor final de elétrons.\nObservação: No metabolismo aeróbio, o O₂ recebe elétrons no final da cadeia respiratória.",
+                      "enunciado": "A principal função dos ribossomos é:",
+                      "explicacao_erro": "Como pensar: Ribossomos participam da tradução do RNA mensageiro.\nPasso a passo:\n1. Relacione ribossomo à síntese proteica.\n2. A tradução une aminoácidos em polipeptídeos.\n3. As outras funções pertencem a outros processos ou estruturas.\nConclusão: Ribossomos produzem proteínas.",
                       "opcoes": [
                         {
-                          "texto": "hormônio",
+                          "texto": "armazenar DNA",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "aceptor final de elétrons",
+                          "texto": "produzir proteínas",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "fonte de glicose",
+                          "texto": "realizar fotossíntese",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "enzima",
+                          "texto": "degradar lipídios",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A glicose é degradada durante processos de:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: respiração celular.\nObservação: A glicose é um importante substrato energético.",
+                      "enunciado": "O transporte que ocorre a favor do gradiente de concentração, sem gasto direto de ATP, é chamado:",
+                      "explicacao_erro": "Como pensar: Transporte a favor do gradiente, sem gasto direto de ATP, é transporte passivo.\nPasso a passo:\n1. Observe a direção do movimento.\n2. A difusão ocorre a favor do gradiente.\n3. O transporte ativo exige energia para vencer o gradiente.\nConclusão: A resposta é difusão.",
                       "opcoes": [
                         {
-                          "texto": "mitose",
+                          "texto": "transporte ativo",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "osmose",
+                          "texto": "endocitose",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "respiração celular",
+                          "texto": "difusão",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "fotossíntese apenas",
+                          "texto": "exocitose",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A principal molécula energética utilizada pela célula é:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: ATP.\nObservação: ATP é a principal moeda energética celular.",
-                      "opcoes": [
-                        {
-                          "texto": "DNA",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "RNA",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "celulose",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "ATP",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Divisão celular",
+              "descricao": "Conteúdo de divisão celular com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Desafio final · celula",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": -35,
+                  "titulo": "Prática · Divisão celular",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A célula é considerada:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: a unidade básica da vida.\nObservação: Todos os seres vivos celulares possuem células como unidade estrutural e funcional.",
+                      "enunciado": "A mitose normalmente produz:",
+                      "explicacao_erro": "Como pensar: A mitose envolve uma divisão celular que mantém o número de cromossomos.\nPasso a passo:\n1. Uma célula entra em divisão.\n2. Formam-se duas células-filhas com conjuntos cromossômicos equivalentes.\n3. A meiose é o processo que gera quatro células haploides.\nConclusão: A mitose normalmente produz duas células-filhas semelhantes.",
                       "opcoes": [
                         {
-                          "texto": "a unidade básica da vida",
+                          "texto": "duas células-filhas geneticamente muito semelhantes à célula inicial",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "um tipo de tecido",
+                          "texto": "quatro células haploides",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "um órgão completo",
+                          "texto": "uma única célula sem DNA",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "uma molécula simples",
+                          "texto": "duas células sempre geneticamente diferentes",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Em células eucarióticas, o material genético fica principalmente:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: no núcleo.\nObservação: O núcleo abriga a maior parte do DNA das células eucarióticas.",
+                      "enunciado": "A meiose é importante porque:",
+                      "explicacao_erro": "Como pensar: A meiose reduz o número cromossômico e participa da formação de gametas.\nPasso a passo:\n1. Parta de uma célula diploide.\n2. Após duas divisões, surgem células com metade dos cromossomos.\n3. Isso é essencial para a reprodução sexuada.\nConclusão: A meiose forma células haploides.",
                       "opcoes": [
                         {
-                          "texto": "no vacúolo",
+                          "texto": "duplica o número de cromossomos em todas as células",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "no núcleo",
+                          "texto": "forma células haploides e reduz o número de cromossomos",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "na parede celular",
+                          "texto": "ocorre apenas para crescimento de tecidos",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "no lisossomo",
+                          "texto": "não altera a quantidade de cromossomos",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Células procarióticas não possuem:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: núcleo delimitado por membrana.\nObservação: Procariontes possuem DNA, mas não um núcleo membranoso.",
+                      "enunciado": "Antes de uma divisão celular, o DNA é normalmente:",
+                      "explicacao_erro": "Como pensar: A informação genética precisa ser copiada para ser distribuída às células-filhas.\nPasso a passo:\n1. Identifique a etapa de cópia do material genético.\n2. O DNA é replicado antes da divisão.\n3. Assim, cópias podem ser distribuídas entre as células-filhas.\nConclusão: O DNA é replicado.",
                       "opcoes": [
                         {
-                          "texto": "ribossomos",
+                          "texto": "degradado",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "membrana plasmática",
+                          "texto": "transformado em RNA",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "núcleo delimitado por membrana",
+                          "texto": "replicado",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "DNA",
+                          "texto": "eliminado",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A membrana plasmática atua principalmente no:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: controle da entrada e saída de substâncias.\nObservação: A membrana funciona como barreira seletiva.",
-                      "opcoes": [
-                        {
-                          "texto": "armazenamento de ossos",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "movimento dos cromossomos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "transporte de sangue",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "controle da entrada e saída de substâncias",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
@@ -4281,342 +3963,88 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · genetica",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "Gene é uma unidade de informação genética localizada em:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: DNA.\nObservação: Genes são segmentos de DNA que carregam informação hereditária.",
-                      "opcoes": [
-                        {
-                          "texto": "DNA",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "água",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "ATP",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "glicose",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Os alelos correspondem:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: a formas alternativas de um gene.\nObservação: Alelos são versões de um mesmo gene.",
-                      "opcoes": [
-                        {
-                          "texto": "a organelas",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "a formas alternativas de um gene",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "a tipos de células",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "a moléculas de ATP",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em um cruzamento Aa × Aa, a chance de AA é:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: 25%.\nObservação: O quadro de Punnett produz AA em 1 de 4 combinações.",
-                      "opcoes": [
-                        {
-                          "texto": "75%",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "100%",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "25%",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "50%",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Característica determinada por dois alelos diferentes é chamada de:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: heterozigota.\nObservação: Heterozigoto possui dois alelos diferentes.",
-                      "opcoes": [
-                        {
-                          "texto": "homozigota dominante",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "homozigota recessiva",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "haploide",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "heterozigota",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · genetica",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "Gene é uma unidade de informação genética localizada em:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: DNA.\nObservação: Genes são segmentos de DNA que carregam informação hereditária.",
-                      "opcoes": [
-                        {
-                          "texto": "DNA",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "água",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "ATP",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "glicose",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Os alelos correspondem:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: a formas alternativas de um gene.\nObservação: Alelos são versões de um mesmo gene.",
-                      "opcoes": [
-                        {
-                          "texto": "a organelas",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "a formas alternativas de um gene",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "a tipos de células",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "a moléculas de ATP",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em um cruzamento Aa × Aa, a chance de AA é:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: 25%.\nObservação: O quadro de Punnett produz AA em 1 de 4 combinações.",
-                      "opcoes": [
-                        {
-                          "texto": "75%",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "100%",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "25%",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "50%",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Característica determinada por dois alelos diferentes é chamada de:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: heterozigota.\nObservação: Heterozigoto possui dois alelos diferentes.",
-                      "opcoes": [
-                        {
-                          "texto": "homozigota dominante",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "homozigota recessiva",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "haploide",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "heterozigota",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · mitose",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A mitose normalmente gera:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: duas células geneticamente semelhantes.\nObservação: A mitose conserva o número de cromossomos e gera duas células-filhas.",
+                      "enunciado": "Gene é uma unidade de informação genética localizada em:",
+                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: DNA.\nObservação: Genes são segmentos de DNA que carregam informação hereditária.",
                       "opcoes": [
                         {
-                          "texto": "duas células geneticamente semelhantes",
+                          "texto": "DNA",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
-                          "texto": "quatro células diferentes",
+                          "texto": "água",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
-                          "texto": "uma célula sem DNA",
+                          "texto": "ATP",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
-                          "texto": "apenas gametas",
+                          "texto": "glicose",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
                     {
-                      "enunciado": "A duplicação do DNA ocorre antes da mitose, durante:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: a interfase.\nObservação: A duplicação acontece antes da divisão celular.",
+                      "enunciado": "Os alelos correspondem:",
+                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: a formas alternativas de um gene.\nObservação: Alelos são versões de um mesmo gene.",
                       "opcoes": [
                         {
-                          "texto": "a prófase somente",
+                          "texto": "a organelas",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
-                          "texto": "a interfase",
+                          "texto": "a formas alternativas de um gene",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
-                          "texto": "a telófase",
+                          "texto": "a tipos de células",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
-                          "texto": "a citocinese final",
+                          "texto": "a moléculas de ATP",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
                     {
-                      "enunciado": "A função central da mitose em organismos multicelulares inclui:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: crescimento e reparo de tecidos.\nObservação: A mitose repõe e multiplica células somáticas.",
+                      "enunciado": "Em um cruzamento Aa × Aa, a chance de AA é:",
+                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: 25%.\nObservação: O quadro de Punnett produz AA em 1 de 4 combinações.",
                       "opcoes": [
                         {
-                          "texto": "digestão",
+                          "texto": "75%",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
-                          "texto": "respiração pulmonar",
+                          "texto": "100%",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
-                          "texto": "crescimento e reparo de tecidos",
+                          "texto": "25%",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
-                          "texto": "produção exclusiva de gametas",
+                          "texto": "50%",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Na metáfase, os cromossomos ficam:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: alinhados na região equatorial.\nObservação: Na metáfase, cromossomos condensados se alinham no plano equatorial.",
-                      "opcoes": [
-                        {
-                          "texto": "duplicados no núcleo sem condensação",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "fora da célula",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "destruídos",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "alinhados na região equatorial",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -4630,12 +4058,12 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · celula",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "A célula é considerada:",
@@ -4644,22 +4072,22 @@
                         {
                           "texto": "a unidade básica da vida",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "um tipo de tecido",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "um órgão completo",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "uma molécula simples",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -4670,22 +4098,22 @@
                         {
                           "texto": "no vacúolo",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "no núcleo",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "na parede celular",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "no lisossomo",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -4696,275 +4124,211 @@
                         {
                           "texto": "ribossomos",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "membrana plasmática",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "núcleo delimitado por membrana",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "DNA",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A membrana plasmática atua principalmente no:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: controle da entrada e saída de substâncias.\nObservação: A membrana funciona como barreira seletiva.",
-                      "opcoes": [
-                        {
-                          "texto": "armazenamento de ossos",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "movimento dos cromossomos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "transporte de sangue",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "controle da entrada e saída de substâncias",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Genética mendeliana",
+              "descricao": "Conteúdo de genética mendeliana com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · respiracao",
-                  "ordem": 2,
+                  "titulo": "Prática · Genética mendeliana",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "A respiração celular tem como função principal:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: liberar energia dos nutrientes para uso celular.\nObservação: A respiração celular produz ATP a partir de moléculas orgânicas.",
-                      "opcoes": [
-                        {
-                          "texto": "liberar energia dos nutrientes para uso celular",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "produzir luz",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "fabricar ossos",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "eliminar todo o CO₂ do organismo",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Na respiração aeróbia, o oxigênio atua como:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: aceptor final de elétrons.\nObservação: No metabolismo aeróbio, o O₂ recebe elétrons no final da cadeia respiratória.",
-                      "opcoes": [
-                        {
-                          "texto": "hormônio",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "aceptor final de elétrons",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "fonte de glicose",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "enzima",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A glicose é degradada durante processos de:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: respiração celular.\nObservação: A glicose é um importante substrato energético.",
-                      "opcoes": [
-                        {
-                          "texto": "mitose",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "osmose",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "respiração celular",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "fotossíntese apenas",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A principal molécula energética utilizada pela célula é:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: ATP.\nObservação: ATP é a principal moeda energética celular.",
-                      "opcoes": [
-                        {
-                          "texto": "DNA",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "RNA",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "celulose",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "ATP",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Desafio final · evolucao",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Seleção natural está associada à sobrevivência e reprodução diferencial de organismos:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: com características favoráveis ao ambiente.\nObservação: O ambiente favorece determinados fenótipos em determinadas condições.",
+                      "enunciado": "No cruzamento Aa × Aa, considerando dominância completa, a proporção genotípica esperada é:",
+                      "explicacao_erro": "Como pensar: Cada indivíduo Aa produz gametas A e a.\nPasso a passo:\n1. Monte as quatro combinações: AA, Aa, Aa e aa.\n2. Conte os genótipos.\n3. A proporção é 1:2:1.\nConclusão: A proporção genotípica é 1 AA : 2 Aa : 1 aa.",
                       "opcoes": [
                         {
-                          "texto": "com características favoráveis ao ambiente",
+                          "texto": "1 AA : 2 Aa : 1 aa",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "sempre dos maiores indivíduos",
+                          "texto": "3 AA : 1 aa",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "apenas dos mais antigos",
+                          "texto": "2 AA : 2 aa",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "sem relação com ambiente",
+                          "texto": "1 Aa : 1 aa",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Uma mutação é:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: uma alteração no material genético.\nObservação: Mutações são mudanças na sequência ou estrutura do material genético.",
+                      "enunciado": "Um indivíduo com genótipo AA é:",
+                      "explicacao_erro": "Como pensar: Observe se os dois alelos são iguais ou diferentes.\nPasso a passo:\n1. AA possui dois alelos iguais.\n2. A é o alelo dominante no enunciado.\n3. Logo, o indivíduo é homozigoto dominante.\nConclusão: É homozigoto dominante.",
                       "opcoes": [
                         {
-                          "texto": "uma organela",
+                          "texto": "heterozigoto",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "uma alteração no material genético",
+                          "texto": "homozigoto dominante",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "um tipo de tecido",
+                          "texto": "homozigoto recessivo",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "uma espécie inteira",
+                          "texto": "hemizigoto",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A variabilidade genética é importante porque:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: fornece diferenças sobre as quais a seleção pode atuar.\nObservação: Sem variação, a seleção natural tem menos matéria-prima.",
+                      "enunciado": "Fenótipo corresponde:",
+                      "explicacao_erro": "Como pensar: Fenótipo é o conjunto de características que podem ser observadas ou medidas.\nPasso a passo:\n1. Diferencie fenótipo de genótipo.\n2. Fenótipo inclui a expressão das características.\n3. Fatores genéticos e ambientais podem participar dessa expressão.\nConclusão: Fenótipo é o conjunto de características observáveis.",
                       "opcoes": [
                         {
-                          "texto": "impede reprodução",
+                          "texto": "apenas ao DNA",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "faz todos os indivíduos iguais",
+                          "texto": "somente ao conjunto de alelos",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "fornece diferenças sobre as quais a seleção pode atuar",
+                          "texto": "ao conjunto de características observáveis de um organismo",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "elimina toda adaptação",
+                          "texto": "a uma organela celular",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "titulo": "DNA e biotecnologia",
+              "descricao": "Conteúdo de dna e biotecnologia com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
+                {
+                  "titulo": "Prática · DNA e biotecnologia",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
+                  "questoes": [
+                    {
+                      "enunciado": "No DNA, a adenina se pareia normalmente com:",
+                      "explicacao_erro": "Como pensar: Use as regras de complementaridade das bases do DNA.\nPasso a passo:\n1. Adenina forma par com timina.\n2. Citosina forma par com guanina.\n3. Uracila aparece no RNA em lugar da timina.\nConclusão: A adenina se pareia com a timina.",
+                      "opcoes": [
+                        {
+                          "texto": "timina",
+                          "correta": true,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "citosina",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "uracila",
+                          "correta": false,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "guanina",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Evidência de ancestralidade comum pode ser encontrada em:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: estruturas homólogas.\nObservação: Estruturas homólogas compartilham origem evolutiva.",
+                      "enunciado": "A técnica de PCR é usada principalmente para:",
+                      "explicacao_erro": "Como pensar: PCR permite obter muitas cópias de uma região específica de DNA.\nPasso a passo:\n1. Observe a ideia de amplificação.\n2. A técnica copia repetidamente uma sequência-alvo.\n3. Isso é útil em diversas análises moleculares.\nConclusão: PCR é usada para amplificar regiões específicas de DNA.",
                       "opcoes": [
                         {
-                          "texto": "apenas tamanho corporal",
+                          "texto": "produzir ATP",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "cor dos olhos isoladamente",
-                          "correta": false,
+                          "texto": "amplificar regiões específicas de DNA",
+                          "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "idade dos indivíduos",
+                          "texto": "digerir proteínas",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "estruturas homólogas",
+                          "texto": "transportar oxigênio",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    },
+                    {
+                      "enunciado": "Uma aplicação da biotecnologia que utiliza organismos geneticamente modificados é:",
+                      "explicacao_erro": "Como pensar: Biotecnologia pode usar células geneticamente modificadas para produzir substâncias de interesse.\nPasso a passo:\n1. Pense em uma célula que recebe um gene.\n2. Ela pode passar a produzir determinada proteína.\n3. Esse princípio é usado em produtos biológicos.\nConclusão: Uma aplicação é a produção de proteínas por células modificadas.",
+                      "opcoes": [
+                        {
+                          "texto": "formação de nuvens",
+                          "correta": false,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "medição da temperatura",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "produção de algumas proteínas de interesse por células modificadas",
                           "correta": true,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "erosão do solo",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
@@ -4990,12 +4354,12 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · ecologia",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": -35,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Ecossistema é formado por:",
@@ -5004,22 +4368,22 @@
                         {
                           "texto": "componentes bióticos e abióticos em interação",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "apenas animais",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "apenas plantas",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "apenas o clima",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -5030,22 +4394,22 @@
                         {
                           "texto": "vivem sem energia",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "produzem matéria orgânica a partir de recursos do ambiente",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "alimentam-se somente de outros animais",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "não realizam metabolismo",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -5056,276 +4420,22 @@
                         {
                           "texto": "absorvendo minerais apenas",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "realizando erosão",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "alimentando-se de outros organismos",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "produzindo luz",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Decompositores têm papel importante porque:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: reciclam matéria orgânica.\nObservação: Fungos e bactérias decompositoras devolvem nutrientes ao ambiente.",
-                      "opcoes": [
-                        {
-                          "texto": "eliminam toda a água do solo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "produzem rochas",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "impedem qualquer ciclo de nutrientes",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "reciclam matéria orgânica",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · cadeia",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": 0,
-                  "questoes": [
-                    {
-                      "enunciado": "Em uma cadeia alimentar, a energia passa:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: dos produtores para os consumidores.\nObservação: A energia entra principalmente pela fotossíntese e flui entre níveis tróficos.",
-                      "opcoes": [
-                        {
-                          "texto": "dos produtores para os consumidores",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "dos consumidores para o Sol",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "dos decompositores para as estrelas",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "dos predadores para os produtores sempre",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Em uma cadeia, a grama ocupa o nível de:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: produtor.\nObservação: Plantas produzem sua própria matéria orgânica.",
-                      "opcoes": [
-                        {
-                          "texto": "decompositor",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "produtor",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "consumidor primário",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "consumidor secundário",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma cadeia alimentar representa:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: relações de alimentação entre organismos.\nObservação: Ela mostra quem serve de alimento para quem.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas fluxo de água",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas reprodução",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "relações de alimentação entre organismos",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "somente relações climáticas",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A energia disponível tende a diminuir ao passar:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: para níveis tróficos superiores.\nObservação: Parte da energia é dissipada como calor a cada transferência.",
-                      "opcoes": [
-                        {
-                          "texto": "para níveis inferiores sempre",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "somente entre decompositores",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "não há diferença",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "para níveis tróficos superiores",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · evolucao",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "Seleção natural está associada à sobrevivência e reprodução diferencial de organismos:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: com características favoráveis ao ambiente.\nObservação: O ambiente favorece determinados fenótipos em determinadas condições.",
-                      "opcoes": [
-                        {
-                          "texto": "com características favoráveis ao ambiente",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "sempre dos maiores indivíduos",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "apenas dos mais antigos",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "sem relação com ambiente",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma mutação é:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: uma alteração no material genético.\nObservação: Mutações são mudanças na sequência ou estrutura do material genético.",
-                      "opcoes": [
-                        {
-                          "texto": "uma organela",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "uma alteração no material genético",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "um tipo de tecido",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "uma espécie inteira",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A variabilidade genética é importante porque:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: fornece diferenças sobre as quais a seleção pode atuar.\nObservação: Sem variação, a seleção natural tem menos matéria-prima.",
-                      "opcoes": [
-                        {
-                          "texto": "impede reprodução",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "faz todos os indivíduos iguais",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "fornece diferenças sobre as quais a seleção pode atuar",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "elimina toda adaptação",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Evidência de ancestralidade comum pode ser encontrada em:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: estruturas homólogas.\nObservação: Estruturas homólogas compartilham origem evolutiva.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas tamanho corporal",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "cor dos olhos isoladamente",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "idade dos indivíduos",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "estruturas homólogas",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -5339,12 +4449,12 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · fotossintese",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": -35,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Na fotossíntese, a planta utiliza energia principalmente da:",
@@ -5353,22 +4463,22 @@
                         {
                           "texto": "luz",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "gravidade",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "pressão",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "radioatividade",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -5379,22 +4489,22 @@
                         {
                           "texto": "amônia",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "oxigênio",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "nitrogênio",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "gás carbônico",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -5405,275 +4515,211 @@
                         {
                           "texto": "sementes",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "frutos",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "estruturas estomáticas das folhas",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "raízes apenas",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A matéria orgânica produzida na fotossíntese é sintetizada a partir de:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: CO₂ e água.\nObservação: Carbono e hidrogênio da glicose vêm, respectivamente, do CO₂ e da água.",
-                      "opcoes": [
-                        {
-                          "texto": "apenas oxigênio",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "apenas nitrogênio",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "proteínas prontas",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "CO₂ e água",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Cadeias alimentares e energia",
+              "descricao": "Conteúdo de cadeias alimentares e energia com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · ecologia",
-                  "ordem": 2,
+                  "titulo": "Prática · Cadeias alimentares e energia",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Ecossistema é formado por:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: componentes bióticos e abióticos em interação.\nObservação: Ecossistemas reúnem seres vivos e fatores físicos em interação.",
+                      "enunciado": "Em uma cadeia alimentar, a energia disponível tende a:",
+                      "explicacao_erro": "Como pensar: A transferência de energia entre níveis tróficos não é totalmente eficiente.\nPasso a passo:\n1. Parte da energia é usada no metabolismo.\n2. Outra parte é dissipada como calor.\n3. Assim, menos energia fica disponível para o nível seguinte.\nConclusão: A energia tende a diminuir ao longo dos níveis tróficos.",
                       "opcoes": [
                         {
-                          "texto": "componentes bióticos e abióticos em interação",
+                          "texto": "diminuir ao longo dos níveis tróficos",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "apenas animais",
+                          "texto": "aumentar a cada nível",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "apenas plantas",
+                          "texto": "ser igual em todos os níveis",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "apenas o clima",
+                          "texto": "desaparecer apenas nos produtores",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Produtores são organismos que:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: produzem matéria orgânica a partir de recursos do ambiente.\nObservação: Plantas e algas são exemplos de produtores fotossintetizantes.",
+                      "enunciado": "Os decompositores têm papel importante porque:",
+                      "explicacao_erro": "Como pensar: Decompositores degradam restos e resíduos de organismos.\nPasso a passo:\n1. Eles atuam sobre matéria orgânica.\n2. A decomposição libera nutrientes para o ambiente.\n3. Esses nutrientes podem voltar a ser utilizados pelos produtores.\nConclusão: Decompositores reciclam matéria e disponibilizam nutrientes.",
                       "opcoes": [
                         {
-                          "texto": "vivem sem energia",
+                          "texto": "produzem toda a luz do ecossistema",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "produzem matéria orgânica a partir de recursos do ambiente",
+                          "texto": "reciclam matéria orgânica e disponibilizam nutrientes",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "alimentam-se somente de outros animais",
+                          "texto": "impedem qualquer decomposição",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "não realizam metabolismo",
+                          "texto": "eliminam os produtores",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Consumidores obtêm matéria e energia principalmente:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: alimentando-se de outros organismos.\nObservação: Consumidores dependem da matéria orgânica obtida na alimentação.",
+                      "enunciado": "Na sequência capim → gafanhoto → sapo → cobra, o gafanhoto é:",
+                      "explicacao_erro": "Como pensar: Identifique quem produz matéria orgânica e quem se alimenta de quem.\nPasso a passo:\n1. O capim é produtor.\n2. O gafanhoto se alimenta diretamente do produtor.\n3. Por isso, é consumidor primário.\nConclusão: O gafanhoto é consumidor primário.",
                       "opcoes": [
                         {
-                          "texto": "absorvendo minerais apenas",
+                          "texto": "produtor",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "realizando erosão",
+                          "texto": "consumidor secundário",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "alimentando-se de outros organismos",
+                          "texto": "consumidor primário",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "produzindo luz",
+                          "texto": "decompositor",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Decompositores têm papel importante porque:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: reciclam matéria orgânica.\nObservação: Fungos e bactérias decompositoras devolvem nutrientes ao ambiente.",
-                      "opcoes": [
-                        {
-                          "texto": "eliminam toda a água do solo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "produzem rochas",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "impedem qualquer ciclo de nutrientes",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "reciclam matéria orgânica",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Ciclos e impactos ambientais",
+              "descricao": "Conteúdo de ciclos e impactos ambientais com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Desafio final · respiracao",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 55,
+                  "titulo": "Prática · Ciclos e impactos ambientais",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A respiração celular tem como função principal:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: liberar energia dos nutrientes para uso celular.\nObservação: A respiração celular produz ATP a partir de moléculas orgânicas.",
+                      "enunciado": "O excesso de nutrientes em um lago pode provocar:",
+                      "explicacao_erro": "Como pensar: Excesso de nutrientes como nitrogênio e fósforo pode alterar a qualidade da água.\nPasso a passo:\n1. Mais nutrientes podem estimular proliferação de algas.\n2. A decomposição dessa biomassa pode reduzir o oxigênio da água.\n3. Esse processo é chamado eutrofização.\nConclusão: O fenômeno é a eutrofização.",
                       "opcoes": [
                         {
-                          "texto": "liberar energia dos nutrientes para uso celular",
+                          "texto": "eutrofização",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "produzir luz",
+                          "texto": "desertificação instantânea",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "fabricar ossos",
+                          "texto": "tectonismo",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "eliminar todo o CO₂ do organismo",
+                          "texto": "maré gravitacional",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Na respiração aeróbia, o oxigênio atua como:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: aceptor final de elétrons.\nObservação: No metabolismo aeróbio, o O₂ recebe elétrons no final da cadeia respiratória.",
+                      "enunciado": "No ciclo do carbono, a fotossíntese contribui para:",
+                      "explicacao_erro": "Como pensar: A fotossíntese usa dióxido de carbono para formar compostos orgânicos.\nPasso a passo:\n1. A planta absorve CO₂.\n2. O carbono é incorporado à matéria orgânica.\n3. Assim, o processo retira CO₂ da atmosfera.\nConclusão: A fotossíntese retira CO₂ e o incorpora à matéria orgânica.",
                       "opcoes": [
                         {
-                          "texto": "hormônio",
+                          "texto": "liberar somente nitrogênio",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "aceptor final de elétrons",
+                          "texto": "retirar CO₂ da atmosfera e incorporá-lo à matéria orgânica",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "fonte de glicose",
+                          "texto": "produzir combustíveis fósseis instantaneamente",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "enzima",
+                          "texto": "eliminar todo o carbono do planeta",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A glicose é degradada durante processos de:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: respiração celular.\nObservação: A glicose é um importante substrato energético.",
+                      "enunciado": "Um efeito comum do desmatamento intenso é:",
+                      "explicacao_erro": "Como pensar: A remoção da vegetação pode destruir ou fragmentar habitats.\nPasso a passo:\n1. Identifique o papel da vegetação no ambiente.\n2. Sua remoção pode eliminar abrigo e alimento.\n3. Isso pode reduzir populações e biodiversidade.\nConclusão: Um efeito comum é a perda de habitat e biodiversidade.",
                       "opcoes": [
                         {
-                          "texto": "mitose",
+                          "texto": "aumento obrigatório da biodiversidade",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "osmose",
+                          "texto": "formação de novos oceanos",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "respiração celular",
+                          "texto": "perda de habitat e redução da biodiversidade",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "fotossíntese apenas",
+                          "texto": "fim do ciclo da água",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A principal molécula energética utilizada pela célula é:",
-                      "explicacao_erro": "Como pensar: identifique a estrutura, processo ou função biológica central da pergunta.\nPasso a passo:\n1. Localize o conceito-chave.\n2. Relacione-o à função ou processo correspondente.\n3. Elimine alternativas que descrevam outro fenômeno.\nConclusão: ATP.\nObservação: ATP é a principal moeda energética celular.",
-                      "opcoes": [
-                        {
-                          "texto": "DNA",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "RNA",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "celulose",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "ATP",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
