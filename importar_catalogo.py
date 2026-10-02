@@ -243,6 +243,9 @@ def validar_catalogo(dados):
 
             ordens_modulos = set()
 
+            fases_jogo = 0
+            questoes_jogo = 0
+
             for modulo_indice, modulo in enumerate(modulos, start=1):
                 contexto_modulo = (
                     f'{contexto_jogo} · Módulo #{modulo_indice}'
@@ -275,10 +278,10 @@ def validar_catalogo(dados):
 
                 fases = modulo['fases']
 
-                if not isinstance(fases, list) or len(fases) != 1:
+                if not isinstance(fases, list) or len(fases) != 3:
                     erro(
                         f'{contexto_modulo}: cada módulo deve possuir '
-                        'exatamente 1 fase.'
+                        'exatamente 3 fases.'
                     )
 
                 ordens_fases = set()
@@ -309,20 +312,20 @@ def validar_catalogo(dados):
 
                     ordens_fases.add(fase['ordem'])
 
-                    if fase['ordem'] != 1:
+                    if fase['ordem'] not in (1, 2, 3):
                         erro(
-                            f'{contexto_fase}: a única fase do módulo '
-                            'deve ter ordem 1.'
+                            f'{contexto_fase}: a ordem deve estar entre 1 e 3.'
                         )
 
                     total_fases += 1
+                    fases_jogo += 1
 
                     questoes = fase['questoes']
 
-                    if not isinstance(questoes, list) or len(questoes) != 3:
+                    if not isinstance(questoes, list) or len(questoes) != 4:
                         erro(
                             f'{contexto_fase}: cada fase deve possuir '
-                            'exatamente 3 questões.'
+                            'exatamente 4 questões.'
                         )
 
                     posicoes_corretas = []
@@ -374,12 +377,13 @@ def validar_catalogo(dados):
                         )
 
                         total_questoes += 1
+                        questoes_jogo += 1
                         total_opcoes += 4
 
                     if len(set(posicoes_corretas)) != len(posicoes_corretas):
                         erro(
                             f'{contexto_fase}: a posição da resposta correta '
-                            'deve variar entre as 3 questões da fase.'
+                            'deve variar entre as 4 questões da fase.'
                         )
 
     print()
