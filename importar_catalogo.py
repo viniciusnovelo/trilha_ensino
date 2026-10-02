@@ -784,13 +784,22 @@ def main():
         )
         return
 
+    if args.dry_run:
+        importar_catalogo(
+            dados=dados,
+            autor=None,
+            replace=args.replace,
+            dry_run=True,
+        )
+        return
+
     autor = obter_autor(args.autor)
 
     importar_catalogo(
         dados=dados,
         autor=autor,
         replace=args.replace,
-        dry_run=args.dry_run,
+        dry_run=False,
     )
 
 
