@@ -536,7 +536,7 @@
 
                                         <button
                                             type="button"
-                                            onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')"
+                                            data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escapejs }}"
                                             class="bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] border border-emerald-300/10"
                                         >
                                             ＋ Questão ({{ fase.questoes.count }})
