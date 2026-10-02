@@ -1206,9 +1206,9 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · cinematica",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
                   "deslocamento_y": 0,
@@ -1220,22 +1220,22 @@
                         {
                           "texto": "deslocamento e intervalo de tempo",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "massa e volume",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "força e massa",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "energia e potência",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1246,22 +1246,22 @@
                         {
                           "texto": "1 m/s",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "10 m/s",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "2 m/s",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "20 m/s",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1272,276 +1272,22 @@
                         {
                           "texto": "J",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "W",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "m/s",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "N",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Se a velocidade é constante, a aceleração é:",
-                      "explicacao_erro": "Como pensar: aceleração mede a variação da velocidade.\nPasso a passo:\n1. Velocidade constante significa Δv=0.\n2. a=Δv/Δt.\n3. Logo, a=0.\nConclusão: a aceleração é nula.",
-                      "opcoes": [
-                        {
-                          "texto": "máxima",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "negativa sempre",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "igual à massa",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "zero",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · aceleracao",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "A aceleração mede a variação da:",
-                      "explicacao_erro": "Como pensar: observe a grandeza que está mudando ao longo do tempo.\nPasso a passo:\n1. A velocidade pode aumentar ou diminuir.\n2. A aceleração mede essa mudança por unidade de tempo.\nConclusão: aceleração mede a variação da velocidade por tempo.",
-                      "opcoes": [
-                        {
-                          "texto": "velocidade ao longo do tempo",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "massa",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "energia potencial",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "distância ao centro",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um carro passa de 3 m/s para 9 m/s em 3 s. A aceleração média é:",
-                      "explicacao_erro": "Como pensar: aceleração média mede a variação da velocidade por tempo.\nPasso a passo:\n1. Δv = 9 − 3 = 6 m/s.\n2. aₘ = Δv/Δt.\n3. aₘ = 6 ÷ 3 = 2 m/s².\nConclusão: a aceleração média é 2 m/s².",
-                      "opcoes": [
-                        {
-                          "texto": "6 m/s²",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "2 m/s²",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "3 m/s²",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "6 m/s²",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A unidade de aceleração no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: m/s².",
-                      "opcoes": [
-                        {
-                          "texto": "N",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "kg",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "m/s²",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "m/s",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "No movimento acelerado, a velocidade:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: pode variar ao longo do tempo.",
-                      "opcoes": [
-                        {
-                          "texto": "é necessariamente zero",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "é sempre constante",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "depende apenas da massa",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "pode variar ao longo do tempo",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · cinematica",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "A velocidade média relaciona:",
-                      "explicacao_erro": "Como pensar: compare deslocamento e tempo.\nPasso a passo:\n1. Identifique Δs.\n2. Identifique Δt.\n3. Relacione pela fórmula vₘ=Δs/Δt.\nConclusão: velocidade média relaciona deslocamento e intervalo de tempo.",
-                      "opcoes": [
-                        {
-                          "texto": "deslocamento e intervalo de tempo",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "massa e volume",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "força e massa",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "energia e potência",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um móvel percorre 40 m em 4 s. Sua velocidade média é:",
-                      "explicacao_erro": "Como pensar: velocidade média é deslocamento dividido pelo intervalo de tempo.\nPasso a passo:\n1. Use vₘ = Δs/Δt.\n2. vₘ = 40 ÷ 4 = 10 m/s.\nConclusão: a velocidade média é 10 m/s.",
-                      "opcoes": [
-                        {
-                          "texto": "1 m/s",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "10 m/s",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "4 m/s",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "40 m/s",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "No SI, a unidade de velocidade é:",
-                      "explicacao_erro": "Como pensar: velocidade combina uma unidade de comprimento com uma de tempo.\nPasso a passo:\n1. No SI, comprimento é metro.\n2. Tempo é segundo.\n3. Portanto, velocidade é medida em metro por segundo.\nConclusão: m/s.",
-                      "opcoes": [
-                        {
-                          "texto": "J",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "W",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "m/s",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "N",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Se a velocidade é constante, a aceleração é:",
-                      "explicacao_erro": "Como pensar: aceleração mede a variação da velocidade.\nPasso a passo:\n1. Velocidade constante significa Δv=0.\n2. a=Δv/Δt.\n3. Logo, a=0.\nConclusão: a aceleração é nula.",
-                      "opcoes": [
-                        {
-                          "texto": "máxima",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "negativa sempre",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "igual à massa",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "zero",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -1555,9 +1301,9 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · aceleracao",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
                   "deslocamento_y": 0,
@@ -1569,22 +1315,22 @@
                         {
                           "texto": "velocidade ao longo do tempo",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "massa",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "energia potencial",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "distância ao centro",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1595,22 +1341,22 @@
                         {
                           "texto": "5 m/s²",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "2 m/s²",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "3 m/s²",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "6 m/s²",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1621,275 +1367,211 @@
                         {
                           "texto": "N",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "kg",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "m/s²",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "m/s",
+                          "correta": false,
+                          "ordem": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "titulo": "Movimento retilíneo uniforme",
+              "descricao": "Conteúdo de movimento retilíneo uniforme com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
+                {
+                  "titulo": "Prática · Movimento retilíneo uniforme",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
+                  "questoes": [
+                    {
+                      "enunciado": "Um móvel parte de x₀=2 m e se move a 4 m/s. Onde estará após 5 s?",
+                      "explicacao_erro": "Como pensar: No MRU, use x=x₀+vt.\nPasso a passo:\n1. Substitua x₀=2, v=4 e t=5.\n2. x=2+4·5.\n3. x=22 m.\nConclusão: O móvel estará em 22 m.",
+                      "opcoes": [
+                        {
+                          "texto": "22 m",
+                          "correta": true,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "10 m",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "20 m",
+                          "correta": false,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "24 m",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "No movimento acelerado, a velocidade:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: pode variar ao longo do tempo.",
+                      "enunciado": "Quanto tempo um móvel a 5 m/s leva para percorrer 100 m?",
+                      "explicacao_erro": "Como pensar: No MRU, use v=Δs/Δt e isole o tempo.\nPasso a passo:\n1. t=Δs/v.\n2. t=100/5.\n3. t=20 s.\nConclusão: O tempo é 20 s.",
                       "opcoes": [
                         {
-                          "texto": "é necessariamente zero",
+                          "texto": "10 s",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "é sempre constante",
-                          "correta": false,
+                          "texto": "20 s",
+                          "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "depende apenas da massa",
+                          "texto": "25 s",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "pode variar ao longo do tempo",
+                          "texto": "50 s",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    },
+                    {
+                      "enunciado": "Em um gráfico posição × tempo de um MRU, a inclinação da reta representa:",
+                      "explicacao_erro": "Como pensar: A inclinação é a variação da posição por unidade de tempo.\nPasso a passo:\n1. Calcule Δs/Δt.\n2. Essa razão é a velocidade.\n3. Logo, a inclinação representa a velocidade.\nConclusão: A inclinação representa a velocidade.",
+                      "opcoes": [
+                        {
+                          "texto": "a massa",
+                          "correta": false,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "a força",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "a velocidade",
                           "correta": true,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "a energia",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Movimento retilíneo uniformemente variado",
+              "descricao": "Conteúdo de movimento retilíneo uniformemente variado com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · newton",
-                  "ordem": 2,
+                  "titulo": "Prática · Movimento retilíneo uniformemente variado",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A 2ª lei de Newton é expressa por:",
-                      "explicacao_erro": "Como pensar: relacione força, massa e aceleração.\nPasso a passo:\n1. Identifique F, m e a.\n2. Use F=m·a.\n3. Isole a grandeza pedida.\nConclusão: a 2ª lei é F=m·a.",
+                      "enunciado": "Um carro parte do repouso com aceleração de 2 m/s². Qual é sua velocidade após 4 s?",
+                      "explicacao_erro": "Como pensar: No MRUV, use v=v₀+at.\nPasso a passo:\n1. Como parte do repouso, v₀=0.\n2. v=0+2·4.\n3. v=8 m/s.\nConclusão: A velocidade final é 8 m/s.",
                       "opcoes": [
                         {
-                          "texto": "F = m·a",
+                          "texto": "8 m/s",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "F = m/v",
+                          "texto": "2 m/s",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "F = a/m",
+                          "texto": "4 m/s",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "F = m+a",
+                          "texto": "6 m/s",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Uma força de 30 N atua em uma massa de 3 kg. A aceleração é:",
-                      "explicacao_erro": "Como pensar: pela 2ª lei de Newton, F = m·a.\nPasso a passo:\n1. Isole a: a = F/m.\n2. Substitua: a = 30 ÷ 3 = 10 m/s².\nConclusão: a aceleração é 10 m/s².",
+                      "enunciado": "Um corpo parte do repouso com a=3 m/s² durante 4 s. Qual deslocamento ele percorre?",
+                      "explicacao_erro": "Como pensar: Com velocidade inicial zero, use Δs=at²/2.\nPasso a passo:\n1. t²=16.\n2. Δs=(3·16)/2.\n3. Δs=24 m.\nConclusão: O deslocamento é 24 m.",
                       "opcoes": [
                         {
-                          "texto": "1 m/s²",
+                          "texto": "6 m",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "10 m/s²",
+                          "texto": "24 m",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "30 m/s²",
+                          "texto": "12 m",
                           "correta": false,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "48 m",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    },
+                    {
+                      "enunciado": "Um carro reduz sua velocidade de 20 m/s para 8 m/s em 4 s. A aceleração média é:",
+                      "explicacao_erro": "Como pensar: A aceleração média é a variação da velocidade dividida pelo tempo.\nPasso a passo:\n1. Δv=8-20=-12 m/s.\n2. a=Δv/4.\n3. a=-3 m/s².\nConclusão: A aceleração média é -3 m/s².",
+                      "opcoes": [
+                        {
+                          "texto": "-2 m/s²",
+                          "correta": false,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "2 m/s²",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "-3 m/s²",
+                          "correta": true,
                           "ordem": 3
                         },
                         {
                           "texto": "3 m/s²",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A unidade de força no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: newton.",
-                      "opcoes": [
-                        {
-                          "texto": "watt",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "pascal",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "newton",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "joule",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A 1ª lei de Newton também é chamada de lei da:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: inércia.",
-                      "opcoes": [
-                        {
-                          "texto": "energia",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "potência",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "gravitação",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "inércia",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Desafio final · trabalho",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "Trabalho mecânico está associado à ação de uma força que provoca:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: deslocamento.",
-                      "opcoes": [
-                        {
-                          "texto": "deslocamento",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "aumento de massa",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "redução da gravidade",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "mudança de temperatura obrigatória",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma força de 20 N desloca um objeto 4 m na mesma direção. O trabalho é:",
-                      "explicacao_erro": "Como pensar: quando força e deslocamento têm a mesma direção, W = F·d.\nPasso a passo:\n1. W = 20 × 4.\n2. W = 80 J.\nConclusão: o trabalho é 80 J.",
-                      "opcoes": [
-                        {
-                          "texto": "20 J",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "80 J",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "24 J",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "16 J",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A unidade de trabalho no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: joule.",
-                      "opcoes": [
-                        {
-                          "texto": "watt",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "metro",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "joule",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "newton",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Quando a força é perpendicular ao deslocamento, o trabalho dessa força é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: zero.",
-                      "opcoes": [
-                        {
-                          "texto": "máximo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "negativo sempre",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "igual à massa",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "zero",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
@@ -1915,12 +1597,12 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · newton",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "A 2ª lei de Newton é expressa por:",
@@ -1929,22 +1611,22 @@
                         {
                           "texto": "F = m·a",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "F = m/v",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "F = a/m",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "F = m+a",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1955,22 +1637,22 @@
                         {
                           "texto": "1 m/s²",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "10 m/s²",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "30 m/s²",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "3 m/s²",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -1981,276 +1663,22 @@
                         {
                           "texto": "watt",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "pascal",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "newton",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "joule",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A 1ª lei de Newton também é chamada de lei da:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: inércia.",
-                      "opcoes": [
-                        {
-                          "texto": "energia",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "potência",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "gravitação",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "inércia",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · newton",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "A 2ª lei de Newton é expressa por:",
-                      "explicacao_erro": "Como pensar: relacione força, massa e aceleração.\nPasso a passo:\n1. Identifique F, m e a.\n2. Use F=m·a.\n3. Isole a grandeza pedida.\nConclusão: a 2ª lei é F=m·a.",
-                      "opcoes": [
-                        {
-                          "texto": "F = m·a",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "F = m/v",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "F = a/m",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "F = m+a",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Uma força de 40 N atua em uma massa de 4 kg. A aceleração é:",
-                      "explicacao_erro": "Como pensar: pela 2ª lei de Newton, F = m·a.\nPasso a passo:\n1. Isole a: a = F/m.\n2. Substitua: a = 40 ÷ 4 = 10 m/s².\nConclusão: a aceleração é 10 m/s².",
-                      "opcoes": [
-                        {
-                          "texto": "1 m/s²",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "10 m/s²",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "40 m/s²",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "4 m/s²",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A unidade de força no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: newton.",
-                      "opcoes": [
-                        {
-                          "texto": "watt",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "pascal",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "newton",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "joule",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A 1ª lei de Newton também é chamada de lei da:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: inércia.",
-                      "opcoes": [
-                        {
-                          "texto": "energia",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "potência",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "gravitação",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "inércia",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · aceleracao",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 0,
-                  "questoes": [
-                    {
-                      "enunciado": "A aceleração mede a variação da:",
-                      "explicacao_erro": "Como pensar: observe a grandeza que está mudando ao longo do tempo.\nPasso a passo:\n1. A velocidade pode aumentar ou diminuir.\n2. A aceleração mede essa mudança por unidade de tempo.\nConclusão: aceleração mede a variação da velocidade por tempo.",
-                      "opcoes": [
-                        {
-                          "texto": "velocidade ao longo do tempo",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "massa",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "energia potencial",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "distância ao centro",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Um carro passa de 2 m/s para 8 m/s em 3 s. A aceleração média é:",
-                      "explicacao_erro": "Como pensar: aceleração média mede a variação da velocidade por tempo.\nPasso a passo:\n1. Δv = 8 − 2 = 6 m/s.\n2. aₘ = Δv/Δt.\n3. aₘ = 6 ÷ 3 = 2 m/s².\nConclusão: a aceleração média é 2 m/s².",
-                      "opcoes": [
-                        {
-                          "texto": "5 m/s²",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "2 m/s²",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "3 m/s²",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "6 m/s²",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A unidade de aceleração no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: m/s².",
-                      "opcoes": [
-                        {
-                          "texto": "N",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "kg",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "m/s²",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "m/s",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "No movimento acelerado, a velocidade:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: pode variar ao longo do tempo.",
-                      "opcoes": [
-                        {
-                          "texto": "é necessariamente zero",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "é sempre constante",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "depende apenas da massa",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "pode variar ao longo do tempo",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -2264,12 +1692,12 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · trabalho",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": 55,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Trabalho mecânico está associado à ação de uma força que provoca:",
@@ -2278,22 +1706,22 @@
                         {
                           "texto": "deslocamento",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "aumento de massa",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "redução da gravidade",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "mudança de temperatura obrigatória",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -2304,22 +1732,22 @@
                         {
                           "texto": "15 J",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "45 J",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "18 J",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "9 J",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -2330,275 +1758,211 @@
                         {
                           "texto": "watt",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "metro",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "joule",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "newton",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Quando a força é perpendicular ao deslocamento, o trabalho dessa força é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: zero.",
-                      "opcoes": [
-                        {
-                          "texto": "máximo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "negativo sempre",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "igual à massa",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "zero",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Leis de Newton",
+              "descricao": "Conteúdo de leis de newton com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · energia cinetica",
-                  "ordem": 2,
+                  "titulo": "Prática · Leis de Newton",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
-                  "deslocamento_y": -35,
-                  "questoes": [
-                    {
-                      "enunciado": "Energia cinética está relacionada principalmente ao:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: movimento.",
-                      "opcoes": [
-                        {
-                          "texto": "movimento",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "volume",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "cor",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "tempo de reação",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A energia cinética de uma massa 4 kg com velocidade 2 m/s é:",
-                      "explicacao_erro": "Como pensar: energia cinética depende da massa e do quadrado da velocidade.\nPasso a passo:\n1. Ec = m·v²/2.\n2. v² = 2² = 4.\n3. Ec = 4 × 4 ÷ 2 = 8 J.\nConclusão: Ec = 8 J.",
-                      "opcoes": [
-                        {
-                          "texto": "2 J",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "8 J",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "4 J",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "16 J",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Se a velocidade de um corpo dobra, sua energia cinética:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: quadruplica.",
-                      "opcoes": [
-                        {
-                          "texto": "fica igual",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "cai pela metade",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "quadruplica",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "dobra",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A unidade de energia no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: joule.",
-                      "opcoes": [
-                        {
-                          "texto": "watt",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "newton",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "pascal",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "joule",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Desafio final · energia potencial",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "A energia potencial gravitacional depende da altura em relação a:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: um nível de referência.",
+                      "enunciado": "Qual expressão representa a 2ª lei de Newton?",
+                      "explicacao_erro": "Como pensar: A 2ª lei relaciona força resultante, massa e aceleração.\nPasso a passo:\n1. Identifique a relação fundamental.\n2. Fr=m·a.\n3. Essa é a forma correta da lei.\nConclusão: A expressão correta é F=m·a.",
                       "opcoes": [
                         {
-                          "texto": "um nível de referência",
+                          "texto": "F=m·a",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "uma velocidade final",
+                          "texto": "F=m+a",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "uma corrente elétrica",
+                          "texto": "F=m/a",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "uma frequência",
+                          "texto": "F=a/m",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A expressão da energia potencial gravitacional é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: Ep = mgh.",
+                      "enunciado": "Uma força resultante de 12 N atua em um corpo de 3 kg. Qual é sua aceleração?",
+                      "explicacao_erro": "Como pensar: Use Fr=m·a e isole a aceleração.\nPasso a passo:\n1. a=Fr/m.\n2. a=12/3.\n3. a=4 m/s².\nConclusão: A aceleração é 4 m/s².",
                       "opcoes": [
                         {
-                          "texto": "Ep = m/g",
+                          "texto": "2 m/s²",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "Ep = mgh",
+                          "texto": "4 m/s²",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "Ep = mv",
+                          "texto": "3 m/s²",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "Ep = F/a",
+                          "texto": "36 m/s²",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Para massa 2 kg, g = 10 m/s² e altura 2 m, Ep vale:",
-                      "explicacao_erro": "Como pensar: energia potencial gravitacional depende de massa, gravidade e altura.\nPasso a passo:\n1. Ep = m·g·h.\n2. Ep = 2 × 10 × 2 = 40 J.\nConclusão: Ep = 40 J.",
+                      "enunciado": "Quando a força resultante sobre um corpo é zero, ele pode:",
+                      "explicacao_erro": "Como pensar: Se a força resultante é zero, a aceleração resultante também é zero.\nPasso a passo:\n1. Fr=0.\n2. Pela 2ª lei, a=0.\n3. O corpo mantém repouso ou velocidade constante em linha reta.\nConclusão: Ele pode estar em repouso ou em MRU.",
                       "opcoes": [
                         {
-                          "texto": "4 J",
+                          "texto": "somente acelerar",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "10 J",
+                          "texto": "somente parar",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "40 J",
+                          "texto": "estar em repouso ou movimento retilíneo uniforme",
                           "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "20 J",
+                          "texto": "ter aceleração máxima",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "titulo": "Atrito e dinâmica",
+              "descricao": "Conteúdo de atrito e dinâmica com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
+                {
+                  "titulo": "Prática · Atrito e dinâmica",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
+                  "questoes": [
+                    {
+                      "enunciado": "Uma caixa sofre uma força normal de 50 N e coeficiente de atrito 0,2. Qual é o módulo do atrito máximo?",
+                      "explicacao_erro": "Como pensar: Use Fat=μN para o módulo do atrito máximo.\nPasso a passo:\n1. μ=0,2 e N=50.\n2. Fat=0,2·50.\n3. Fat=10 N.\nConclusão: O atrito máximo é 10 N.",
+                      "opcoes": [
+                        {
+                          "texto": "10 N",
+                          "correta": true,
+                          "ordem": 1
+                        },
+                        {
+                          "texto": "5 N",
+                          "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "25 N",
+                          "correta": false,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "250 N",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Ao aumentar a altura, mantendo massa e gravidade constantes, a energia potencial:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: aumenta.",
+                      "enunciado": "A força de atrito cinético atua, em geral:",
+                      "explicacao_erro": "Como pensar: O atrito se opõe ao deslizamento relativo entre as superfícies.\nPasso a passo:\n1. Observe o sentido do movimento relativo.\n2. O atrito aponta em sentido contrário.\n3. Isso reduz a tendência de deslizamento.\nConclusão: O atrito atua contra o movimento relativo.",
                       "opcoes": [
                         {
-                          "texto": "diminui",
+                          "texto": "no mesmo sentido do movimento relativo",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "zera",
-                          "correta": false,
+                          "texto": "contra o movimento relativo",
+                          "correta": true,
                           "ordem": 2
+                        },
+                        {
+                          "texto": "sempre para cima",
+                          "correta": false,
+                          "ordem": 3
+                        },
+                        {
+                          "texto": "sempre para baixo",
+                          "correta": false,
+                          "ordem": 4
+                        }
+                      ]
+                    },
+                    {
+                      "enunciado": "Mantendo o mesmo coeficiente de atrito, se a força normal dobra, o atrito máximo:",
+                      "explicacao_erro": "Como pensar: Pela relação Fat=μN, o atrito máximo é proporcional à normal.\nPasso a passo:\n1. Mantenha μ constante.\n2. Dobre N.\n3. Fat também é multiplicado por 2.\nConclusão: O atrito máximo dobra.",
+                      "opcoes": [
+                        {
+                          "texto": "cai pela metade",
+                          "correta": false,
+                          "ordem": 1
                         },
                         {
                           "texto": "não muda",
                           "correta": false,
+                          "ordem": 2
+                        },
+                        {
+                          "texto": "dobra",
+                          "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "aumenta",
-                          "correta": true,
+                          "texto": "zera",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
@@ -2624,12 +1988,12 @@
               "ordem": 1,
               "fases": [
                 {
-                  "titulo": "Fundamentos · trabalho",
+                  "titulo": "Fundamentos essenciais",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": -35,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Trabalho mecânico está associado à ação de uma força que provoca:",
@@ -2638,22 +2002,22 @@
                         {
                           "texto": "deslocamento",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "aumento de massa",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "redução da gravidade",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "mudança de temperatura obrigatória",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -2664,22 +2028,22 @@
                         {
                           "texto": "20 J",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "80 J",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "24 J",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "16 J",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -2690,276 +2054,22 @@
                         {
                           "texto": "watt",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "metro",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "joule",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "newton",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Quando a força é perpendicular ao deslocamento, o trabalho dessa força é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: zero.",
-                      "opcoes": [
-                        {
-                          "texto": "máximo",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "negativo sempre",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "igual à massa",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "zero",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Conceitos essenciais · energia cinetica",
-                  "ordem": 2,
-                  "tipo": "quiz",
-                  "xp_recompensa": 60,
-                  "moedas_recompensa": 10,
-                  "deslocamento_y": 0,
-                  "questoes": [
-                    {
-                      "enunciado": "Energia cinética está relacionada principalmente ao:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: movimento.",
-                      "opcoes": [
-                        {
-                          "texto": "movimento",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "volume",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "cor",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "tempo de reação",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A energia cinética de uma massa 2 kg com velocidade 2 m/s é:",
-                      "explicacao_erro": "Como pensar: energia cinética depende da massa e do quadrado da velocidade.\nPasso a passo:\n1. Ec = m·v²/2.\n2. v² = 2² = 4.\n3. Ec = 2 × 4 ÷ 2 = 4 J.\nConclusão: Ec = 4 J.",
-                      "opcoes": [
-                        {
-                          "texto": "1 J",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "4 J",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "2 J",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "8 J",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Se a velocidade de um corpo dobra, sua energia cinética:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: quadruplica.",
-                      "opcoes": [
-                        {
-                          "texto": "fica igual",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "cai pela metade",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "quadruplica",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "dobra",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A unidade de energia no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: joule.",
-                      "opcoes": [
-                        {
-                          "texto": "watt",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "newton",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "pascal",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "joule",
-                          "correta": true,
-                          "ordem": 4
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "titulo": "Primeiros desafios · energia potencial",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 55,
-                  "questoes": [
-                    {
-                      "enunciado": "A energia potencial gravitacional depende da altura em relação a:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: um nível de referência.",
-                      "opcoes": [
-                        {
-                          "texto": "um nível de referência",
-                          "correta": true,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "uma velocidade final",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "uma corrente elétrica",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "uma frequência",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A expressão da energia potencial gravitacional é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: Ep = mgh.",
-                      "opcoes": [
-                        {
-                          "texto": "Ep = m/g",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "Ep = mgh",
-                          "correta": true,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "Ep = mv",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "Ep = F/a",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Para massa 3 kg, g = 10 m/s² e altura 2 m, Ep vale:",
-                      "explicacao_erro": "Como pensar: energia potencial gravitacional depende de massa, gravidade e altura.\nPasso a passo:\n1. Ep = m·g·h.\n2. Ep = 3 × 10 × 2 = 60 J.\nConclusão: Ep = 60 J.",
-                      "opcoes": [
-                        {
-                          "texto": "6 J",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "15 J",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "60 J",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "30 J",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Ao aumentar a altura, mantendo massa e gravidade constantes, a energia potencial:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: aumenta.",
-                      "opcoes": [
-                        {
-                          "texto": "diminui",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "zera",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "não muda",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "aumenta",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
@@ -2973,12 +2083,12 @@
               "ordem": 2,
               "fases": [
                 {
-                  "titulo": "Aplicações · potencia",
+                  "titulo": "Aplicação e raciocínio",
                   "ordem": 1,
-                  "tipo": "teoria",
+                  "tipo": "quiz",
                   "xp_recompensa": 40,
                   "moedas_recompensa": 8,
-                  "deslocamento_y": -35,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
                       "enunciado": "Potência mede a rapidez com que um trabalho é:",
@@ -2987,22 +2097,22 @@
                         {
                           "texto": "realizado",
                           "correta": true,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "anulado",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "armazenado em massa",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "transformado em volume",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3013,22 +2123,22 @@
                         {
                           "texto": "100 W",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "10 W",
                           "correta": true,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "40 W",
                           "correta": false,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "400 W",
                           "correta": false,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     },
@@ -3039,124 +2149,105 @@
                         {
                           "texto": "newton",
                           "correta": false,
-                          "ordem": 1
+                          "ordem": 0
                         },
                         {
                           "texto": "tesla",
                           "correta": false,
-                          "ordem": 2
+                          "ordem": 0
                         },
                         {
                           "texto": "watt",
                           "correta": true,
-                          "ordem": 3
+                          "ordem": 0
                         },
                         {
                           "texto": "joule",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Dois motores fazem o mesmo trabalho, mas um leva metade do tempo. Esse motor tem:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: maior potência.",
-                      "opcoes": [
-                        {
-                          "texto": "menor potência",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "a mesma potência obrigatoriamente",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "energia zero",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "maior potência",
-                          "correta": true,
-                          "ordem": 4
+                          "ordem": 0
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Energia cinética e potencial",
+              "descricao": "Conteúdo de energia cinética e potencial com exercícios guiados e resolução comentada.",
+              "ordem": 3,
+              "fases": [
                 {
-                  "titulo": "Raciocínio aplicado · energia cinetica",
-                  "ordem": 2,
+                  "titulo": "Prática · Energia cinética e potencial",
+                  "ordem": 1,
                   "tipo": "quiz",
-                  "xp_recompensa": 60,
+                  "xp_recompensa": 55,
                   "moedas_recompensa": 10,
                   "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Energia cinética está relacionada principalmente ao:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: movimento.",
+                      "enunciado": "Um corpo de 2 kg move-se a 3 m/s. Sua energia cinética é:",
+                      "explicacao_erro": "Como pensar: Use Ec=mv²/2.\nPasso a passo:\n1. v²=9.\n2. Ec=(2·9)/2.\n3. Ec=9 J.\nConclusão: A energia cinética é 9 J.",
                       "opcoes": [
                         {
-                          "texto": "movimento",
+                          "texto": "9 J",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "volume",
+                          "texto": "3 J",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "cor",
+                          "texto": "6 J",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "tempo de reação",
+                          "texto": "18 J",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A energia cinética de uma massa 2 kg com velocidade 2 m/s é:",
-                      "explicacao_erro": "Como pensar: energia cinética depende da massa e do quadrado da velocidade.\nPasso a passo:\n1. Ec = m·v²/2.\n2. v² = 2² = 4.\n3. Ec = 2 × 4 ÷ 2 = 4 J.\nConclusão: Ec = 4 J.",
+                      "enunciado": "Um objeto de 2 kg está a 5 m de altura. Adote g=10 m/s². Sua energia potencial gravitacional é:",
+                      "explicacao_erro": "Como pensar: A energia potencial gravitacional é Ep=mgh.\nPasso a passo:\n1. Substitua m=2, g=10 e h=5.\n2. Ep=2·10·5.\n3. Ep=100 J.\nConclusão: A energia potencial gravitacional é 100 J.",
                       "opcoes": [
                         {
-                          "texto": "1 J",
+                          "texto": "25 J",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "4 J",
+                          "texto": "100 J",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "2 J",
+                          "texto": "50 J",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "8 J",
+                          "texto": "200 J",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Se a velocidade de um corpo dobra, sua energia cinética:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: quadruplica.",
+                      "enunciado": "Se a velocidade de um corpo dobra, sua energia cinética, mantendo a massa constante:",
+                      "explicacao_erro": "Como pensar: A velocidade aparece ao quadrado na expressão da energia cinética.\nPasso a passo:\n1. Troque v por 2v.\n2. (2v)²=4v².\n3. A energia fica quatro vezes maior.\nConclusão: A energia cinética quadruplica.",
                       "opcoes": [
                         {
-                          "texto": "fica igual",
+                          "texto": "dobra",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "cai pela metade",
+                          "texto": "triplica",
                           "correta": false,
                           "ordem": 2
                         },
@@ -3166,129 +2257,84 @@
                           "ordem": 3
                         },
                         {
-                          "texto": "dobra",
+                          "texto": "fica pela metade",
                           "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "A unidade de energia no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: joule.",
-                      "opcoes": [
-                        {
-                          "texto": "watt",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "newton",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "pascal",
-                          "correta": false,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "joule",
-                          "correta": true,
                           "ordem": 4
                         }
                       ]
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "titulo": "Trabalho e potência",
+              "descricao": "Conteúdo de trabalho e potência com exercícios guiados e resolução comentada.",
+              "ordem": 4,
+              "fases": [
                 {
-                  "titulo": "Desafio final · trabalho",
-                  "ordem": 3,
-                  "tipo": "desafio",
-                  "xp_recompensa": 80,
-                  "moedas_recompensa": 14,
-                  "deslocamento_y": 55,
+                  "titulo": "Prática · Trabalho e potência",
+                  "ordem": 1,
+                  "tipo": "quiz",
+                  "xp_recompensa": 55,
+                  "moedas_recompensa": 10,
+                  "deslocamento_y": 0,
                   "questoes": [
                     {
-                      "enunciado": "Trabalho mecânico está associado à ação de uma força que provoca:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: deslocamento.",
+                      "enunciado": "Uma força de 30 N atua na mesma direção do deslocamento de 5 m. Qual trabalho ela realiza?",
+                      "explicacao_erro": "Como pensar: Quando força e deslocamento têm a mesma direção, W=Fd.\nPasso a passo:\n1. F=30 N e d=5 m.\n2. W=30·5.\n3. W=150 J.\nConclusão: O trabalho é 150 J.",
                       "opcoes": [
                         {
-                          "texto": "deslocamento",
+                          "texto": "150 J",
                           "correta": true,
                           "ordem": 1
                         },
                         {
-                          "texto": "aumento de massa",
+                          "texto": "6 J",
                           "correta": false,
                           "ordem": 2
                         },
                         {
-                          "texto": "redução da gravidade",
+                          "texto": "35 J",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "mudança de temperatura obrigatória",
+                          "texto": "300 J",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "Uma força de 15 N desloca um objeto 3 m na mesma direção. O trabalho é:",
-                      "explicacao_erro": "Como pensar: quando força e deslocamento têm a mesma direção, W = F·d.\nPasso a passo:\n1. W = 15 × 3.\n2. W = 45 J.\nConclusão: o trabalho é 45 J.",
+                      "enunciado": "Um motor realiza 600 J de trabalho em 30 s. Qual é a potência média?",
+                      "explicacao_erro": "Como pensar: Potência é a taxa de realização de trabalho: P=W/Δt.\nPasso a passo:\n1. P=600/30.\n2. Efetue a divisão.\n3. P=20 W.\nConclusão: A potência média é 20 W.",
                       "opcoes": [
                         {
-                          "texto": "15 J",
+                          "texto": "10 W",
                           "correta": false,
                           "ordem": 1
                         },
                         {
-                          "texto": "45 J",
+                          "texto": "20 W",
                           "correta": true,
                           "ordem": 2
                         },
                         {
-                          "texto": "18 J",
+                          "texto": "30 W",
                           "correta": false,
                           "ordem": 3
                         },
                         {
-                          "texto": "9 J",
+                          "texto": "18000 W",
                           "correta": false,
                           "ordem": 4
                         }
                       ]
                     },
                     {
-                      "enunciado": "A unidade de trabalho no SI é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: joule.",
-                      "opcoes": [
-                        {
-                          "texto": "watt",
-                          "correta": false,
-                          "ordem": 1
-                        },
-                        {
-                          "texto": "metro",
-                          "correta": false,
-                          "ordem": 2
-                        },
-                        {
-                          "texto": "joule",
-                          "correta": true,
-                          "ordem": 3
-                        },
-                        {
-                          "texto": "newton",
-                          "correta": false,
-                          "ordem": 4
-                        }
-                      ]
-                    },
-                    {
-                      "enunciado": "Quando a força é perpendicular ao deslocamento, o trabalho dessa força é:",
-                      "explicacao_erro": "Como pensar: identifique a grandeza física principal e a relação usada para descrevê-la.\nPasso a passo:\n1. Localize os dados ou conceitos fornecidos.\n2. Use a definição ou fórmula correspondente.\nConclusão: zero.",
+                      "enunciado": "Quando a força é perpendicular ao deslocamento, o trabalho da força é:",
+                      "explicacao_erro": "Como pensar: Use W=Fd cosθ e observe o ângulo de 90°.\nPasso a passo:\n1. Força perpendicular implica θ=90°.\n2. cos90°=0.\n3. Logo W=0.\nConclusão: O trabalho é zero.",
                       "opcoes": [
                         {
                           "texto": "máximo",
@@ -3301,13 +2347,13 @@
                           "ordem": 2
                         },
                         {
-                          "texto": "igual à massa",
-                          "correta": false,
+                          "texto": "zero",
+                          "correta": true,
                           "ordem": 3
                         },
                         {
-                          "texto": "zero",
-                          "correta": true,
+                          "texto": "igual à potência",
+                          "correta": false,
                           "ordem": 4
                         }
                       ]
