@@ -2016,11 +2016,11 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            'onclick="event.stopPropagation(); openSelectedModulo()"',
+            'data-editor-action="editar-selecao-modulo"',
         )
         self.assertContains(
             response,
-            'onclick="event.stopPropagation(); openSelectedFase()"',
+            'data-editor-action="editar-selecao-fase"',
         )
 
         # Ações principais precisam existir como elementos funcionais,
