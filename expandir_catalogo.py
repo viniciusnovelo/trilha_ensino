@@ -301,9 +301,10 @@ def executar(dry_run=False):
                             Opcao(
                                 questao=questao,
                                 texto=opcao,
+                                ordem=ordem,
                                 e_correta=(opcao == correta),
                             )
-                            for opcao in opcoes
+                            for ordem, opcao in enumerate(opcoes, start=1)
                         ]
                     )
                     criados["opcoes"] += 4
