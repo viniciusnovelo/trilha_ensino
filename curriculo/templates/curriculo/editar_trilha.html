@@ -315,7 +315,7 @@
 
                     <div class="editor-structure-viewport flex-1 scrollbar-thin p-3 space-y-3">
                         {% for modulo in modulos %}
-                            <article class="editor-selectable rounded-2xl bg-black/15 border border-white/10 overflow-hidden" data-editor-type="modulo" data-editor-id="{{ modulo.id }}" onclick="selectEditorItem('modulo', {{ modulo.id }})">
+                            <article class="editor-selectable rounded-2xl bg-black/15 border border-white/10 overflow-hidden" data-editor-type="modulo" data-editor-id="{{ modulo.id }}" data-editor-select="modulo">
                                 <div class="p-3 flex items-start gap-3">
                                     <div class="w-9 h-9 shrink-0 rounded-xl bg-sky-400/10 text-sky-200 border border-sky-300/10 flex items-center justify-center font-black">{{ modulo.ordem }}</div>
                                     <div class="min-w-0 flex-1">
@@ -327,8 +327,8 @@
                                                 {% endif %}
                                             </div>
                                             <div class="flex items-center gap-1 shrink-0">
-                                                <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" onclick="event.stopPropagation(); openEditModulo({{ modulo.id }}, '{{ modulo.titulo|escapejs }}', '{{ modulo.descricao|default_if_none:""|escapejs }}', {{ modulo.ordem }})" title="Editar módulo">✎</button>
-                                                <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" onclick="event.stopPropagation(); deleteModulo({{ modulo.id }}, '{{ modulo.titulo|escapejs }}')" title="Excluir módulo">×</button>
+                                                <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" data-editor-action="editar-modulo" data-modulo-id="{{ modulo.id }}" title="Editar módulo">✎</button>
+                                                <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" data-editor-action="excluir-modulo" data-modulo-id="{{ modulo.id }}" data-modulo-titulo="{{ modulo.titulo|escapejs }}" title="Excluir módulo">×</button>
                                             </div>
                                         </div>
                                     </div>
@@ -336,7 +336,7 @@
 
                                 <div class="px-3 pb-3 space-y-2">
                                     {% for fase in modulo.fases.all %}
-                                        <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-3" data-editor-type="fase" data-editor-id="{{ fase.id }}" onclick="selectEditorItem('fase', {{ fase.id }}, event)">
+                                        <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-3" data-editor-type="fase" data-editor-id="{{ fase.id }}" data-editor-select="fase">
                                             <div class="flex items-start gap-3">
                                                 <div class="w-8 h-8 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-300/20 flex items-center justify-center text-xs font-black text-indigo-200">{{ fase.ordem }}</div>
                                                 <div class="min-w-0 flex-1">
@@ -344,13 +344,13 @@
                                                     <p class="text-[11px] text-white/40 mt-1">{{ fase.get_tipo_display }} · {{ fase.questoes.count }} questão(ões)</p>
                                                 </div>
                                                 <div class="flex gap-1">
-                                                    <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" onclick="event.stopPropagation(); openEditFase({{ fase.id }}, {{ fase.modulo_id }}, '{{ fase.titulo|escapejs }}', {{ fase.ordem }}, '{{ fase.tipo }}', {{ fase.xp_recompensa }}, {{ fase.moedas_recompensa }}, {{ fase.deslocamento_y }})" title="Editar fase">✎</button>
-                                                    <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" onclick="event.stopPropagation(); deleteFase({{ fase.id }}, '{{ fase.titulo|escapejs }}')" title="Excluir fase">×</button>
+                                                    <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" data-editor-action="editar-fase" data-fase-id="{{ fase.id }}" title="Editar fase">✎</button>
+                                                    <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" data-editor-action="excluir-fase" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escapejs }}" title="Excluir fase">×</button>
                                                 </div>
                                             </div>
-                                            <button type="button" onclick="event.stopPropagation(); openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
+                                            <button type="button" data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escapejs }}" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
                                     {% for questao in fase.questoes.all %}
-                                        <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-3" data-editor-type="questao" data-editor-id="{{ questao.id }}" onclick="selectEditorItem('questao', {{ questao.id }}, event)">
+                                        <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-3" data-editor-type="questao" data-editor-id="{{ questao.id }}" data-editor-select="questao">
                                             <div class="flex items-start gap-3">
                                                 <div class="w-7 h-7 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[11px] font-black">
                                                     Q
@@ -362,13 +362,13 @@
                                                 <div class="flex gap-1 shrink-0">
                                                     <button
                                                         type="button"
-                                                        onclick="event.stopPropagation(); openEditQuestao({{ questao.id }})"
+                                                        data-editor-action="editar-questao" data-questao-id="{{ questao.id }}"
                                                         class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10"
                                                         title="Editar questão"
                                                     >✎</button>
                                                     <button
                                                         type="button"
-                                                        onclick="event.stopPropagation(); deleteQuestao({{ questao.id }}, '{{ questao.enunciado|escapejs }}')"
+                                                        data-editor-action="excluir-questao" data-questao-id="{{ questao.id }}" data-questao-enunciado="{{ questao.enunciado|escapejs }}"
                                                         class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200"
                                                         title="Excluir questão"
                                                     >×</button>
@@ -383,7 +383,7 @@
                                         <div class="rounded-xl border border-dashed border-white/10 p-4 text-center text-xs text-white/35">Ainda não há fases neste módulo.</div>
                                     {% endfor %}
 
-                                    <button type="button" onclick="event.stopPropagation(); openPhaseForModule({{ modulo.id }})" class="w-full rounded-xl border border-dashed border-indigo-300/20 hover:border-indigo-300/40 hover:bg-indigo-400/5 px-3 py-2 text-xs font-black text-indigo-200 transition">＋ Nova fase neste módulo</button>
+                                    <button type="button" data-editor-action="nova-fase-modulo" data-modulo-id="{{ modulo.id }}" class="w-full rounded-xl border border-dashed border-indigo-300/20 hover:border-indigo-300/40 hover:bg-indigo-400/5 px-3 py-2 text-xs font-black text-indigo-200 transition">＋ Nova fase neste módulo</button>
                                 </div>
                             </article>
                         {% empty %}
@@ -455,7 +455,7 @@
 
                                 {% if fase.primeira_do_modulo %}
 
-                                    <div class="editor-module-label editor-selectable" data-editor-type="modulo" data-editor-id="{{ fase.modulo.id }}" onclick="selectEditorItem('modulo', {{ fase.modulo.id }})">
+                                    <div class="editor-module-label editor-selectable" data-editor-type="modulo" data-editor-id="{{ fase.modulo.id }}" data-editor-select="modulo">
 
                                         <span class="editor-module-number editor-module-{{ fase.modulo.ordem }}">
                                             {{ fase.modulo.ordem }}
@@ -485,11 +485,13 @@
                                     tabindex="0"
                                 >
 
-                                    <a
-                                        href="{% url 'fase_detalhe' fase.id %}"
-                                        onclick="selectEditorItem('fase', {{ fase.id }}, event)"
+                                    <button
+                                        type="button"
+                                        data-editor-type="fase"
+                                        data-editor-id="{{ fase.id }}"
+                                        data-editor-select="fase"
                                         class="editor-fase-circle"
-                                        title="Abrir {{ fase.titulo }}"
+                                        title="Selecionar {{ fase.titulo }}"
                                     >
 
                                         {% if fase.tipo == 'teoria' %}
@@ -514,7 +516,7 @@
 
                                         {% endif %}
 
-                                    </a>
+                                    </button>
 
 
                                     <div class="editor-phase-title" data-editor-phase-title="{{ fase.id }}">
@@ -926,7 +928,22 @@
 
         const csrfToken = '{{ csrf_token }}';
         const trilhaId = {{ trilha.id }};
+        const editorAjaxUrls = {
+            editarModulo: '{% url "ajax_editar_modulo" 0 %}',
+            excluirModulo: '{% url "ajax_excluir_modulo" 0 %}',
+            editarFase: '{% url "ajax_editar_fase" 0 %}',
+            excluirFase: '{% url "ajax_excluir_fase" 0 %}',
+            editarQuestao: '{% url "ajax_editar_questao" 0 %}',
+            excluirQuestao: '{% url "ajax_excluir_questao" 0 %}',
+            atualizarYFase: '{% url "atualizar_y_fase" 0 %}',
+        };
         const temasTrilha = ['tema-padrao','tema-floresta','tema-deserto','tema-masmorra','tema-aurora','tema-oceano'];
+
+        function editorAjaxUrl(name, id) {
+            const template = editorAjaxUrls[name];
+            if (!template) throw new Error('Endpoint do editor não configurado: ' + name);
+            return template.replace('/0/', '/' + encodeURIComponent(id) + '/');
+        }
 
         function openModal(id) {
             const modal=document.getElementById(id);
@@ -1005,6 +1022,7 @@
                 const input = document.getElementById('editar-questao-op-' + indice);
                 const radio = document.querySelector('#form-editar-questao input[name="op_correta"][value="' + indice + '"]');
 
+                if (!input || !radio) continue;
                 input.value = questao.opcoes[indice]?.texto || '';
                 radio.checked = Boolean(questao.opcoes[indice]?.correta);
             }
@@ -1019,7 +1037,7 @@
             }
 
             try {
-                await postAction('/estudio/ajax/questao/' + id + '/excluir/');
+                await postAction(editorAjaxUrl('excluirQuestao', id));
                 window.location.reload();
             } catch (error) {
                 alert(error.message);
@@ -1037,7 +1055,7 @@
 
             try {
                 await postAction(
-                    '/estudio/ajax/questao/' + id + '/editar/',
+                    editorAjaxUrl('editarQuestao', id),
                     Object.fromEntries(new FormData(form).entries())
                 );
                 window.location.reload();
@@ -1090,7 +1108,7 @@
         async function deleteModulo(id,titulo) {
             if(!confirm('Excluir o módulo "'+titulo+'"? Todas as fases e questões dele também serão removidas.')) return;
             try {
-                await postAction('/estudio/ajax/modulo/'+id+'/excluir/');
+                await postAction(editorAjaxUrl('excluirModulo', id));
                 window.location.reload();
             } catch(error) {
                 alert(error.message);
@@ -1100,7 +1118,7 @@
         async function deleteFase(id,titulo) {
             if(!confirm('Excluir a fase "'+titulo+'"? As questões desta fase também serão removidas.')) return;
             try {
-                await postAction('/estudio/ajax/fase/'+id+'/excluir/');
+                await postAction(editorAjaxUrl('excluirFase', id));
                 window.location.reload();
             } catch(error) {
                 alert(error.message);
@@ -1114,7 +1132,7 @@
             const error=document.getElementById('editar-modulo-erro');
             error.classList.add('hidden');
             try {
-                await postAction('/estudio/ajax/modulo/'+id+'/editar/',Object.fromEntries(new FormData(form).entries()));
+                await postAction(editorAjaxUrl('editarModulo', id),Object.fromEntries(new FormData(form).entries()));
                 window.location.reload();
             } catch(err) {
                 error.textContent=err.message;
@@ -1129,7 +1147,7 @@
             const error=document.getElementById('editar-fase-erro');
             error.classList.add('hidden');
             try {
-                await postAction('/estudio/ajax/fase/'+id+'/editar/',Object.fromEntries(new FormData(form).entries()));
+                await postAction(editorAjaxUrl('editarFase', id),Object.fromEntries(new FormData(form).entries()));
                 window.location.reload();
             } catch(err) {
                 error.textContent=err.message;
@@ -1193,10 +1211,7 @@
             return String(value ?? '').replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
         }
 
-        function selectEditorItem(type,id,event=null) {
-            if(event) {
-                event.stopPropagation();
-            }
+        function selectEditorItem(type,id) {
             selectedEditorType=type;
             selectedEditorId=String(id);
             document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
@@ -1208,6 +1223,66 @@
             renderEditorDetails(type,String(id));
         }
 
+        function handleEditorInteraction(event) {
+            const target = event.target.closest('[data-editor-action], [data-editor-select]');
+            if (!target) return;
+
+            event.stopPropagation();
+
+            if (target.dataset.editorSelect) {
+                selectEditorItem(target.dataset.editorSelect, target.dataset.editorId);
+                return;
+            }
+
+            const action = target.dataset.editorAction;
+            switch (action) {
+                case 'editar-modulo': {
+                    const modulo = editorModulos[target.dataset.moduloId];
+                    if (modulo) openEditModulo(modulo.id, modulo.titulo, modulo.descricao, modulo.ordem);
+                    break;
+                }
+                case 'excluir-modulo':
+                    deleteModulo(target.dataset.moduloId, target.dataset.moduloTitulo || '');
+                    break;
+                case 'editar-fase': {
+                    const fase = editorFases[target.dataset.faseId];
+                    if (!fase) break;
+                    const node = document.querySelector('.fase-node[data-id="' + fase.id + '"]');
+                    openEditFase(fase.id, fase.moduloId, fase.titulo, fase.ordem, fase.tipoCodigo, fase.xp, fase.moedas, node?.getAttribute('data-y') || 0);
+                    break;
+                }
+                case 'excluir-fase':
+                    deleteFase(target.dataset.faseId, target.dataset.faseTitulo || '');
+                    break;
+                case 'editar-questao':
+                    openEditQuestao(target.dataset.questaoId);
+                    break;
+                case 'excluir-questao':
+                    deleteQuestao(target.dataset.questaoId, target.dataset.questaoEnunciado || '');
+                    break;
+                case 'adicionar-questao':
+                    openQuestaoModal(target.dataset.faseId, target.dataset.faseTitulo || '');
+                    break;
+                case 'nova-fase-modulo':
+                    openPhaseForModule(target.dataset.moduloId);
+                    break;
+                case 'editar-selecao-modulo':
+                    openSelectedModulo();
+                    break;
+                case 'excluir-selecao-modulo':
+                    deleteSelectedModulo();
+                    break;
+                case 'editar-selecao-fase':
+                    openSelectedFase();
+                    break;
+                case 'excluir-selecao-fase':
+                    deleteSelectedFase();
+                    break;
+            }
+        }
+
+        document.addEventListener('click', handleEditorInteraction);
+
         function renderEditorDetails(type,id) {
             const empty=document.getElementById('editor-details-empty');
             const content=document.getElementById('editor-details-content');
@@ -1217,16 +1292,16 @@
             if(type==='modulo') {
                 const modulo=editorModulos[id]; if(!modulo)return;
                 context.textContent='Módulo selecionado';
-                html='<div class="rounded-2xl bg-sky-400/10 border border-sky-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-sky-300 font-black">MÓDULO '+escapeEditorHtml(modulo.ordem)+'</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(modulo.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(modulo.descricao||'Sem descrição cadastrada.')+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Fases</p><p class="text-xl font-black mt-1">'+modulo.fases+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Ordem</p><p class="text-xl font-black mt-1">'+modulo.ordem+'</p></div></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-4 py-3" onclick="event.stopPropagation(); openSelectedModulo()">Editar módulo</button><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" onclick="event.stopPropagation(); deleteSelectedModulo()">Excluir módulo</button></div>';
+                html='<div class="rounded-2xl bg-sky-400/10 border border-sky-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-sky-300 font-black">MÓDULO '+escapeEditorHtml(modulo.ordem)+'</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(modulo.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(modulo.descricao||'Sem descrição cadastrada.')+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Fases</p><p class="text-xl font-black mt-1">'+modulo.fases+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Ordem</p><p class="text-xl font-black mt-1">'+modulo.ordem+'</p></div></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-4 py-3" data-editor-action="editar-selecao-modulo">Editar módulo</button><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" data-editor-action="excluir-selecao-modulo">Excluir módulo</button></div>';
             } else if(type==='fase') {
                 const fase=editorFases[id]; if(!fase)return;
                 context.textContent='Fase selecionada';
-                html='<div class="rounded-2xl bg-indigo-400/10 border border-indigo-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">FASE</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(fase.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(fase.moduloTitulo)+' · '+escapeEditorHtml(fase.tipo)+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Questões</p><p class="text-xl font-black mt-1">'+fase.questoes+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">XP</p><p class="text-xl font-black mt-1">'+fase.xp+'</p></div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3 text-xs text-white/55">Recompensa: <strong class="text-white">'+fase.moedas+' moedas</strong></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black px-4 py-3" onclick="event.stopPropagation(); openSelectedFase()">Editar fase</button><a href="'+fase.url+'" class="editor-details-action flex items-center justify-center w-full rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-black px-4 py-3">Abrir fase</a><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" onclick="event.stopPropagation(); deleteSelectedFase()">Excluir fase</button></div>';
+                html='<div class="rounded-2xl bg-indigo-400/10 border border-indigo-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">FASE</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(fase.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(fase.moduloTitulo)+' · '+escapeEditorHtml(fase.tipo)+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Questões</p><p class="text-xl font-black mt-1">'+fase.questoes+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">XP</p><p class="text-xl font-black mt-1">'+fase.xp+'</p></div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3 text-xs text-white/55">Recompensa: <strong class="text-white">'+fase.moedas+' moedas</strong></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black px-4 py-3" data-editor-action="editar-selecao-fase">Editar fase</button><a href="'+fase.url+'" class="editor-details-action flex items-center justify-center w-full rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-black px-4 py-3">Abrir fase</a><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" data-editor-action="excluir-selecao-fase">Excluir fase</button></div>';
             } else if(type==='questao') {
                 const questao=questoesEditor[id]; if(!questao)return;
                 context.textContent='Questão selecionada';
                 const opcoes=(questao.opcoes||[]).map((opcao,index)=>'<div class="rounded-xl border '+(opcao.correta?'border-emerald-400/35 bg-emerald-400/10':'border-white/10 bg-white/[0.03]')+' p-3"><div class="flex gap-2"><span class="text-[10px] font-black '+(opcao.correta?'text-emerald-300':'text-white/35')+'">'+(index+1)+'</span><span class="text-xs text-white/75">'+escapeEditorHtml(opcao.texto||'Alternativa vazia')+(opcao.correta?' <strong class="text-emerald-300">· correta</strong>':'')+'</span></div></div>').join('');
-                html='<div class="rounded-2xl bg-emerald-400/10 border border-emerald-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-emerald-300 font-black">QUESTÃO</span><p class="text-sm font-black leading-relaxed mt-2">'+escapeEditorHtml(questao.enunciado)+'</p></div><div><p class="text-[10px] uppercase tracking-widest text-white/35 font-black mb-2">Alternativas</p><div class="space-y-2">'+(opcoes||'<p class="text-xs text-white/35">Nenhuma alternativa cadastrada.</p>')+'</div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-widest text-white/35 font-black">Feedback</p><p class="text-xs text-white/55 mt-2">'+escapeEditorHtml(questao.explicacao||'Sem feedback cadastrado.')+'</p></div><button type="button" class="editor-details-action w-full rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-3" onclick="event.stopPropagation(); openEditQuestao('+id+')">Editar questão</button>';
+                html='<div class="rounded-2xl bg-emerald-400/10 border border-emerald-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-emerald-300 font-black">QUESTÃO</span><p class="text-sm font-black leading-relaxed mt-2">'+escapeEditorHtml(questao.enunciado)+'</p></div><div><p class="text-[10px] uppercase tracking-widest text-white/35 font-black mb-2">Alternativas</p><div class="space-y-2">'+(opcoes||'<p class="text-xs text-white/35">Nenhuma alternativa cadastrada.</p>')+'</div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-widest text-white/35 font-black">Feedback</p><p class="text-xs text-white/55 mt-2">'+escapeEditorHtml(questao.explicacao||'Sem feedback cadastrado.')+'</p></div><button type="button" class="editor-details-action w-full rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-3" data-editor-action="editar-questao" data-questao-id="'+id+'">Editar questão</button>';
             }
             empty.classList.add('hidden'); content.classList.remove('hidden'); content.innerHTML=html;
         }
@@ -1306,7 +1381,7 @@
             node.querySelector('.drag-handle')?.classList.remove('cursor-grabbing');
 
             try {
-                const response=await fetch('/estudio/fase/'+node.getAttribute('data-id')+'/atualizar-y/',{
+                const response=await fetch(editorAjaxUrl('atualizarYFase', node.getAttribute('data-id')),{
                     method:'POST',
                     headers:{'Content-Type':'application/json','X-CSRFToken':csrfToken},
                     body:JSON.stringify({y:node.getAttribute('data-y')})
