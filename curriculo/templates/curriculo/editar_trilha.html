@@ -12,15 +12,15 @@
         html, body { min-height:100%; }
         body.editor-page { height:100vh; min-height:100vh; overflow:hidden; }
         .editor-shell { height:100vh; min-height:0; overflow:hidden; }
-        .editor-main { min-height:0; overflow:hidden; }
-        .editor-workspace { min-height:0; height:calc(100vh - 245px); }
+        .editor-main { min-height:0; overflow:hidden; display:flex; flex-direction:column; }
+        .editor-workspace { min-height:0; flex:1 1 auto; }
         .editor-workspace-panel { min-height:0; height:100%; }
         .editor-map-viewport { min-height:0; overflow:auto; }
         .editor-structure-viewport { min-height:0; overflow-y:auto; }
         @media (max-width: 1023px) {
             body.editor-page { height:auto; min-height:100vh; overflow:auto; }
             .editor-shell { height:auto; min-height:100vh; overflow:visible; }
-            .editor-main { overflow:visible; }
+            .editor-main { overflow:visible; display:block; }
             .editor-workspace { height:auto; min-height:0; }
             .editor-workspace-panel { height:auto; min-height:420px; }
             .editor-map-viewport { min-height:520px; }
