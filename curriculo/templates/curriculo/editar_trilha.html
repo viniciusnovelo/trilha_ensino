@@ -1189,7 +1189,10 @@
             selectedEditorId=String(id);
             document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
             document.querySelectorAll('[data-editor-type="'+type+'"][data-editor-id="'+id+'"]').forEach((element)=>element.classList.add('editor-selected'));
-            if(type==='fase') document.querySelectorAll('[data-editor-phase-title="'+id+'"]').forEach((element)=>element.classList.add('editor-selected'));
+            if(type==='fase') {
+                document.querySelectorAll('.fase-node[data-id="'+id+'"] .editor-fase-circle').forEach((element)=>element.classList.add('editor-selected'));
+                document.querySelectorAll('[data-editor-phase-title="'+id+'"]').forEach((element)=>element.classList.add('editor-selected'));
+            }
             renderEditorDetails(type,String(id));
         }
 
