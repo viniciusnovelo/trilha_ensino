@@ -1184,7 +1184,10 @@
         }
 
         function selectEditorItem(type,id,event=null) {
-            if(event) event.preventDefault();
+            if(event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
             selectedEditorType=type;
             selectedEditorId=String(id);
             document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
@@ -1246,7 +1249,7 @@
 
         document.addEventListener('mousemove',(event)=>{
             if(!isDragging || !activeNode) return;
-            let newY=initialNodeY+(event.clientY-startCursorY);
+            let newY=initialNodeY+((event.clientY-startCursorY)/mapScale);
             newY=Math.max(-150,Math.min(150,newY));
             activeNode.style.transform='translateY('+newY+'px)';
             activeNode.setAttribute('data-y',newY);
