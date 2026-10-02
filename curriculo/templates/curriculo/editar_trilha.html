@@ -327,8 +327,8 @@
                                                 {% endif %}
                                             </div>
                                             <div class="flex items-center gap-1 shrink-0">
-                                                <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" onclick="openEditModulo({{ modulo.id }}, '{{ modulo.titulo|escapejs }}', '{{ modulo.descricao|default_if_none:""|escapejs }}', {{ modulo.ordem }})" title="Editar módulo">✎</button>
-                                                <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" onclick="deleteModulo({{ modulo.id }}, '{{ modulo.titulo|escapejs }}')" title="Excluir módulo">×</button>
+                                                <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" onclick="event.stopPropagation(); openEditModulo({{ modulo.id }}, '{{ modulo.titulo|escapejs }}', '{{ modulo.descricao|default_if_none:""|escapejs }}', {{ modulo.ordem }})" title="Editar módulo">✎</button>
+                                                <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" onclick="event.stopPropagation(); deleteModulo({{ modulo.id }}, '{{ modulo.titulo|escapejs }}')" title="Excluir módulo">×</button>
                                             </div>
                                         </div>
                                     </div>
@@ -344,11 +344,11 @@
                                                     <p class="text-[11px] text-white/40 mt-1">{{ fase.get_tipo_display }} · {{ fase.questoes.count }} questão(ões)</p>
                                                 </div>
                                                 <div class="flex gap-1">
-                                                    <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" onclick="openEditFase({{ fase.id }}, {{ fase.modulo_id }}, '{{ fase.titulo|escapejs }}', {{ fase.ordem }}, '{{ fase.tipo }}', {{ fase.xp_recompensa }}, {{ fase.moedas_recompensa }}, {{ fase.deslocamento_y }})" title="Editar fase">✎</button>
-                                                    <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" onclick="deleteFase({{ fase.id }}, '{{ fase.titulo|escapejs }}')" title="Excluir fase">×</button>
+                                                    <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" onclick="event.stopPropagation(); openEditFase({{ fase.id }}, {{ fase.modulo_id }}, '{{ fase.titulo|escapejs }}', {{ fase.ordem }}, '{{ fase.tipo }}', {{ fase.xp_recompensa }}, {{ fase.moedas_recompensa }}, {{ fase.deslocamento_y }})" title="Editar fase">✎</button>
+                                                    <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" onclick="event.stopPropagation(); deleteFase({{ fase.id }}, '{{ fase.titulo|escapejs }}')" title="Excluir fase">×</button>
                                                 </div>
                                             </div>
-                                            <button type="button" onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
+                                            <button type="button" onclick="event.stopPropagation(); openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
                                     {% for questao in fase.questoes.all %}
                                         <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-3" data-editor-type="questao" data-editor-id="{{ questao.id }}" onclick="selectEditorItem('questao', {{ questao.id }}, event)">
                                             <div class="flex items-start gap-3">
@@ -362,13 +362,13 @@
                                                 <div class="flex gap-1 shrink-0">
                                                     <button
                                                         type="button"
-                                                        onclick="openEditQuestao({{ questao.id }})"
+                                                        onclick="event.stopPropagation(); openEditQuestao({{ questao.id }})"
                                                         class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10"
                                                         title="Editar questão"
                                                     >✎</button>
                                                     <button
                                                         type="button"
-                                                        onclick="deleteQuestao({{ questao.id }}, '{{ questao.enunciado|escapejs }}')"
+                                                        onclick="event.stopPropagation(); deleteQuestao({{ questao.id }}, '{{ questao.enunciado|escapejs }}')"
                                                         class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200"
                                                         title="Excluir questão"
                                                     >×</button>
@@ -383,7 +383,7 @@
                                         <div class="rounded-xl border border-dashed border-white/10 p-4 text-center text-xs text-white/35">Ainda não há fases neste módulo.</div>
                                     {% endfor %}
 
-                                    <button type="button" onclick="openPhaseForModule({{ modulo.id }})" class="w-full rounded-xl border border-dashed border-indigo-300/20 hover:border-indigo-300/40 hover:bg-indigo-400/5 px-3 py-2 text-xs font-black text-indigo-200 transition">＋ Nova fase neste módulo</button>
+                                    <button type="button" onclick="event.stopPropagation(); openPhaseForModule({{ modulo.id }})" class="w-full rounded-xl border border-dashed border-indigo-300/20 hover:border-indigo-300/40 hover:bg-indigo-400/5 px-3 py-2 text-xs font-black text-indigo-200 transition">＋ Nova fase neste módulo</button>
                                 </div>
                             </article>
                         {% empty %}
@@ -929,12 +929,22 @@
         const temasTrilha = ['tema-padrao','tema-floresta','tema-deserto','tema-masmorra','tema-aurora','tema-oceano'];
 
         function openModal(id) {
-            document.getElementById(id)?.classList.add('modal-active');
+            const modal=document.getElementById(id);
+            if(!modal) {
+                console.error('Modal não encontrado:', id);
+                return;
+            }
+            modal.classList.add('modal-active');
             document.body.classList.add('overflow-hidden');
         }
 
         function closeModal(id) {
-            document.getElementById(id)?.classList.remove('modal-active');
+            const modal=document.getElementById(id);
+            if(!modal) {
+                console.error('Modal não encontrado:', id);
+                return;
+            }
+            modal.classList.remove('modal-active');
             document.body.classList.remove('overflow-hidden');
         }
 
@@ -1185,7 +1195,6 @@
 
         function selectEditorItem(type,id,event=null) {
             if(event) {
-                event.preventDefault();
                 event.stopPropagation();
             }
             selectedEditorType=type;
@@ -1208,24 +1217,43 @@
             if(type==='modulo') {
                 const modulo=editorModulos[id]; if(!modulo)return;
                 context.textContent='Módulo selecionado';
-                html='<div class="rounded-2xl bg-sky-400/10 border border-sky-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-sky-300 font-black">MÓDULO '+escapeEditorHtml(modulo.ordem)+'</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(modulo.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(modulo.descricao||'Sem descrição cadastrada.')+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Fases</p><p class="text-xl font-black mt-1">'+modulo.fases+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Ordem</p><p class="text-xl font-black mt-1">'+modulo.ordem+'</p></div></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-4 py-3" onclick="openSelectedModulo()">Editar módulo</button><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" onclick="deleteSelectedModulo()">Excluir módulo</button></div>';
+                html='<div class="rounded-2xl bg-sky-400/10 border border-sky-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-sky-300 font-black">MÓDULO '+escapeEditorHtml(modulo.ordem)+'</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(modulo.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(modulo.descricao||'Sem descrição cadastrada.')+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Fases</p><p class="text-xl font-black mt-1">'+modulo.fases+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Ordem</p><p class="text-xl font-black mt-1">'+modulo.ordem+'</p></div></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-4 py-3" onclick="event.stopPropagation(); openSelectedModulo()">Editar módulo</button><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" onclick="event.stopPropagation(); deleteSelectedModulo()">Excluir módulo</button></div>';
             } else if(type==='fase') {
                 const fase=editorFases[id]; if(!fase)return;
                 context.textContent='Fase selecionada';
-                html='<div class="rounded-2xl bg-indigo-400/10 border border-indigo-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">FASE</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(fase.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(fase.moduloTitulo)+' · '+escapeEditorHtml(fase.tipo)+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Questões</p><p class="text-xl font-black mt-1">'+fase.questoes+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">XP</p><p class="text-xl font-black mt-1">'+fase.xp+'</p></div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3 text-xs text-white/55">Recompensa: <strong class="text-white">'+fase.moedas+' moedas</strong></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black px-4 py-3" onclick="openSelectedFase()">Editar fase</button><a href="'+fase.url+'" class="editor-details-action flex items-center justify-center w-full rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-black px-4 py-3">Abrir fase</a><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" onclick="deleteSelectedFase()">Excluir fase</button></div>';
+                html='<div class="rounded-2xl bg-indigo-400/10 border border-indigo-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">FASE</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(fase.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(fase.moduloTitulo)+' · '+escapeEditorHtml(fase.tipo)+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Questões</p><p class="text-xl font-black mt-1">'+fase.questoes+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">XP</p><p class="text-xl font-black mt-1">'+fase.xp+'</p></div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3 text-xs text-white/55">Recompensa: <strong class="text-white">'+fase.moedas+' moedas</strong></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black px-4 py-3" onclick="event.stopPropagation(); openSelectedFase()">Editar fase</button><a href="'+fase.url+'" class="editor-details-action flex items-center justify-center w-full rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-black px-4 py-3">Abrir fase</a><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" onclick="event.stopPropagation(); deleteSelectedFase()">Excluir fase</button></div>';
             } else if(type==='questao') {
                 const questao=questoesEditor[id]; if(!questao)return;
                 context.textContent='Questão selecionada';
                 const opcoes=(questao.opcoes||[]).map((opcao,index)=>'<div class="rounded-xl border '+(opcao.correta?'border-emerald-400/35 bg-emerald-400/10':'border-white/10 bg-white/[0.03]')+' p-3"><div class="flex gap-2"><span class="text-[10px] font-black '+(opcao.correta?'text-emerald-300':'text-white/35')+'">'+(index+1)+'</span><span class="text-xs text-white/75">'+escapeEditorHtml(opcao.texto||'Alternativa vazia')+(opcao.correta?' <strong class="text-emerald-300">· correta</strong>':'')+'</span></div></div>').join('');
-                html='<div class="rounded-2xl bg-emerald-400/10 border border-emerald-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-emerald-300 font-black">QUESTÃO</span><p class="text-sm font-black leading-relaxed mt-2">'+escapeEditorHtml(questao.enunciado)+'</p></div><div><p class="text-[10px] uppercase tracking-widest text-white/35 font-black mb-2">Alternativas</p><div class="space-y-2">'+(opcoes||'<p class="text-xs text-white/35">Nenhuma alternativa cadastrada.</p>')+'</div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-widest text-white/35 font-black">Feedback</p><p class="text-xs text-white/55 mt-2">'+escapeEditorHtml(questao.explicacao||'Sem feedback cadastrado.')+'</p></div><button type="button" class="editor-details-action w-full rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-3" onclick="openEditQuestao('+id+')">Editar questão</button>';
+                html='<div class="rounded-2xl bg-emerald-400/10 border border-emerald-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-emerald-300 font-black">QUESTÃO</span><p class="text-sm font-black leading-relaxed mt-2">'+escapeEditorHtml(questao.enunciado)+'</p></div><div><p class="text-[10px] uppercase tracking-widest text-white/35 font-black mb-2">Alternativas</p><div class="space-y-2">'+(opcoes||'<p class="text-xs text-white/35">Nenhuma alternativa cadastrada.</p>')+'</div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-widest text-white/35 font-black">Feedback</p><p class="text-xs text-white/55 mt-2">'+escapeEditorHtml(questao.explicacao||'Sem feedback cadastrado.')+'</p></div><button type="button" class="editor-details-action w-full rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-3" onclick="event.stopPropagation(); openEditQuestao('+id+')">Editar questão</button>';
             }
             empty.classList.add('hidden'); content.classList.remove('hidden'); content.innerHTML=html;
         }
 
-        function openSelectedModulo(){const modulo=editorModulos[selectedEditorId];if(modulo)openEditModulo(modulo.id,modulo.titulo,modulo.descricao,modulo.ordem);}
-        function openSelectedFase(){const fase=editorFases[selectedEditorId];if(!fase)return;const node=document.querySelector('.fase-node[data-id="'+fase.id+'"]');openEditFase(fase.id,fase.moduloId,fase.titulo,fase.ordem,fase.tipoCodigo,fase.xp,fase.moedas,node?.getAttribute('data-y')||0);}
-        function deleteSelectedModulo(){const modulo=editorModulos[selectedEditorId];if(modulo)deleteModulo(modulo.id,modulo.titulo);}
-        function deleteSelectedFase(){const fase=editorFases[selectedEditorId];if(fase)deleteFase(fase.id,fase.titulo);}
+        function openSelectedModulo(){
+            if(selectedEditorType!=='modulo' || !selectedEditorId) return;
+            const modulo=editorModulos[selectedEditorId];
+            if(!modulo) return;
+            openEditModulo(modulo.id,modulo.titulo,modulo.descricao,modulo.ordem);
+        }
+        function openSelectedFase(){
+            if(selectedEditorType!=='fase' || !selectedEditorId) return;
+            const fase=editorFases[selectedEditorId];
+            if(!fase) return;
+            const node=document.querySelector('.fase-node[data-id="'+fase.id+'"]');
+            openEditFase(fase.id,fase.moduloId,fase.titulo,fase.ordem,fase.tipoCodigo,fase.xp,fase.moedas,node?.getAttribute('data-y')||0);
+        }
+        function deleteSelectedModulo(){
+            if(selectedEditorType!=='modulo' || !selectedEditorId) return;
+            const modulo=editorModulos[selectedEditorId];
+            if(modulo) deleteModulo(modulo.id,modulo.titulo);
+        }
+        function deleteSelectedFase(){
+            if(selectedEditorType!=='fase' || !selectedEditorId) return;
+            const fase=editorFases[selectedEditorId];
+            if(fase) deleteFase(fase.id,fase.titulo);
+        }
         function applyMapScale(){const canvas=document.getElementById('editor-map-canvas');const label=document.getElementById('map-zoom-value');if(!canvas)return;canvas.style.transform='scale('+mapScale+')';if(label)label.textContent=Math.round(mapScale*100)+'%';}
         function changeMapZoom(delta){mapScale=Math.max(0.65,Math.min(1.35,Math.round((mapScale+delta)*100)/100));applyMapScale();}
         function fitMapToViewport(){const viewport=document.querySelector('.editor-map-viewport');const canvas=document.getElementById('editor-map-canvas');if(!viewport||!canvas)return;const availableHeight=Math.max(320,viewport.clientHeight-40);mapScale=Math.max(0.65,Math.min(1.05,availableHeight/canvas.offsetHeight));mapScale=Math.round(mapScale*100)/100;applyMapScale();requestAnimationFrame(()=>{viewport.scrollLeft=Math.max(0,(canvas.offsetWidth*mapScale-viewport.clientWidth)/2);viewport.scrollTop=Math.max(0,(canvas.offsetHeight*mapScale-viewport.clientHeight)/2);});}
