@@ -13,16 +13,16 @@ O catálogo inicial possui:
 - **4 matérias:** Matemática, Física, Geografia e Biologia.
 - **3 jogos por matéria:** 12 jogos no total.
 - **4 módulos por jogo.**
-- **1 fase por módulo.**
-- **3 questões por fase.**
+- **3 fases por módulo.**
+- **4 questões por fase.**
 - **4 alternativas por questão.**
-- **12 questões por jogo.**
+- **12 fases e 48 questões por jogo.**
 
 Total:
 
-**4 matérias, 12 jogos, 48 módulos, 48 fases, 144 questões e 576 alternativas.**
+**4 matérias, 12 jogos, 48 módulos, 144 fases, 576 questões e 2.304 alternativas.**
 
-Os dois primeiros módulos de cada jogo preservam seis questões que já faziam parte do catálogo anterior. Os módulos 3 e 4 acrescentam seis novas questões, três em cada módulo, com explicações pedagógicas estruturadas em:
+As questões que já faziam parte do catálogo anterior são preservadas. Cada módulo agora possui três fases, e cada fase possui quatro questões, com continuidade e aprofundamento dos temas do jogo. As questões possuem explicações pedagógicas estruturadas em:
 
 - **Como pensar**
 - **Passo a passo**
@@ -48,7 +48,7 @@ Para recriar os jogos que já possuem o mesmo slug e sincronizar integralmente a
 python importar_catalogo.py dados_catalogo_ensino_medio.json --autor vilel --replace
 ```
 
-O parâmetro `--replace` apaga e recria apenas os jogos que possuem os slugs presentes no JSON. Isso pode remover progresso associado às fases desses jogos.
+Sem `--replace`, o importador sincroniza matérias, jogos, módulos, fases, questões e alternativas existentes, criando o que estiver faltando e preservando os IDs e o progresso já registrado. O parâmetro `--replace` continua sendo destrutivo para os jogos indicados e pode remover progresso associado às suas fases.
 
 As matérias são criadas ou atualizadas automaticamente.
 
