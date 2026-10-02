@@ -2023,6 +2023,107 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
             'onclick="event.stopPropagation(); openSelectedFase()"',
         )
 
+        # Ações principais precisam existir como elementos funcionais,
+        # não apenas como texto visual.
+        self.assertContains(
+            response,
+            f'data-editor-action="editar-modulo" data-modulo-id="{self.modulo.id}"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-action="editar-fase" data-fase-id="{self.fase_1.id}"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-action="editar-questao" data-questao-id="{questao.id}"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-select="modulo"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-select="fase"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-select="questao"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-action="adicionar-questao" data-fase-id="{self.fase_1.id}"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-action="excluir-modulo" data-modulo-id="{self.modulo.id}"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-action="excluir-fase" data-fase-id="{self.fase_1.id}"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-action="excluir-questao" data-questao-id="{questao.id}"',
+        )
+
+        # O nó do mapa é um seletor, não um link. A navegação para a fase
+        # fica isolada no botão "Abrir fase" do painel contextual.
+        self.assertContains(
+            response,
+            f'data-editor-select="fase"',
+        )
+        self.assertNotContains(
+            response,
+            f'href="{reverse("fase_detalhe", args=[self.fase_1.id])}" class="editor-fase-circle"',
+        )
+        self.assertContains(
+            response,
+            f'data-editor-action="editar-fase" data-fase-id="{self.fase_1.id}"',
+        )
+        self.assertContains(
+            response,
+            'data-editor-action="editar-selecao-fase"',
+        )
+        self.assertContains(
+            response,
+            'href="'+reverse("fase_detalhe", args=[self.fase_1.id])+'"',
+        )
+
+        # As URLs AJAX usadas pelo JavaScript são derivadas dos nomes das
+        # rotas Django, evitando divergência entre template e urls.py.
+        self.assertContains(
+            response,
+            'editarModulo:',
+        )
+        self.assertContains(
+            response,
+            'excluirModulo:',
+        )
+        self.assertContains(
+            response,
+            'editarFase:',
+        )
+        self.assertContains(
+            response,
+            'excluirFase:',
+        )
+        self.assertContains(
+            response,
+            'editarQuestao:',
+        )
+        self.assertContains(
+            response,
+            'excluirQuestao:',
+        )
+        self.assertContains(
+            response,
+            'atualizarYFase:',
+        )
+        self.assertContains(
+            response,
+            'document.addEventListener(\'click\', handleEditorInteraction);',
+        )
+
 
     def test_mapa_do_aluno_exibe_hud_e_controles(self):
         self.client.login(
