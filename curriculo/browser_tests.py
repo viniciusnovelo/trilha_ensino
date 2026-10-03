@@ -137,12 +137,11 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 await self._phase_toggle(page).click()
         label_locator = item.get_by_text(label, exact=True).first
         await expect(label_locator).to_be_visible()
-        label_box = await label_locator.bounding_box()
-        self.assertIsNotNone(label_box)
-        await page.mouse.click(
-            label_box["x"] + label_box["width"] / 2,
-            label_box["y"] + label_box["height"] / 2,
-        )
+        # O item selecionável contém controles filhos que ocupam a mesma
+        # caixa visual. O force mantém o clique como interação real do
+        # navegador, apenas desabilitando a checagem de hit-target do
+        # Playwright para permitir o bubble até o item selecionável.
+        await label_locator.click(force=True)
         return item
 
     def _module_toggle(self, page):
