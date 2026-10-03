@@ -149,6 +149,11 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             box["x"] + box["width"] / 2,
             box["y"] + box["height"] / 2,
         )
+        selection_state = await page.evaluate(
+            "() => ({type: selectedEditorType, id: selectedEditorId})"
+        )
+        self.assertEqual(selection_state["type"], item_type)
+        self.assertEqual(selection_state["id"], str(item_id))
         return item
 
     def _module_toggle(self, page):
