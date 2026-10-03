@@ -126,15 +126,24 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
     async def _select_content_item(self, page, item_type, item_id, label):
         item = self._content_item(page, item_type, item_id)
+        hierarchy_opened = False
         if item_type == "fase" and not await item.is_visible():
             module_toggle = self._module_toggle(page)
             if await self._module_content(page).get_attribute("hidden") is not None:
                 await module_toggle.click()
+                hierarchy_opened = True
         elif item_type == "questao" and not await item.is_visible():
             if await self._module_content(page).get_attribute("hidden") is not None:
                 await self._module_toggle(page).click()
+                hierarchy_opened = True
             if await self._phase_content(page).get_attribute("hidden") is not None:
                 await self._phase_toggle(page).click()
+                hierarchy_opened = True
+        if hierarchy_opened:
+            # A árvore usa uma transição curta para abrir o conteúdo. Aguarde
+            # a animação terminar antes do clique para evitar clicar na
+            # coordenada anterior durante o reflow.
+            await page.wait_for_timeout(250)
         selection_target = page.locator(
             f'[data-editor-select="{item_type}"]'
             f'[data-editor-id="{item_id}"].editor-selection-target'
