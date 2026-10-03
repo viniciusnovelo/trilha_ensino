@@ -135,7 +135,10 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 await self._module_toggle(page).click()
             if await self._phase_content(page).get_attribute("hidden") is not None:
                 await self._phase_toggle(page).click()
-        selection_target = item.locator(".editor-selection-target").first
+        selection_target = page.locator(
+            f'[data-editor-select="{item_type}"]'
+            f'[data-editor-id="{item_id}"].editor-selection-target'
+        ).first
         await expect(selection_target).to_be_visible()
         # O alvo de seleção é uma área real da árvore, separada dos
         # controles de expandir/editar/excluir, e o clique ainda percorre
