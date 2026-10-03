@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
+from asgiref.sync import sync_to_async
 from playwright.async_api import expect, async_playwright
 
 from .models import Disciplina, Fase, Modulo, Opcao, Questao
@@ -576,6 +577,139 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         self.assertFalse(
             await Questao.objects.filter(id=self.questao.id).aexists()
         )
+        self._assert_no_page_errors(page_errors)
+
+    async def test_jornada_global_mantem_conector_entre_modulos(self):
+        modulo2 = await sync_to_async(Modulo.objects.create)(
+            disciplina=self.trilha,
+            titulo="Módulo Browser 2",
+            descricao="Segundo módulo.",
+            ordem=2,
+        )
+        fase2 = await sync_to_async(Fase.objects.create)(
+            modulo=modulo2,
+            titulo="Fase Browser 2",
+            ordem=1,
+            tipo="quiz",
+            xp_recompensa=50,
+            moedas_recompensa=10,
+            deslocamento_y=24,
+        )
+        modulo3 = await sync_to_async(Modulo.objects.create)(
+            disciplina=self.trilha,
+            titulo="Módulo Browser 3",
+            descricao="Terceiro módulo.",
+            ordem=3,
+        )
+        await sync_to_async(Fase.objects.create)(
+            modulo=modulo3,
+            titulo="Fase Browser 3",
+            ordem=1,
+            tipo="quiz",
+            xp_recompensa=50,
+            moedas_recompensa=10,
+            deslocamento_y=-18,
+        )
+
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            nodes = page.locator(".fase-node[data-index]")
+            connectors = page.locator(".editor-connector[data-connector-index]")
+            await expect(nodes).to_have_count(3)
+            await expect(connectors).to_have_count(2)
+
+            first = nodes.nth(0)
+            second = nodes.nth(1)
+            self.assertNotEqual(
+                await first.get_attribute("data-modulo-id"),
+                await second.get_attribute("data-modulo-id"),
+            )
+
+            for index in range(2):
+                path = page.locator(
+                    f'.editor-connector[data-connector-index="{index}"] .linha-conector'
+                )
+                await expect(path).to_have_attribute("d", re.compile(r"^M 0,"))
+                self.assertNotEqual(await path.get_attribute("d"), "")
+
+            path_before = await page.locator(
+                '.editor-connector[data-connector-index="0"] .linha-conector'
+            ).get_attribute("d")
+
+            await self._map_phase_button(page).click()
+            await page.get_by_title("Aumentar zoom").click()
+
+            path_after_zoom = await page.locator(
+                '.editor-connector[data-connector-index="0"] .linha-conector'
+            ).get_attribute("d")
+            self.assertEqual(path_before, path_after_zoom)
+
+            await page.get_by_title("Diminuir zoom").click()
+            await expect(
+                page.locator(
+                    '.editor-connector[data-connector-index="0"] .linha-conector'
+                )
+            ).to_have_attribute("d", path_before)
+
+        self._assert_no_page_errors(page_errors)
+
+    async def test_arraste_recalcula_conectores_com_y_automatico_e_persistido(self):
+        modulo2 = await sync_to_async(Modulo.objects.create)(
+            disciplina=self.trilha,
+            titulo="Módulo Browser 2",
+            ordem=2,
+        )
+        await sync_to_async(Fase.objects.create)(
+            modulo=modulo2,
+            titulo="Fase Browser 2",
+            ordem=1,
+            tipo="quiz",
+            deslocamento_y=0,
+        )
+
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            path_before = await page.locator(
+                '.editor-connector[data-connector-index="0"] .linha-conector'
+            ).get_attribute("d")
+
+            handle = page.locator(
+                f'.fase-node[data-id="{self.fase.id}"] .drag-handle'
+            )
+            await handle.scroll_into_view_if_needed()
+            box = await handle.bounding_box()
+            self.assertIsNotNone(box)
+
+            start_x = box["x"] + box["width"] / 2
+            start_y = box["y"] + box["height"] / 2
+            await page.mouse.move(start_x, start_y)
+            await page.mouse.down()
+            await page.mouse.move(start_x, start_y + 45, steps=5)
+            await page.mouse.up()
+
+            path_after = await page.locator(
+                '.editor-connector[data-connector-index="0"] .linha-conector'
+            ).get_attribute("d")
+            self.assertNotEqual(path_before, path_after)
+
+            node = page.locator(f'.fase-node[data-id="{self.fase.id}"]')
+            custom_y = int(float(await node.get_attribute("data-y")))
+            auto_y = int(float(await node.get_attribute("data-auto-y")))
+            render_y = int(float(await node.get_attribute("data-render-y")))
+            self.assertEqual(render_y, custom_y + auto_y)
+
+            await page.reload()
+            node = page.locator(f'.fase-node[data-id="{self.fase.id}"]')
+            await expect(node).to_have_attribute("data-y", str(custom_y))
+            self.assertEqual(
+                int(float(await node.get_attribute("data-render-y"))),
+                custom_y + int(float(await node.get_attribute("data-auto-y"))),
+            )
+
+        await self.fase.arefresh_from_db()
+        self.assertEqual(self.fase.deslocamento_y, custom_y)
         self._assert_no_page_errors(page_errors)
 
     async def test_controles_do_mapa_e_arraste_de_fase_funcionam_e_persistem(self):
