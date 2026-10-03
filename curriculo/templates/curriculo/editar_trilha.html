@@ -1216,15 +1216,23 @@
         }
 
         function selectEditorItem(type,id) {
+            const normalizedId=String(id);
             selectedEditorType=type;
-            selectedEditorId=String(id);
+            selectedEditorId=normalizedId;
+
+            // Uma seleção tem uma única origem e pode possuir vários
+            // representantes visuais (conteúdo, mapa e detalhes).
             document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
-            document.querySelectorAll('[data-editor-type="'+type+'"][data-editor-id="'+id+'"]').forEach((element)=>element.classList.add('editor-selected'));
+            document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
+
+            // O nó da fase é composto por botão + título; ambos precisam
+            // refletir a mesma seleção do item na coluna Conteúdo.
             if(type==='fase') {
-                document.querySelectorAll('.fase-node[data-id="'+id+'"] .editor-fase-circle').forEach((element)=>element.classList.add('editor-selected'));
-                document.querySelectorAll('[data-editor-phase-title="'+id+'"]').forEach((element)=>element.classList.add('editor-selected'));
+                document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').forEach((element)=>element.classList.add('editor-selected'));
+                document.querySelectorAll('[data-editor-phase-title="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
             }
-            renderEditorDetails(type,String(id));
+
+            renderEditorDetails(type,normalizedId);
         }
 
         function handleEditorInteraction(event) {
