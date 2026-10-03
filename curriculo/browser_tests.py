@@ -155,7 +155,7 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         # O alvo é um botão real de seleção. O locator.click mantém a
         # interação no navegador e aguarda estabilidade de layout após a
         # expansão automática da hierarquia.
-        await selection_target.click(force=True)
+        await selection_target.click()
         return item
 
     def _module_toggle(self, page):
