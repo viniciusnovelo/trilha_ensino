@@ -129,6 +129,22 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         await item.get_by_text(label, exact=True).click()
         return item
 
+    def _module_toggle(self, page):
+        return page.locator(
+            f'[data-editor-toggle="modulo"][data-modulo-id="{self.modulo.id}"]'
+        )
+
+    def _module_content(self, page):
+        return page.locator(f"#editor-module-content-{self.modulo.id}")
+
+    def _phase_toggle(self, page):
+        return page.locator(
+            f'[data-editor-toggle="fase"][data-fase-id="{self.fase.id}"]'
+        )
+
+    def _phase_content(self, page):
+        return page.locator(f"#editor-phase-content-{self.fase.id}")
+
     def _map_phase_button(self, page):
         return page.locator(
             f'.fase-node[data-id="{self.fase.id}"]'
@@ -159,14 +175,17 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 page, "modulo", self.modulo.id, self.modulo.titulo
             )
             await expect(modulo).to_contain_class("editor-selected")
+            await expect(self._module_content(page)).to_be_visible()
             await expect(
                 page.locator("#editor-details-content")
             ).to_contain_text(self.modulo.titulo)
 
+            await self._phase_toggle(page).click()
             fase = await self._select_content_item(
                 page, "fase", self.fase.id, self.fase.titulo
             )
             await expect(fase).to_contain_class("editor-selected")
+            await expect(self._phase_content(page)).to_be_visible()
             await expect(
                 page.locator("#editor-details-content")
             ).to_contain_text(self.fase.titulo)
@@ -175,9 +194,107 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 page, "questao", self.questao.id, self.questao.enunciado
             )
             await expect(questao).to_contain_class("editor-selected")
+            await expect(self._phase_content(page)).to_be_visible()
             await expect(
                 page.locator("#editor-details-content")
             ).to_contain_text(self.questao.enunciado)
+
+        self._assert_no_page_errors(page_errors)
+
+    async def test_modulo_e_fase_podem_expandir_e_recolher_independentemente(self):
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            await expect(self._module_content(page)).to_be_hidden()
+            await expect(self._phase_content(page)).to_be_hidden()
+
+            await self._module_toggle(page).click()
+            await expect(self._module_content(page)).to_be_visible()
+            await expect(self._module_toggle(page)).to_have_attribute(
+                "aria-expanded", "true"
+            )
+
+            await self._phase_toggle(page).click()
+            await expect(self._phase_content(page)).to_be_visible()
+            await expect(self._phase_toggle(page)).to_have_attribute(
+                "aria-expanded", "true"
+            )
+
+            await self._phase_toggle(page).click()
+            await expect(self._phase_content(page)).to_be_hidden()
+
+            await self._module_toggle(page).click()
+            await expect(self._module_content(page)).to_be_hidden()
+            await expect(self._module_toggle(page)).to_have_attribute(
+                "aria-expanded", "false"
+            )
+
+        self._assert_no_page_errors(page_errors)
+
+    async def test_selecionar_fase_abre_sua_hierarquia_e_fecha_outras(self):
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            await self._module_toggle(page).click()
+            await self._phase_toggle(page).click()
+            await self._select_content_item(
+                page, "fase", self.fase.id, self.fase.titulo
+            )
+
+            await expect(self._module_content(page)).to_be_visible()
+            await expect(self._phase_content(page)).to_be_visible()
+            await expect(
+                self._phase_toggle(page)
+            ).to_have_attribute("aria-expanded", "true")
+            await expect(
+                page.locator(
+                    f'[data-editor-select="fase"][data-editor-id="{self.fase.id}"]'
+                ).first
+            ).to_contain_class("editor-selected")
+
+        self._assert_no_page_errors(page_errors)
+
+    async def test_painel_detalhes_abre_fecha_e_libera_espaco_para_o_mapa(self):
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            workspace = page.locator(".editor-workspace")
+            details = page.locator("#editor-details-panel")
+            map_panel = page.locator("#editor-map-panel")
+
+            await expect(details).to_be_hidden()
+            await expect(workspace).to_have_class(re.compile(r"details-collapsed"))
+
+            await self._select_content_item(
+                page, "modulo", self.modulo.id, self.modulo.titulo
+            )
+            await expect(details).to_be_visible()
+            await expect(workspace).to_have_class(re.compile(r"details-open"))
+
+            map_open_width = (await map_panel.bounding_box())["width"]
+
+            await page.get_by_role(
+                "button", name="Recolher detalhes"
+            ).click()
+            await expect(details).to_be_hidden()
+            await expect(workspace).to_have_class(
+                re.compile(r"details-collapsed")
+            )
+
+            map_closed_width = (await map_panel.bounding_box())["width"]
+            self.assertGreater(
+                map_closed_width,
+                map_open_width,
+                "O mapa deve ganhar espaço quando Detalhes estiver recolhido.",
+            )
+
+            await self._select_content_item(
+                page, "fase", self.fase.id, self.fase.titulo
+            )
+            await expect(details).to_be_visible()
+            await expect(
+                page.locator("#editor-details-content")
+            ).to_contain_text(self.fase.titulo)
 
         self._assert_no_page_errors(page_errors)
 
