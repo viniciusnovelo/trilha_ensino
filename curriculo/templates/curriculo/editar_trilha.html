@@ -1260,10 +1260,10 @@
 
         function setEditorAccordion(kind,id,expanded) {
             const normalizedId=String(id);
-            const selector=kind==='modulo'
-                ? '#editor-module-content-'+CSS.escape(normalizedId)
-                : '#editor-phase-content-'+CSS.escape(normalizedId);
-            const content=document.querySelector(selector);
+            const contentId=kind==='modulo'
+                ? 'editor-module-content-'+normalizedId
+                : 'editor-phase-content-'+normalizedId;
+            const content=document.getElementById(contentId);
             const toggle=document.querySelector('[data-editor-toggle="'+kind+'"][data-'+kind+'-id="'+normalizedId+'"]');
             if(!content || !toggle) return;
             content.hidden=!expanded;
