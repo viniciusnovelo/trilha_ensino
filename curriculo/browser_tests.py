@@ -144,11 +144,12 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             # a animação terminar antes do clique para evitar clicar na
             # coordenada anterior durante o reflow.
             await page.wait_for_timeout(250)
-        label_locator = item.get_by_text(label, exact=True).first
-        await expect(label_locator).to_be_visible()
-        # Clique no conteúdo textual efetivamente apresentado ao usuário.
-        # Isso evita depender do tamanho calculado do contêiner selecionável.
-        await label_locator.click()
+        selection_target = page.locator(
+            f'[data-editor-select="{item_type}"]'
+            f'[data-editor-id="{item_id}"].editor-selection-target'
+        ).first
+        await expect(selection_target).to_be_visible()
+        await selection_target.click(force=True)
         return item
 
     def _module_toggle(self, page):
