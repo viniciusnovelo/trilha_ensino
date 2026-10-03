@@ -135,13 +135,12 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 await self._module_toggle(page).click()
             if await self._phase_content(page).get_attribute("hidden") is not None:
                 await self._phase_toggle(page).click()
-        label_locator = item.get_by_text(label, exact=True).first
-        await expect(label_locator).to_be_visible()
-        # O item selecionável contém controles filhos que ocupam a mesma
-        # caixa visual. O force mantém o clique como interação real do
-        # navegador, apenas desabilitando a checagem de hit-target do
-        # Playwright para permitir o bubble até o item selecionável.
-        await label_locator.click(force=True)
+        selection_target = item.locator(".editor-selection-target").first
+        await expect(selection_target).to_be_visible()
+        # O alvo de seleção é uma área real da árvore, separada dos
+        # controles de expandir/editar/excluir, e o clique ainda percorre
+        # o caminho normal do navegador até o listener delegado.
+        await selection_target.click(force=True)
         return item
 
     def _module_toggle(self, page):
