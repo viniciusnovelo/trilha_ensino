@@ -135,13 +135,13 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 await self._module_toggle(page).click()
             if await self._phase_content(page).get_attribute("hidden") is not None:
                 await self._phase_toggle(page).click()
-        box = await item.bounding_box()
-        self.assertIsNotNone(box)
-        await item.click(
-            position={
-                "x": box["width"] / 2,
-                "y": min(12, box["height"] / 2),
-            }
+        label_locator = item.get_by_text(label, exact=True).first
+        await expect(label_locator).to_be_visible()
+        label_box = await label_locator.bounding_box()
+        self.assertIsNotNone(label_box)
+        await page.mouse.click(
+            label_box["x"] + label_box["width"] / 2,
+            label_box["y"] + label_box["height"] / 2,
         )
         return item
 
