@@ -889,6 +889,32 @@
     </div>
 
     <script>
+        console.log('[EDITOR] script iniciado');
+
+        document.addEventListener('click', (event) => {
+            const target = event.target.closest?.('[data-editor-action]');
+            if (target) console.log('[EDITOR] click', target.dataset);
+        }, true);
+
+        window.__diagnosticoEditorModal = function() {
+            const modal = document.getElementById('modal-editar-modulo');
+            if (!modal) {
+                console.error('[EDITOR] diagnóstico: modal-editar-modulo não encontrado');
+                return { encontrado: false };
+            }
+            console.log('[EDITOR] diagnóstico: modal antes', modal, getComputedStyle(modal).display);
+            modal.classList.add('modal-active');
+            const resultado = {
+                encontrado: true,
+                classeAtiva: modal.classList.contains('modal-active'),
+                display: getComputedStyle(modal).display,
+                zIndex: getComputedStyle(modal).zIndex,
+            };
+            console.log('[EDITOR] diagnóstico: modal depois', resultado);
+            modal.classList.remove('modal-active');
+            return resultado;
+        };
+
         const questoesEditor = {
             {% for modulo in modulos %}
                 {% for fase in modulo.fases.all %}
