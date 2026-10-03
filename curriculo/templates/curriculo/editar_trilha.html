@@ -340,7 +340,7 @@
                     <div class="editor-structure-viewport flex-1 scrollbar-thin p-2.5 space-y-2">
                         {% for modulo in modulos %}
                             <article class="editor-selectable rounded-2xl bg-black/15 border border-white/10 overflow-hidden" data-editor-type="modulo" data-editor-id="{{ modulo.id }}" data-editor-select="modulo">
-                                <div class="p-2.5 flex items-start gap-2.5">
+                                <div class="p-2.5 flex items-start gap-2.5 editor-selection-target">
                                     <button
                                         type="button"
                                         class="editor-expand-toggle"
@@ -372,7 +372,7 @@
                                     <div class="px-2 pb-2.5 space-y-2">
                                         {% for fase in modulo.fases.all %}
                                             <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-2.5" data-editor-type="fase" data-editor-id="{{ fase.id }}" data-editor-select="fase">
-                                                <div class="flex items-start gap-2">
+                                                <div class="flex items-start gap-2 editor-selection-target">
                                                     <button
                                                         type="button"
                                                         class="editor-expand-toggle"
@@ -402,7 +402,7 @@
                                                     <button type="button" data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-[11px] font-black text-emerald-200 transition">＋ Adicionar questão</button>
                                                     {% for questao in fase.questoes.all %}
                                                         <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-2.5" data-editor-type="questao" data-editor-id="{{ questao.id }}" data-editor-select="questao">
-                                                            <div class="flex items-start gap-2">
+                                                            <div class="flex items-start gap-2 editor-selection-target">
                                                                 <div class="w-6 h-6 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[10px] font-black">Q</div>
                                                                 <div class="min-w-0 flex-1">
                                                                     <p class="text-[11px] font-bold text-white/80 line-clamp-2">{{ questao.enunciado }}</p>
