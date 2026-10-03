@@ -26,7 +26,49 @@
         .editor-map-canvas { transform-origin:top left; will-change:transform; }
         .editor-details-empty { background:rgba(2,6,23,.18); border:1px dashed rgba(255,255,255,.10); }
         .editor-details-action { min-height:40px; }
-        @media (max-width: 1279px) and (min-width: 1024px) { .editor-workspace { grid-template-columns:300px minmax(0,1fr) 270px; } }
+        .editor-workspace { --editor-content-width:300px; --editor-details-width:320px; }
+        .editor-workspace.details-open { grid-template-columns:var(--editor-content-width) minmax(0,1fr) var(--editor-details-width); }
+        .editor-workspace.details-collapsed { grid-template-columns:var(--editor-content-width) minmax(0,1fr); }
+        .editor-details-panel { transition:opacity .18s ease, transform .18s ease; }
+        .editor-workspace.details-collapsed #editor-details-panel { display:none; }
+        .editor-accordion-content { overflow:hidden; transition:max-height .2s ease, opacity .18s ease, transform .18s ease; max-height:5000px; opacity:1; }
+        .editor-accordion-content[hidden] { display:block; max-height:0; opacity:0; transform:translateY(-4px); pointer-events:none; }
+        .editor-expand-toggle { width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; border-radius:8px; color:rgba(255,255,255,.55); transition:background .18s ease, color .18s ease, transform .18s ease; }
+        .editor-expand-toggle:hover, .editor-expand-toggle:focus-visible { background:rgba(255,255,255,.08); color:white; outline:none; }
+        .editor-expand-chevron { display:block; transition:transform .18s ease; font-size:10px; }
+        .editor-expand-toggle[aria-expanded="true"] .editor-expand-chevron { transform:rotate(90deg); }
+        .editor-structure-actions { opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; transform:translateY(2px); }
+        .editor-selectable:hover .editor-structure-actions,
+        .editor-selectable:focus-within .editor-structure-actions,
+        .editor-selectable.editor-selected .editor-structure-actions { opacity:1; pointer-events:auto; transform:translateY(0); }
+        .editor-module-content { padding-left:4px; }
+        .editor-phase-content { margin-left:12px; padding-left:8px; border-left:1px solid rgba(255,255,255,.07); }
+        .editor-details-close { min-width:36px; min-height:36px; }
+        #editor-details-backdrop { display:none; }
+        @media (max-width: 1279px) and (min-width: 1024px) { .editor-workspace { --editor-content-width:300px; --editor-details-width:270px; } }
+        @media (max-width: 1023px) {
+            .editor-workspace.details-collapsed #editor-details-panel { display:none; }
+            .editor-workspace.details-open #editor-details-panel {
+                display:flex;
+                position:fixed;
+                top:12px;
+                right:12px;
+                bottom:12px;
+                width:min(92vw,380px);
+                height:auto;
+                z-index:120;
+                box-shadow:0 30px 80px rgba(0,0,0,.55);
+                border:1px solid rgba(255,255,255,.14);
+            }
+            .editor-workspace.details-open #editor-details-backdrop {
+                display:block;
+                position:fixed;
+                inset:0;
+                z-index:110;
+                background:rgba(2,6,23,.48);
+                backdrop-filter:blur(3px);
+            }
+        }
         @media (max-width: 1023px) {
             body.editor-page { height:auto; min-height:100vh; overflow:auto; }
             .editor-shell { height:auto; min-height:100vh; overflow:visible; }
@@ -266,129 +308,127 @@
         </header>
 
         <main class="editor-main max-w-[1500px] mx-auto w-full flex-1 min-h-0 px-4 sm:px-6 py-5 sm:py-6">
-            <section class="glass-card rounded-3xl p-4 sm:p-5 mb-5">
-                <div class="flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[.16em] text-white/45">
-                    <span class="px-3 py-1.5 rounded-full bg-indigo-400/10 text-indigo-200 border border-indigo-300/10">1 · Jogo</span>
-                    <span class="text-white/20">→</span>
-                    <span class="px-3 py-1.5 rounded-full bg-sky-400/10 text-sky-200 border border-sky-300/10">2 · Módulos</span>
-                    <span class="text-white/20">→</span>
-                    <span class="px-3 py-1.5 rounded-full bg-violet-400/10 text-violet-200 border border-violet-300/10">3 · Fases</span>
-                    <span class="text-white/20">→</span>
-                    <span class="px-3 py-1.5 rounded-full bg-emerald-400/10 text-emerald-200 border border-emerald-300/10">4 · Questões</span>
-                    <span class="text-white/20">→</span>
-                    <span class="px-3 py-1.5 rounded-full bg-amber-400/10 text-amber-200 border border-amber-300/10">5 · Publicar</span>
+            <section class="glass-card rounded-2xl px-3 sm:px-4 py-2.5 mb-3">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <nav aria-label="Etapas da construção" class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[.12em] text-white/45">
+                        <span class="text-indigo-200">Jogo</span><span class="text-white/20">›</span>
+                        <span class="text-sky-200">Módulos</span><span class="text-white/20">›</span>
+                        <span class="text-violet-200">Fases</span><span class="text-white/20">›</span>
+                        <span class="text-emerald-200">Questões</span><span class="text-white/20">›</span>
+                        <span class="text-amber-200">Publicar</span>
+                    </nav>
+                    <div class="flex items-center gap-3 text-xs text-white/50">
+                        <span><strong class="text-white/80">{{ modulos|length }}</strong> módulos</span>
+                        <span><strong class="text-white/80">{{ fases|length }}</strong> fases</span>
+                        <span><strong class="text-white/80">{{ total_questoes }}</strong> questões</span>
+                    </div>
                 </div>
             </section>
 
-            <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-                <div class="glass-card rounded-2xl p-4">
-                    <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Módulos</p>
-                    <p class="text-2xl font-black mt-1">{{ modulos|length }}</p>
-                </div>
-                <div class="glass-card rounded-2xl p-4">
-                    <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Fases</p>
-                    <p class="text-2xl font-black mt-1">{{ fases|length }}</p>
-                </div>
-                <div class="glass-card rounded-2xl p-4">
-                    <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Questões</p>
-                    <p class="text-2xl font-black mt-1">{{ total_questoes }}</p>
-                </div>
-                <div class="glass-card rounded-2xl p-4">
-                    <p class="text-[11px] uppercase tracking-widest text-white/40 font-black">Estado</p>
-                    <p class="text-sm font-black mt-2 {% if trilha.ativo %}text-emerald-300{% else %}text-amber-300{% endif %}">
-                        {% if trilha.ativo %}Disponível para alunos{% else %}Ainda em construção{% endif %}
-                    </p>
-                </div>
-            </section>
-
-            <div class="editor-workspace grid lg:grid-cols-[300px_minmax(0,1fr)_300px] gap-4 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
+            <div class="editor-workspace details-collapsed grid lg:grid-cols-[300px_minmax(0,1fr)_300px] gap-3 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
                 <aside class="editor-workspace-panel glass-card rounded-3xl overflow-hidden flex flex-col">
-                    <div class="p-4 border-b border-white/10">
+                    <div class="p-3 border-b border-white/10">
                         <div class="flex items-center justify-between gap-3">
                             <div>
-                                <p class="text-[11px] uppercase tracking-widest text-indigo-300 font-black">Estrutura do jogo</p>
-                                <h2 class="text-lg font-black mt-1">Conteúdo</h2>
+                                <p class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">Estrutura do jogo</p>
+                                <h2 class="text-base font-black mt-0.5">Conteúdo</h2>
                             </div>
-                            <button type="button" onclick="openModal('modal-modulo')" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 font-black text-xl" title="Novo módulo">＋</button>
+                            <button type="button" onclick="openModal('modal-modulo')" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 font-black text-lg" title="Novo módulo">＋</button>
                         </div>
-                        <p class="text-xs text-white/45 mt-2">Cada módulo agrupa fases. Cada fase pode receber suas questões.</p>
                     </div>
 
-                    <div class="editor-structure-viewport flex-1 scrollbar-thin p-3 space-y-3">
+                    <div class="editor-structure-viewport flex-1 scrollbar-thin p-2.5 space-y-2">
                         {% for modulo in modulos %}
                             <article class="editor-selectable rounded-2xl bg-black/15 border border-white/10 overflow-hidden" data-editor-type="modulo" data-editor-id="{{ modulo.id }}" data-editor-select="modulo">
-                                <div class="p-3 flex items-start gap-3">
-                                    <div class="w-9 h-9 shrink-0 rounded-xl bg-sky-400/10 text-sky-200 border border-sky-300/10 flex items-center justify-center font-black">{{ modulo.ordem }}</div>
+                                <div class="p-2.5 flex items-start gap-2.5">
+                                    <button
+                                        type="button"
+                                        class="editor-expand-toggle"
+                                        data-editor-toggle="modulo"
+                                        data-modulo-id="{{ modulo.id }}"
+                                        aria-expanded="false"
+                                        aria-controls="editor-module-content-{{ modulo.id }}"
+                                        aria-label="Expandir módulo {{ modulo.titulo }}"
+                                        title="Expandir/recolher módulo"
+                                    ><span class="editor-expand-chevron">▶</span></button>
+                                    <div class="w-8 h-8 shrink-0 rounded-lg bg-sky-400/10 text-sky-200 border border-sky-300/10 flex items-center justify-center text-sm font-black">{{ modulo.ordem }}</div>
                                     <div class="min-w-0 flex-1">
                                         <div class="flex items-start justify-between gap-2">
                                             <div class="min-w-0">
-                                                <h3 class="font-black truncate">{{ modulo.titulo }}</h3>
+                                                <h3 class="font-black truncate text-sm">{{ modulo.titulo }}</h3>
                                                 {% if modulo.descricao %}
-                                                    <p class="text-xs text-white/40 mt-1 line-clamp-2">{{ modulo.descricao }}</p>
+                                                    <p class="text-[11px] text-white/40 mt-0.5 line-clamp-1">{{ modulo.descricao }}</p>
                                                 {% endif %}
                                             </div>
-                                            <div class="flex items-center gap-1 shrink-0">
-                                                <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" data-editor-action="editar-modulo" data-modulo-id="{{ modulo.id }}" title="Editar módulo">✎</button>
-                                                <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" data-editor-action="excluir-modulo" data-modulo-id="{{ modulo.id }}" data-modulo-titulo="{{ modulo.titulo|escape }}" title="Excluir módulo">×</button>
+                                            <div class="editor-structure-actions flex items-center gap-1 shrink-0">
+                                                <button type="button" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" data-editor-action="editar-modulo" data-modulo-id="{{ modulo.id }}" title="Editar módulo">✎</button>
+                                                <button type="button" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200 text-xs" data-editor-action="excluir-modulo" data-modulo-id="{{ modulo.id }}" data-modulo-titulo="{{ modulo.titulo|escape }}" title="Excluir módulo">×</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="px-3 pb-3 space-y-2">
-                                    {% for fase in modulo.fases.all %}
-                                        <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-3" data-editor-type="fase" data-editor-id="{{ fase.id }}" data-editor-select="fase">
-                                            <div class="flex items-start gap-3">
-                                                <div class="w-8 h-8 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-300/20 flex items-center justify-center text-xs font-black text-indigo-200">{{ fase.ordem }}</div>
-                                                <div class="min-w-0 flex-1">
-                                                    <p class="font-bold text-sm truncate">{{ fase.titulo }}</p>
-                                                    <p class="text-[11px] text-white/40 mt-1">{{ fase.get_tipo_display }} · {{ fase.questoes.count }} questão(ões)</p>
-                                                </div>
-                                                <div class="flex gap-1">
-                                                    <button type="button" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" data-editor-action="editar-fase" data-fase-id="{{ fase.id }}" title="Editar fase">✎</button>
-                                                    <button type="button" class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200" data-editor-action="excluir-fase" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" title="Excluir fase">×</button>
-                                                </div>
-                                            </div>
-                                            <button type="button" data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-xs font-black text-emerald-200 transition">＋ Adicionar questão</button>
-                                    {% for questao in fase.questoes.all %}
-                                        <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-3" data-editor-type="questao" data-editor-id="{{ questao.id }}" data-editor-select="questao">
-                                            <div class="flex items-start gap-3">
-                                                <div class="w-7 h-7 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[11px] font-black">
-                                                    Q
-                                                </div>
-                                                <div class="min-w-0 flex-1">
-                                                    <p class="text-xs font-bold text-white/80 line-clamp-2">{{ questao.enunciado }}</p>
-                                                    <p class="text-[10px] text-white/35 mt-1">{{ questao.opcoes.count }} alternativa(s)</p>
-                                                </div>
-                                                <div class="flex gap-1 shrink-0">
+                                <div id="editor-module-content-{{ modulo.id }}" class="editor-accordion-content editor-module-content" hidden>
+                                    <div class="px-2 pb-2.5 space-y-2">
+                                        {% for fase in modulo.fases.all %}
+                                            <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-2.5" data-editor-type="fase" data-editor-id="{{ fase.id }}" data-editor-select="fase">
+                                                <div class="flex items-start gap-2">
                                                     <button
                                                         type="button"
-                                                        data-editor-action="editar-questao" data-questao-id="{{ questao.id }}"
-                                                        class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10"
-                                                        title="Editar questão"
-                                                    >✎</button>
-                                                    <button
-                                                        type="button"
-                                                        data-editor-action="excluir-questao" data-questao-id="{{ questao.id }}" data-questao-enunciado="{{ questao.enunciado|escape }}"
-                                                        class="w-8 h-8 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200"
-                                                        title="Excluir questão"
-                                                    >×</button>
+                                                        class="editor-expand-toggle"
+                                                        data-editor-toggle="fase"
+                                                        data-fase-id="{{ fase.id }}"
+                                                        aria-expanded="false"
+                                                        aria-controls="editor-phase-content-{{ fase.id }}"
+                                                        aria-label="Expandir fase {{ fase.titulo }}"
+                                                        title="Expandir/recolher fase"
+                                                    ><span class="editor-expand-chevron">▶</span></button>
+                                                    <div class="w-7 h-7 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-300/20 flex items-center justify-center text-[10px] font-black text-indigo-200">{{ fase.ordem }}</div>
+                                                    <div class="min-w-0 flex-1">
+                                                        <div class="flex items-start justify-between gap-2">
+                                                            <div class="min-w-0">
+                                                                <p class="font-bold text-xs truncate">{{ fase.titulo }}</p>
+                                                                <p class="text-[10px] text-white/40 mt-0.5">{{ fase.get_tipo_display }} · {{ fase.questoes.count }} questão(ões)</p>
+                                                            </div>
+                                                            <div class="editor-structure-actions flex gap-1 shrink-0">
+                                                                <button type="button" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" data-editor-action="editar-fase" data-fase-id="{{ fase.id }}" title="Editar fase">✎</button>
+                                                                <button type="button" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/10 border border-red-400/10 text-red-200 text-xs" data-editor-action="excluir-fase" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" title="Excluir fase">×</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </article>
-                                    {% empty %}
-                                        <p class="mt-2 text-[10px] text-white/30 text-center">Nenhuma atividade criada nesta fase.</p>
-                                    {% endfor %}
-                                        </div>
-                                    {% empty %}
-                                        <div class="rounded-xl border border-dashed border-white/10 p-4 text-center text-xs text-white/35">Ainda não há fases neste módulo.</div>
-                                    {% endfor %}
 
-                                    <button type="button" data-editor-action="nova-fase-modulo" data-modulo-id="{{ modulo.id }}" class="w-full rounded-xl border border-dashed border-indigo-300/20 hover:border-indigo-300/40 hover:bg-indigo-400/5 px-3 py-2 text-xs font-black text-indigo-200 transition">＋ Nova fase neste módulo</button>
+                                                <div id="editor-phase-content-{{ fase.id }}" class="editor-accordion-content editor-phase-content" hidden>
+                                                    <button type="button" data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-[11px] font-black text-emerald-200 transition">＋ Adicionar questão</button>
+                                                    {% for questao in fase.questoes.all %}
+                                                        <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-2.5" data-editor-type="questao" data-editor-id="{{ questao.id }}" data-editor-select="questao">
+                                                            <div class="flex items-start gap-2">
+                                                                <div class="w-6 h-6 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[10px] font-black">Q</div>
+                                                                <div class="min-w-0 flex-1">
+                                                                    <p class="text-[11px] font-bold text-white/80 line-clamp-2">{{ questao.enunciado }}</p>
+                                                                    <p class="text-[9px] text-white/35 mt-0.5">{{ questao.opcoes.count }} alternativa(s)</p>
+                                                                </div>
+                                                                <div class="editor-structure-actions flex gap-1 shrink-0">
+                                                                    <button type="button" data-editor-action="editar-questao" data-questao-id="{{ questao.id }}" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" title="Editar questão">✎</button>
+                                                                    <button type="button" data-editor-action="excluir-questao" data-questao-id="{{ questao.id }}" data-questao-enunciado="{{ questao.enunciado|escape }}" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200 text-xs" title="Excluir questão">×</button>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                    {% empty %}
+                                                        <p class="mt-2 text-[10px] text-white/30 text-center">Nenhuma atividade criada nesta fase.</p>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% empty %}
+                                            <div class="rounded-xl border border-dashed border-white/10 p-3 text-center text-[11px] text-white/35">Ainda não há fases neste módulo.</div>
+                                        {% endfor %}
+
+                                        <button type="button" data-editor-action="nova-fase-modulo" data-modulo-id="{{ modulo.id }}" class="w-full rounded-xl border border-dashed border-indigo-300/20 hover:border-indigo-300/40 hover:bg-indigo-400/5 px-3 py-2 text-[11px] font-black text-indigo-200 transition">＋ Nova fase neste módulo</button>
+                                    </div>
                                 </div>
                             </article>
                         {% empty %}
-                            <div class="rounded-2xl border border-dashed border-white/10 p-7 text-center">
+                            <div class="rounded-2xl border border-dashed border-white/10 p-6 text-center">
                                 <div class="text-4xl">🧩</div>
                                 <p class="font-black mt-3">Comece pelos módulos</p>
                                 <p class="text-xs text-white/40 mt-1">Crie um módulo para organizar as etapas da sua trilha.</p>
@@ -398,7 +438,7 @@
                     </div>
                 </aside>
 
-                <section class="editor-workspace-panel glass-card rounded-3xl overflow-hidden min-w-0 flex flex-col">
+                <section class="editor-workspace-panel glass-card rounded-3xl overflow-hidden min-w-0 flex flex-col" id="editor-map-panel">
 
                     <div class="p-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
 
@@ -412,7 +452,7 @@
                             </h2>
 
                             <p class="text-xs text-white/40 mt-1">
-                                A mesma organização visual que o aluno verá. Clique em uma fase para abri-la.
+                                A mesma organização visual que o aluno verá. Selecione nós para sincronizar o editor.
                             </p>
                         </div>
 
@@ -613,19 +653,25 @@
                     </div>
                 </section>
 
-                <aside id="editor-details-panel" class="editor-workspace-panel glass-card rounded-3xl overflow-hidden flex flex-col">
-                    <div class="p-4 border-b border-white/10">
-                        <p class="text-[11px] uppercase tracking-widest text-violet-300 font-black">Seleção</p>
-                        <h2 class="text-lg font-black mt-1">Detalhes</h2>
-                        <p id="editor-details-context" class="text-xs text-white/40 mt-1">Selecione um módulo, fase ou questão.</p>
+                <div id="editor-details-backdrop" aria-hidden="true"></div>
+                <aside id="editor-details-panel" class="editor-details-panel editor-workspace-panel glass-card rounded-3xl overflow-hidden flex flex-col">
+                    <div class="p-3 border-b border-white/10">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <p class="text-[10px] uppercase tracking-widest text-violet-300 font-black">Seleção</p>
+                                <h2 class="text-base font-black mt-0.5">Detalhes</h2>
+                                <p id="editor-details-context" class="text-xs text-white/40 mt-0.5">Selecione um módulo, fase ou questão.</p>
+                            </div>
+                            <button type="button" id="editor-details-close" class="editor-details-close rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70" title="Recolher detalhes" aria-label="Recolher detalhes">×</button>
+                        </div>
                     </div>
-                    <div id="editor-details-viewport" class="editor-details-viewport flex-1 p-4">
-                        <div id="editor-details-empty" class="editor-details-empty rounded-2xl p-5 text-center mt-2">
+                    <div id="editor-details-viewport" class="editor-details-viewport flex-1 p-3">
+                        <div id="editor-details-empty" class="editor-details-empty rounded-2xl p-4 text-center mt-1">
                             <div class="text-3xl">✦</div>
                             <p class="font-black mt-3">Nada selecionado</p>
                             <p class="text-xs text-white/40 mt-1">Clique em um item da estrutura ou em um nó do mapa para ver seus detalhes.</p>
                         </div>
-                        <div id="editor-details-content" class="hidden space-y-4"></div>
+                        <div id="editor-details-content" class="hidden space-y-3"></div>
                     </div>
                 </aside>
             </div>
@@ -1212,18 +1258,69 @@
             return String(value ?? '').replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
         }
 
+        function setEditorAccordion(kind,id,expanded) {
+            const normalizedId=String(id);
+            const selector=kind==='modulo'
+                ? '#editor-module-content-'+CSS.escape(normalizedId)
+                : '#editor-phase-content-'+CSS.escape(normalizedId);
+            const content=document.querySelector(selector);
+            const toggle=document.querySelector('[data-editor-toggle="'+kind+'"][data-'+kind+'-id="'+normalizedId+'"]');
+            if(!content || !toggle) return;
+            content.hidden=!expanded;
+            toggle.setAttribute('aria-expanded',String(expanded));
+            toggle.setAttribute('aria-label',(expanded?'Recolher ':'Expandir ')+(kind==='modulo'?'módulo ':'fase ')+normalizedId);
+        }
+
+        function collapseEditorAccordions(kind,exceptId=null) {
+            document.querySelectorAll('[data-editor-toggle="'+kind+'"]').forEach(toggle=>{
+                const id=toggle.dataset[kind+'Id'];
+                if(exceptId!==null && String(id)===String(exceptId)) return;
+                setEditorAccordion(kind,id,false);
+            });
+        }
+
+        function ensureEditorHierarchy(type,id) {
+            if(type==='modulo') {
+                collapseEditorAccordions('modulo',id);
+                collapseEditorAccordions('fase');
+                setEditorAccordion('modulo',id,true);
+                return;
+            }
+            const item=type==='fase' ? editorFases[String(id)] : questoesEditor[String(id)];
+            if(!item) return;
+            const faseId=type==='fase' ? String(id) : String(item.faseId);
+            const moduloId=type==='fase' ? String(item.moduloId) : String(editorFases[faseId]?.moduloId);
+            if(!moduloId) return;
+            collapseEditorAccordions('modulo',moduloId);
+            collapseEditorAccordions('fase',faseId);
+            setEditorAccordion('modulo',moduloId,true);
+            setEditorAccordion('fase',faseId,true);
+        }
+
+        function openDetailsPanel() {
+            const workspace=document.querySelector('.editor-workspace');
+            if(!workspace) return;
+            workspace.classList.remove('details-collapsed');
+            workspace.classList.add('details-open');
+        }
+
+        function closeDetailsPanel() {
+            const workspace=document.querySelector('.editor-workspace');
+            if(!workspace) return;
+            workspace.classList.remove('details-open');
+            workspace.classList.add('details-collapsed');
+        }
+
         function selectEditorItem(type,id) {
             const normalizedId=String(id);
             selectedEditorType=type;
             selectedEditorId=normalizedId;
+            ensureEditorHierarchy(type,normalizedId);
+            openDetailsPanel();
 
-            // Uma seleção tem uma única origem e pode possuir vários
-            // representantes visuais (conteúdo, mapa e detalhes).
             document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
             document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
 
-            // O nó da fase é composto por botão + título; ambos precisam
-            // refletir a mesma seleção do item na coluna Conteúdo.
             if(type==='fase') {
                 document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').forEach((element)=>element.classList.add('editor-selected'));
                 document.querySelectorAll('[data-editor-phase-title="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
@@ -1233,11 +1330,22 @@
         }
 
         function handleEditorInteraction(event) {
-            const target = event.target.closest('[data-editor-action], [data-editor-select]');
+            const target = event.target.closest('[data-editor-action], [data-editor-select], [data-editor-toggle]');
             if (!target) return;
 
             event.preventDefault();
             event.stopPropagation();
+
+            if (target.dataset.editorToggle) {
+                const kind=target.dataset.editorToggle;
+                const id=target.dataset[kind+'Id'];
+                const content=document.getElementById('editor-'+(kind==='modulo'?'module':'phase')+'-content-'+id);
+                const expanded=content ? !content.hidden : false;
+                if (kind==='modulo') collapseEditorAccordions('modulo',id);
+                else collapseEditorAccordions('fase',id);
+                setEditorAccordion(kind,id,!expanded);
+                return;
+            }
 
             if (target.dataset.editorSelect) {
                 selectEditorItem(target.dataset.editorSelect, target.dataset.editorId);
@@ -1294,6 +1402,13 @@
         }
 
         document.addEventListener('click', handleEditorInteraction);
+
+        document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            closeDetailsPanel();
+        });
+        document.getElementById('editor-details-backdrop')?.addEventListener('click', closeDetailsPanel);
 
         function renderEditorDetails(type,id) {
             const empty=document.getElementById('editor-details-empty');
