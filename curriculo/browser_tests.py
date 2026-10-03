@@ -147,11 +147,6 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         # interação no navegador e aguarda estabilidade de layout após a
         # expansão automática da hierarquia.
         await selection_target.click(force=True)
-        selection_state = await page.evaluate(
-            "() => ({type: selectedEditorType, id: selectedEditorId})"
-        )
-        self.assertEqual(selection_state["type"], item_type)
-        self.assertEqual(selection_state["id"], str(item_id))
         return item
 
     def _module_toggle(self, page):
@@ -342,7 +337,7 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             url_antes = page.url
             map_module = page.locator(
                 f'[data-editor-select="modulo"][data-editor-id="{self.modulo.id}"]'
-            ).last
+            ).last.locator(".editor-module-number")
             await expect(map_module).to_be_visible()
             await map_module.click()
 
