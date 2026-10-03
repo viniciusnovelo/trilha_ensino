@@ -1546,8 +1546,8 @@
 
             const sourceY=getRenderMapY(source);
             const targetY=getRenderMapY(target);
-            const y1=clampEditorNumber(100+sourceY,-80,280);
-            const y2=clampEditorNumber(100+targetY,-80,280);
+            const y1=100+sourceY;
+            const y2=100+targetY;
             const delta=Math.abs(y2-y1);
             const bend=Math.max(22,Math.min(38,38-delta*0.08));
             const path='M 0,'+y1+' C '+bend+','+y1+' '+(100-bend)+','+y2+' 100,'+y2;
