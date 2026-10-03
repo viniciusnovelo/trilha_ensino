@@ -55,10 +55,14 @@ O padrão é headless.
 
 ## Cobertura
 
-A suíte contém 8 testes e cobre:
+A suíte contém 12 testes e cobre:
 
 - acesso autenticado ao editor;
 - seleção de módulo, fase e questão;
+- expansão/recolhimento independente de módulos e fases;
+- abertura automática da hierarquia ao selecionar fase ou questão;
+- painel de detalhes contextual, recolhível e com ganho de espaço para o mapa;
+- sincronização visual entre Conteúdo e Mapa;
 - sincronização fase Conteúdo ↔ Mapa ↔ Detalhes;
 - ausência de navegação ao clicar na fase do mapa;
 - navegação explícita pelo botão "Abrir fase";
