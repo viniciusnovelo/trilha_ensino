@@ -1348,6 +1348,14 @@
         }
 
         function handleEditorInteraction(event) {
+            const selectionTarget = event.target.closest('.editor-selection-target');
+            if (selectionTarget) {
+                event.preventDefault();
+                event.stopPropagation();
+                selectEditorItem(selectionTarget.dataset.editorSelect, selectionTarget.dataset.editorId);
+                return;
+            }
+
             const target = event.target.closest('[data-editor-action], [data-editor-select], [data-editor-toggle]');
             if (!target) return;
 
@@ -1420,17 +1428,6 @@
         }
 
         document.addEventListener('click', handleEditorInteraction);
-
-        // Alvos de seleção da árvore têm um listener direto para não depender
-        // do hit-testing de contêineres aninhados; ações e nós do mapa
-        // continuam usando a delegação centralizada acima.
-        document.querySelectorAll('.editor-selection-target').forEach((element) => {
-            element.addEventListener('click', (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                selectEditorItem(element.dataset.editorSelect, element.dataset.editorId);
-            });
-        });
 
         document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
             event.preventDefault();
