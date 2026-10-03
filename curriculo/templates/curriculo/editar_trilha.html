@@ -1227,6 +1227,7 @@
             const target = event.target.closest('[data-editor-action], [data-editor-select]');
             if (!target) return;
 
+            event.preventDefault();
             event.stopPropagation();
 
             if (target.dataset.editorSelect) {
