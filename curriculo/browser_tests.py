@@ -143,12 +143,10 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         # O alvo é um botão real de seleção. O clique é feito pela API
         # de mouse do navegador na coordenada do próprio botão, evitando
         # ambiguidades de hit-testing dos contêineres ancestrais.
-        box = await selection_target.bounding_box()
-        self.assertIsNotNone(box)
-        await page.mouse.click(
-            box["x"] + box["width"] / 2,
-            box["y"] + box["height"] / 2,
-        )
+        # O alvo é um botão real de seleção. O locator.click mantém a
+        # interação no navegador e aguarda estabilidade de layout após a
+        # expansão automática da hierarquia.
+        await selection_target.click(force=True)
         selection_state = await page.evaluate(
             "() => ({type: selectedEditorType, id: selectedEditorId})"
         )
@@ -221,6 +219,11 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             await expect(
                 page.locator("#editor-details-content")
             ).to_contain_text(self.fase.titulo)
+
+            # Recolher antes de selecionar a questão garante que o teste
+            # valide também a expansão automática da fase correspondente.
+            await self._phase_toggle(page).click()
+            await expect(self._phase_content(page)).to_be_hidden()
 
             questao = await self._select_content_item(
                 page, "questao", self.questao.id, self.questao.enunciado
@@ -329,6 +332,28 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             await expect(
                 page.locator("#editor-details-content")
             ).to_contain_text(self.fase.titulo)
+
+        self._assert_no_page_errors(page_errors)
+
+    async def test_selecao_de_modulo_no_mapa_sincroniza_conteudo_e_detalhes(self):
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            url_antes = page.url
+            map_module = page.locator(
+                f'[data-editor-select="modulo"][data-editor-id="{self.modulo.id}"]'
+            ).last
+            await expect(map_module).to_be_visible()
+            await map_module.click()
+
+            await expect(page).to_have_url(url_antes)
+            await expect(
+                self._content_item(page, "modulo", self.modulo.id)
+            ).to_contain_class("editor-selected")
+            await expect(
+                page.locator("#editor-details-content")
+            ).to_contain_text(self.modulo.titulo)
+            await expect(self._module_content(page)).to_be_visible()
 
         self._assert_no_page_errors(page_errors)
 
