@@ -140,10 +140,15 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             f'[data-editor-id="{item_id}"].editor-selection-target'
         ).first
         await expect(selection_target).to_be_visible()
-        # O alvo de seleção é uma área real da árvore, separada dos
-        # controles de expandir/editar/excluir, e o clique ainda percorre
-        # o caminho normal do navegador até o listener delegado.
-        await selection_target.click(force=True)
+        # O alvo é um botão real de seleção. O clique é feito pela API
+        # de mouse do navegador na coordenada do próprio botão, evitando
+        # ambiguidades de hit-testing dos contêineres ancestrais.
+        box = await selection_target.bounding_box()
+        self.assertIsNotNone(box)
+        await page.mouse.click(
+            box["x"] + box["width"] / 2,
+            box["y"] + box["height"] / 2,
+        )
         return item
 
     def _module_toggle(self, page):
