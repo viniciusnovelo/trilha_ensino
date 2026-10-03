@@ -2002,18 +2002,8 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
             response,
             'id="modal-editar-questao"',
         )
-        self.assertContains(
-            response,
-            'onclick="event.stopPropagation(); openEditModulo(',
-        )
-        self.assertContains(
-            response,
-            'onclick="event.stopPropagation(); openEditFase(',
-        )
-        self.assertContains(
-            response,
-            'onclick="event.stopPropagation(); openEditQuestao(',
-        )
+        # A edição agora é acionada por data-* e por um listener
+        # centralizado, evitando handlers inline misturados à seleção.
         self.assertContains(
             response,
             'data-editor-action="editar-selecao-modulo"',
