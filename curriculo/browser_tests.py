@@ -135,7 +135,14 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 await self._module_toggle(page).click()
             if await self._phase_content(page).get_attribute("hidden") is not None:
                 await self._phase_toggle(page).click()
-        await item.get_by_text(label, exact=True).click()
+        box = await item.bounding_box()
+        self.assertIsNotNone(box)
+        await item.click(
+            position={
+                "x": box["width"] / 2,
+                "y": min(12, box["height"] / 2),
+            }
+        )
         return item
 
     def _module_toggle(self, page):
@@ -518,6 +525,8 @@ class EditorBrowserTests(StaticLiveServerTestCase):
     async def test_exclusao_de_questao_exige_confirmacao_e_remove_registro(self):
         async with self._browser_page() as (page, page_errors):
             await self._login_and_open_editor(page)
+            await self._module_toggle(page).click()
+            await self._phase_toggle(page).click()
 
             page.once("dialog", lambda dialog: dialog.accept())
             delete_button = page.locator(
