@@ -2025,7 +2025,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            f'data-editor-action="editar-questao" data-questao-id="{questao.id}"',
+            f'data-editor-action="editar-questao" data-questao-id="{self.questao.id}"',
         )
         self.assertContains(
             response,
@@ -2053,7 +2053,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            f'data-editor-action="excluir-questao" data-questao-id="{questao.id}"',
+            f'data-editor-action="excluir-questao" data-questao-id="{self.questao.id}"',
         )
 
         # O nó do mapa é um seletor, não um link. A navegação para a fase
