@@ -184,6 +184,11 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 page, "modulo", self.modulo.id, self.modulo.titulo
             )
             await expect(modulo).to_contain_class("editor-selected")
+            await expect(
+                page.locator(
+                    f'[data-editor-select="modulo"][data-editor-id="{self.modulo.id}"]'
+                ).nth(1)
+            ).to_contain_class("editor-selected")
             await expect(self._module_content(page)).to_be_visible()
             await expect(
                 page.locator("#editor-details-content")
@@ -288,6 +293,9 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             await expect(workspace).to_have_class(
                 re.compile(r"details-collapsed")
             )
+            await expect(
+                self._content_item(page, "modulo", self.modulo.id)
+            ).to_contain_class("editor-selected")
 
             map_closed_width = (await map_panel.bounding_box())["width"]
             self.assertGreater(
