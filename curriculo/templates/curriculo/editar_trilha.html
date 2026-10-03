@@ -544,7 +544,7 @@
                                     data-id="{{ fase.id }}"
                                     data-index="{{ forloop.counter0 }}"
                                     data-y="{{ fase.deslocamento_y }}"
-                                    style="transform:translateY({{ fase.deslocamento_y }}px);"
+                                    style="transform:translateY(0px);" data-custom-y="{{ fase.deslocamento_y }}" data-auto-y="0" data-render-y="{{ fase.deslocamento_y }}"
                                     tabindex="0"
                                 >
 
@@ -612,7 +612,7 @@
 
                                 {% if not forloop.last %}
 
-                                    <div class="editor-connector">
+                                    <div class="editor-connector" data-connector-index="{{ forloop.counter0 }}">
 
                                         <svg
                                             viewBox="0 0 100 200"
@@ -1491,16 +1491,92 @@
         function fitMapToViewport(){const viewport=document.querySelector('.editor-map-viewport');const canvas=document.getElementById('editor-map-canvas');if(!viewport||!canvas)return;const availableHeight=Math.max(320,viewport.clientHeight-40);mapScale=Math.max(0.65,Math.min(1.05,availableHeight/canvas.offsetHeight));mapScale=Math.round(mapScale*100)/100;applyMapScale();requestAnimationFrame(()=>{viewport.scrollLeft=Math.max(0,(canvas.offsetWidth*mapScale-viewport.clientWidth)/2);viewport.scrollTop=Math.max(0,(canvas.offsetHeight*mapScale-viewport.clientHeight)/2);});}
         applyMapScale();
 
+        /*
+         * Geometria global da jornada:
+         * - a ordem horizontal continua sendo a ordem única de Fase;
+         * - o Y visual é composto por uma ondulação automática global +
+         *   deslocamento_y persistido pelo usuário;
+         * - cada conector é calculado entre os dois nós consecutivos reais,
+         *   inclusive quando a passagem cruza um módulo.
+         *
+         * A ondulação não reinicia por módulo: isso é o que mantém a leitura
+         * de uma única estrada em vez de quatro trilhas independentes.
+         */
+        const EDITOR_AUTO_WAVE = 56;
+
+        function getMapPhaseNodes() {
+            return Array.from(document.querySelectorAll('.fase-node[data-index]'))
+                .sort((a,b)=>Number(a.dataset.index)-Number(b.dataset.index));
+        }
+
+        function clampEditorNumber(value,min,max) {
+            return Math.max(min,Math.min(max,value));
+        }
+
+        function getAutoMapY(index) {
+            return Math.round(Math.sin(Number(index) * Math.PI / 2) * EDITOR_AUTO_WAVE);
+        }
+
+        function getCustomMapY(node) {
+            return Number(node.dataset.customY ?? node.dataset.y ?? 0) || 0;
+        }
+
+        function getRenderMapY(node) {
+            return Number(node.dataset.renderY ?? 0) || 0;
+        }
+
+        function applyMapNodePosition(node) {
+            const autoY=getAutoMapY(node.dataset.index);
+            const customY=getCustomMapY(node);
+            const renderY=autoY+customY;
+            node.dataset.autoY=String(autoY);
+            node.dataset.customY=String(customY);
+            node.dataset.y=String(customY);
+            node.dataset.renderY=String(renderY);
+            node.style.transform='translateY('+renderY+'px)';
+        }
+
+        function updateMapConnector(index) {
+            const nodes=getMapPhaseNodes();
+            const source=nodes[index];
+            const target=nodes[index+1];
+            const connector=document.querySelector('.editor-connector[data-connector-index="'+index+'"]');
+            if(!source || !target || !connector) return;
+
+            const sourceY=getRenderMapY(source);
+            const targetY=getRenderMapY(target);
+            const y1=clampEditorNumber(100+sourceY,-80,280);
+            const y2=clampEditorNumber(100+targetY,-80,280);
+            const delta=Math.abs(y2-y1);
+            const bend=Math.max(22,Math.min(38,38-delta*0.08));
+            const path='M 0,'+y1+' C '+bend+','+y1+' '+(100-bend)+','+y2+' 100,'+y2;
+
+            const base=connector.querySelector('.linha-conector');
+            const dash=connector.querySelector('.linha-tracejada');
+            if(base) base.setAttribute('d',path);
+            if(dash) dash.setAttribute('d',path);
+        }
+
+        function updateAllMapGeometry() {
+            const nodes=getMapPhaseNodes();
+            nodes.forEach(applyMapNodePosition);
+            document.querySelectorAll('.editor-connector[data-connector-index]').forEach((_,index)=>{
+                updateMapConnector(index);
+            });
+        }
+
+        updateAllMapGeometry();
+
         let isDragging=false;
         let activeNode=null;
         let startCursorY=0;
-        let initialNodeY=0;
+        let initialCustomY=0;
 
         document.querySelectorAll('.drag-handle').forEach(handle=>{
             handle.addEventListener('mousedown',(event)=>{
                 isDragging=true;
                 activeNode=event.target.closest('.fase-node');
-                initialNodeY=parseInt(activeNode.getAttribute('data-y'))||0;
+                initialCustomY=getCustomMapY(activeNode);
                 startCursorY=event.clientY;
                 document.body.classList.add('cursor-grabbing');
                 handle.classList.add('cursor-grabbing');
@@ -1509,26 +1585,18 @@
 
         document.addEventListener('mousemove',(event)=>{
             if(!isDragging || !activeNode) return;
-            let newY=Math.round(initialNodeY+((event.clientY-startCursorY)/mapScale));
-            newY=Math.max(-150,Math.min(150,newY));
-            activeNode.style.transform='translateY('+newY+'px)';
-            activeNode.setAttribute('data-y',newY);
 
-            const index=parseInt(activeNode.getAttribute('data-index'));
-            const updateLine=(i,y1,y2)=>{
-                const base=document.getElementById('path-base-'+i);
-                const dash=document.getElementById('path-dash-'+i);
-                if(base && dash){
-                    const path='M 0,'+(100+y1)+' C 50,'+(100+y1)+' 50,'+(100+y2)+' 100,'+(100+y2);
-                    base.setAttribute('d',path);
-                    dash.setAttribute('d',path);
-                }
-            };
+            const newCustomY=clampEditorNumber(
+                Math.round(initialCustomY+((event.clientY-startCursorY)/mapScale)),
+                -150,
+                150
+            );
 
-            const next=document.querySelector('.fase-node[data-index="'+(index+1)+'"]');
-            const prev=document.querySelector('.fase-node[data-index="'+(index-1)+'"]');
-            updateLine(index,newY,next ? parseInt(next.getAttribute('data-y'))||0 : 0);
-            updateLine(index-1,prev ? parseInt(prev.getAttribute('data-y'))||0 : 0,newY);
+            activeNode.dataset.customY=String(newCustomY);
+            activeNode.dataset.y=String(newCustomY);
+            applyMapNodePosition(activeNode);
+            updateMapConnector(Number(activeNode.dataset.index));
+            updateMapConnector(Number(activeNode.dataset.index)-1);
         });
 
         document.addEventListener('mouseup',async()=>{
@@ -1541,7 +1609,7 @@
                 const response=await fetch(editorAjaxUrl('atualizarYFase', node.getAttribute('data-id')),{
                     method:'POST',
                     headers:{'Content-Type':'application/json','X-CSRFToken':csrfToken},
-                    body:JSON.stringify({y:node.getAttribute('data-y')})
+                    body:JSON.stringify({y:node.dataset.customY})
                 });
                 if(!response.ok) throw new Error('Não foi possível salvar a posição.');
             } catch(error) {
@@ -1552,6 +1620,8 @@
                 activeNode=null;
             }
         });
+
+        window.addEventListener('resize',updateAllMapGeometry);
     </script>
 </body>
 </html>
