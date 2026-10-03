@@ -2006,11 +2006,11 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         # centralizado, evitando handlers inline misturados à seleção.
         self.assertContains(
             response,
-            'data-editor-action="editar-selecao-modulo"',
+            f'data-editor-action="editar-modulo" data-modulo-id="{self.modulo.id}"',
         )
         self.assertContains(
             response,
-            'data-editor-action="editar-selecao-fase"',
+            f'data-editor-action="editar-fase" data-fase-id="{self.fase_1.id}"',
         )
 
         # Ações principais precisam existir como elementos funcionais,
@@ -2072,7 +2072,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            'data-editor-action="editar-selecao-fase"',
+            f'data-editor-action="editar-fase" data-fase-id="{self.fase_1.id}"',
         )
         self.assertContains(
             response,
