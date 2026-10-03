@@ -93,10 +93,11 @@
             position: relative;
             display: flex;
             align-items: center;
-            min-width: max-content;
+            min-width: 100%;
             width: max-content;
-            min-height: 520px;
+            min-height: 100%;
             padding: 80px 55px 130px;
+            justify-content: center;
         }
 
         .editor-inicio {
@@ -244,7 +245,7 @@
 
     <div class="editor-shell relative z-10 flex flex-col">
         <header class="shrink-0 border-b border-white/10 bg-slate-950/75 backdrop-blur-2xl">
-            <div class="max-w-[1500px] mx-auto w-full px-4 sm:px-6 py-4">
+            <div class="max-w-[1500px] mx-auto w-full px-4 sm:px-6 py-3">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <div class="min-w-0">
                         <a href="{% url 'dashboard_professor' %}" class="inline-flex items-center gap-2 text-sm text-white/55 hover:text-white transition font-bold">
@@ -307,8 +308,8 @@
             </div>
         </header>
 
-        <main class="editor-main max-w-[1500px] mx-auto w-full flex-1 min-h-0 px-4 sm:px-6 py-5 sm:py-6">
-            <section class="glass-card rounded-2xl px-3 sm:px-4 py-2.5 mb-3">
+        <main class="editor-main max-w-[1500px] mx-auto w-full flex-1 min-h-0 px-4 sm:px-6 py-3 sm:py-4">
+            <section class="glass-card rounded-2xl px-3 sm:px-4 py-2 mb-2">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <nav aria-label="Etapas da construção" class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[.12em] text-white/45">
                         <span class="text-indigo-200">Jogo</span><span class="text-white/20">›</span>
