@@ -126,6 +126,15 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
     async def _select_content_item(self, page, item_type, item_id, label):
         item = self._content_item(page, item_type, item_id)
+        if item_type == "fase" and not await item.is_visible():
+            module_toggle = self._module_toggle(page)
+            if await self._module_content(page).get_attribute("hidden") is not None:
+                await module_toggle.click()
+        elif item_type == "questao" and not await item.is_visible():
+            if await self._module_content(page).get_attribute("hidden") is not None:
+                await self._module_toggle(page).click()
+            if await self._phase_content(page).get_attribute("hidden") is not None:
+                await self._phase_toggle(page).click()
         await item.get_by_text(label, exact=True).click()
         return item
 
@@ -231,15 +240,14 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
         self._assert_no_page_errors(page_errors)
 
-    async def test_selecionar_fase_abre_sua_hierarquia_e_fecha_outras(self):
+    async def test_selecionar_fase_no_mapa_abre_sua_hierarquia(self):
         async with self._browser_page() as (page, page_errors):
             await self._login_and_open_editor(page)
 
             await self._module_toggle(page).click()
-            await self._phase_toggle(page).click()
-            await self._select_content_item(
-                page, "fase", self.fase.id, self.fase.titulo
-            )
+            await expect(self._phase_content(page)).to_be_hidden()
+
+            await self._map_phase_button(page).click()
 
             await expect(self._module_content(page)).to_be_visible()
             await expect(self._phase_content(page)).to_be_visible()
