@@ -38,7 +38,8 @@
         }
         .cursor-grab { cursor:grab; }
         .cursor-grabbing { cursor:grabbing !important; }
-        .modal-bg { display:none; background:rgba(2,6,23,.72); backdrop-filter:blur(10px); }
+        /* O modal precisa permanecer fora do fluxo da página e acima do editor. */
+        .modal-bg { position:fixed !important; inset:0 !important; z-index:200 !important; display:none; background:rgba(2,6,23,.72); backdrop-filter:blur(10px); }
         .modal-active { display:flex; }
         .linha-conector { stroke:rgba(255,255,255,.15); }
         .linha-tracejada { stroke:rgba(255,255,255,.45); }
@@ -889,32 +890,6 @@
     </div>
 
     <script>
-        console.log('[EDITOR] script iniciado');
-
-        document.addEventListener('click', (event) => {
-            const target = event.target.closest?.('[data-editor-action]');
-            if (target) console.log('[EDITOR] click', target.dataset);
-        }, true);
-
-        window.__diagnosticoEditorModal = function() {
-            const modal = document.getElementById('modal-editar-modulo');
-            if (!modal) {
-                console.error('[EDITOR] diagnóstico: modal-editar-modulo não encontrado');
-                return { encontrado: false };
-            }
-            console.log('[EDITOR] diagnóstico: modal antes', modal, getComputedStyle(modal).display);
-            modal.classList.add('modal-active');
-            const resultado = {
-                encontrado: true,
-                classeAtiva: modal.classList.contains('modal-active'),
-                display: getComputedStyle(modal).display,
-                zIndex: getComputedStyle(modal).zIndex,
-            };
-            console.log('[EDITOR] diagnóstico: modal depois', resultado);
-            modal.classList.remove('modal-active');
-            return resultado;
-        };
-
         const questoesEditor = {
             {% for modulo in modulos %}
                 {% for fase in modulo.fases.all %}
@@ -1265,13 +1240,10 @@
             }
 
             const action = target.dataset.editorAction;
-            console.log('[EDITOR] handleEditorInteraction', {action, moduloId: target.dataset.moduloId, faseId: target.dataset.faseId, questaoId: target.dataset.questaoId});
             switch (action) {
                 case 'editar-modulo': {
                     const modulo = editorModulos[target.dataset.moduloId];
-                    console.log('[EDITOR] modulo', {id: target.dataset.moduloId, encontrado: Boolean(modulo), modulo});
                     if (modulo) {
-                        console.log('[EDITOR] chamando openEditModulo');
                         openEditModulo(modulo.id, modulo.titulo, modulo.descricao, modulo.ordem);
                     }
                     break;
