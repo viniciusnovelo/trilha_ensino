@@ -1865,19 +1865,19 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
             ordem=2,
         )
 
-        questao = Questao.objects.create(
+        self.questao = Questao.objects.create(
             fase=self.fase_1,
             enunciado="Questao de interface",
         )
 
         Opcao.objects.create(
-            questao=questao,
+            questao=self.questao,
             texto="Resposta correta",
             e_correta=True,
         )
 
         Opcao.objects.create(
-            questao=questao,
+            questao=self.questao,
             texto="Resposta incorreta",
             e_correta=False,
         )
