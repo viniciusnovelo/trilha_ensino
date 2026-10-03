@@ -947,14 +947,12 @@
         }
 
         function openModal(id) {
-            console.log('[EDITOR] openModal', id);
             const modal=document.getElementById(id);
             if(!modal) {
                 console.error('Modal não encontrado:', id);
                 return;
             }
             modal.classList.add('modal-active');
-            console.log('[EDITOR] modal encontrado/ativo', modal, modal.classList.contains('modal-active'), getComputedStyle(modal).display);
             document.body.classList.add('overflow-hidden');
         }
 
@@ -1074,7 +1072,6 @@
         }
 
         function openEditModulo(id,titulo,descricao,ordem) {
-            console.log('[EDITOR] openEditModulo', {id, titulo, descricao, ordem});
             document.getElementById('editar-modulo-id').value=id;
             document.getElementById('editar-modulo-titulo').value=titulo;
             document.getElementById('editar-modulo-descricao').value=descricao;
@@ -1367,7 +1364,7 @@
 
         document.addEventListener('mousemove',(event)=>{
             if(!isDragging || !activeNode) return;
-            let newY=initialNodeY+((event.clientY-startCursorY)/mapScale);
+            let newY=Math.round(initialNodeY+((event.clientY-startCursorY)/mapScale));
             newY=Math.max(-150,Math.min(150,newY));
             activeNode.style.transform='translateY('+newY+'px)';
             activeNode.setAttribute('data-y',newY);

@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 
 from django.contrib.auth.models import User
@@ -2042,25 +2043,32 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
 
         # A mesma chave type/id precisa existir nas áreas que representam
         # a seleção, permitindo que um único clique sincronize o workspace.
+        html = response.content.decode()
         self.assertGreaterEqual(
-            response.content.decode().count(
-                f'data-editor-select="modulo" data-editor-id="{self.modulo.id}"'
+            len(
+                re.findall(
+                    rf'data-editor-id="{self.modulo.id}"\s+data-editor-select="modulo"',
+                    html,
+                )
             ),
             2,
         )
         self.assertGreaterEqual(
-            response.content.decode().count(
-                f'data-editor-select="fase" data-editor-id="{self.fase_1.id}"'
+            len(
+                re.findall(
+                    rf'data-editor-id="{self.fase_1.id}"\s+data-editor-select="fase"',
+                    html,
+                )
             ),
             2,
         )
         self.assertContains(
             response,
-            f'.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle',
+            "document.querySelectorAll('.fase-node[data-id=\"'+normalizedId+'\"] .editor-fase-circle')",
         )
         self.assertContains(
             response,
-            f'[data-editor-phase-title="'+normalizedId+'"]',
+            "document.querySelectorAll('[data-editor-phase-title=\"'+normalizedId+'\"]')",
         )
         self.assertContains(
             response,
