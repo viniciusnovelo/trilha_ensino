@@ -38,6 +38,8 @@
         .editor-expand-chevron { display:block; transition:transform .18s ease; font-size:10px; }
         .editor-expand-toggle[aria-expanded="true"] .editor-expand-chevron { transform:rotate(90deg); }
         .editor-structure-actions { opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; transform:translateY(2px); }
+        .editor-selection-target { position:relative; z-index:1; }
+        .editor-accordion-content .editor-selection-target { z-index:2; }
         .editor-selectable:hover .editor-structure-actions,
         .editor-selectable:focus-within .editor-structure-actions,
         .editor-selectable.editor-selected .editor-structure-actions { opacity:1; pointer-events:auto; transform:translateY(0); }
