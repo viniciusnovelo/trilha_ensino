@@ -39,6 +39,8 @@
         .editor-expand-toggle[aria-expanded="true"] .editor-expand-chevron { transform:rotate(90deg); }
         .editor-structure-actions { opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; transform:translateY(2px); }
         .editor-selection-target { position:relative; z-index:1; }
+        .editor-structure-header { position:relative; z-index:3; pointer-events:none; }
+        .editor-structure-header > * { pointer-events:auto; }
         .editor-accordion-content .editor-selection-target { z-index:2; }
         .editor-selectable:hover .editor-structure-actions,
         .editor-selectable:focus-within .editor-structure-actions,
@@ -343,7 +345,7 @@
                     <div class="editor-structure-viewport flex-1 scrollbar-thin p-2.5 space-y-2">
                         {% for modulo in modulos %}
                             <article class="editor-selectable rounded-2xl bg-black/15 border border-white/10 overflow-hidden" data-editor-type="modulo" data-editor-id="{{ modulo.id }}" data-editor-select="modulo">
-                                <div class="p-2.5 flex items-start gap-2.5">
+                                <div class="editor-structure-header p-2.5 flex items-start gap-2.5">
                                     <button
                                         type="button"
                                         class="editor-expand-toggle"
@@ -380,7 +382,7 @@
                                     <div class="px-2 pb-2.5 space-y-2">
                                         {% for fase in modulo.fases.all %}
                                             <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-2.5" data-editor-type="fase" data-editor-id="{{ fase.id }}" data-editor-select="fase">
-                                                <div class="flex items-start gap-2">
+                                                <div class="editor-structure-header flex items-start gap-2">
                                                     <button
                                                         type="button"
                                                         class="editor-expand-toggle"
