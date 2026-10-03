@@ -340,7 +340,7 @@
                     <div class="editor-structure-viewport flex-1 scrollbar-thin p-2.5 space-y-2">
                         {% for modulo in modulos %}
                             <article class="editor-selectable rounded-2xl bg-black/15 border border-white/10 overflow-hidden" data-editor-type="modulo" data-editor-id="{{ modulo.id }}" data-editor-select="modulo">
-                                <div class="p-2.5 flex items-start gap-2.5 editor-selection-target" data-editor-select="modulo" data-editor-id="{{ modulo.id }}">
+                                <div class="p-2.5 flex items-start gap-2.5">
                                     <button
                                         type="button"
                                         class="editor-expand-toggle"
@@ -354,12 +354,17 @@
                                     <div class="w-8 h-8 shrink-0 rounded-lg bg-sky-400/10 text-sky-200 border border-sky-300/10 flex items-center justify-center text-sm font-black">{{ modulo.ordem }}</div>
                                     <div class="min-w-0 flex-1">
                                         <div class="flex items-start justify-between gap-2">
-                                            <div class="min-w-0">
+                                            <button
+                                                type="button"
+                                                class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0"
+                                                data-editor-select="modulo"
+                                                data-editor-id="{{ modulo.id }}"
+                                            >
                                                 <h3 class="font-black truncate text-sm">{{ modulo.titulo }}</h3>
                                                 {% if modulo.descricao %}
                                                     <p class="text-[11px] text-white/40 mt-0.5 line-clamp-1">{{ modulo.descricao }}</p>
                                                 {% endif %}
-                                            </div>
+                                            </button>
                                             <div class="editor-structure-actions flex items-center gap-1 shrink-0">
                                                 <button type="button" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" data-editor-action="editar-modulo" data-modulo-id="{{ modulo.id }}" title="Editar módulo">✎</button>
                                                 <button type="button" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200 text-xs" data-editor-action="excluir-modulo" data-modulo-id="{{ modulo.id }}" data-modulo-titulo="{{ modulo.titulo|escape }}" title="Excluir módulo">×</button>
@@ -372,7 +377,7 @@
                                     <div class="px-2 pb-2.5 space-y-2">
                                         {% for fase in modulo.fases.all %}
                                             <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-2.5" data-editor-type="fase" data-editor-id="{{ fase.id }}" data-editor-select="fase">
-                                                <div class="flex items-start gap-2 editor-selection-target" data-editor-select="fase" data-editor-id="{{ fase.id }}">
+                                                <div class="flex items-start gap-2">
                                                     <button
                                                         type="button"
                                                         class="editor-expand-toggle"
@@ -386,10 +391,15 @@
                                                     <div class="w-7 h-7 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-300/20 flex items-center justify-center text-[10px] font-black text-indigo-200">{{ fase.ordem }}</div>
                                                     <div class="min-w-0 flex-1">
                                                         <div class="flex items-start justify-between gap-2">
-                                                            <div class="min-w-0">
+                                                            <button
+                                                                type="button"
+                                                                class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0"
+                                                                data-editor-select="fase"
+                                                                data-editor-id="{{ fase.id }}"
+                                                            >
                                                                 <p class="font-bold text-xs truncate">{{ fase.titulo }}</p>
                                                                 <p class="text-[10px] text-white/40 mt-0.5">{{ fase.get_tipo_display }} · {{ fase.questoes.count }} questão(ões)</p>
-                                                            </div>
+                                                            </button>
                                                             <div class="editor-structure-actions flex gap-1 shrink-0">
                                                                 <button type="button" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" data-editor-action="editar-fase" data-fase-id="{{ fase.id }}" title="Editar fase">✎</button>
                                                                 <button type="button" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/10 border border-red-400/10 text-red-200 text-xs" data-editor-action="excluir-fase" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" title="Excluir fase">×</button>
@@ -402,12 +412,19 @@
                                                     <button type="button" data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-[11px] font-black text-emerald-200 transition">＋ Adicionar questão</button>
                                                     {% for questao in fase.questoes.all %}
                                                         <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-2.5" data-editor-type="questao" data-editor-id="{{ questao.id }}" data-editor-select="questao">
-                                                            <div class="flex items-start gap-2 editor-selection-target" data-editor-select="questao" data-editor-id="{{ questao.id }}">
-                                                                <div class="w-6 h-6 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[10px] font-black">Q</div>
-                                                                <div class="min-w-0 flex-1">
-                                                                    <p class="text-[11px] font-bold text-white/80 line-clamp-2">{{ questao.enunciado }}</p>
-                                                                    <p class="text-[9px] text-white/35 mt-0.5">{{ questao.opcoes.count }} alternativa(s)</p>
-                                                                </div>
+                                                            <div class="flex items-start gap-2">
+                                                                <button
+                                                                    type="button"
+                                                                    class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0 flex items-start gap-2"
+                                                                    data-editor-select="questao"
+                                                                    data-editor-id="{{ questao.id }}"
+                                                                >
+                                                                    <div class="w-6 h-6 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[10px] font-black">Q</div>
+                                                                    <div class="min-w-0 flex-1 text-left">
+                                                                        <p class="text-[11px] font-bold text-white/80 line-clamp-2">{{ questao.enunciado }}</p>
+                                                                        <p class="text-[9px] text-white/35 mt-0.5">{{ questao.opcoes.count }} alternativa(s)</p>
+                                                                    </div>
+                                                                </button>
                                                                 <div class="editor-structure-actions flex gap-1 shrink-0">
                                                                     <button type="button" data-editor-action="editar-questao" data-questao-id="{{ questao.id }}" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" title="Editar questão">✎</button>
                                                                     <button type="button" data-editor-action="excluir-questao" data-questao-id="{{ questao.id }}" data-questao-enunciado="{{ questao.enunciado|escape }}" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200 text-xs" title="Excluir questão">×</button>
