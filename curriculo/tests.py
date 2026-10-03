@@ -2039,6 +2039,29 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
             response,
             f'data-editor-select="questao"',
         )
+
+        # A mesma chave type/id precisa existir nas áreas que representam
+        # a seleção, permitindo que um único clique sincronize o workspace.
+        self.assertGreaterEqual(
+            response.content.decode().count(
+                f'data-editor-select="modulo" data-editor-id="{self.modulo.id}"'
+            ),
+            2,
+        )
+        self.assertGreaterEqual(
+            response.content.decode().count(
+                f'data-editor-select="fase" data-editor-id="{self.fase_1.id}"'
+            ),
+            2,
+        )
+        self.assertContains(
+            response,
+            f'.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle',
+        )
+        self.assertContains(
+            response,
+            f'[data-editor-phase-title="'+normalizedId+'"]',
+        )
         self.assertContains(
             response,
             f'data-editor-action="adicionar-questao" data-fase-id="{self.fase_1.id}"',
