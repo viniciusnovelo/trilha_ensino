@@ -1513,19 +1513,21 @@
         /*
          * Trajetória dinâmica global:
          * - existe uma única sequência de fases, independentemente dos módulos;
-         * - o eixo X continua sendo monotônico pela ordem global;
-         * - o Y automático é uma heurística determinística de vizinhança,
-         *   não uma onda periódica;
+         * - o eixo X continua monotônico pela ordem global;
+         * - o Y automático é escolhido por uma composição determinística com
+         *   pequeno olhar à frente, vizinhança e continuidade de direção;
          * - deslocamento_y permanece exclusivamente como ajuste persistido;
-         * - a geometria de cada conector é derivada dos dois nós consecutivos.
+         * - cada conector é derivado dos dois nós consecutivos.
          *
-         * A heurística usa o módulo e a posição dentro dele apenas para dar
-         * ritmo à composição. Ela nunca reinicia ao trocar de módulo.
+         * A ideia não é desenhar uma onda. Cada fase escolhe entre níveis
+         * verticais possíveis e a escolha considera também como a próxima
+         * transição ficará. Assim, a forma final emerge da sequência inteira.
          */
-        const EDITOR_LAYOUT_LEVELS = [-58, -28, 0, 28, 58];
-        const EDITOR_MIN_NODE_GAP = 92;
+        const EDITOR_LAYOUT_LEVELS = [-112, -76, -42, -8, 28, 64, 100];
+        const EDITOR_MIN_NODE_GAP = 78;
         const EDITOR_TITLE_HALF = 72;
         const EDITOR_NODE_RADIUS = 35;
+        const EDITOR_MAX_AUTO_Y = 112;
 
         function getMapPhaseNodes() {
             return Array.from(document.querySelectorAll('.fase-node[data-index]'))
@@ -1552,43 +1554,138 @@
             return Number(node.dataset.modulePhaseIndex || 0) || 0;
         }
 
+        function getVisualY(nodes,index,candidateAutoY) {
+            return candidateAutoY + getCustomMapY(nodes[index]);
+        }
+
+        function getCandidateLevels(node,index) {
+            const moduleIndex=getPhaseModuleIndex(node);
+            const phaseIndex=getPhaseWithinModule(node);
+            const rhythm=((moduleIndex*13 + phaseIndex*7) % 17) - 8;
+
+            return EDITOR_LAYOUT_LEVELS
+                .map(level=>clampEditorNumber(
+                    level + rhythm,
+                    -EDITOR_MAX_AUTO_Y,
+                    EDITOR_MAX_AUTO_Y
+                ))
+                .filter((value,position,array)=>array.indexOf(value)===position);
+        }
+
+        function verticalSeparationPenalty(nodes,index,candidateVisual) {
+            let penalty=0;
+
+            for(let i=Math.max(0,index-4);i<index;i++) {
+                const otherVisual=getRenderMapY(nodes[i]);
+                const distance=Math.abs(candidateVisual-otherVisual);
+
+                if(distance<EDITOR_MIN_NODE_GAP) {
+                    penalty += Math.pow(EDITOR_MIN_NODE_GAP-distance,2)*0.22;
+                }
+
+                if(index-i===1) penalty += Math.max(0,58-distance)*2.4;
+                if(index-i===2) penalty += Math.max(0,42-distance)*0.65;
+            }
+
+            const previous=index>0 ? getRenderMapY(nodes[index-1]) : null;
+            if(previous!==null) {
+                const titleBand=EDITOR_TITLE_HALF+EDITOR_NODE_RADIUS;
+                if(Math.abs(candidateVisual-previous)<titleBand) {
+                    penalty += (titleBand-Math.abs(candidateVisual-previous))*0.9;
+                }
+            }
+
+            return penalty;
+        }
+
+        function directionPenalty(previousDelta,nextDelta) {
+            if(previousDelta===null) return 0;
+
+            const previousDirection=Math.sign(previousDelta);
+            const nextDirection=Math.sign(nextDelta);
+
+            if(nextDirection===0 || previousDirection===0) return 0;
+
+            return previousDirection!==nextDirection
+                ? Math.min(28,Math.abs(previousDelta-nextDelta)*0.18)
+                : 0;
+        }
+
+        function continuationPenalty(nodes,index,candidateAutoY) {
+            const nextIndex=index+1;
+            if(nextIndex>=nodes.length) return 0;
+
+            const currentVisual=getVisualY(nodes,index,candidateAutoY);
+            const previousVisual=index>0
+                ? getRenderMapY(nodes[index-1])
+                : currentVisual;
+            const incoming=currentVisual-previousVisual;
+
+            let bestNext=Infinity;
+            getCandidateLevels(nodes[nextIndex],nextIndex).forEach(nextAuto=>{
+                const nextVisual=getVisualY(nodes,nextIndex,nextAuto);
+                const outgoing=nextVisual-currentVisual;
+                let score=Math.abs(outgoing-incoming)*0.34;
+
+                if(Math.abs(outgoing)<EDITOR_MIN_NODE_GAP) {
+                    score += (EDITOR_MIN_NODE_GAP-Math.abs(outgoing))*1.8;
+                }
+
+                score += directionPenalty(incoming,outgoing);
+
+                if(getPhaseModuleIndex(nodes[index])!==getPhaseModuleIndex(nodes[nextIndex])) {
+                    score += Math.abs(outgoing-incoming)*0.12;
+                }
+
+                bestNext=Math.min(bestNext,score);
+            });
+
+            return bestNext;
+        }
+
         function chooseDynamicAutoY(nodes,index) {
             if(index===0) return 0;
 
+            const node=nodes[index];
             const previous=nodes[index-1];
+            const previousVisual=getRenderMapY(previous);
             const previousAuto=Number(previous.dataset.autoY || 0);
-            const previousCustom=getCustomMapY(previous);
-            const previousVisual=previousAuto+previousCustom;
-            const moduleIndex=getPhaseModuleIndex(nodes[index]);
-            const phaseIndex=getPhaseWithinModule(nodes[index]);
+            const previousPreviousVisual=index>1
+                ? getRenderMapY(nodes[index-2])
+                : previousVisual;
+            const incoming=previousVisual-previousPreviousVisual;
+            const moduleIndex=getPhaseModuleIndex(node);
+            const previousModuleIndex=getPhaseModuleIndex(previous);
 
-            const candidates=EDITOR_LAYOUT_LEVELS
-                .map(level=>level + (phaseIndex%2===0 ? 0 : (moduleIndex%2 ? 10 : -10)))
-                .filter((value,position,array)=>array.indexOf(value)===position);
-
-            let best=candidates[0];
+            let best=getCandidateLevels(node,index)[0];
             let bestScore=Infinity;
 
-            candidates.forEach(candidate=>{
-                const candidateVisual=candidate+getCustomMapY(nodes[index]);
-                const verticalGap=Math.abs(candidateVisual-previousVisual);
-                let score=Math.abs(candidateVisual-previousVisual)*0.42;
+            getCandidateLevels(node,index).forEach(candidate=>{
+                const candidateVisual=getVisualY(nodes,index,candidate);
+                const delta=candidateVisual-previousVisual;
+                let score=0;
+                const distance=Math.abs(delta);
 
-                if(verticalGap<EDITOR_MIN_NODE_GAP) {
-                    score += (EDITOR_MIN_NODE_GAP-verticalGap)*3.2;
+                score += Math.pow(Math.max(0,EDITOR_MIN_NODE_GAP-distance),2)*0.34;
+                score += Math.max(0,distance-112)*1.15;
+
+                if(Math.abs(candidate-previousAuto)<12) score+=20;
+                if(incoming!==0 && Math.sign(delta)!==0 && Math.sign(delta)!==Math.sign(incoming)) {
+                    score+=11;
                 }
 
-                if(Math.abs(candidateVisual)>92) score += (Math.abs(candidateVisual)-92)*0.45;
-
-                // Penaliza repetir exatamente a altura anterior: a estrada ganha
-                // variação sem obrigar toda fase a mudar de lado.
-                if(Math.abs(candidate-previousAuto)<8) score += 18;
-
-                // Em uma mudança de módulo, privilegia uma transição de ritmo
-                // pequena, nunca um salto arbitrário.
-                if(index>0 && getPhaseModuleIndex(previous)!==moduleIndex) {
-                    score += Math.abs(candidate-previousAuto)*0.18;
+                if(previousModuleIndex!==moduleIndex) {
+                    score += Math.abs(delta-incoming)*0.10;
                 }
+
+                const phaseIndex=getPhaseWithinModule(node);
+                if(phaseIndex===1) score += Math.max(0,Math.abs(delta)-100)*0.35;
+                if(phaseIndex===3) score += Math.max(0,Math.abs(delta)-92)*0.25;
+
+                score += verticalSeparationPenalty(nodes,index,candidateVisual);
+                score += continuationPenalty(nodes,index,candidate);
+
+                score += ((moduleIndex*17 + phaseIndex*11 + index*7) % 19)*0.001;
 
                 if(score<bestScore) {
                     bestScore=score;
@@ -1603,8 +1700,6 @@
             const node=nodes[index];
             if(index===0) return 0;
 
-            // Calcula sequencialmente porque a decisão atual depende da vizinhança
-            // visual já posicionada. Isso mantém o resultado determinístico.
             if(node.dataset.layoutCalculated==='true') {
                 return Number(node.dataset.autoY||0);
             }
@@ -1644,8 +1739,7 @@
                 let visual=autoY+getCustomMapY(node);
 
                 if(positionsConflict(nodes,index,visual)) {
-                    const alternatives=EDITOR_LAYOUT_LEVELS
-                        .map(level=>level)
+                    const alternatives=getCandidateLevels(node,index)
                         .sort((a,b)=>Math.abs(a-autoY)-Math.abs(b-autoY));
 
                     const alternative=alternatives.find(level=>{
@@ -1653,7 +1747,10 @@
                         return !positionsConflict(nodes,index,candidate);
                     });
 
-                    if(alternative!==undefined) autoY=alternative;
+                    if(alternative!==undefined) {
+                        autoY=alternative;
+                        node.dataset.autoY=String(autoY);
+                    }
                 }
 
                 applyMapNodePosition(node,autoY);
@@ -1671,13 +1768,17 @@
             const targetY=100+getRenderMapY(target);
             const delta=targetY-sourceY;
             const distance=Math.abs(delta);
+            const bend=clampEditorNumber(46-distance*0.16,22,46);
 
-            // O avanço horizontal é constante, mas a curvatura se adapta ao
-            // deslocamento vertical. Isso evita ângulos secos e curvas fechadas.
-            const bend=clampEditorNumber(42-distance*0.055,20,38);
+            const moduleTransition=
+                getPhaseModuleIndex(source)!==getPhaseModuleIndex(target);
+            const transitionBend=moduleTransition
+                ? clampEditorNumber(bend+6,24,52)
+                : bend;
+
             const path='M 0,'+sourceY+
-                ' C '+bend+','+sourceY+
-                ' '+(100-bend)+','+targetY+
+                ' C '+transitionBend+','+sourceY+
+                ' '+(100-transitionBend)+','+targetY+
                 ' 100,'+targetY;
 
             const base=connector.querySelector('.linha-conector');
