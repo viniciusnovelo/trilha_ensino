@@ -217,6 +217,13 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             ).to_contain_text(self.modulo.titulo)
 
             await self._phase_toggle(page).click()
+            print("DEBUG_PHASE_STATE", await page.evaluate("""(id) => ({
+                selectedType: window.selectedEditorType,
+                selectedId: window.selectedEditorId,
+                circleClass: document.querySelector('.fase-node[data-id="' + id + '"] .editor-fase-circle')?.className,
+                phaseClass: document.querySelector('[data-editor-select="fase"][data-editor-id="' + id + '"]')?.className,
+                details: document.getElementById('editor-details-content')?.innerText,
+            })""", str(self.fase.id)))
             fase = await self._select_content_item(
                 page, "fase", self.fase.id, self.fase.titulo
             )
@@ -234,6 +241,12 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             questao = await self._select_content_item(
                 page, "questao", self.questao.id, self.questao.enunciado
             )
+            print("DEBUG_QUESTION_STATE", await page.evaluate("""(id) => ({
+                selectedType: window.selectedEditorType,
+                selectedId: window.selectedEditorId,
+                questionClass: document.querySelector('[data-editor-select="questao"][data-editor-id="' + id + '"]')?.className,
+                details: document.getElementById('editor-details-content')?.innerText,
+            })""", str(self.questao.id)))
             await expect(questao).to_contain_class("editor-selected")
             await expect(self._phase_content(page)).to_be_visible()
             await expect(
