@@ -800,8 +800,8 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 self.assertLessEqual(control_xs[1], 100)
                 self.assertLessEqual(control_xs[0], control_xs[1])
 
-                source_y = ys[index]
-                target_y = ys[index + 1]
+                source_y = 100 + ys[index]
+                target_y = 100 + ys[index + 1]
                 control_ys = [float(values[3]), float(values[5])]
                 lower_y = min(source_y, target_y)
                 upper_y = max(source_y, target_y)
