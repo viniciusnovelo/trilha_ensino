@@ -1442,6 +1442,14 @@
             selectEditorItem(selectionTarget.dataset.editorSelect, selectionTarget.dataset.editorId);
         }
 
+        document.querySelectorAll('.editor-selection-target, .editor-fase-circle[data-editor-select]').forEach((element)=>{
+            element.addEventListener('click',(event)=>{
+                event.preventDefault();
+                event.stopPropagation();
+                selectEditorItem(element.dataset.editorSelect, element.dataset.editorId);
+            });
+        });
+
         document.addEventListener('click', handleEditorSelectionCapture, true);
         document.addEventListener('click', handleEditorInteraction);
 
