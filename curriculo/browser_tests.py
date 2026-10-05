@@ -470,8 +470,8 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             await self._select_content_item(
                 page, "fase", self.fase.id, self.fase.titulo
             )
-            await page.locator(
-                '[data-editor-action="editar-fase"]'
+            await page.get_by_role(
+                "button", name="Editar fase"
             ).click()
 
             edit_modal = page.locator("#modal-editar-fase")
