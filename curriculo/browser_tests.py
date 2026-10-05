@@ -656,6 +656,23 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         self._assert_no_page_errors(page_errors)
 
     async def test_geometria_global_tem_contratos_de_continuidade(self):
+        for modulo_ordem in range(2, 5):
+            modulo = await sync_to_async(Modulo.objects.create)(
+                disciplina=self.trilha,
+                titulo=f"Módulo Browser {modulo_ordem}",
+                ordem=modulo_ordem,
+            )
+            for fase_ordem in range(1, 4):
+                await sync_to_async(Fase.objects.create)(
+                    modulo=modulo,
+                    titulo=f"Fase {modulo_ordem}.{fase_ordem}",
+                    ordem=fase_ordem,
+                    tipo="quiz",
+                    xp_recompensa=50,
+                    moedas_recompensa=10,
+                    deslocamento_y=0,
+                )
+
         async with self._browser_page() as (page, page_errors):
             await self._login_and_open_editor(page)
 
