@@ -1440,13 +1440,6 @@
 
         document.addEventListener('click', handleEditorInteraction);
 
-        document.querySelectorAll('.editor-selection-target, .editor-fase-circle, .editor-module-label, [data-editor-select="questao"].editor-selectable').forEach((element)=>{
-            element.addEventListener('click',(event)=>{
-                event.preventDefault();
-                selectEditorItem(element.dataset.editorSelect,element.dataset.editorId);
-            });
-        });
-
         document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
             event.preventDefault();
             event.stopPropagation();
