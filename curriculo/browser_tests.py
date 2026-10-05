@@ -157,18 +157,7 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             f'[data-editor-id="{item_id}"].editor-selection-target'
         ).first
         await expect(selection_target).to_be_visible()
-        if item_type == "questao":
-            print("DEBUG_QUESTION_HIT", await selection_target.evaluate("""el => {
-                const r = el.getBoundingClientRect();
-                const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-                return {
-                    hit: hit ? hit.outerHTML.slice(0, 500) : null,
-                    hitClosest: hit?.closest('[data-editor-select]')?.outerHTML.slice(0, 350) || null,
-                    pointerEvents: getComputedStyle(el).pointerEvents,
-                    zIndex: getComputedStyle(el).zIndex,
-                };
-            }"""))
-        await selection_target.click(force=True)
+        await selection_target.click()
         return item
 
     def _module_toggle(self, page):
