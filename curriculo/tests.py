@@ -2031,7 +2031,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            'id="context-edit-question-form"',
+            "formId=editing?'context-edit-question-form':'context-new-question-form'",
         )
         self.assertContains(
             response,
