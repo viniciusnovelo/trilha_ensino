@@ -638,6 +638,24 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         )
         self._assert_no_page_errors(page_errors)
 
+    async def test_arvore_usa_chevrons_consistentes_e_expande_fase_com_questoes(self):
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+            module_toggle = self._module_toggle(page)
+            phase_toggle = self._phase_toggle(page)
+
+            await expect(module_toggle.locator(".editor-expand-chevron")).to_have_text("›")
+            await expect(phase_toggle.locator(".editor-expand-chevron")).to_have_text("›")
+
+            await module_toggle.click()
+            await expect(module_toggle).to_have_attribute("aria-expanded", "true")
+            await phase_toggle.click()
+            await expect(phase_toggle).to_have_attribute("aria-expanded", "true")
+            await expect(self._content_item(page, "questao", self.questao.id)).to_be_visible()
+            await expect(page.locator(".editor-expand-chevron")).not_to_contain_text("▶")
+
+        self._assert_no_page_errors(page_errors)
+
     async def test_trajetoria_dinamica_conecta_as_12_fases_em_sequencia_global(self):
         for fase_ordem in (2, 3):
             await sync_to_async(Fase.objects.create)(
