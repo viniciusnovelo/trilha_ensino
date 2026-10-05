@@ -780,6 +780,29 @@ class EstudioConteudoTests(AutenticacaoBaseTests):
             Modulo.objects.filter(id=modulo.id).exists()
         )
 
+    def test_criar_fase_sem_posicao_inicializa_deslocamento_em_zero(self):
+        modulo = Modulo.objects.create(
+            disciplina=self.trilha,
+            titulo="Módulo posição automática",
+            ordem=1,
+        )
+
+        response = self.client.post(
+            reverse("ajax_criar_fase", args=[self.trilha.id]),
+            {
+                "modulo_id": modulo.id,
+                "titulo": "Fase automática",
+                "ordem": 1,
+                "tipo": "quiz",
+                "xp_recompensa": 50,
+                "moedas_recompensa": 10,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        fase = Fase.objects.get(modulo=modulo, titulo="Fase automática")
+        self.assertEqual(fase.deslocamento_y, 0)
+
     def test_professor_pode_criar_editar_e_excluir_fase(self):
         modulo = Modulo.objects.create(
             disciplina=self.trilha,
@@ -809,6 +832,9 @@ class EstudioConteudoTests(AutenticacaoBaseTests):
             titulo="Fase 1",
         )
 
+        fase.deslocamento_y = 70
+        fase.save(update_fields=["deslocamento_y"])
+
         response = self.client.post(
             reverse(
                 "ajax_editar_fase",
@@ -821,12 +847,12 @@ class EstudioConteudoTests(AutenticacaoBaseTests):
                 "tipo": "desafio",
                 "xp_recompensa": 80,
                 "moedas_recompensa": 15,
-                "deslocamento_y": 70,
             },
         )
 
         self.assertEqual(response.status_code, 200)
         fase.refresh_from_db()
+        self.assertEqual(fase.deslocamento_y, 70)
         self.assertEqual(fase.titulo, "Fase revisada")
         self.assertEqual(fase.tipo, "desafio")
         self.assertEqual(fase.deslocamento_y, 70)
