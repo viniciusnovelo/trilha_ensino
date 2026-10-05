@@ -1440,10 +1440,10 @@
 
         document.addEventListener('click', handleEditorInteraction);
 
-        document.querySelectorAll('.editor-selection-target, .editor-fase-circle, .editor-module-label').forEach((element)=>{
-            element.addEventListener('pointerdown',(event)=>{
-                event.stopPropagation();
-                selectEditorItem(element.dataset.editorSelect, element.dataset.editorId);
+        document.querySelectorAll('.editor-selection-target, .editor-fase-circle, .editor-module-label, [data-editor-select="questao"].editor-selectable').forEach((element)=>{
+            element.addEventListener('click',(event)=>{
+                event.preventDefault();
+                selectEditorItem(element.dataset.editorSelect,element.dataset.editorId);
             });
         });
 
