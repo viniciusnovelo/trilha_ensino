@@ -580,6 +580,17 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         self._assert_no_page_errors(page_errors)
 
     async def test_trajetoria_dinamica_conecta_as_12_fases_em_sequencia_global(self):
+        for fase_ordem in (2, 3):
+            await sync_to_async(Fase.objects.create)(
+                modulo=self.modulo,
+                titulo=f"Fase 1.{fase_ordem}",
+                ordem=fase_ordem,
+                tipo="quiz",
+                xp_recompensa=50,
+                moedas_recompensa=10,
+                deslocamento_y=0,
+            )
+
         for modulo_ordem in range(2, 5):
             modulo = await sync_to_async(Modulo.objects.create)(
                 disciplina=self.trilha,
@@ -602,10 +613,10 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
             nodes = page.locator(".fase-node[data-index]")
             connectors = page.locator(".editor-connector[data-connector-index]")
-            await expect(nodes).to_have_count(13)
-            await expect(connectors).to_have_count(12)
+            await expect(nodes).to_have_count(12)
+            await expect(connectors).to_have_count(11)
 
-            for index in range(12):
+            for index in range(11):
                 source = nodes.nth(index)
                 target = nodes.nth(index + 1)
                 connector = page.locator(
@@ -627,7 +638,7 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
             auto_positions = [
                 int(float(await nodes.nth(index).get_attribute("data-auto-y")))
-                for index in range(13)
+                for index in range(12)
             ]
             self.assertGreater(
                 len(set(auto_positions)),
