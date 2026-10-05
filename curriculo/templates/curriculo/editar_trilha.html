@@ -1434,7 +1434,16 @@
             }
         }
 
-        document.addEventListener('click', handleEditorInteraction, true);
+        function handleEditorSelectionCapture(event) {
+            const selectionTarget = event.target.closest?.('.editor-selection-target');
+            if (!selectionTarget) return;
+            event.preventDefault();
+            event.stopPropagation();
+            selectEditorItem(selectionTarget.dataset.editorSelect, selectionTarget.dataset.editorId);
+        }
+
+        document.addEventListener('click', handleEditorSelectionCapture, true);
+        document.addEventListener('click', handleEditorInteraction);
 
         document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
             event.preventDefault();
