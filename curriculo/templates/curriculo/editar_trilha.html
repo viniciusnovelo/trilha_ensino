@@ -364,7 +364,7 @@
                                                 class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0"
                                                 data-editor-select="modulo"
                                                 data-editor-id="{{ modulo.id }}"
-                                                onclick="event.stopPropagation(); selectEditorItem('modulo', '{{ modulo.id }}')"
+
                                             >
                                                 <h3 class="font-black truncate text-sm">{{ modulo.titulo }}</h3>
                                                 {% if modulo.descricao %}
@@ -402,7 +402,7 @@
                                                                 class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0"
                                                                 data-editor-select="fase"
                                                                 data-editor-id="{{ fase.id }}"
-                                                                onclick="event.stopPropagation(); selectEditorItem('fase', '{{ fase.id }}')"
+
                                                             >
                                                                 <p class="font-bold text-xs truncate">{{ fase.titulo }}</p>
                                                                 <p class="text-[10px] text-white/40 mt-0.5">{{ fase.get_tipo_display }} · {{ fase.questoes.count }} questão(ões)</p>
@@ -425,7 +425,7 @@
                                                                     class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0 flex items-start gap-2"
                                                                     data-editor-select="questao"
                                                                     data-editor-id="{{ questao.id }}"
-                                                                    onclick="event.stopPropagation(); selectEditorItem('questao', '{{ questao.id }}')"
+
                                                                 >
                                                                     <div class="w-6 h-6 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[10px] font-black">Q</div>
                                                                     <div class="min-w-0 flex-1 text-left">
@@ -559,7 +559,7 @@
                                         data-editor-type="fase"
                                         data-editor-id="{{ fase.id }}"
                                         data-editor-select="fase"
-                                        onclick="event.stopPropagation(); selectEditorItem('fase', '{{ fase.id }}')"
+
                                         class="editor-fase-circle"
                                         title="Selecionar {{ fase.titulo }}"
                                     >
@@ -1689,22 +1689,7 @@
         let startCursorY=0;
         let initialCustomY=0;
 
-        document.querySelectorAll('.drag-handle').forEach(handle=>{
-            handle.addEventListener('pointerdown',(event)=>{
-                const node=event.currentTarget.closest('.fase-node');
-                if(!node) return;
-                event.preventDefault();
-                isDragging=true;
-                activeNode=node;
-                initialCustomY=getCustomMapY(node);
-                startCursorY=event.clientY;
-                document.body.classList.add('cursor-grabbing');
-                handle.classList.add('cursor-grabbing');
-                handle.setPointerCapture?.(event.pointerId);
-            });
-        });
-
-        document.addEventListener('pointermove',(event)=>{
+        function applyDraggedMapY(event) {
             if(!isDragging || !activeNode) return;
             event.preventDefault();
 
@@ -1719,9 +1704,9 @@
             applyMapNodePosition(activeNode);
             updateMapConnector(Number(activeNode.dataset.index));
             updateMapConnector(Number(activeNode.dataset.index)-1);
-        });
+        }
 
-        document.addEventListener('pointerup',async()=>{
+        async function finishDraggedMapPhase() {
             if(!isDragging || !activeNode) return;
             const node=activeNode;
             document.body.classList.remove('cursor-grabbing');
@@ -1741,7 +1726,24 @@
                 isDragging=false;
                 activeNode=null;
             }
+        }
+
+        document.querySelectorAll('.drag-handle').forEach(handle=>{
+            handle.addEventListener('mousedown',(event)=>{
+                const node=event.currentTarget.closest('.fase-node');
+                if(!node) return;
+                event.preventDefault();
+                isDragging=true;
+                activeNode=node;
+                initialCustomY=getCustomMapY(node);
+                startCursorY=event.clientY;
+                document.body.classList.add('cursor-grabbing');
+                handle.classList.add('cursor-grabbing');
+            });
         });
+
+        document.addEventListener('mousemove',applyDraggedMapY);
+        document.addEventListener('mouseup',finishDraggedMapPhase);
 
         window.addEventListener('resize',updateAllMapGeometry);
     </script>
