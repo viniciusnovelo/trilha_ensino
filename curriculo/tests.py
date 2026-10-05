@@ -2184,7 +2184,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            'function openEditFase(id,moduloId,titulo,ordem,tipo,xp,moedas,y)',
+            'function openEditFase(id,moduloId,titulo,ordem,tipo,xp,moedas)',
         )
         self.assertContains(
             response,
