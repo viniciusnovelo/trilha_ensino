@@ -1832,13 +1832,6 @@ def ajax_criar_fase(
             )
         )
 
-        deslocamento_y = int(
-            request.POST.get(
-                'deslocamento_y',
-                0,
-            )
-        )
-
     except (
         TypeError,
         ValueError,
@@ -1935,14 +1928,6 @@ def ajax_criar_fase(
             status=400,
         )
 
-    deslocamento_y = max(
-        DESLOCAMENTO_MINIMO,
-        min(
-            DESLOCAMENTO_MAXIMO,
-            deslocamento_y,
-        ),
-    )
-
     fase = Fase.objects.create(
         modulo=modulo,
         titulo=titulo,
@@ -1950,7 +1935,7 @@ def ajax_criar_fase(
         tipo=tipo,
         xp_recompensa=xp_recompensa,
         moedas_recompensa=moedas_recompensa,
-        deslocamento_y=deslocamento_y,
+        deslocamento_y=0,
     )
 
     return JsonResponse(
