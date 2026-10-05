@@ -1096,7 +1096,7 @@
             }).join('');
             const submitLabel=editing?'Salvar alterações':'Salvar questão';
             const title=editing?'Editar questão':'Nova questão';
-            const actionUrl=editing ? editorAjaxUrl('editarQuestao',id) : editorAjaxUrl('criarQuestao','');
+            const actionUrl=editing ? editorAjaxUrl('editarQuestao',id) : editorAjaxUrls.criarQuestao;
             const formId=editing?'context-edit-question-form':'context-new-question-form';
             context.textContent=editing?'Editando questão':'Nova questão';
             empty.classList.add('hidden');
