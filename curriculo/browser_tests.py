@@ -249,6 +249,16 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             await expect(self._module_content(page)).to_be_hidden()
             await expect(self._phase_content(page)).to_be_hidden()
 
+            module_toggle_class = await self._module_toggle(page).get_attribute("class")
+            self.assertNotIn(
+                "bg-sky-400",
+                module_toggle_class or "",
+                "O controle do accordion não deve usar o antigo quadrado azul.",
+            )
+            await expect(
+                self._module_toggle(page).locator(".editor-expand-chevron")
+            ).to_have_text("›")
+
             await self._module_toggle(page).click()
             await expect(self._module_content(page)).to_be_visible()
             await expect(self._module_toggle(page)).to_have_attribute(
@@ -693,30 +703,33 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 "A trajetória precisa apresentar variação vertical real.",
             )
 
-            directions = [
-                0 if abs(auto_positions[index] - auto_positions[index - 1]) < 1 else (
-                    1 if auto_positions[index] > auto_positions[index - 1] else -1
+            module_profiles = []
+            for module_start in (0, 3, 6, 9):
+                profile = tuple(
+                    round(
+                        auto_positions[module_start + phase]
+                        - auto_positions[module_start],
+                        1,
+                    )
+                    for phase in range(3)
                 )
-                for index in range(1, 12)
-            ]
+                module_profiles.append(profile)
 
-            self.assertGreaterEqual(
-                sum(direction == 0 for direction in directions),
-                0,
-            )
-
-            for period in (2, 3, 4):
-                repeated_three_times = any(
-                    directions[index - period:index]
-                    == directions[index - 2 * period:index - period]
-                    == directions[index - 3 * period:index - 2 * period]
-                    for index in range(3 * period, len(directions) + 1)
+            for index in range(3):
+                self.assertNotEqual(
+                    module_profiles[index],
+                    module_profiles[index + 1],
+                    "Módulos vizinhos não devem receber a mesma composição.",
                 )
-                self.assertFalse(
-                    repeated_three_times,
-                    (
-                        "A trajetória não deve repetir o mesmo ciclo "
-                        f"de direções de período {period} por três ciclos consecutivos."
+
+            for boundary in (2, 5, 8):
+                self.assertAlmostEqual(
+                    auto_positions[boundary],
+                    auto_positions[boundary + 1],
+                    delta=0.1,
+                    msg=(
+                        f"F{boundary + 1} e F{boundary + 2} devem formar "
+                        "uma transição contínua entre trechos."
                     ),
                 )
 
@@ -831,6 +844,16 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                     await source.get_attribute("data-modulo-id"),
                     await target.get_attribute("data-modulo-id"),
                     f"A transição F{index + 1} → F{index + 2} deve cruzar módulos.",
+                )
+
+                self.assertAlmostEqual(
+                    ys[index],
+                    ys[index + 1],
+                    delta=0.1,
+                    msg=(
+                        f"A transição F{index + 1} → F{index + 2} deve "
+                        "manter continuidade de altura."
+                    ),
                 )
 
         self._assert_no_page_errors(page_errors)
