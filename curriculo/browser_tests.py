@@ -655,6 +655,66 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
         self._assert_no_page_errors(page_errors)
 
+    async def test_geometria_global_tem_contratos_de_continuidade(self):
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            nodes = page.locator(".fase-node[data-index]")
+            connectors = page.locator(".editor-connector[data-connector-index]")
+
+            await expect(nodes).to_have_count(12)
+            await expect(connectors).to_have_count(11)
+
+            ys = [
+                float(await nodes.nth(index).get_attribute("data-render-y"))
+                for index in range(12)
+            ]
+
+            self.assertGreaterEqual(
+                len({round(value, 1) for value in ys}),
+                3,
+                "A trajetória precisa ter pelo menos três alturas visuais distintas.",
+            )
+
+            for index in range(11):
+                source = nodes.nth(index)
+                target = nodes.nth(index + 1)
+                connector = page.locator(
+                    f'.editor-connector[data-connector-index="{index}"] .linha-conector'
+                )
+
+                self.assertEqual(
+                    int(await target.get_attribute("data-index")),
+                    int(await source.get_attribute("data-index")) + 1,
+                )
+                path = await connector.get_attribute("d")
+                self.assertRegex(path or "", r"^M 0,-?\d+(?:\.\d+)? C ")
+                self.assertNotEqual(path, "")
+
+                self.assertNotEqual(
+                    round(ys[index], 1),
+                    round(ys[index + 1], 1),
+                    f"F{index + 1} e F{index + 2} não devem compartilhar a mesma altura.",
+                )
+
+                values = re.findall(r"-?\d+(?:\.\d+)?", path or "")
+                self.assertGreaterEqual(len(values), 6)
+                control_xs = [float(values[2]), float(values[4])]
+                self.assertGreaterEqual(control_xs[0], 0)
+                self.assertLessEqual(control_xs[1], 100)
+                self.assertLessEqual(control_xs[0], control_xs[1])
+
+            for index in (2, 5, 8):
+                source = nodes.nth(index)
+                target = nodes.nth(index + 1)
+                self.assertNotEqual(
+                    await source.get_attribute("data-modulo-id"),
+                    await target.get_attribute("data-modulo-id"),
+                    f"A transição F{index + 1} → F{index + 2} deve cruzar módulos.",
+                )
+
+        self._assert_no_page_errors(page_errors)
+
     async def test_jornada_global_mantem_conector_entre_modulos(self):
         modulo2 = await sync_to_async(Modulo.objects.create)(
             disciplina=self.trilha,
