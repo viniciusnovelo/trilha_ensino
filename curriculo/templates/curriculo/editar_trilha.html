@@ -781,11 +781,6 @@
                         <input type="number" name="moedas_recompensa" value="10" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
                     </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Posição vertical</label>
-                    <input type="number" name="deslocamento_y" value="0" min="-150" max="150" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
-                    <p class="text-xs text-white/35 mt-1">Use a posição para criar uma jornada mais viva no mapa. O ajuste fino pode ser feito arrastando a fase.</p>
-                </div>
                 <div class="flex gap-3 pt-2">
                     <button type="button" onclick="closeModal('modal-fase')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
                     <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black">Criar fase</button>
@@ -950,10 +945,6 @@
                 <div class="grid grid-cols-2 gap-3">
                     <input type="number" name="xp_recompensa" id="editar-fase-xp" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
                     <input type="number" name="moedas_recompensa" id="editar-fase-moedas" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
-                </div>
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Deslocamento vertical</label>
-                    <input type="number" name="deslocamento_y" id="editar-fase-y" min="-150" max="150" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
                 </div>
                 <div class="flex gap-3">
                     <button type="button" onclick="closeModal('modal-editar-fase')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
@@ -1155,7 +1146,7 @@
             openModal('modal-editar-modulo');
         }
 
-        function openEditFase(id,moduloId,titulo,ordem,tipo,xp,moedas,y) {
+        function openEditFase(id,moduloId,titulo,ordem,tipo,xp,moedas) {
             document.getElementById('editar-fase-id').value=id;
             document.getElementById('editar-fase-modulo').value=moduloId;
             document.getElementById('editar-fase-titulo').value=titulo;
@@ -1163,7 +1154,6 @@
             document.getElementById('editar-fase-tipo').value=tipo;
             document.getElementById('editar-fase-xp').value=xp;
             document.getElementById('editar-fase-moedas').value=moedas;
-            document.getElementById('editar-fase-y').value=y;
             document.getElementById('editar-fase-erro').classList.add('hidden');
             openModal('modal-editar-fase');
         }
@@ -1405,7 +1395,7 @@
                     const fase = editorFases[target.dataset.faseId];
                     if (!fase) break;
                     const node = document.querySelector('.fase-node[data-id="' + fase.id + '"]');
-                    openEditFase(fase.id, fase.moduloId, fase.titulo, fase.ordem, fase.tipoCodigo, fase.xp, fase.moedas, node?.getAttribute('data-y') || 0);
+                    openEditFase(fase.id, fase.moduloId, fase.titulo, fase.ordem, fase.tipoCodigo, fase.xp, fase.moedas);
                     break;
                 }
                 case 'excluir-fase':
@@ -1493,7 +1483,7 @@
             const fase=editorFases[selectedEditorId];
             if(!fase) return;
             const node=document.querySelector('.fase-node[data-id="'+fase.id+'"]');
-            openEditFase(fase.id,fase.moduloId,fase.titulo,fase.ordem,fase.tipoCodigo,fase.xp,fase.moedas,node?.getAttribute('data-y')||0);
+            openEditFase(fase.id,fase.moduloId,fase.titulo,fase.ordem,fase.tipoCodigo,fase.xp,fase.moedas);
         }
         function deleteSelectedModulo(){
             if(selectedEditorType!=='modulo' || !selectedEditorId) return;
