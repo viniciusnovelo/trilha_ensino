@@ -1493,17 +1493,21 @@
         applyMapScale();
 
         /*
-         * Geometria global da jornada:
-         * - a ordem horizontal continua sendo a ordem única de Fase;
-         * - o Y visual é composto por uma ondulação automática global +
-         *   deslocamento_y persistido pelo usuário;
-         * - cada conector é calculado entre os dois nós consecutivos reais,
-         *   inclusive quando a passagem cruza um módulo.
+         * Trajetória dinâmica global:
+         * - existe uma única sequência de fases, independentemente dos módulos;
+         * - o eixo X continua sendo monotônico pela ordem global;
+         * - o Y automático é uma heurística determinística de vizinhança,
+         *   não uma onda periódica;
+         * - deslocamento_y permanece exclusivamente como ajuste persistido;
+         * - a geometria de cada conector é derivada dos dois nós consecutivos.
          *
-         * A ondulação não reinicia por módulo: isso é o que mantém a leitura
-         * de uma única estrada em vez de quatro trilhas independentes.
+         * A heurística usa o módulo e a posição dentro dele apenas para dar
+         * ritmo à composição. Ela nunca reinicia ao trocar de módulo.
          */
-        const EDITOR_AUTO_WAVE = 56;
+        const EDITOR_LAYOUT_LEVELS = [-58, -28, 0, 28, 58];
+        const EDITOR_MIN_NODE_GAP = 92;
+        const EDITOR_TITLE_HALF = 72;
+        const EDITOR_NODE_RADIUS = 35;
 
         function getMapPhaseNodes() {
             return Array.from(document.querySelectorAll('.fase-node[data-index]'))
@@ -1514,10 +1518,6 @@
             return Math.max(min,Math.min(max,value));
         }
 
-        function getAutoMapY(index) {
-            return Math.round(Math.sin(Number(index) * Math.PI / 2) * EDITOR_AUTO_WAVE);
-        }
-
         function getCustomMapY(node) {
             return Number(node.dataset.customY ?? node.dataset.y ?? 0) || 0;
         }
@@ -1526,8 +1526,87 @@
             return Number(node.dataset.renderY ?? 0) || 0;
         }
 
-        function applyMapNodePosition(node) {
-            const autoY=getAutoMapY(node.dataset.index);
+        function getPhaseModuleIndex(node) {
+            return Number(node.dataset.moduloIndex || node.dataset.moduloId || 0) || 0;
+        }
+
+        function getPhaseWithinModule(node) {
+            return Number(node.dataset.modulePhaseIndex || 0) || 0;
+        }
+
+        function chooseDynamicAutoY(nodes,index) {
+            if(index===0) return 0;
+
+            const previous=nodes[index-1];
+            const previousAuto=Number(previous.dataset.autoY || 0);
+            const previousCustom=getCustomMapY(previous);
+            const previousVisual=previousAuto+previousCustom;
+            const moduleIndex=getPhaseModuleIndex(nodes[index]);
+            const phaseIndex=getPhaseWithinModule(nodes[index]);
+
+            const candidates=EDITOR_LAYOUT_LEVELS
+                .map(level=>level + (phaseIndex%2===0 ? 0 : (moduleIndex%2 ? 10 : -10)))
+                .filter((value,position,array)=>array.indexOf(value)===position);
+
+            let best=candidates[0];
+            let bestScore=Infinity;
+
+            candidates.forEach(candidate=>{
+                const candidateVisual=candidate+getCustomMapY(nodes[index]);
+                const verticalGap=Math.abs(candidateVisual-previousVisual);
+                let score=Math.abs(candidateVisual-previousVisual)*0.42;
+
+                if(verticalGap<EDITOR_MIN_NODE_GAP) {
+                    score += (EDITOR_MIN_NODE_GAP-verticalGap)*3.2;
+                }
+
+                if(Math.abs(candidateVisual)>92) score += (Math.abs(candidateVisual)-92)*0.45;
+
+                // Penaliza repetir exatamente a altura anterior: a estrada ganha
+                // variação sem obrigar toda fase a mudar de lado.
+                if(Math.abs(candidate-previousAuto)<8) score += 18;
+
+                // Em uma mudança de módulo, privilegia uma transição de ritmo
+                // pequena, nunca um salto arbitrário.
+                if(index>0 && getPhaseModuleIndex(previous)!==moduleIndex) {
+                    score += Math.abs(candidate-previousAuto)*0.18;
+                }
+
+                if(score<bestScore) {
+                    bestScore=score;
+                    best=candidate;
+                }
+            });
+
+            return best;
+        }
+
+        function getAutoMapY(index,nodes) {
+            const node=nodes[index];
+            if(index===0) return 0;
+
+            // Calcula sequencialmente porque a decisão atual depende da vizinhança
+            // visual já posicionada. Isso mantém o resultado determinístico.
+            if(node.dataset.layoutCalculated==='true') {
+                return Number(node.dataset.autoY||0);
+            }
+
+            const autoY=chooseDynamicAutoY(nodes,index);
+            node.dataset.autoY=String(autoY);
+            node.dataset.layoutCalculated='true';
+            return autoY;
+        }
+
+        function positionsConflict(nodes,index,candidateVisual) {
+            for(let i=0;i<index;i++) {
+                const otherVisual=getRenderMapY(nodes[i]);
+                const distance=Math.abs(candidateVisual-otherVisual);
+                if(distance<EDITOR_NODE_RADIUS*2) return true;
+            }
+            return false;
+        }
+
+        function applyMapNodePosition(node,autoY) {
             const customY=getCustomMapY(node);
             const renderY=autoY+customY;
             node.dataset.autoY=String(autoY);
@@ -1537,6 +1616,32 @@
             node.style.transform='translateY('+renderY+'px)';
         }
 
+        function rebuildDynamicLayout(nodes) {
+            nodes.forEach(node=>{
+                node.dataset.layoutCalculated='false';
+            });
+
+            nodes.forEach((node,index)=>{
+                let autoY=getAutoMapY(index,nodes);
+                let visual=autoY+getCustomMapY(node);
+
+                if(positionsConflict(nodes,index,visual)) {
+                    const alternatives=EDITOR_LAYOUT_LEVELS
+                        .map(level=>level)
+                        .sort((a,b)=>Math.abs(a-autoY)-Math.abs(b-autoY));
+
+                    const alternative=alternatives.find(level=>{
+                        const candidate=level+getCustomMapY(node);
+                        return !positionsConflict(nodes,index,candidate);
+                    });
+
+                    if(alternative!==undefined) autoY=alternative;
+                }
+
+                applyMapNodePosition(node,autoY);
+            });
+        }
+
         function updateMapConnector(index) {
             const nodes=getMapPhaseNodes();
             const source=nodes[index];
@@ -1544,13 +1649,18 @@
             const connector=document.querySelector('.editor-connector[data-connector-index="'+index+'"]');
             if(!source || !target || !connector) return;
 
-            const sourceY=getRenderMapY(source);
-            const targetY=getRenderMapY(target);
-            const y1=100+sourceY;
-            const y2=100+targetY;
-            const delta=Math.abs(y2-y1);
-            const bend=Math.max(22,Math.min(38,38-delta*0.08));
-            const path='M 0,'+y1+' C '+bend+','+y1+' '+(100-bend)+','+y2+' 100,'+y2;
+            const sourceY=100+getRenderMapY(source);
+            const targetY=100+getRenderMapY(target);
+            const delta=targetY-sourceY;
+            const distance=Math.abs(delta);
+
+            // O avanço horizontal é constante, mas a curvatura se adapta ao
+            // deslocamento vertical. Isso evita ângulos secos e curvas fechadas.
+            const bend=clampEditorNumber(42-distance*0.055,20,38);
+            const path='M 0,'+sourceY+
+                ' C '+bend+','+sourceY+
+                ' '+(100-bend)+','+targetY+
+                ' 100,'+targetY;
 
             const base=connector.querySelector('.linha-conector');
             const dash=connector.querySelector('.linha-tracejada');
@@ -1560,7 +1670,7 @@
 
         function updateAllMapGeometry() {
             const nodes=getMapPhaseNodes();
-            nodes.forEach(applyMapNodePosition);
+            rebuildDynamicLayout(nodes);
             document.querySelectorAll('.editor-connector[data-connector-index]').forEach((_,index)=>{
                 updateMapConnector(index);
             });
