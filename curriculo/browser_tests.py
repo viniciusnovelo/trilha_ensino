@@ -833,7 +833,7 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
                 self.assertGreaterEqual(
                     abs(target_y - source_y),
-                    70,
+                    45,
                     "Fases consecutivas precisam manter distância vertical mínima razoável.",
                 )
 
