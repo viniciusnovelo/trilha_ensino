@@ -91,9 +91,8 @@
         .linha-conector { stroke:rgba(255,255,255,.15); }
         .linha-tracejada { stroke:rgba(255,255,255,.45); }
         .glass-card { background:rgba(15,23,42,.72); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(18px); }
-        .fase-node .fase-actions { opacity:0; transform:translateY(6px); }
-        .fase-node:hover .fase-actions,
-        .fase-node:focus-within .fase-actions { opacity:1; transform:translateY(0); }
+        .fase-node .fase-actions { opacity:0; pointer-events:none; transform:translateY(6px); transition:opacity .16s ease, transform .16s ease; }
+        .fase-node.editor-selected .fase-actions { opacity:1; pointer-events:auto; transform:translateY(0); }
         .editor-mapa-track {
             position: relative;
             display: flex;
@@ -101,7 +100,7 @@
             min-width: 100%;
             width: max-content;
             min-height: 100%;
-            padding: 80px 55px 130px;
+            padding: 52px 55px 92px;
             justify-content: center;
         }
 
@@ -117,21 +116,21 @@
             width: 0;
             min-width: 0;
             z-index: 40;
-            top: -150px;
+            top: -48px;
             margin-right: -18px;
             flex: 0 0 auto;
         }
 
         .editor-module-number {
-            width: 25px;
-            height: 25px;
-            border-radius: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(255,255,255,.12);
             color: var(--editor-module-color, #a5b4fc);
-            background: rgba(2,6,23,.40);
+            background: rgba(2,6,23,.55);
             font-size: 9px;
             font-weight: 1000;
             backdrop-filter: blur(5px);
@@ -171,6 +170,9 @@
             transform: translateY(-2px);
             filter: brightness(1.08);
         }
+
+        .editor-module-label > div { max-width: 150px; }
+        .editor-module-label > div span:last-child { line-height:1.15; }
 
         .editor-phase-title {
             position: absolute;
@@ -603,14 +605,6 @@
                                             title="Arrastar verticalmente"
                                         >
                                             ↕
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}"
-                                            class="bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] border border-emerald-300/10"
-                                        >
-                                            ＋ Questão ({{ fase.questoes.count }})
                                         </button>
 
                                     </div>
@@ -1463,7 +1457,7 @@
             } else if(type==='fase') {
                 const fase=editorFases[id]; if(!fase)return;
                 context.textContent='Fase selecionada';
-                html='<div class="rounded-2xl bg-indigo-400/10 border border-indigo-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">FASE</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(fase.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(fase.moduloTitulo)+' · '+escapeEditorHtml(fase.tipo)+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Questões</p><p class="text-xl font-black mt-1">'+fase.questoes+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">XP</p><p class="text-xl font-black mt-1">'+fase.xp+'</p></div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3 text-xs text-white/55">Recompensa: <strong class="text-white">'+fase.moedas+' moedas</strong></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black px-4 py-3" data-editor-action="editar-fase" data-fase-id="'+id+'">Editar fase</button><a href="'+fase.url+'" class="editor-details-action flex items-center justify-center w-full rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-black px-4 py-3">Abrir fase</a><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" data-editor-action="excluir-fase" data-fase-id="'+id+'" data-fase-titulo="'+escapeEditorHtml(fase.titulo)+'">Excluir fase</button></div>';
+                html='<div class="rounded-2xl bg-indigo-400/10 border border-indigo-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">FASE</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(fase.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(fase.moduloTitulo)+' · '+escapeEditorHtml(fase.tipo)+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Questões</p><p class="text-xl font-black mt-1">'+fase.questoes+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">XP</p><p class="text-xl font-black mt-1">'+fase.xp+'</p></div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3 text-xs text-white/55">Recompensa: <strong class="text-white">'+fase.moedas+' moedas</strong></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black px-4 py-3" data-editor-action="editar-fase" data-fase-id="'+id+'">Editar fase</button><a href="'+fase.url+'" class="editor-details-action flex items-center justify-center w-full rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-black px-4 py-3">Abrir fase</a><button type="button" class="editor-details-action w-full rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 text-emerald-200 font-black px-4 py-3" data-editor-action="adicionar-questao" data-fase-id="'+id+'" data-fase-titulo="'+escapeEditorHtml(fase.titulo)+'">Adicionar questão <span class="ml-1 text-emerald-300/70">('+fase.questoes+')</span></button><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" data-editor-action="excluir-fase" data-fase-id="'+id+'" data-fase-titulo="'+escapeEditorHtml(fase.titulo)+'">Excluir fase</button></div>';
             } else if(type==='questao') {
                 const questao=questoesEditor[id]; if(!questao)return;
                 context.textContent='Questão selecionada';
@@ -1498,7 +1492,7 @@
         }
         function applyMapScale(){const canvas=document.getElementById('editor-map-canvas');const label=document.getElementById('map-zoom-value');if(!canvas)return;canvas.style.transform='scale('+mapScale+')';if(label)label.textContent=Math.round(mapScale*100)+'%';}
         function changeMapZoom(delta){mapScale=Math.max(0.65,Math.min(1.35,Math.round((mapScale+delta)*100)/100));applyMapScale();}
-        function fitMapToViewport(){const viewport=document.querySelector('.editor-map-viewport');const canvas=document.getElementById('editor-map-canvas');if(!viewport||!canvas)return;const availableHeight=Math.max(320,viewport.clientHeight-40);mapScale=Math.max(0.65,Math.min(1.05,availableHeight/canvas.offsetHeight));mapScale=Math.round(mapScale*100)/100;applyMapScale();requestAnimationFrame(()=>{viewport.scrollLeft=Math.max(0,(canvas.offsetWidth*mapScale-viewport.clientWidth)/2);viewport.scrollTop=Math.max(0,(canvas.offsetHeight*mapScale-viewport.clientHeight)/2);});}
+        function fitMapToViewport(){const viewport=document.querySelector('.editor-map-viewport');const canvas=document.getElementById('editor-map-canvas');if(!viewport||!canvas)return;const availableHeight=Math.max(320,viewport.clientHeight-40);mapScale=Math.max(0.65,Math.min(1.35,availableHeight/canvas.offsetHeight));mapScale=Math.round(mapScale*100)/100;applyMapScale();requestAnimationFrame(()=>{viewport.scrollLeft=Math.max(0,(canvas.offsetWidth*mapScale-viewport.clientWidth)/2);viewport.scrollTop=Math.max(0,(canvas.offsetHeight*mapScale-viewport.clientHeight)/2);});}
         applyMapScale();
 
         /*
