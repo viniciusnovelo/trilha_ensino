@@ -684,14 +684,37 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                     )
 
             auto_positions = [
-                int(float(await nodes.nth(index).get_attribute("data-auto-y")))
+                float(await nodes.nth(index).get_attribute("data-auto-y"))
                 for index in range(12)
             ]
             self.assertGreater(
-                len(set(auto_positions)),
-                2,
-                "A trajetória não deve repetir apenas uma onda periódica fixa.",
+                len({round(value, 1) for value in auto_positions}),
+                3,
+                "A trajetória precisa apresentar variação vertical real.",
             )
+
+            directions = [
+                0 if abs(auto_positions[index] - auto_positions[index - 1]) < 1 else (
+                    1 if auto_positions[index] > auto_positions[index - 1] else -1
+                )
+                for index in range(1, 12)
+            ]
+
+            self.assertGreaterEqual(
+                sum(direction == 0 for direction in directions),
+                0,
+            )
+
+            for period in (2, 3, 4):
+                repeated = any(
+                    directions[index - period:index]
+                    == directions[index - 2 * period:index - period]
+                    for index in range(2 * period, len(directions) + 1)
+                )
+                self.assertFalse(
+                    repeated,
+                    f"A trajetória não deve repetir um ciclo de direções de período {period}.",
+                )
 
         self._assert_no_page_errors(page_errors)
 

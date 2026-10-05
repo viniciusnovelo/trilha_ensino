@@ -1513,11 +1513,12 @@
          * verticais possíveis e a escolha considera também como a próxima
          * transição ficará. Assim, a forma final emerge da sequência inteira.
          */
-        const EDITOR_LAYOUT_LEVELS = [-112, -76, -42, -8, 28, 64, 100];
-        const EDITOR_MIN_NODE_GAP = 78;
+        const EDITOR_LAYOUT_LEVELS = [-108, -72, -36, 0, 36, 72, 108];
+        const EDITOR_MIN_NODE_GAP = 82;
         const EDITOR_TITLE_HALF = 72;
         const EDITOR_NODE_RADIUS = 35;
         const EDITOR_MAX_AUTO_Y = 112;
+        const EDITOR_TARGET_STEP = 62;
 
         function getMapPhaseNodes() {
             return Array.from(document.querySelectorAll('.fase-node[data-index]'))
@@ -1549,17 +1550,110 @@
         }
 
         function getCandidateLevels(node,index) {
-            const moduleIndex=getPhaseModuleIndex(node);
-            const phaseIndex=getPhaseWithinModule(node);
-            const rhythm=((moduleIndex*13 + phaseIndex*7) % 17) - 8;
+            return EDITOR_LAYOUT_LEVELS.slice();
+        }
 
-            return EDITOR_LAYOUT_LEVELS
-                .map(level=>clampEditorNumber(
-                    level + rhythm,
-                    -EDITOR_MAX_AUTO_Y,
-                    EDITOR_MAX_AUTO_Y
-                ))
-                .filter((value,position,array)=>array.indexOf(value)===position);
+        function getDirection(delta) {
+            if(Math.abs(delta)<1) return 0;
+            return delta>0 ? 1 : -1;
+        }
+
+        function transitionShapePenalty(delta,previousDelta,previousPreviousDelta,history) {
+            const distance=Math.abs(delta);
+            let penalty=0;
+            const direction=getDirection(delta);
+
+            if(distance<EDITOR_MIN_NODE_GAP) {
+                penalty += Math.pow(EDITOR_MIN_NODE_GAP-distance,2)*0.38;
+            }
+
+            if(distance>118) {
+                penalty += (distance-118)*1.25;
+            }
+
+            if(direction===0) {
+                penalty += 10;
+            }
+
+            if(previousDelta!==null) {
+                const previousDirection=getDirection(previousDelta);
+
+                if(direction!==0 && previousDirection===direction) {
+                    penalty += 11;
+                }
+
+                if(direction!==0 && previousDirection!==0 && previousDirection!==direction) {
+                    penalty += 3.5;
+                }
+
+                if(Math.abs(distance-Math.abs(previousDelta))<9) {
+                    penalty += 13;
+                }
+            }
+
+            if(
+                previousDelta!==null &&
+                previousPreviousDelta!==null
+            ) {
+                const previousDirection=getDirection(previousDelta);
+                const previousPreviousDirection=getDirection(previousPreviousDelta);
+
+                if(
+                    direction!==0 &&
+                    direction===previousDirection &&
+                    direction===previousPreviousDirection
+                ) {
+                    penalty += 42;
+                }
+
+                if(
+                    direction!==0 &&
+                    previousDirection!==0 &&
+                    previousPreviousDirection!==0 &&
+                    direction===-previousDirection &&
+                    previousDirection===-previousPreviousDirection
+                ) {
+                    penalty += 31;
+                }
+
+                if(
+                    direction!==0 &&
+                    direction===previousPreviousDirection &&
+                    previousDirection!==direction
+                ) {
+                    penalty += 18;
+                }
+            }
+
+            const recent=history || [];
+
+            if(recent.length>=3) {
+                const previous=recent[recent.length-1];
+                const twoBack=recent[recent.length-2];
+                const threeBack=recent[recent.length-3];
+
+                if(
+                    direction!==0 &&
+                    getDirection(previous)===getDirection(twoBack) &&
+                    getDirection(twoBack)===getDirection(threeBack) &&
+                    direction===getDirection(previous)
+                ) {
+                    penalty += 24;
+                }
+
+                if(
+                    direction!==0 &&
+                    getDirection(previous)!==0 &&
+                    getDirection(twoBack)!==0 &&
+                    getDirection(threeBack)!==0 &&
+                    direction===getDirection(twoBack) &&
+                    getDirection(previous)===getDirection(threeBack)
+                ) {
+                    penalty += 27;
+                }
+            }
+
+            return penalty;
         }
 
         function verticalSeparationPenalty(nodes,index,candidateVisual) {
@@ -1573,61 +1667,95 @@
                     penalty += Math.pow(EDITOR_MIN_NODE_GAP-distance,2)*0.22;
                 }
 
-                if(index-i===1) penalty += Math.max(0,58-distance)*2.4;
-                if(index-i===2) penalty += Math.max(0,42-distance)*0.65;
+                if(index-i===1) {
+                    penalty += Math.max(0,58-distance)*2.4;
+                }
+
+                if(index-i===2) {
+                    penalty += Math.max(0,42-distance)*0.65;
+                }
             }
 
             const previous=index>0 ? getRenderMapY(nodes[index-1]) : null;
+
             if(previous!==null) {
                 const titleBand=EDITOR_TITLE_HALF+EDITOR_NODE_RADIUS;
+
                 if(Math.abs(candidateVisual-previous)<titleBand) {
-                    penalty += (titleBand-Math.abs(candidateVisual-previous))*0.9;
+                    penalty += (
+                        titleBand-Math.abs(candidateVisual-previous)
+                    )*0.9;
                 }
             }
 
             return penalty;
         }
 
-        function directionPenalty(previousDelta,nextDelta) {
-            if(previousDelta===null) return 0;
-
-            const previousDirection=Math.sign(previousDelta);
-            const nextDirection=Math.sign(nextDelta);
-
-            if(nextDirection===0 || previousDirection===0) return 0;
-
-            return previousDirection!==nextDirection
-                ? Math.min(28,Math.abs(previousDelta-nextDelta)*0.18)
-                : 0;
-        }
-
         function continuationPenalty(nodes,index,candidateAutoY) {
             const nextIndex=index+1;
+
             if(nextIndex>=nodes.length) return 0;
 
-            const currentVisual=getVisualY(nodes,index,candidateAutoY);
+            const currentVisual=getVisualY(
+                nodes,
+                index,
+                candidateAutoY
+            );
+
             const previousVisual=index>0
                 ? getRenderMapY(nodes[index-1])
                 : currentVisual;
+
             const incoming=currentVisual-previousVisual;
+            const history=[];
+
+            for(
+                let historyIndex=Math.max(1,index-3);
+                historyIndex<=index;
+                historyIndex++
+            ) {
+                history.push(
+                    getRenderMapY(nodes[historyIndex])
+                    - getRenderMapY(nodes[historyIndex-1])
+                );
+            }
 
             let bestNext=Infinity;
-            getCandidateLevels(nodes[nextIndex],nextIndex).forEach(nextAuto=>{
-                const nextVisual=getVisualY(nodes,nextIndex,nextAuto);
+
+            getCandidateLevels(
+                nodes[nextIndex],
+                nextIndex
+            ).forEach(nextAuto=>{
+                const nextVisual=getVisualY(
+                    nodes,
+                    nextIndex,
+                    nextAuto
+                );
+
                 const outgoing=nextVisual-currentVisual;
-                let score=Math.abs(outgoing-incoming)*0.34;
+                let score=transitionShapePenalty(
+                    outgoing,
+                    incoming,
+                    history.length>=2
+                        ? history[history.length-2]
+                        : null,
+                    history
+                );
 
-                if(Math.abs(outgoing)<EDITOR_MIN_NODE_GAP) {
-                    score += (EDITOR_MIN_NODE_GAP-Math.abs(outgoing))*1.8;
+                if(
+                    getPhaseModuleIndex(nodes[index]) !==
+                    getPhaseModuleIndex(nodes[nextIndex])
+                ) {
+                    score += Math.max(
+                        0,
+                        Math.abs(outgoing-incoming)-84
+                    )*0.12;
                 }
 
-                score += directionPenalty(incoming,outgoing);
-
-                if(getPhaseModuleIndex(nodes[index])!==getPhaseModuleIndex(nodes[nextIndex])) {
-                    score += Math.abs(outgoing-incoming)*0.12;
-                }
-
-                bestNext=Math.min(bestNext,score);
+                bestNext=Math.min(
+                    bestNext,
+                    score
+                );
             });
 
             return bestNext;
@@ -1639,43 +1767,100 @@
             const node=nodes[index];
             const previous=nodes[index-1];
             const previousVisual=getRenderMapY(previous);
-            const previousAuto=Number(previous.dataset.autoY || 0);
             const previousPreviousVisual=index>1
                 ? getRenderMapY(nodes[index-2])
                 : previousVisual;
+
             const incoming=previousVisual-previousPreviousVisual;
-            const moduleIndex=getPhaseModuleIndex(node);
-            const previousModuleIndex=getPhaseModuleIndex(previous);
+            const previousPreviousPreviousVisual=index>2
+                ? getRenderMapY(nodes[index-3])
+                : previousPreviousVisual;
+
+            const previousPreviousDelta=
+                previousPreviousVisual
+                - previousPreviousPreviousVisual;
+
+            const history=[];
+
+            for(
+                let historyIndex=Math.max(1,index-3);
+                historyIndex<=index-1;
+                historyIndex++
+            ) {
+                history.push(
+                    getRenderMapY(nodes[historyIndex])
+                    - getRenderMapY(nodes[historyIndex-1])
+                );
+            }
 
             let best=getCandidateLevels(node,index)[0];
             let bestScore=Infinity;
 
-            getCandidateLevels(node,index).forEach(candidate=>{
-                const candidateVisual=getVisualY(nodes,index,candidate);
+            getCandidateLevels(
+                node,
+                index
+            ).forEach((candidate,candidateIndex)=>{
+                const candidateVisual=getVisualY(
+                    nodes,
+                    index,
+                    candidate
+                );
+
                 const delta=candidateVisual-previousVisual;
-                let score=0;
                 const distance=Math.abs(delta);
+                let score=transitionShapePenalty(
+                    delta,
+                    index>1 ? incoming : null,
+                    index>2 ? previousPreviousDelta : null,
+                    history
+                );
 
-                score += Math.pow(Math.max(0,EDITOR_MIN_NODE_GAP-distance),2)*0.34;
-                score += Math.max(0,distance-112)*1.15;
+                score += verticalSeparationPenalty(
+                    nodes,
+                    index,
+                    candidateVisual
+                );
 
-                if(Math.abs(candidate-previousAuto)<12) score+=20;
-                if(incoming!==0 && Math.sign(delta)!==0 && Math.sign(delta)!==Math.sign(incoming)) {
-                    score+=11;
-                }
+                score += continuationPenalty(
+                    nodes,
+                    index,
+                    candidate
+                )*0.72;
 
-                if(previousModuleIndex!==moduleIndex) {
-                    score += Math.abs(delta-incoming)*0.10;
+                if(
+                    getPhaseModuleIndex(previous) !==
+                    getPhaseModuleIndex(node)
+                ) {
+                    score += Math.max(
+                        0,
+                        distance-104
+                    )*0.28;
+
+                    score += Math.max(
+                        0,
+                        Math.abs(delta-incoming)-72
+                    )*0.10;
                 }
 
                 const phaseIndex=getPhaseWithinModule(node);
-                if(phaseIndex===1) score += Math.max(0,Math.abs(delta)-100)*0.35;
-                if(phaseIndex===3) score += Math.max(0,Math.abs(delta)-92)*0.25;
 
-                score += verticalSeparationPenalty(nodes,index,candidateVisual);
-                score += continuationPenalty(nodes,index,candidate);
+                if(phaseIndex===1) {
+                    score += Math.max(
+                        0,
+                        distance-104
+                    )*0.20;
+                }
 
-                score += ((moduleIndex*17 + phaseIndex*11 + index*7) % 19)*0.001;
+                if(phaseIndex===3) {
+                    score += Math.max(
+                        0,
+                        distance-96
+                    )*0.18;
+                }
+
+                score += (
+                    (index*17 + candidateIndex*11)%23
+                )*0.003;
 
                 if(score<bestScore) {
                     bestScore=score;
@@ -1688,15 +1873,21 @@
 
         function getAutoMapY(index,nodes) {
             const node=nodes[index];
+
             if(index===0) return 0;
 
             if(node.dataset.layoutCalculated==='true') {
                 return Number(node.dataset.autoY||0);
             }
 
-            const autoY=chooseDynamicAutoY(nodes,index);
+            const autoY=chooseDynamicAutoY(
+                nodes,
+                index
+            );
+
             node.dataset.autoY=String(autoY);
             node.dataset.layoutCalculated='true';
+
             return autoY;
         }
 
@@ -1704,14 +1895,22 @@
             for(let i=0;i<index;i++) {
                 const otherVisual=getRenderMapY(nodes[i]);
                 const distance=Math.abs(candidateVisual-otherVisual);
-                if(distance<EDITOR_NODE_RADIUS*2) return true;
+
+                if(distance<EDITOR_NODE_RADIUS*2) {
+                    return true;
+                }
             }
+
             return false;
         }
 
-        function applyMapNodePosition(node,autoY=Number(node.dataset.autoY||0)) {
+        function applyMapNodePosition(
+            node,
+            autoY=Number(node.dataset.autoY||0)
+        ) {
             const customY=getCustomMapY(node);
             const renderY=autoY+customY;
+
             node.dataset.autoY=String(autoY);
             node.dataset.customY=String(customY);
             node.dataset.y=String(customY);
@@ -1725,16 +1924,29 @@
             });
 
             nodes.forEach((node,index)=>{
-                let autoY=getAutoMapY(index,nodes);
-                let visual=autoY+getCustomMapY(node);
+                let autoY=getAutoMapY(
+                    index,
+                    nodes
+                );
+
+                const visual=autoY+getCustomMapY(node);
 
                 if(positionsConflict(nodes,index,visual)) {
-                    const alternatives=getCandidateLevels(node,index)
-                        .sort((a,b)=>Math.abs(a-autoY)-Math.abs(b-autoY));
+                    const alternatives=getCandidateLevels(
+                        node,
+                        index
+                    ).sort(
+                        (a,b)=>Math.abs(a-autoY)-Math.abs(b-autoY)
+                    );
 
                     const alternative=alternatives.find(level=>{
                         const candidate=level+getCustomMapY(node);
-                        return !positionsConflict(nodes,index,candidate);
+
+                        return !positionsConflict(
+                            nodes,
+                            index,
+                            candidate
+                        );
                     });
 
                     if(alternative!==undefined) {
@@ -1743,7 +1955,10 @@
                     }
                 }
 
-                applyMapNodePosition(node,autoY);
+                applyMapNodePosition(
+                    node,
+                    autoY
+                );
             });
         }
 
