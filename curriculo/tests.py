@@ -2027,7 +2027,19 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            'id="modal-editar-questao"',
+            'function renderQuestionEditor(mode, id)',
+        )
+        self.assertContains(
+            response,
+            'id="context-edit-question-form"',
+        )
+        self.assertContains(
+            response,
+            'editor-expand-chevron',
+        )
+        self.assertNotContains(
+            response,
+            '<span class="editor-expand-chevron">▶</span>',
         )
         # A edição agora é acionada por data-* e por um listener
         # centralizado, evitando handlers inline misturados à seleção.
