@@ -1354,9 +1354,11 @@
             if(type==='fase') {
                 document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').forEach((element)=>element.classList.add('editor-selected'));
                 document.querySelectorAll('[data-editor-phase-title="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
+                console.log('EDITOR_PHASE_CIRCLE',normalizedId,document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').length,document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').length && document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle')[0].className);
             }
 
             renderEditorDetails(type,normalizedId);
+            console.log('EDITOR_DETAILS_CONTEXT',document.getElementById('editor-details-context')?.textContent,document.getElementById('editor-details-content')?.textContent?.slice(0,80));
         }
 
         function handleEditorInteraction(event) {
