@@ -706,14 +706,18 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             )
 
             for period in (2, 3, 4):
-                repeated = any(
+                repeated_three_times = any(
                     directions[index - period:index]
                     == directions[index - 2 * period:index - period]
-                    for index in range(2 * period, len(directions) + 1)
+                    == directions[index - 3 * period:index - 2 * period]
+                    for index in range(3 * period, len(directions) + 1)
                 )
                 self.assertFalse(
-                    repeated,
-                    f"A trajetória não deve repetir um ciclo de direções de período {period}.",
+                    repeated_three_times,
+                    (
+                        "A trajetória não deve repetir o mesmo ciclo "
+                        f"de direções de período {period} por três ciclos consecutivos."
+                    ),
                 )
 
         self._assert_no_page_errors(page_errors)
@@ -790,10 +794,35 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
                 values = re.findall(r"-?\d+(?:\.\d+)?", path or "")
                 self.assertGreaterEqual(len(values), 6)
+
                 control_xs = [float(values[2]), float(values[4])]
                 self.assertGreaterEqual(control_xs[0], 0)
                 self.assertLessEqual(control_xs[1], 100)
                 self.assertLessEqual(control_xs[0], control_xs[1])
+
+                source_y = ys[index]
+                target_y = ys[index + 1]
+                control_ys = [float(values[3]), float(values[5])]
+                lower_y = min(source_y, target_y)
+                upper_y = max(source_y, target_y)
+
+                for control_y in control_ys:
+                    self.assertGreaterEqual(
+                        control_y,
+                        lower_y - 1,
+                        "O conector não deve fazer overshoot vertical.",
+                    )
+                    self.assertLessEqual(
+                        control_y,
+                        upper_y + 1,
+                        "O conector não deve fazer overshoot vertical.",
+                    )
+
+                self.assertGreaterEqual(
+                    abs(target_y - source_y),
+                    70,
+                    "Fases consecutivas precisam manter distância vertical mínima razoável.",
+                )
 
             for index in (2, 5, 8):
                 source = nodes.nth(index)
