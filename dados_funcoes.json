@@ -22,7 +22,7 @@
           "questoes": [
             {
               "enunciado": "O que é uma função?",
-              "explicacao_erro": "Em uma função, cada elemento do domínio deve estar associado a exatamente um elemento do contradomínio.",
+              "explicacao_erro": "Como pensar: uma função transforma cada entrada permitida em uma única saída.\nResolução: para cada elemento do domínio, deve existir exatamente um elemento correspondente no contradomínio. Isso é a regra fundamental de uma função.\nResposta: Uma relação em que cada elemento do domínio está associado a exatamente um elemento do contradomínio.",
               "opcoes": [
                 {
                   "texto": "Uma relação em que cada elemento do domínio pode ter vários valores de saída.",
@@ -44,7 +44,7 @@
             },
             {
               "enunciado": "Considere f(x)=2x+1 com domínio {0,1,2}. Quais são os elementos da imagem?",
-              "explicacao_erro": "Calcule f(0), f(1) e f(2). Os resultados são 1, 3 e 5.",
+              "explicacao_erro": "Como pensar: a imagem é formada pelas saídas produzidas quando usamos os valores do domínio.\nResolução: f(0)=2·0+1=1, f(1)=2·1+1=3 e f(2)=2·2+1=5. Portanto, a imagem é {1,3,5}.\nResposta: {1,3,5}.",
               "opcoes": [
                 {
                   "texto": "{0,1,2}",
@@ -66,7 +66,7 @@
             },
             {
               "enunciado": "Se f(x)=2x+5, qual é o valor de f(3)?",
-              "explicacao_erro": "Substitua x por 3: f(3)=2·3+5=11.",
+              "explicacao_erro": "Como pensar: substitua o valor de x diretamente na expressão.\nResolução: f(3)=2·3+5=6+5=11.\nResposta: 11.",
               "opcoes": [
                 {
                   "texto": "8",
@@ -88,7 +88,7 @@
             },
             {
               "enunciado": "Em uma função custo C(x), em que x representa a quantidade de produtos comprados, qual é a variável independente?",
-              "explicacao_erro": "A variável independente é a entrada da função. Neste caso, é a quantidade x de produtos.",
+              "explicacao_erro": "Como pensar: a variável independente é a entrada da função; a saída depende dela.\nResolução: como x representa a quantidade de produtos escolhida, C(x) depende de x. Portanto, x é a variável independente.\nResposta: A quantidade x de produtos.",
               "opcoes": [
                 {
                   "texto": "O custo total C(x)",
@@ -120,7 +120,7 @@
           "questoes": [
             {
               "enunciado": "Para a função f(x)=x+4, definida para x∈{1,2,3}, qual é o domínio?",
-              "explicacao_erro": "O domínio é o conjunto de valores que podem ser usados como entrada da função.",
+              "explicacao_erro": "Como pensar: domínio é o conjunto de valores que podem entrar na função.\nResolução: a própria questão informa x∈{1,2,3}. Logo, esses são exatamente os valores do domínio.\nResposta: {1,2,3}.",
               "opcoes": [
                 {
                   "texto": "{4,5,6}",
@@ -142,7 +142,7 @@
             },
             {
               "enunciado": "Para f(x)=3x com domínio {1,2,3}, qual é a imagem?",
-              "explicacao_erro": "Calcule 3·1, 3·2 e 3·3. Os resultados formam a imagem.",
+              "explicacao_erro": "Como pensar: calcule a saída para cada elemento do domínio.\nResolução: f(1)=3, f(2)=6 e f(3)=9. Reunindo as saídas, a imagem é {3,6,9}.\nResposta: {3,6,9}.",
               "opcoes": [
                 {
                   "texto": "{1,2,3}",
@@ -164,7 +164,7 @@
             },
             {
               "enunciado": "Uma relação deixa de ser função quando:",
-              "explicacao_erro": "Para ser função, uma mesma entrada não pode possuir duas saídas diferentes.",
+              "explicacao_erro": "Como pensar: a regra de uma função permite apenas uma saída para cada entrada.\nResolução: se uma mesma entrada estiver ligada a duas saídas diferentes, a associação deixa de satisfazer a definição de função.\nResposta: Uma mesma entrada estiver associada a duas saídas diferentes.",
               "opcoes": [
                 {
                   "texto": "Um valor do contradomínio não for usado.",
@@ -186,7 +186,7 @@
             },
             {
               "enunciado": "Se f(0)=5, f(1)=7 e f(2)=9, qual valor corresponde à saída para x=1?",
-              "explicacao_erro": "Basta localizar a saída associada à entrada x=1.",
+              "explicacao_erro": "Como pensar: procure diretamente a saída correspondente à entrada pedida.\nResolução: na relação fornecida, quando x=1 temos f(1)=7.\nResposta: 7.",
               "opcoes": [
                 {
                   "texto": "5",
@@ -218,7 +218,7 @@
           "questoes": [
             {
               "enunciado": "Qual expressão representa uma função que a cada x associa o dobro de x mais 3?",
-              "explicacao_erro": "Dobro de x corresponde a 2x. Depois somamos 3.",
+              "explicacao_erro": "Como pensar: traduza cada parte da frase para uma operação algébrica.\nResolução: “dobro de x” é 2x. Depois somamos 3, formando f(x)=2x+3.\nResposta: f(x)=2x+3.",
               "opcoes": [
                 {
                   "texto": "f(x)=x+3",
@@ -240,7 +240,7 @@
             },
             {
               "enunciado": "Se f(x)=4x-1, qual é f(5)?",
-              "explicacao_erro": "Substitua x por 5: 4·5−1=19.",
+              "explicacao_erro": "Como pensar: substitua x=5 na expressão e faça a multiplicação antes da subtração.\nResolução: f(5)=4·5−1=20−1=19.\nResposta: 19.",
               "opcoes": [
                 {
                   "texto": "15",
@@ -262,7 +262,7 @@
             },
             {
               "enunciado": "Se f(x)=x²+2 e x=-3, qual é f(-3)?",
-              "explicacao_erro": "Primeiro calcule (-3)²=9. Depois some 2.",
+              "explicacao_erro": "Como pensar: substitua x por −3 e tenha atenção ao quadrado de um número negativo.\nResolução: f(-3)=(-3)²+2=9+2=11. O quadrado torna o resultado positivo.\nResposta: 11.",
               "opcoes": [
                 {
                   "texto": "-11",
@@ -284,7 +284,7 @@
             },
             {
               "enunciado": "Qual é o valor de x para que f(x)=10, sabendo que f(x)=2x+4?",
-              "explicacao_erro": "Resolva 2x+4=10. Então 2x=6 e x=3.",
+              "explicacao_erro": "Como pensar: como sabemos que f(x)=10, substitua esse valor na função e forme uma equação.\nResolução: 2x+4=10 → 2x=6 → x=3.\nResposta: 3.",
               "opcoes": [
                 {
                   "texto": "2",
@@ -323,7 +323,7 @@
           "questoes": [
             {
               "enunciado": "Na função f(x)=-3x+7, quais são os coeficientes angular e linear?",
-              "explicacao_erro": "Na forma ax+b, temos a=-3 e b=7.",
+              "explicacao_erro": "Como pensar: compare a função com a forma padrão f(x)=ax+b.\nResolução: em f(x)=−3x+7, o número que acompanha x é a=−3 e o termo independente é b=7.\nResposta: a=-3 e b=7.",
               "opcoes": [
                 {
                   "texto": "a=7 e b=-3",
@@ -345,7 +345,7 @@
             },
             {
               "enunciado": "Na função f(x)=5x-2, o coeficiente linear é:",
-              "explicacao_erro": "O coeficiente linear é o termo que não multiplica x.",
+              "explicacao_erro": "Como pensar: na forma ax+b, o coeficiente linear é o termo que fica sozinho, sem x.\nResolução: em 5x−2, temos a=5 e b=−2.\nResposta: −2.",
               "opcoes": [
                 {
                   "texto": "5",
@@ -367,7 +367,7 @@
             },
             {
               "enunciado": "Qual das funções abaixo é uma função afim?",
-              "explicacao_erro": "Função afim possui a forma f(x)=ax+b.",
+              "explicacao_erro": "Como pensar: uma função afim pode ser escrita na forma f(x)=ax+b, com a e b constantes.\nResolução: f(x)=3x−4 tem exatamente essa forma.\nResposta: f(x)=3x-4.",
               "opcoes": [
                 {
                   "texto": "f(x)=x²+1",
@@ -389,7 +389,7 @@
             },
             {
               "enunciado": "Se f(x)=ax+6 e f(2)=10, qual é o valor de a?",
-              "explicacao_erro": "Substitua x=2: 2a+6=10. Então 2a=4 e a=2.",
+              "explicacao_erro": "Como pensar: use o valor informado da função para montar uma equação em a.\nResolução: f(2)=10 → 2a+6=10 → 2a=4 → a=2.\nResposta: 2.",
               "opcoes": [
                 {
                   "texto": "1",
@@ -421,7 +421,7 @@
           "questoes": [
             {
               "enunciado": "A função f(x)=-2x+8 é:",
-              "explicacao_erro": "Quando o coeficiente angular é negativo, a função é decrescente.",
+              "explicacao_erro": "Como pensar: o sinal do coeficiente angular determina o comportamento da reta.\nResolução: como a=−2 é negativo, a função diminui quando x aumenta. Portanto, ela é decrescente.\nResposta: Decrescente.",
               "opcoes": [
                 {
                   "texto": "Crescente",
@@ -443,7 +443,7 @@
             },
             {
               "enunciado": "A função g(x)=4x-1 é:",
-              "explicacao_erro": "Quando o coeficiente angular é positivo, a função é crescente.",
+              "explicacao_erro": "Como pensar: observe o sinal do coeficiente angular.\nResolução: em g(x)=4x−1, temos a=4>0. Quando x aumenta, a função também aumenta.\nResposta: Crescente.",
               "opcoes": [
                 {
                   "texto": "Crescente",
@@ -465,7 +465,7 @@
             },
             {
               "enunciado": "Qual função representa uma reta horizontal?",
-              "explicacao_erro": "Uma reta horizontal tem coeficiente angular igual a zero.",
+              "explicacao_erro": "Como pensar: uma reta horizontal não sobe nem desce quando x varia.\nResolução: isso acontece quando o coeficiente de x é zero. Em f(x)=7, não existe termo com x, então a=0.\nResposta: f(x)=7.",
               "opcoes": [
                 {
                   "texto": "f(x)=2x+1",
@@ -487,7 +487,7 @@
             },
             {
               "enunciado": "Na função f(x)=6-3x, quando x aumenta uma unidade, o valor de f(x):",
-              "explicacao_erro": "O coeficiente angular é -3, então a saída diminui 3 unidades quando x aumenta 1.",
+              "explicacao_erro": "Como pensar: em uma função afim, o coeficiente angular informa a variação da saída para cada unidade de x.\nResolução: em f(x)=6−3x, a=−3. Portanto, aumentando x em 1, f(x) diminui 3.\nResposta: diminui 3.",
               "opcoes": [
                 {
                   "texto": "aumenta 3",
@@ -519,7 +519,7 @@
           "questoes": [
             {
               "enunciado": "Qual é o zero da função f(x)=4x-12?",
-              "explicacao_erro": "Faça f(x)=0: 4x−12=0. Assim, x=3.",
+              "explicacao_erro": "Como pensar: o zero da função é encontrado fazendo f(x)=0.\nResolução: 4x−12=0 → 4x=12 → x=3.\nResposta: 3.",
               "opcoes": [
                 {
                   "texto": "-3",
@@ -541,7 +541,7 @@
             },
             {
               "enunciado": "O zero da função f(x)=2x+10 é:",
-              "explicacao_erro": "Resolva 2x+10=0. Logo, x=-5.",
+              "explicacao_erro": "Como pensar: faça a função valer zero e isole x.\nResolução: 2x+10=0 → 2x=−10 → x=−5.\nResposta: −5.",
               "opcoes": [
                 {
                   "texto": "-10",
@@ -563,7 +563,7 @@
             },
             {
               "enunciado": "Se f(x)=-5x+20, em qual ponto o gráfico cruza o eixo x?",
-              "explicacao_erro": "No eixo x temos y=0. Assim, -5x+20=0 e x=4.",
+              "explicacao_erro": "Como pensar: todos os pontos do eixo x têm y=0.\nResolução: −5x+20=0 → −5x=−20 → x=4. Portanto, o ponto é (4,0).\nResposta: (4,0).",
               "opcoes": [
                 {
                   "texto": "(0,20)",
@@ -585,7 +585,7 @@
             },
             {
               "enunciado": "Qual função tem zero igual a 2?",
-              "explicacao_erro": "Substitua x=2 e verifique qual expressão resulta em zero.",
+              "explicacao_erro": "Como pensar: uma função tem zero 2 quando f(2)=0.\nResolução: teste as alternativas substituindo x=2. Para f(x)=2x−4, temos 2·2−4=0.\nResposta: f(x)=2x-4.",
               "opcoes": [
                 {
                   "texto": "f(x)=x+2",
@@ -624,7 +624,7 @@
           "questoes": [
             {
               "enunciado": "Onde o gráfico de f(x)=2x-6 cruza o eixo y?",
-              "explicacao_erro": "No eixo y temos x=0. Portanto, f(0)=-6.",
+              "explicacao_erro": "Como pensar: identifique o conceito pedido e organize os dados antes de calcular.\nResolução: No eixo y temos x=0. Portanto, f(0)=-6.\nResposta: (0,-6).",
               "opcoes": [
                 {
                   "texto": "(0,2)",
@@ -646,7 +646,7 @@
             },
             {
               "enunciado": "Qual ponto pertence ao gráfico de f(x)=3x+1?",
-              "explicacao_erro": "Substitua o x de cada alternativa na função e verifique se o y coincide.",
+              "explicacao_erro": "Como pensar: um ponto (x,y) pertence ao gráfico quando y é exatamente o resultado de f(x).\nResolução: substitua o x de cada alternativa em f(x)=3x+1. Para x=1, temos f(1)=3·1+1=4, então (1,4) pertence ao gráfico.\nResposta: (1,4).",
               "opcoes": [
                 {
                   "texto": "(0,0)",
@@ -668,7 +668,7 @@
             },
             {
               "enunciado": "Qual é o ponto onde o gráfico de f(x)=-4x+9 cruza o eixo y?",
-              "explicacao_erro": "Para encontrar a interseção com o eixo y, faça x=0.",
+              "explicacao_erro": "Como pensar: identifique o conceito pedido e organize os dados antes de calcular.\nResolução: Para encontrar a interseção com o eixo y, faça x=0.\nResposta: (0,9).",
               "opcoes": [
                 {
                   "texto": "(9,0)",
@@ -690,7 +690,7 @@
             },
             {
               "enunciado": "Uma reta passa pelos pontos (0,2) e (2,6). Qual é o coeficiente angular?",
-              "explicacao_erro": "Use a=(y2−y1)/(x2−x1)=(6−2)/(2−0)=2.",
+              "explicacao_erro": "Como pensar: o coeficiente angular mede quanto y varia quando x varia.\nResolução: a=(y₂−y₁)/(x₂−x₁)=(6−2)/(2−0)=4/2=2.\nResposta: 2.",
               "opcoes": [
                 {
                   "texto": "1",
@@ -722,7 +722,7 @@
           "questoes": [
             {
               "enunciado": "Uma tabela mostra x: 0,1,2 e f(x): 3,5,7. Qual lei representa a função?",
-              "explicacao_erro": "A saída aumenta 2 a cada unidade de x e começa em 3. Logo, f(x)=2x+3.",
+              "explicacao_erro": "Como pensar: observe quanto f(x) aumenta a cada aumento de 1 em x e identifique o valor inicial.\nResolução: os valores 3, 5 e 7 aumentam 2 em 2. Portanto, o coeficiente angular é 2. Como f(0)=3, o termo constante é 3. Logo, f(x)=2x+3.\nResposta: f(x)=2x+3.",
               "opcoes": [
                 {
                   "texto": "f(x)=x+3",
@@ -744,7 +744,7 @@
             },
             {
               "enunciado": "Se f(x)=3x+2, qual valor aparece na tabela quando x=4?",
-              "explicacao_erro": "Calcule f(4)=3·4+2=14.",
+              "explicacao_erro": "Como pensar: basta substituir x=4 na lei da função.\nResolução: f(4)=3·4+2=12+2=14.\nResposta: 14.",
               "opcoes": [
                 {
                   "texto": "10",
@@ -766,7 +766,7 @@
             },
             {
               "enunciado": "Observe a sequência de valores 10, 7, 4, 1. Qual é a variação a cada passo?",
-              "explicacao_erro": "Cada termo é obtido subtraindo 3 do termo anterior.",
+              "explicacao_erro": "Como pensar: compare dois termos consecutivos da sequência.\nResolução: 7−10=−3, 4−7=−3 e 1−4=−3. A variação é constante e igual a −3.\nResposta: -3.",
               "opcoes": [
                 {
                   "texto": "+3",
@@ -788,7 +788,7 @@
             },
             {
               "enunciado": "Se uma função afim apresenta f(0)=5 e f(1)=8, qual é o coeficiente angular?",
-              "explicacao_erro": "A variação entre x=0 e x=1 é 8−5=3. Portanto, a=3.",
+              "explicacao_erro": "Como pensar: o coeficiente angular pode ser calculado pela variação de y dividida pela variação de x.\nResolução: a=(8−5)/(1−0)=3/1=3.\nResposta: 3.",
               "opcoes": [
                 {
                   "texto": "2",
@@ -820,7 +820,7 @@
           "questoes": [
             {
               "enunciado": "Comparando f(x)=x+2 e g(x)=3x+2, qual é mais inclinada?",
-              "explicacao_erro": "A inclinação de uma função afim é determinada pelo coeficiente angular.",
+              "explicacao_erro": "Como pensar: para comparar a inclinação de duas retas, compare os módulos dos coeficientes angulares.\nResolução: f tem a=1 e g tem a=3. Como 3 é maior, g sobe mais rapidamente para cada unidade de x.\nResposta: g, pois 3 é maior.",
               "opcoes": [
                 {
                   "texto": "f, pois 1 é menor.",
@@ -842,7 +842,7 @@
             },
             {
               "enunciado": "As funções f(x)=2x+1 e g(x)=2x-5 possuem:",
-              "explicacao_erro": "Elas têm o mesmo coeficiente angular e, portanto, gráficos com a mesma inclinação.",
+              "explicacao_erro": "Como pensar: identifique o conceito pedido e organize os dados antes de calcular.\nResolução: Elas têm o mesmo coeficiente angular e, portanto, gráficos com a mesma inclinação.\nResposta: o mesmo coeficiente angular..",
               "opcoes": [
                 {
                   "texto": "o mesmo coeficiente angular.",
@@ -864,7 +864,7 @@
             },
             {
               "enunciado": "Qual é o ponto de encontro das funções f(x)=x+2 e g(x)=6-x?",
-              "explicacao_erro": "Iguale as expressões: x+2=6−x. Assim, x=2 e y=4.",
+              "explicacao_erro": "Como pensar: no ponto de encontro, as duas funções têm o mesmo valor de y.\nResolução: iguale as expressões: x+2=6−x → 2x=4 → x=2. Então y=2+2=4.\nResposta: (2,4).",
               "opcoes": [
                 {
                   "texto": "(2,4)",
@@ -886,7 +886,7 @@
             },
             {
               "enunciado": "Se duas funções têm o mesmo coeficiente angular, mas coeficientes lineares diferentes, seus gráficos são:",
-              "explicacao_erro": "Mesma inclinação e alturas diferentes produzem retas paralelas.",
+              "explicacao_erro": "Como pensar: compare os coeficientes de x nas duas funções.\nResolução: f(x)=2x+1 e g(x)=2x−5 têm a=2 nas duas. Portanto, possuem a mesma inclinação e são retas paralelas.\nResposta: o mesmo coeficiente angular.",
               "opcoes": [
                 {
                   "texto": "perpendiculares",
@@ -925,7 +925,7 @@
           "questoes": [
             {
               "enunciado": "Um táxi cobra R$6,00 de bandeirada e R$2,50 por quilômetro. Qual função representa o custo C(x)?",
-              "explicacao_erro": "A parcela fixa é 6 e o valor por quilômetro é 2,50. Portanto, C(x)=2,50x+6.",
+              "explicacao_erro": "Como pensar: separe a parte fixa da parte que depende da quantidade percorrida.\nResolução: a bandeirada é o custo fixo, 6. O custo variável é 2,50 por km, portanto 2,50x. Juntando os dois: C(x)=2,50x+6.\nResposta: C(x)=2,50x+6.",
               "opcoes": [
                 {
                   "texto": "C(x)=6x+2,50",
@@ -947,7 +947,7 @@
             },
             {
               "enunciado": "Usando C(x)=2,50x+6, qual é o custo de uma viagem de 10 km?",
-              "explicacao_erro": "Calcule 2,50·10+6=31.",
+              "explicacao_erro": "Como pensar: use a função de custo e substitua x pelo número de quilômetros.\nResolução: C(10)=2,50·10+6=25+6=31.\nResposta: R$31,00.",
               "opcoes": [
                 {
                   "texto": "R$25,00",
@@ -969,7 +969,7 @@
             },
             {
               "enunciado": "Uma empresa cobra uma taxa fixa de R$20,00 mais R$5,00 por item. Quanto custa comprar 8 itens?",
-              "explicacao_erro": "Use C(x)=5x+20 e substitua x=8. O resultado é R$60,00.",
+              "explicacao_erro": "Como pensar: identifique o custo fixo e o custo por item.\nResolução: C(x)=20+5x. Para 8 itens: C(8)=20+5·8=20+40=60.\nResposta: R$60,00.",
               "opcoes": [
                 {
                   "texto": "R$40,00",
@@ -991,7 +991,7 @@
             },
             {
               "enunciado": "Em C(x)=3x+50, o número 50 representa:",
-              "explicacao_erro": "O termo independente representa o custo fixo.",
+              "explicacao_erro": "Como pensar: na forma ax+b, b é a parcela que não depende de x.\nResolução: em C(x)=3x+50, os R$50 permanecem mesmo quando a quantidade x varia. Portanto, representam o custo fixo.\nResposta: o custo fixo.",
               "opcoes": [
                 {
                   "texto": "o preço por item",
@@ -1023,7 +1023,7 @@
           "questoes": [
             {
               "enunciado": "Um vendedor recebe R$1.200,00 fixos e R$40,00 por venda. Quanto recebe ao vender 15 produtos?",
-              "explicacao_erro": "Calcule 1200+40·15. O resultado é R$1.800,00.",
+              "explicacao_erro": "Como pensar: o salário possui uma parte fixa e outra proporcional ao número de vendas.\nResolução: S(15)=1200+40·15=1200+600=1800.\nResposta: R$1.800,00.",
               "opcoes": [
                 {
                   "texto": "R$1.600,00",
@@ -1045,7 +1045,7 @@
             },
             {
               "enunciado": "Qual função representa o salário S(x) de um vendedor com R$1.500,00 fixos e R$50,00 por venda?",
-              "explicacao_erro": "A parcela fixa é 1500 e a variável é 50x. Portanto, S(x)=50x+1500.",
+              "explicacao_erro": "Como pensar: coloque a parcela variável junto de x e some a parcela fixa.\nResolução: 50 por venda produz 50x; o valor fixo é 1500. Assim, S(x)=50x+1500.\nResposta: S(x)=50x+1500.",
               "opcoes": [
                 {
                   "texto": "S(x)=1500x+50",
@@ -1067,7 +1067,7 @@
             },
             {
               "enunciado": "Uma loja vende cada produto por R$30,00. Qual função representa a receita R(x) de x produtos?",
-              "explicacao_erro": "A receita é o preço multiplicado pela quantidade: R(x)=30x.",
+              "explicacao_erro": "Como pensar: receita total = preço de cada unidade × quantidade vendida.\nResolução: cada produto custa R$30, então, para x produtos, R(x)=30x.\nResposta: R(x)=30x.",
               "opcoes": [
                 {
                   "texto": "R(x)=30+x",
@@ -1089,7 +1089,7 @@
             },
             {
               "enunciado": "Se R(x)=30x, qual é a receita com 25 produtos?",
-              "explicacao_erro": "Calcule 30·25=750.",
+              "explicacao_erro": "Como pensar: substitua a quantidade vendida na função da receita.\nResolução: R(25)=30·25=750.\nResposta: R$750,00.",
               "opcoes": [
                 {
                   "texto": "R$550,00",
@@ -1121,7 +1121,7 @@
           "questoes": [
             {
               "enunciado": "Na conversão F=1,8C+32, qual temperatura corresponde a 10 °C?",
-              "explicacao_erro": "Substitua C=10: F=1,8·10+32=50.",
+              "explicacao_erro": "Como pensar: a conversão já está dada como uma função de C.\nResolução: substitua C=10: F=1,8·10+32=18+32=50.\nResposta: 50 °F.",
               "opcoes": [
                 {
                   "texto": "42 °F",
@@ -1143,7 +1143,7 @@
             },
             {
               "enunciado": "Uma empresa tem receita R(x)=30x e custo C(x)=10x+200. Qual é o lucro em 20 unidades?",
-              "explicacao_erro": "R(20)=600 e C(20)=400. Logo, lucro=600−400=200.",
+              "explicacao_erro": "Como pensar: lucro é receita menos custo.\nResolução: R(20)=30·20=600 e C(20)=10·20+200=400. Então L(20)=600−400=200.\nResposta: R$200,00.",
               "opcoes": [
                 {
                   "texto": "R$0,00",
@@ -1165,7 +1165,7 @@
             },
             {
               "enunciado": "No problema anterior, para qual quantidade x o lucro é zero?",
-              "explicacao_erro": "Resolva 30x−(10x+200)=0. Então 20x=200 e x=10.",
+              "explicacao_erro": "Como pensar: lucro zero significa que receita e custo são iguais.\nResolução: 30x−(10x+200)=0 → 30x−10x−200=0 → 20x=200 → x=10.\nResposta: 10.",
               "opcoes": [
                 {
                   "texto": "5",
@@ -1187,7 +1187,7 @@
             },
             {
               "enunciado": "Um reservatório contém 500 L e perde 20 L por hora. Qual expressão representa o volume V(t) após t horas?",
-              "explicacao_erro": "O volume inicial é 500 L e a perda é de 20 L por hora. Portanto, V(t)=500−20t.",
+              "explicacao_erro": "Como pensar: comece pelo volume inicial e represente a perda como uma taxa negativa.\nResolução: o reservatório começa com 500 L e perde 20 L por hora. Depois de t horas: V(t)=500−20t.\nResposta: V(t)=500-20t.",
               "opcoes": [
                 {
                   "texto": "V(t)=500+20t",

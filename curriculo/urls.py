@@ -5,6 +5,13 @@ from . import views
 
 urlpatterns = [
 
+    path(
+        'contas/cadastro/',
+        views.cadastro_usuario,
+        name='cadastro_usuario',
+    ),
+
+
     # ========================================================
     # ROTEAMENTO
     # ========================================================
@@ -29,6 +36,12 @@ urlpatterns = [
         'jogar/',
         views.dashboard_aluno,
         name='dashboard_aluno',
+    ),
+
+    path(
+        'jogar/materia/<slug:materia_slug>/',
+        views.materia_detalhe,
+        name='materia_detalhe',
     ),
 
     path(
@@ -57,6 +70,12 @@ urlpatterns = [
         'estudio/trilha/<int:trilha_id>/excluir/',
         views.deletar_trilha,
         name='deletar_trilha',
+    ),
+
+    path(
+        'estudio/trilha/<int:trilha_id>/publicar/',
+        views.alternar_publicacao,
+        name='alternar_publicacao',
     ),
 
     # ========================================================
@@ -97,6 +116,42 @@ urlpatterns = [
         name='ajax_criar_questao',
     ),
 
+    path(
+        'estudio/ajax/modulo/<int:modulo_id>/editar/',
+        views.ajax_editar_modulo,
+        name='ajax_editar_modulo',
+    ),
+
+    path(
+        'estudio/ajax/modulo/<int:modulo_id>/excluir/',
+        views.ajax_excluir_modulo,
+        name='ajax_excluir_modulo',
+    ),
+
+    path(
+        'estudio/ajax/fase/<int:fase_id>/editar/',
+        views.ajax_editar_fase,
+        name='ajax_editar_fase',
+    ),
+
+    path(
+        'estudio/ajax/fase/<int:fase_id>/excluir/',
+        views.ajax_excluir_fase,
+        name='ajax_excluir_fase',
+    ),
+
+    path(
+        'estudio/ajax/questao/<int:questao_id>/editar/',
+        views.ajax_editar_questao,
+        name='ajax_editar_questao',
+    ),
+
+    path(
+        'estudio/ajax/questao/<int:questao_id>/excluir/',
+        views.ajax_excluir_questao,
+        name='ajax_excluir_questao',
+    ),
+
     # ========================================================
     # JOGO
     # ========================================================
@@ -128,6 +183,12 @@ urlpatterns = [
     # ========================================================
     # HISTÓRICO
     # ========================================================
+
+    path(
+        'fase/<int:fase_id>/revisao/',
+        views.revisao_fase,
+        name='revisao_fase',
+    ),
 
     path(
         'fase/<int:fase_id>/historico/',

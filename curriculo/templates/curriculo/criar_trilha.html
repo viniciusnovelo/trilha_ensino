@@ -1,36 +1,183 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head><title>Criar Novo Jogo</title><script src="https://cdn.tailwindcss.com"></script></head>
-<body class="bg-slate-100 text-slate-900 min-h-screen p-8">
-    <div class="max-w-3xl mx-auto">
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-indigo-700">Criar Nova Trilha/Jogo</h1>
-            <a href="{% url 'dashboard_professor' %}" class="text-slate-500 font-bold hover:underline">Voltar</a>
-        </div>
-        
-        <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200">
-            <form method="post" class="space-y-6">
-                {% csrf_token %}
-                <div><label class="block text-slate-700 font-bold mb-2">Nome do Jogo</label>{{ form.nome }}</div>
-                <div><label class="block text-slate-700 font-bold mb-2">Link Único (Slug - sem espaços)</label>{{ form.slug }}</div>
-                <div><label class="block text-slate-700 font-bold mb-2">Descrição da Matéria</label>{{ form.descricao }}</div>
-                <div><label class="block text-slate-700 font-bold mb-2">Tema Visual (Pano de Fundo)</label>{{ form.tema }}</div>
-                
-                <div class="flex items-center space-x-3 bg-indigo-50 p-4 rounded-lg border border-indigo-100">
-                    {{ form.ativo }}
-                    <div>
-                        <label class="font-bold text-indigo-900 block">Publicar Jogo?</label>
-                        <span class="text-sm text-indigo-700">Se marcado, os alunos já poderão ver este jogo no painel deles.</span>
-                    </div>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo jogo · Trilha Ensino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tema-card { transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+        .tema-card:hover { transform:translateY(-3px); }
+        .tema-card.ativo { box-shadow:0 0 0 3px rgba(255,255,255,.78),0 18px 45px rgba(0,0,0,.25); }
+    </style>
+</head>
+<body class="{{ tema_aplicado }} min-h-screen text-white font-sans relative">
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 
-                <div class="pt-4">
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition shadow-lg hover:shadow-indigo-500/30">
-                        Salvar e Criar Jogo
-                    </button>
+    <div class="relative z-10 min-h-screen">
+        <header class="border-b border-white/10 bg-slate-950/75 backdrop-blur-2xl">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-indigo-300 font-black">Estúdio · passo 1</p>
+                    <h1 class="text-2xl sm:text-3xl font-black mt-1">Criar novo jogo</h1>
                 </div>
-            </form>
-        </div>
+                <div class="flex items-center gap-2">
+                    {% include 'gamificacao/partials/controle_aparencia.html' %}
+                    <a href="{% url 'dashboard_professor' %}" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 font-bold text-sm">Voltar</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+            <div class="grid lg:grid-cols-[1fr_320px] gap-6">
+                <section class="bg-slate-950/70 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 sm:p-8">
+                    <div class="flex items-center gap-3 mb-7">
+                        <span class="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center font-black">1</span>
+                        <div>
+                            <h2 class="text-xl font-black">Identidade do jogo</h2>
+                            <p class="text-sm text-white/45">Defina o que o professor e o aluno verão primeiro.</p>
+                        </div>
+                    </div>
+
+                    <form method="post" class="space-y-6">
+                        {% csrf_token %}
+
+                        <div>
+                            <label class="block text-sm font-black mb-2">Matéria</label>
+                            {{ form.materia }}
+                            <p class="text-xs text-white/35 mt-1">
+                                O jogo ficará organizado dentro desta matéria no catálogo dos alunos.
+                            </p>
+                            {% for error in form.materia.errors %}
+                                <p class="text-red-300 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+
+                        <div>
+                            <label class="block text-sm font-black mb-2">Nome do jogo</label>
+                            {{ form.nome }}
+                            {% for error in form.nome.errors %}<p class="text-red-300 text-xs mt-1">{{ error }}</p>{% endfor %}
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-black mb-2">Endereço / slug</label>
+                            {{ form.slug }}
+                            <p class="text-xs text-white/35 mt-1">Use um nome curto, sem espaços. Ele identifica a trilha no sistema.</p>
+                            {% for error in form.slug.errors %}<p class="text-red-300 text-xs mt-1">{{ error }}</p>{% endfor %}
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-black mb-2">Descrição</label>
+                            {{ form.descricao }}
+                            <p class="text-xs text-white/35 mt-1">Uma frase curta ajuda o aluno a entender a proposta antes de começar.</p>
+                            {% for error in form.descricao.errors %}<p class="text-red-300 text-xs mt-1">{{ error }}</p>{% endfor %}
+                        </div>
+
+                        <div>
+                            <div class="flex items-end justify-between gap-3 mb-3">
+                                <div>
+                                    <label class="block text-sm font-black">Paisagem padrão</label>
+                                    <p class="text-xs text-white/35 mt-1">Você poderá trocar depois no editor. O aluno também terá sua própria preferência.</p>
+                                </div>
+                                <span id="tema-escolhido" class="text-xs font-black text-indigo-200"></span>
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <button type="button" data-create-theme="tema-padrao" data-label="Noite Estrelada" class="tema-card h-24 rounded-2xl border-2 border-white/10 bg-gradient-to-br from-slate-950 to-slate-700 text-left p-3">
+                                    <span class="text-xs font-black">Noite Estrelada</span>
+                                    <span class="block text-[10px] text-white/45 mt-1">estrelas · lua</span>
+                                </button>
+                                <button type="button" data-create-theme="tema-floresta" data-label="Floresta Encantada" class="tema-card h-24 rounded-2xl border-2 border-white/10 bg-gradient-to-br from-green-950 via-emerald-700 to-green-950 text-left p-3">
+                                    <span class="text-xs font-black">Floresta Encantada</span>
+                                    <span class="block text-[10px] text-white/45 mt-1">névoa · vaga-lumes</span>
+                                </button>
+                                <button type="button" data-create-theme="tema-deserto" data-label="Deserto Escaldante" class="tema-card h-24 rounded-2xl border-2 border-white/10 bg-gradient-to-br from-amber-950 via-orange-600 to-amber-950 text-left p-3">
+                                    <span class="text-xs font-black">Deserto Escaldante</span>
+                                    <span class="block text-[10px] text-white/45 mt-1">dunas · areia</span>
+                                </button>
+                                <button type="button" data-create-theme="tema-masmorra" data-label="Masmorra Sombria" class="tema-card h-24 rounded-2xl border-2 border-white/10 bg-gradient-to-br from-slate-950 via-indigo-900 to-slate-950 text-left p-3">
+                                    <span class="text-xs font-black">Masmorra Sombria</span>
+                                    <span class="block text-[10px] text-white/45 mt-1">tochas · sombras</span>
+                                </button>
+                                <button type="button" data-create-theme="tema-aurora" data-label="Aurora Boreal" class="tema-card h-24 rounded-2xl border-2 border-white/10 bg-gradient-to-br from-cyan-950 via-cyan-400 to-indigo-950 text-left p-3">
+                                    <span class="text-xs font-black">Aurora Boreal</span>
+                                    <span class="block text-[10px] text-white/45 mt-1">luzes · montanhas</span>
+                                </button>
+                                <button type="button" data-create-theme="tema-oceano" data-label="Oceano Profundo" class="tema-card h-24 rounded-2xl border-2 border-white/10 bg-gradient-to-br from-sky-950 via-sky-500 to-cyan-950 text-left p-3">
+                                    <span class="text-xs font-black">Oceano Profundo</span>
+                                    <span class="block text-[10px] text-white/45 mt-1">ondas · brilho</span>
+                                </button>
+                            </div>
+
+                            <div class="hidden">{{ form.tema }}</div>
+                            {% for error in form.tema.errors %}<p class="text-red-300 text-xs mt-1">{{ error }}</p>{% endfor %}
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-400 text-white font-black py-4 rounded-2xl shadow-xl transition">
+                            Criar rascunho e abrir o estúdio →
+                        </button>
+                    </form>
+                </section>
+
+                <aside class="space-y-4">
+                    <section class="bg-slate-950/65 backdrop-blur-2xl border border-white/10 rounded-3xl p-6">
+                        <p class="text-xs uppercase tracking-widest text-indigo-300 font-black">Como funciona</p>
+                        <div class="space-y-4 mt-5">
+                            <div class="flex gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-400/15 text-sky-200 flex items-center justify-center text-sm font-black">2</span>
+                                <div><p class="font-black text-sm">Crie módulos</p><p class="text-xs text-white/40 mt-1">Separe o conteúdo em blocos pedagógicos.</p></div>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-400/15 text-violet-200 flex items-center justify-center text-sm font-black">3</span>
+                                <div><p class="font-black text-sm">Monte fases</p><p class="text-xs text-white/40 mt-1">Cada fase vira uma parada no mapa.</p></div>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-400/15 text-emerald-200 flex items-center justify-center text-sm font-black">4</span>
+                                <div><p class="font-black text-sm">Adicione questões</p><p class="text-xs text-white/40 mt-1">Defina alternativas e feedback pedagógico.</p></div>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-400/15 text-amber-200 flex items-center justify-center text-sm font-black">5</span>
+                                <div><p class="font-black text-sm">Publique</p><p class="text-xs text-white/40 mt-1">O aluno só verá jogos publicados.</p></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="bg-amber-400/10 border border-amber-300/15 rounded-3xl p-5">
+                        <p class="font-black text-amber-200">Tudo começa como rascunho.</p>
+                        <p class="text-sm text-amber-100/60 mt-1">Você pode construir, testar e revisar antes de liberar para os alunos.</p>
+                    </section>
+                </aside>
+            </div>
+        </main>
     </div>
+
+    <script>
+        const selectTema=document.getElementById('tema-trilha-form');
+        const body=document.body;
+        const temas=['tema-padrao','tema-floresta','tema-deserto','tema-masmorra','tema-aurora','tema-oceano'];
+        const label=document.getElementById('tema-escolhido');
+
+        function aplicarTema(tema,nome) {
+            body.classList.remove(...temas);
+            body.classList.add(tema);
+            if(selectTema) selectTema.value=tema;
+            if(label) label.textContent=nome;
+            document.querySelectorAll('[data-create-theme]').forEach(button=>{
+                const ativo=button.dataset.createTheme===tema;
+                button.classList.toggle('ativo',ativo);
+                button.classList.toggle('border-white',ativo);
+                button.classList.toggle('border-white/10',!ativo);
+            });
+        }
+
+        document.querySelectorAll('[data-create-theme]').forEach(button=>{
+            button.addEventListener('click',()=>aplicarTema(button.dataset.createTheme,button.dataset.label));
+        });
+
+        const inicial=selectTema?.value || '{{ tema_aplicado }}' || 'tema-padrao';
+        const inicialLabel=[...document.querySelectorAll('[data-create-theme]')].find(button=>button.dataset.createTheme===inicial)?.dataset.label || 'Noite Estrelada';
+        aplicarTema(inicial,inicialLabel);
+    </script>
 </body>
 </html>

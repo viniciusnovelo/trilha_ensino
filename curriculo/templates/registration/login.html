@@ -1,24 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <title>Login - Plataforma</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - Trilha Ensino</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 flex items-center justify-center h-screen text-white">
-    <div class="bg-slate-800 p-10 rounded-2xl shadow-2xl w-full max-w-md">
-        <h2 class="text-3xl font-bold text-yellow-400 mb-6 text-center">Acessar a Plataforma</h2>
-        <form method="post" class="space-y-4">
-            {% csrf_token %}
-            <div>
-                <label class="block text-slate-400 text-sm mb-1">Usuário</label>
-                <input type="text" name="username" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:border-yellow-400 outline-none">
+
+<body class="min-h-screen bg-[#0b1120] text-white flex items-center justify-center p-6">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="inline-flex w-16 h-16 rounded-2xl bg-indigo-600/20 border border-indigo-400/20 items-center justify-center text-3xl">
+                🎮
             </div>
-            <div>
-                <label class="block text-slate-400 text-sm mb-1">Senha</label>
-                <input type="password" name="password" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:border-yellow-400 outline-none">
+            <p class="text-xs uppercase tracking-[0.3em] text-slate-500 font-bold mt-5">
+                Trilha Ensino
+            </p>
+            <h1 class="text-3xl font-black mt-2">
+                Acesse sua conta
+            </h1>
+            <p class="text-slate-400 mt-2">
+                Entre para continuar sua jornada de aprendizagem.
+            </p>
+        </div>
+
+        <div class="bg-slate-800/80 border border-white/10 rounded-3xl p-7 shadow-2xl">
+            {% if form.non_field_errors %}
+                <div class="mb-5 rounded-xl border border-red-400/20 bg-red-500/10 p-4 text-sm text-red-300">
+                    Usuário ou senha inválidos. Confira os dados e tente novamente.
+                </div>
+            {% endif %}
+
+            {% if next %}
+                <div class="mb-5 rounded-xl border border-yellow-400/20 bg-yellow-500/10 p-4 text-sm text-yellow-200">
+                    Faça login para acessar a página solicitada.
+                </div>
+            {% endif %}
+
+            <form method="post" class="space-y-5">
+                {% csrf_token %}
+
+                <div>
+                    <label for="id_username" class="block text-sm font-bold text-slate-300 mb-2">
+                        Usuário
+                    </label>
+                    <input
+                        id="id_username"
+                        type="text"
+                        name="username"
+                        required
+                        autofocus
+                        autocomplete="username"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-white outline-none focus:border-indigo-400"
+                    >
+                    {% if form.username.errors %}
+                        <p class="mt-2 text-sm text-red-300">{{ form.username.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="id_password" class="block text-sm font-bold text-slate-300 mb-2">
+                        Senha
+                    </label>
+                    <input
+                        id="id_password"
+                        type="password"
+                        name="password"
+                        required
+                        autocomplete="current-password"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-white outline-none focus:border-indigo-400"
+                    >
+                    {% if form.password.errors %}
+                        <p class="mt-2 text-sm text-red-300">{{ form.password.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3.5 rounded-xl transition shadow-lg"
+                >
+                    Entrar
+                </button>
+            </form>
+
+            <div class="mt-6 pt-6 border-t border-white/10 text-center text-sm">
+                <span class="text-slate-500">Ainda não possui uma conta?</span>
+                <a
+                    href="{% url 'cadastro_usuario' %}"
+                    class="text-indigo-400 hover:text-indigo-300 font-bold ml-1"
+                >
+                    Criar conta
+                </a>
             </div>
-            <button type="submit" class="w-full bg-green-500 hover:bg-green-400 text-white font-bold py-3 rounded-lg mt-4 transition">Entrar</button>
-        </form>
+        </div>
     </div>
 </body>
 </html>

@@ -5,6 +5,7 @@ from .models import (
     ItemLoja,
     ItemComprado,
     ProgressoFase,
+    ProgressoModulo,
     TentativaFase,
     RespostaTentativa,
 )
@@ -20,11 +21,14 @@ class PerfilUsuarioAdmin(admin.ModelAdmin):
         'nivel',
         'moedas',
         'vidas',
+        'tema_fundo',
+        'aparencia_interface',
     )
 
     list_filter = (
         'tipo',
         'tema_fundo',
+        'aparencia_interface',
     )
 
     search_fields = (
@@ -158,6 +162,30 @@ class TentativaFaseAdmin(admin.ModelAdmin):
     inlines = [
         RespostaTentativaInline,
     ]
+
+
+@admin.register(ProgressoModulo)
+class ProgressoModuloAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'perfil',
+        'modulo',
+        'desbloqueado',
+        'concluido',
+        'data_desbloqueio',
+        'data_conclusao',
+    )
+
+    list_filter = (
+        'desbloqueado',
+        'concluido',
+        'modulo__disciplina',
+    )
+
+    search_fields = (
+        'perfil__usuario__username',
+        'modulo__titulo',
+    )
 
 
 @admin.register(RespostaTentativa)

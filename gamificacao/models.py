@@ -7,6 +7,9 @@ from curriculo.models import Fase
 
 
 class PerfilUsuario(models.Model):
+    XP_POR_NIVEL = 200
+    VIDAS_MAXIMAS = 5
+
     TIPO_CHOICES = [
         ('aluno', 'Aluno (Jogador)'),
         ('professor', 'Professor (Criador)'),
@@ -46,15 +49,29 @@ class PerfilUsuario(models.Model):
 
     TEMAS = [
         ('tema-padrao', 'Noite Estrelada'),
-        ('tema-floresta', 'Trilha na Floresta'),
+        ('tema-floresta', 'Floresta Encantada'),
         ('tema-deserto', 'Deserto Escaldante'),
         ('tema-masmorra', 'Masmorra Sombria'),
+        ('tema-aurora', 'Aurora Boreal'),
+        ('tema-oceano', 'Oceano Profundo'),
+    ]
+
+    APARENCIA_CHOICES = [
+        ('sistema', 'Seguir preferência do sistema'),
+        ('claro', 'Modo claro'),
+        ('escuro', 'Modo escuro'),
     ]
 
     tema_fundo = models.CharField(
         max_length=50,
         choices=TEMAS,
         default='tema-padrao',
+    )
+
+    aparencia_interface = models.CharField(
+        max_length=20,
+        choices=APARENCIA_CHOICES,
+        default='escuro',
     )
 
     def __str__(self):
@@ -69,7 +86,31 @@ class PerfilUsuario(models.Model):
 
     @property
     def nivel(self):
-        return (self.xp_total // 200) + 1
+        return (self.xp_total // self.XP_POR_NIVEL) + 1
+
+    @property
+    def xp_no_nivel(self):
+        return self.xp_total % self.XP_POR_NIVEL
+
+    @property
+    def xp_proximo_nivel(self):
+        return self.nivel * self.XP_POR_NIVEL
+
+    @property
+    def xp_faltante(self):
+        return max(
+            0,
+            self.xp_proximo_nivel - self.xp_total,
+        )
+
+    @property
+    def progresso_nivel(self):
+        return min(
+            100,
+            round(
+                (self.xp_no_nivel / self.XP_POR_NIVEL) * 100
+            ),
+        )
 
 
 class ItemLoja(models.Model):
@@ -210,6 +251,70 @@ class ProgressoFase(models.Model):
             f"{self.perfil.usuario.username} "
             f"- {self.fase.titulo} "
             f"[{status}]"
+        )
+
+
+class ProgressoModulo(models.Model):
+    """
+    Estado persistido de um módulo para um aluno.
+
+    O primeiro módulo é liberado automaticamente. Os módulos
+    seguintes são liberados quando todas as fases do módulo
+    anterior forem concluídas.
+    """
+
+    perfil = models.ForeignKey(
+        PerfilUsuario,
+        on_delete=models.CASCADE,
+        related_name='progressos_modulo',
+    )
+
+    modulo = models.ForeignKey(
+        'curriculo.Modulo',
+        on_delete=models.CASCADE,
+        related_name='progressos_aluno',
+    )
+
+    desbloqueado = models.BooleanField(
+        default=False,
+    )
+
+    concluido = models.BooleanField(
+        default=False,
+    )
+
+    data_desbloqueio = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    data_conclusao = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['perfil', 'modulo'],
+                name='unique_progresso_por_perfil_modulo',
+            )
+        ]
+
+    def __str__(self):
+        status = (
+            'Concluído'
+            if self.concluido
+            else 'Desbloqueado'
+            if self.desbloqueado
+            else 'Chave disponível'
+            if self.chave_disponivel
+            else 'Bloqueado'
+        )
+
+        return (
+            f"{self.perfil.usuario.username} - "
+            f"{self.modulo.titulo} [{status}]"
         )
 
 
