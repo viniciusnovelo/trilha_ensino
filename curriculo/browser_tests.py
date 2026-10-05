@@ -148,10 +148,9 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 hierarchy_opened = True
 
         if hierarchy_opened:
-            # A árvore usa uma transição curta para abrir o conteúdo. Aguarde
-            # a animação terminar antes do clique para evitar clicar na
-            # coordenada anterior durante o reflow.
-            await page.wait_for_timeout(250)
+            await expect(self._module_content(page)).not_to_have_attribute("hidden", "")
+            if item_type == "questao":
+                await expect(self._phase_content(page)).not_to_have_attribute("hidden", "")
 
         selection_target = page.locator(
             f'[data-editor-select="{item_type}"]'
