@@ -587,61 +587,30 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         self.assertEqual(self.fase.titulo, novo_titulo)
         self._assert_no_page_errors(page_errors)
 
-    async def test_modal_de_questao_fica_visivel_e_persiste_edicao(self):
+    async def test_editar_questao_usa_painel_contextual_e_persiste(self):
         novo_enunciado = "Enunciado Browser Editado."
 
         async with self._browser_page() as (page, page_errors):
             await self._login_and_open_editor(page)
+            await self._select_content_item(page, "questao", self.questao.id, self.questao.enunciado)
             details = page.locator("#editor-details-content")
-            await self._select_content_item(
-                page, "questao", self.questao.id, self.questao.enunciado
-            )
-            await details.get_by_role(
-                "button", name="Editar questão"
-            ).click()
+            await details.get_by_role("button", name="Editar questão").click()
 
-            modal = page.locator("#modal-editar-questao")
-            await expect(modal).to_be_visible()
-            await expect(
-                page.locator("#editar-questao-enunciado")
-            ).to_have_value(self.questao.enunciado)
-            await expect(
-                page.locator("#editar-questao-op-0")
-            ).to_have_value("Alternativa A")
-            await expect(
-                page.locator(
-                    '#form-editar-questao '
-                    'input[name="op_correta"][value="0"]'
-                )
-            ).to_be_checked()
+            form = page.locator("#context-edit-question-form")
+            await expect(form).to_be_visible()
+            await expect(page.locator("#editor-details-context")).to_have_text("Editando questão")
+            await expect(form.locator('textarea[name="enunciado"]')).to_have_value(self.questao.enunciado)
+            await expect(form.locator('input[name="op_texto_0"]')).to_have_value("Alternativa A")
+            await expect(form.locator('input[name="op_correta"][value="0"]')).to_be_checked()
 
-            await page.locator(
-                "#editar-questao-enunciado"
-            ).fill(novo_enunciado)
+            await form.locator('textarea[name="enunciado"]').fill(novo_enunciado)
 
-            async with page.expect_response(
-                lambda response: (
-                    response.request.method == "POST"
-                    and (
-                        f"/estudio/ajax/questao/{self.questao.id}/editar/"
-                        in response.url
-                    )
-                    and response.ok
-                )
-            ):
-                await modal.get_by_role(
-                    "button", name="Salvar alterações"
-                ).click()
+            async with page.expect_response(lambda response: response.request.method == "POST" and f"/estudio/ajax/questao/{self.questao.id}/editar/" in response.url and response.ok):
+                await form.get_by_role("button", name="Salvar alterações").click()
 
-            await expect(modal).to_be_hidden()
-            await expect(
-                page.get_by_text(novo_enunciado, exact=True).first
-            ).to_be_visible()
-
+            await expect(page.get_by_text(novo_enunciado, exact=True).first).to_be_visible()
             await page.reload()
-            await expect(
-                page.get_by_text(novo_enunciado, exact=True).first
-            ).to_be_visible()
+            await expect(page.get_by_text(novo_enunciado, exact=True).first).to_be_visible()
 
         await self.questao.arefresh_from_db()
         self.assertEqual(self.questao.enunciado, novo_enunciado)
