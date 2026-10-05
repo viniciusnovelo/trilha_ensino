@@ -38,7 +38,11 @@
         .editor-expand-toggle:focus-visible { box-shadow:0 0 0 2px rgba(129,140,248,.35); }
         .editor-expand-chevron { display:block; line-height:1; font-size:18px; font-weight:500; transform-origin:center; transition:transform .2s ease, color .18s ease; }
         .editor-expand-toggle[aria-expanded="true"] .editor-expand-chevron { transform:rotate(90deg); color:rgba(255,255,255,.78); }
-        .editor-structure-actions { opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; transform:translateY(2px); }
+         .editor-structure-actions { opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; transform:translateY(2px); }
+        .editor-selectable { position:relative; }
+        .editor-selectable::before { content:""; position:absolute; left:0; top:7px; bottom:7px; width:2px; border-radius:999px; background:transparent; transition:background .16s ease, box-shadow .16s ease; }
+        .editor-selectable.editor-selected::before { background:rgba(129,140,248,.85); box-shadow:0 0 12px rgba(99,102,241,.25); }
+        .editor-selectable.editor-selected > .editor-structure-header { color:rgba(255,255,255,.98); }
         .editor-selection-target { position:relative; z-index:1; }
         .editor-structure-header { position:relative; z-index:3; pointer-events:none; }
         .editor-structure-header button { pointer-events:auto; }
@@ -46,8 +50,25 @@
         .editor-selectable:hover .editor-structure-actions,
         .editor-selectable:focus-within .editor-structure-actions,
         .editor-selectable.editor-selected .editor-structure-actions { opacity:1; pointer-events:auto; transform:translateY(0); }
-        .editor-module-content { padding-left:4px; }
-        .editor-phase-content { margin-left:12px; padding-left:8px; border-left:1px solid rgba(255,255,255,.07); }
+         .editor-module-content { padding-left:12px; }
+        .editor-phase-content { margin-left:18px; padding-left:12px; border-left:1px solid rgba(255,255,255,.09); }
+        .editor-module-content > .editor-selectable { background:transparent !important; border-color:transparent !important; border-radius:12px; padding:5px 6px 6px 4px; }
+        .editor-module-content > .editor-selectable + .editor-selectable { margin-top:2px; }
+        .editor-phase-content > article { background:transparent !important; border-color:transparent !important; border-radius:8px; padding:5px 4px; margin-top:1px !important; }
+        .editor-phase-content > article::before { top:4px; bottom:4px; }
+        .editor-phase-content > button { background:transparent !important; border-color:transparent !important; text-align:left; padding:5px 4px; }
+        .editor-phase-content > button:hover { background:rgba(255,255,255,.035) !important; }
+        .editor-structure-actions button { border:0 !important; background:transparent !important; }
+        .editor-structure-actions button:hover { background:rgba(255,255,255,.07) !important; }
+         .editor-question-editor { color:rgba(255,255,255,.92); }
+        .editor-question-label { display:block; margin-bottom:7px; font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.42); }
+        .editor-question-input, .editor-question-textarea { width:100%; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.035); color:rgba(255,255,255,.92); border-radius:10px; outline:none; transition:border-color .16s ease, background .16s ease, box-shadow .16s ease; }
+        .editor-question-input { padding:9px 10px; font-size:11px; }
+        .editor-question-textarea { padding:10px; font-size:11px; line-height:1.45; resize:vertical; }
+        .editor-question-input:focus, .editor-question-textarea:focus { border-color:rgba(52,211,153,.45); background:rgba(255,255,255,.055); box-shadow:0 0 0 3px rgba(16,185,129,.08); }
+        .editor-question-option { border-radius:9px; transition:background .14s ease; }
+        .editor-question-option:hover { background:rgba(255,255,255,.025); }
+        .editor-question-option input[type="radio"] { accent-color:#34d399; }
         .editor-details-close { min-width:36px; min-height:36px; }
         #editor-details-backdrop { display:none; }
         @media (max-width: 1279px) and (min-width: 1024px) { .editor-workspace { --editor-content-width:300px; --editor-details-width:270px; } }
@@ -396,7 +417,7 @@
                                                         aria-controls="editor-phase-content-{{ fase.id }}"
                                                         aria-label="Expandir fase {{ fase.titulo }}"
                                                         title="Expandir/recolher fase"
-                                                    ><span class="editor-expand-chevron">▶</span></button>
+                                                    ><span class="editor-expand-chevron" aria-hidden="true">›</span></button>
                                                     <div class="w-7 h-7 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-300/20 flex items-center justify-center text-[10px] font-black text-indigo-200">{{ fase.ordem }}</div>
                                                     <div class="min-w-0 flex-1">
                                                         <div class="flex items-start justify-between gap-2">
@@ -991,6 +1012,7 @@
         const csrfToken = '{{ csrf_token }}';
         const trilhaId = {{ trilha.id }};
         const editorAjaxUrls = {
+            criarQuestao: '{% url "ajax_criar_questao" %}',
             editarModulo: '{% url "ajax_editar_modulo" 0 %}',
             excluirModulo: '{% url "ajax_excluir_modulo" 0 %}',
             editarFase: '{% url "ajax_editar_fase" 0 %}',
@@ -1057,40 +1079,53 @@
             }
         }
 
-        function openQuestaoModal(faseId, faseTitulo) {
-            document.getElementById('input-questao-fase-id').value=faseId;
-            document.getElementById('questao-fase-nome').textContent='Fase: '+faseTitulo;
-            document.getElementById('form-questao').reset();
-            document.getElementById('input-questao-fase-id').value=faseId;
-            document.getElementById('questao-fase-nome').textContent='Fase: '+faseTitulo;
-            showFormMessage(document.getElementById('form-questao'),'none');
-            openModal('modal-questao');
+        function renderQuestionEditor(mode, id) {
+            const content=document.getElementById('editor-details-content');
+            const empty=document.getElementById('editor-details-empty');
+            const context=document.getElementById('editor-details-context');
+            if(!content||!empty||!context) return;
+            const editing=mode==='edit';
+            const questao=editing ? questoesEditor[String(id)] : null;
+            const fase=editing ? editorFases[String(questao?.faseId)] : editorFases[String(id)];
+            if(editing && !questao) return;
+            if(!fase) return;
+            const alternativas=editing ? (questao.opcoes||[]) : [];
+            const opcoesHtml=[0,1,2,3].map((index)=>{
+                const opcao=alternativas[index]||{};
+                return '<label class="editor-question-option flex items-center gap-3 py-2.5"><input type="radio" name="op_correta" value="'+index+'" '+(opcao.correta?'checked':'')+' '+(editing?'':'required')+' class="shrink-0"><span class="text-[10px] font-black text-white/35 w-5">'+String.fromCharCode(65+index)+'</span><input type="text" name="op_texto_'+index+'" value="'+escapeEditorHtml(opcao.texto||'')+'" placeholder="Alternativa '+(index+1)+'" '+(editing?'':'required')+' class="editor-question-input flex-1" autocomplete="off"></label>';
+            }).join('');
+            const submitLabel=editing?'Salvar alterações':'Salvar questão';
+            const title=editing?'Editar questão':'Nova questão';
+            const actionUrl=editing ? editorAjaxUrl('editarQuestao',id) : editorAjaxUrl('criarQuestao','');
+            const formId=editing?'context-edit-question-form':'context-new-question-form';
+            context.textContent=editing?'Editando questão':'Nova questão';
+            empty.classList.add('hidden');
+            content.classList.remove('hidden');
+            content.innerHTML='<form id="'+formId+'" class="editor-question-editor space-y-4" data-question-mode="'+mode+'"><div class="flex items-start justify-between gap-3 pb-3 border-b border-white/10"><div><p class="text-[10px] uppercase tracking-[.16em] text-emerald-300 font-black">Conteúdo</p><h3 class="text-lg font-black mt-1">'+title+'</h3><p class="text-[11px] text-white/40 mt-1">Fase: '+escapeEditorHtml(fase.titulo)+'</p></div><button type="button" class="editor-question-cancel rounded-lg px-2 py-1.5 text-white/45 hover:text-white hover:bg-white/5" title="Cancelar">×</button></div><input type="hidden" name="'+(editing?'questao_id':'fase_id')+'" value="'+(editing?id:fase.id)+'"><div><label class="editor-question-label">Enunciado</label><textarea name="enunciado" required rows="4" class="editor-question-textarea" placeholder="Escreva a pergunta exatamente como o aluno deverá recebê-la.">'+(editing?escapeEditorHtml(questao.enunciado):'')+'</textarea></div><div><div class="flex items-center justify-between gap-2"><label class="editor-question-label mb-0">Alternativas</label><span class="text-[9px] text-white/30">Marque uma correta</span></div><div class="mt-1 divide-y divide-white/5">'+opcoesHtml+'</div></div><div><label class="editor-question-label">Feedback</label><textarea name="explicacao_erro" rows="4" class="editor-question-textarea" placeholder="Explique o raciocínio e a resolução para o aluno.">'+(editing?escapeEditorHtml(questao.explicacao||''):'')+'</textarea></div><p class="editor-question-error hidden text-xs text-red-300 font-bold"></p><div class="flex gap-2 pt-1"><button type="button" class="editor-question-cancel flex-1 rounded-xl bg-white/5 border border-white/10 px-3 py-2.5 font-bold text-xs">Cancelar</button><button type="submit" class="flex-[1.4] rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3 py-2.5 font-black text-xs">'+submitLabel+'</button></div></form>';
+            content.querySelectorAll('.editor-question-cancel').forEach((button)=>button.addEventListener('click',()=>{ if(selectedEditorType==='questao') renderEditorDetails('questao',selectedEditorId); else renderEditorDetails('fase',fase.id); }));
+            content.querySelector('form').addEventListener('submit',async(event)=>{
+                event.preventDefault();
+                const form=event.currentTarget;
+                const error=form.querySelector('.editor-question-error');
+                error.classList.add('hidden');
+                try {
+                    const body=Object.fromEntries(new FormData(form).entries());
+                    if(editing) await postAction(actionUrl,body);
+                    else {
+                        const response=await fetch(actionUrl,{method:'POST',headers:{'X-CSRFToken':csrfToken},body:new FormData(form)});
+                        const data=await response.json();
+                        if(!response.ok || data.status!=='ok') throw new Error(data.msg||'Não foi possível salvar a questão.');
+                    }
+                    window.location.reload();
+                } catch(err) { error.textContent=err.message; error.classList.remove('hidden'); }
+            });
         }
 
+        function openQuestaoModal(faseId, faseTitulo) { renderQuestionEditor('create',faseId); }
+
         function openEditQuestao(questaoId) {
-            const questao = questoesEditor[String(questaoId)];
-
-            if (!questao) {
-                alert('Não foi possível carregar esta questão.');
-                return;
-            }
-
-            document.getElementById('editar-questao-id').value = questaoId;
-            document.getElementById('editar-questao-fase-nome').textContent = 'Fase: ' + questao.faseTitulo;
-            document.getElementById('editar-questao-enunciado').value = questao.enunciado;
-            document.getElementById('editar-questao-explicacao').value = questao.explicacao;
-
-            for (let indice = 0; indice < 4; indice += 1) {
-                const input = document.getElementById('editar-questao-op-' + indice);
-                const radio = document.querySelector('#form-editar-questao input[name="op_correta"][value="' + indice + '"]');
-
-                if (!input || !radio) continue;
-                input.value = questao.opcoes[indice]?.texto || '';
-                radio.checked = Boolean(questao.opcoes[indice]?.correta);
-            }
-
-            document.getElementById('editar-questao-erro').classList.add('hidden');
-            openModal('modal-editar-questao');
+            if (!questoesEditor[String(questaoId)]) { alert('Não foi possível carregar esta questão.'); return; }
+            renderQuestionEditor('edit',questaoId);
         }
 
         async function deleteQuestao(id, enunciado) {
