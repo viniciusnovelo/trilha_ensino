@@ -1443,7 +1443,7 @@
         // Mantém a seleção ligada diretamente aos alvos reais do editor.
         // A delegação continua cobrindo ações e conteúdo renderizado dinamicamente.
         document.querySelectorAll(
-            '.editor-selection-target, .editor-fase-circle, .editor-module-label, [data-editor-select="questao"].editor-selectable'
+            '.editor-selection-target, .editor-fase-circle, .editor-module-label'
         ).forEach((element)=>{
             element.addEventListener('click',(event)=>{
                 event.preventDefault();
