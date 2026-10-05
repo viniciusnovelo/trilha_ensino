@@ -1434,7 +1434,7 @@
             }
         }
 
-        document.addEventListener('click', handleEditorInteraction);
+        document.addEventListener('click', handleEditorInteraction, true);
 
         document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
             event.preventDefault();
@@ -1608,7 +1608,7 @@
             return false;
         }
 
-        function applyMapNodePosition(node,autoY) {
+        function applyMapNodePosition(node,autoY=Number(node.dataset.autoY||0)) {
             const customY=getCustomMapY(node);
             const renderY=autoY+customY;
             node.dataset.autoY=String(autoY);
