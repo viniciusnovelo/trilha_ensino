@@ -374,7 +374,7 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             await form.locator('input[name="op_correta"][value="2"]').check()
             await form.locator('textarea[name="explicacao_erro"]').fill("Feedback contextual da questão.")
 
-            async with page.expect_response(lambda response: response.request.method == "POST" and "/estudio/ajax/questao/criar/" in response.url and response.ok):
+            async with page.expect_response(lambda response: response.request.method == "POST" and "/estudio/ajax/questao/" in response.url and response.ok):
                 await form.get_by_role("button", name="Salvar questão").click()
 
             await expect(page.get_by_text(novo_enunciado, exact=True).first).to_be_visible()
