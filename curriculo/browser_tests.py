@@ -598,17 +598,6 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 deslocamento_y=0,
             )
 
-        for fase_ordem in (2, 3):
-            await sync_to_async(Fase.objects.create)(
-                modulo=self.modulo,
-                titulo=f"Fase 1.{fase_ordem}",
-                ordem=fase_ordem,
-                tipo="quiz",
-                xp_recompensa=50,
-                moedas_recompensa=10,
-                deslocamento_y=0,
-            )
-
         for modulo_ordem in range(2, 5):
             modulo = await sync_to_async(Modulo.objects.create)(
                 disciplina=self.trilha,
@@ -683,6 +672,17 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                     moedas_recompensa=10,
                     deslocamento_y=0,
                 )
+
+        for fase_ordem in (2, 3):
+            await sync_to_async(Fase.objects.create)(
+                modulo=self.modulo,
+                titulo=f"Fase 1.{fase_ordem}",
+                ordem=fase_ordem,
+                tipo="quiz",
+                xp_recompensa=50,
+                moedas_recompensa=10,
+                deslocamento_y=0,
+            )
 
         async with self._browser_page() as (page, page_errors):
             await self._login_and_open_editor(page)
