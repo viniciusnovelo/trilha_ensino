@@ -652,7 +652,8 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             await phase_toggle.click()
             await expect(phase_toggle).to_have_attribute("aria-expanded", "true")
             await expect(self._content_item(page, "questao", self.questao.id)).to_be_visible()
-            await expect(page.locator(".editor-expand-chevron")).not_to_contain_text("▶")
+            for chevron in await page.locator(".editor-expand-chevron").all():
+                await expect(chevron).not_to_contain_text("▶")
 
         self._assert_no_page_errors(page_errors)
 
