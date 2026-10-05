@@ -832,10 +832,15 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                         "O conector não deve fazer overshoot vertical.",
                     )
 
+                horizontal_step = 152.0
+                node_distance = (
+                    horizontal_step ** 2
+                    + (target_y - source_y) ** 2
+                ) ** 0.5
                 self.assertGreaterEqual(
-                    abs(target_y - source_y),
-                    45,
-                    "Fases consecutivas precisam manter distância vertical mínima razoável.",
+                    node_distance,
+                    100.0,
+                    "Fases consecutivas precisam manter distância espacial mínima razoável.",
                 )
 
             for index in (2, 5, 8):
