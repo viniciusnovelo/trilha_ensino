@@ -448,6 +448,46 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         self.assertEqual(self.modulo.titulo, novo_titulo)
         self._assert_no_page_errors(page_errors)
 
+    async def test_modal_de_fase_nao_expoe_posicao_vertical(self):
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            await page.get_by_role("button", name="＋ Fase").click()
+            modal = page.locator("#modal-fase")
+            await expect(modal).to_be_visible()
+            await expect(
+                modal.locator('input[name="deslocamento_y"]')
+            ).to_have_count(0)
+            await expect(
+                modal.get_by_text("Posição vertical", exact=True)
+            ).to_have_count(0)
+
+            await page.locator("#select-fase-modulo").select_option(
+                str(self.modulo.id)
+            )
+            await modal.get_by_role("button", name="Cancelar").click()
+
+            await self._select_content_item(
+                page, "fase", self.fase.id, self.fase.titulo
+            )
+            await page.locator(
+                '[data-editor-action="editar-fase"]'
+            ).click()
+
+            edit_modal = page.locator("#modal-editar-fase")
+            await expect(edit_modal).to_be_visible()
+            await expect(
+                edit_modal.locator('input[name="deslocamento_y"]')
+            ).to_have_count(0)
+            await expect(
+                edit_modal.get_by_text("Deslocamento vertical", exact=True)
+            ).to_have_count(0)
+            await edit_modal.get_by_role(
+                "button", name="Cancelar"
+            ).click()
+
+        self._assert_no_page_errors(page_errors)
+
     async def test_modal_de_fase_fica_visivel_e_persiste_edicao(self):
         novo_titulo = "Fase Browser Editada"
 
