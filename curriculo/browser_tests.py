@@ -221,11 +221,6 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 page, "fase", self.fase.id, self.fase.titulo
             )
             await expect(fase).to_contain_class("editor-selected")
-            print("DEBUG_PHASE_AFTER", await page.evaluate("""(id) => ({
-                circleClass: document.querySelector('.fase-node[data-id="' + id + '"] .editor-fase-circle')?.className,
-                phaseClass: document.querySelector('[data-editor-select="fase"][data-editor-id="' + id + '"]')?.className,
-                details: document.getElementById('editor-details-content')?.innerText,
-            })""", str(self.fase.id)))
             await expect(self._phase_content(page)).to_be_visible()
             await expect(
                 page.locator("#editor-details-content")
@@ -239,17 +234,6 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             questao = await self._select_content_item(
                 page, "questao", self.questao.id, self.questao.enunciado
             )
-            print("DEBUG_QUESTION_STATE", await page.evaluate("""(id) => {
-                const target = document.querySelector('[data-editor-select="questao"][data-editor-id="' + id + '"].editor-selection-target');
-                return {
-                    questionData: Object.prototype.hasOwnProperty.call(questoesEditor, id),
-                    targetCount: document.querySelectorAll('[data-editor-select="questao"][data-editor-id="' + id + '"]').length,
-                    targetPointerEvents: target ? getComputedStyle(target).pointerEvents : null,
-                    targetDisabled: target ? target.disabled : null,
-                    questionClass: document.querySelector('[data-editor-select="questao"][data-editor-id="' + id + '"]')?.className,
-                    details: document.getElementById('editor-details-content')?.innerText,
-                };
-            }""", str(self.questao.id)))
             await expect(questao).to_contain_class("editor-selected")
             await expect(self._phase_content(page)).to_be_visible()
             await expect(
