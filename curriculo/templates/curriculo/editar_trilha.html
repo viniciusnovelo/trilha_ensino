@@ -1440,6 +1440,18 @@
 
         document.addEventListener('click', handleEditorInteraction);
 
+        // Mantém a seleção ligada diretamente aos alvos reais do editor.
+        // A delegação continua cobrindo ações e conteúdo renderizado dinamicamente.
+        document.querySelectorAll(
+            '.editor-selection-target, .editor-fase-circle, .editor-module-label, [data-editor-select="questao"].editor-selectable'
+        ).forEach((element)=>{
+            element.addEventListener('click',(event)=>{
+                event.preventDefault();
+                event.stopPropagation();
+                selectEditorItem(element.dataset.editorSelect,element.dataset.editorId);
+            });
+        });
+
         document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -1729,7 +1741,7 @@
         }
 
         document.querySelectorAll('.drag-handle').forEach(handle=>{
-            handle.addEventListener('mousedown',(event)=>{
+            handle.addEventListener('pointerdown',(event)=>{
                 const node=event.currentTarget.closest('.fase-node');
                 if(!node) return;
                 event.preventDefault();
@@ -1739,11 +1751,12 @@
                 startCursorY=event.clientY;
                 document.body.classList.add('cursor-grabbing');
                 handle.classList.add('cursor-grabbing');
+                handle.setPointerCapture?.(event.pointerId);
             });
         });
 
-        document.addEventListener('mousemove',applyDraggedMapY);
-        document.addEventListener('mouseup',finishDraggedMapPhase);
+        document.addEventListener('pointermove',applyDraggedMapY);
+        document.addEventListener('pointerup',finishDraggedMapPhase);
 
         window.addEventListener('resize',updateAllMapGeometry);
     </script>
