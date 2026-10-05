@@ -1349,6 +1349,7 @@
 
             document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
             document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
+            console.log('EDITOR_MATCH_COUNT',type,normalizedId,document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').length,document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').length && document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]')[0].className);
 
             if(type==='fase') {
                 document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').forEach((element)=>element.classList.add('editor-selected'));
