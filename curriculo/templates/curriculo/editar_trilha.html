@@ -1434,7 +1434,7 @@
             }
         }
 
-        document.addEventListener('click', handleEditorInteraction);
+        document.addEventListener('click', handleEditorInteraction, true);
 
         document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
             event.preventDefault();
@@ -1686,18 +1686,23 @@
         let initialCustomY=0;
 
         document.querySelectorAll('.drag-handle').forEach(handle=>{
-            handle.addEventListener('mousedown',(event)=>{
+            handle.addEventListener('pointerdown',(event)=>{
+                const node=event.currentTarget.closest('.fase-node');
+                if(!node) return;
+                event.preventDefault();
                 isDragging=true;
-                activeNode=event.target.closest('.fase-node');
-                initialCustomY=getCustomMapY(activeNode);
+                activeNode=node;
+                initialCustomY=getCustomMapY(node);
                 startCursorY=event.clientY;
                 document.body.classList.add('cursor-grabbing');
                 handle.classList.add('cursor-grabbing');
+                handle.setPointerCapture?.(event.pointerId);
             });
         });
 
-        document.addEventListener('mousemove',(event)=>{
+        document.addEventListener('pointermove',(event)=>{
             if(!isDragging || !activeNode) return;
+            event.preventDefault();
 
             const newCustomY=clampEditorNumber(
                 Math.round(initialCustomY+((event.clientY-startCursorY)/mapScale)),
@@ -1712,7 +1717,7 @@
             updateMapConnector(Number(activeNode.dataset.index)-1);
         });
 
-        document.addEventListener('mouseup',async()=>{
+        document.addEventListener('pointerup',async()=>{
             if(!isDragging || !activeNode) return;
             const node=activeNode;
             document.body.classList.remove('cursor-grabbing');
