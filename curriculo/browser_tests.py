@@ -94,7 +94,7 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             page.on("pageerror", handle_page_error)
 
             def handle_console(message):
-                if message.type == "log" and message.text.startswith("EDITOR_SELECTION"):
+                if message.type == "log" and message.text.startswith("EDITOR_SELECTION") or message.text.startswith("EDITOR_MATCH_COUNT"):
                     page_errors.append("CONSOLE:" + message.text)
 
             page.on("console", handle_console)
