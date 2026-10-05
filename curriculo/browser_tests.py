@@ -579,6 +579,64 @@ class EditorBrowserTests(StaticLiveServerTestCase):
         )
         self._assert_no_page_errors(page_errors)
 
+    async def test_trajetoria_dinamica_conecta_as_12_fases_em_sequencia_global(self):
+        for modulo_ordem in range(2, 5):
+            modulo = await sync_to_async(Modulo.objects.create)(
+                disciplina=self.trilha,
+                titulo=f"Módulo Browser {modulo_ordem}",
+                ordem=modulo_ordem,
+            )
+            for fase_ordem in range(1, 4):
+                await sync_to_async(Fase.objects.create)(
+                    modulo=modulo,
+                    titulo=f"Fase {modulo_ordem}.{fase_ordem}",
+                    ordem=fase_ordem,
+                    tipo="quiz",
+                    xp_recompensa=50,
+                    moedas_recompensa=10,
+                    deslocamento_y=0,
+                )
+
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            nodes = page.locator(".fase-node[data-index]")
+            connectors = page.locator(".editor-connector[data-connector-index]")
+            await expect(nodes).to_have_count(13)
+            await expect(connectors).to_have_count(12)
+
+            for index in range(12):
+                source = nodes.nth(index)
+                target = nodes.nth(index + 1)
+                connector = page.locator(
+                    f'.editor-connector[data-connector-index="{index}"] .linha-conector'
+                )
+                await expect(connector).to_have_attribute("d", re.compile(r"^M 0,"))
+                self.assertNotEqual(await connector.get_attribute("d"), "")
+
+                source_index = await source.get_attribute("data-index")
+                target_index = await target.get_attribute("data-index")
+                self.assertEqual(int(target_index), int(source_index) + 1)
+
+                if index in {2, 5, 8}:
+                    self.assertNotEqual(
+                        await source.get_attribute("data-modulo-id"),
+                        await target.get_attribute("data-modulo-id"),
+                        f"A transição global {index} deve atravessar módulos.",
+                    )
+
+            auto_positions = [
+                int(float(await nodes.nth(index).get_attribute("data-auto-y")))
+                for index in range(13)
+            ]
+            self.assertGreater(
+                len(set(auto_positions)),
+                2,
+                "A trajetória não deve repetir apenas uma onda periódica fixa.",
+            )
+
+        self._assert_no_page_errors(page_errors)
+
     async def test_jornada_global_mantem_conector_entre_modulos(self):
         modulo2 = await sync_to_async(Modulo.objects.create)(
             disciplina=self.trilha,
