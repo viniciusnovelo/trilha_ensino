@@ -399,6 +399,7 @@
                                                             <button
                                                                 type="button"
                                                                 class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0"
+                                                                onclick="selectEditorItem('fase', {{ fase.id }})"
                                                                 data-editor-select="fase"
                                                                 data-editor-id="{{ fase.id }}"
                                                             >
@@ -421,6 +422,7 @@
                                                                 <button
                                                                     type="button"
                                                                     class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0 flex items-start gap-2"
+                                                                    onclick="selectEditorItem('questao', {{ questao.id }})"
                                                                     data-editor-select="questao"
                                                                     data-editor-id="{{ questao.id }}"
                                                                 >
@@ -556,6 +558,7 @@
                                         data-editor-type="fase"
                                         data-editor-id="{{ fase.id }}"
                                         data-editor-select="fase"
+                                        onclick="selectEditorItem('fase', {{ fase.id }})"
                                         class="editor-fase-circle"
                                         title="Selecionar {{ fase.titulo }}"
                                     >
