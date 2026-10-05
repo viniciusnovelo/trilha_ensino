@@ -2208,7 +2208,7 @@ class InterfaceVisualTests(AutenticacaoBaseTests):
         )
         self.assertContains(
             response,
-            'openModal(\'modal-editar-questao\')',
+            "renderQuestionEditor('edit',questaoId)",
         )
         self.assertContains(
             response,
