@@ -92,6 +92,12 @@ class EditorBrowserTests(StaticLiveServerTestCase):
                 page_errors.append(str(error))
 
             page.on("pageerror", handle_page_error)
+
+            def handle_console(message):
+                if message.type == "log" and message.text.startswith("EDITOR_SELECTION"):
+                    page_errors.append("CONSOLE:" + message.text)
+
+            page.on("console", handle_console)
             try:
                 yield page, page_errors
             finally:
