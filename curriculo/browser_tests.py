@@ -351,6 +351,57 @@ class EditorBrowserTests(StaticLiveServerTestCase):
 
         self._assert_no_page_errors(page_errors)
 
+    async def test_fase_selecionada_mantem_adicionar_questao_no_painel_e_mapa_limpo(self):
+        async with self._browser_page() as (page, page_errors):
+            await self._login_and_open_editor(page)
+
+            map_canvas = page.locator("#editor-map-canvas")
+            await expect(
+                map_canvas.locator('[data-editor-action="adicionar-questao"]')
+            ).to_have_count(0)
+
+            await self._map_phase_button(page).click()
+
+            await expect(
+                self._map_phase_circle(page)
+            ).to_contain_class("editor-selected")
+            await expect(
+                page.locator("#editor-details-panel")
+            ).to_be_visible()
+            await expect(
+                page.locator("#editor-details-content")
+            ).to_contain_text(self.fase.titulo)
+
+            add_question = page.locator(
+                '#editor-details-content [data-editor-action="adicionar-questao"]'
+            )
+            await expect(add_question).to_be_visible()
+            await expect(add_question).to_contain_text("Adicionar questão")
+            await expect(
+                map_canvas.locator('[data-editor-action="adicionar-questao"]')
+            ).to_have_count(0)
+
+            await add_question.click()
+            await expect(page.locator("#modal-questao")).to_be_visible()
+            await expect(
+                page.locator("#questao-fase-nome")
+            ).to_contain_text(self.fase.titulo)
+
+            await page.locator("#modal-questao").get_by_role(
+                "button", name="×"
+            ).click()
+
+            await page.get_by_title("Diminuir zoom").click()
+            await expect(page.locator("#map-zoom-value")).to_have_text("90%")
+            await page.get_by_title("Aumentar zoom").click()
+            await expect(page.locator("#map-zoom-value")).to_have_text("100%")
+            await page.get_by_role("button", name="Ajustar").click()
+            await expect(
+                page.locator("#map-zoom-value")
+            ).to_have_text(re.compile(r"^\d+%$"))
+
+        self._assert_no_page_errors(page_errors)
+
     async def test_selecao_de_modulo_no_mapa_sincroniza_conteudo_e_detalhes(self):
         async with self._browser_page() as (page, page_errors):
             await self._login_and_open_editor(page)
