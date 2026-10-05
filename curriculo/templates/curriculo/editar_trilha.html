@@ -399,7 +399,6 @@
                                                             <button
                                                                 type="button"
                                                                 class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0"
-                                                                onclick="selectEditorItem('fase', {{ fase.id }})"
                                                                 data-editor-select="fase"
                                                                 data-editor-id="{{ fase.id }}"
                                                             >
@@ -422,7 +421,6 @@
                                                                 <button
                                                                     type="button"
                                                                     class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0 flex items-start gap-2"
-                                                                    onclick="selectEditorItem('questao', {{ questao.id }})"
                                                                     data-editor-select="questao"
                                                                     data-editor-id="{{ questao.id }}"
                                                                 >
@@ -558,7 +556,6 @@
                                         data-editor-type="fase"
                                         data-editor-id="{{ fase.id }}"
                                         data-editor-select="fase"
-                                        onclick="selectEditorItem('fase', {{ fase.id }})"
                                         class="editor-fase-circle"
                                         title="Selecionar {{ fase.titulo }}"
                                     >
@@ -1341,7 +1338,6 @@
 
         function selectEditorItem(type,id) {
             const normalizedId=String(id);
-            console.log('EDITOR_SELECTION',type,normalizedId);
             selectedEditorType=type;
             selectedEditorId=normalizedId;
             ensureEditorHierarchy(type,normalizedId);
@@ -1349,16 +1345,13 @@
 
             document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
             document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
-            console.log('EDITOR_MATCH_COUNT',type,normalizedId,document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').length,document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').length && document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]')[0].className);
 
             if(type==='fase') {
                 document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').forEach((element)=>element.classList.add('editor-selected'));
                 document.querySelectorAll('[data-editor-phase-title="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
-                console.log('EDITOR_PHASE_CIRCLE',normalizedId,document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').length,document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').length && document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle')[0].className);
             }
 
             renderEditorDetails(type,normalizedId);
-            console.log('EDITOR_DETAILS_CONTEXT',document.getElementById('editor-details-context')?.textContent,document.getElementById('editor-details-content')?.textContent?.slice(0,80));
         }
 
         function handleEditorInteraction(event) {
@@ -1441,13 +1434,6 @@
             }
         }
 
-        document.querySelectorAll('.editor-selection-target, .editor-fase-circle').forEach((element)=>{
-            element.addEventListener('click',(event)=>{
-                event.preventDefault();
-                event.stopPropagation();
-                selectEditorItem(element.dataset.editorSelect,element.dataset.editorId);
-            });
-        });
         document.addEventListener('click', handleEditorInteraction);
 
         document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
