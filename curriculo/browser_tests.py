@@ -239,12 +239,17 @@ class EditorBrowserTests(StaticLiveServerTestCase):
             questao = await self._select_content_item(
                 page, "questao", self.questao.id, self.questao.enunciado
             )
-            print("DEBUG_QUESTION_STATE", await page.evaluate("""(id) => ({
-                selectedType: window.selectedEditorType,
-                selectedId: window.selectedEditorId,
-                questionClass: document.querySelector('[data-editor-select="questao"][data-editor-id="' + id + '"]')?.className,
-                details: document.getElementById('editor-details-content')?.innerText,
-            })""", str(self.questao.id)))
+            print("DEBUG_QUESTION_STATE", await page.evaluate("""(id) => {
+                const target = document.querySelector('[data-editor-select="questao"][data-editor-id="' + id + '"].editor-selection-target');
+                return {
+                    questionData: Object.prototype.hasOwnProperty.call(questoesEditor, id),
+                    targetCount: document.querySelectorAll('[data-editor-select="questao"][data-editor-id="' + id + '"]').length,
+                    targetPointerEvents: target ? getComputedStyle(target).pointerEvents : null,
+                    targetDisabled: target ? target.disabled : null,
+                    questionClass: document.querySelector('[data-editor-select="questao"][data-editor-id="' + id + '"]')?.className,
+                    details: document.getElementById('editor-details-content')?.innerText,
+                };
+            }""", str(self.questao.id)))
             await expect(questao).to_contain_class("editor-selected")
             await expect(self._phase_content(page)).to_be_visible()
             await expect(
