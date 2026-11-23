@@ -72,4 +72,12 @@ class PhysicsSourceTests(unittest.TestCase):
         self.assertFalse(is_correct(10.021, 10, 0.02))
 
 
+    def test_player_submit_button_is_available_for_choice_and_numeric(self):
+        template = Path(__file__).resolve().parent / 'templates' / 'curriculo' / 'physics_player.html'
+        source = template.read_text(encoding='utf-8')
+        self.assertIn('<div class="answer"><button class="btn" id="submit">Responder</button></div>', source)
+        self.assertIn("if(q.type==='choice')", source)
+        self.assertIn("$('numeric-answer').classList.remove('hidden')", source)
+
+
 if __name__ == '__main__': unittest.main()
