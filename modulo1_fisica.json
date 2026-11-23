@@ -998,3 +998,710 @@
             "key": "v",
             "label": "Velocidade",
             "value": 6,
+            "unit": "m/s",
+            "min": 0,
+            "max": 15,
+            "step": 0.5,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Qual é a energia cinética do carrinho para os valores indicados?",
+        "answer": {
+          "type": "numeric",
+          "formula": "kinetic_energy",
+          "unit": "J",
+          "tolerance": 0.03,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "J"
+        },
+        "hint": "A energia cinética depende do quadrado da velocidade. Uma duplicação da velocidade quadruplica essa energia.",
+        "solution": "Use Ec = (m·v²)/2. Substitua a massa em quilogramas e a velocidade em metros por segundo."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Energia cinética"
+      }
+    },
+    {
+      "id": "fis1-ene-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Energia potencial gravitacional",
+      "topic": "Energia potencial gravitacional",
+      "estimated_minutes": 5,
+      "learning_objective": "Calcular a energia potencial gravitacional em relação a um nível de referência.",
+      "context": "Uma carga é elevada por um guindaste. O estudante altera a massa, a altura e a gravidade e observa o armazenamento de energia potencial.",
+      "simulation": {
+        "scene": "potential_gravity",
+        "description": "O guindaste eleva a carga; uma régua vertical representa a altura e um medidor indica a energia potencial.",
+        "parameters": [
+          {
+            "key": "m",
+            "label": "Massa",
+            "value": 3,
+            "unit": "kg",
+            "min": 0.5,
+            "max": 10,
+            "step": 0.5,
+            "hint": ""
+          },
+          {
+            "key": "h",
+            "label": "Altura",
+            "value": 5,
+            "unit": "m",
+            "min": 0,
+            "max": 15,
+            "step": 0.5,
+            "hint": ""
+          },
+          {
+            "key": "g",
+            "label": "Gravidade",
+            "value": 10,
+            "unit": "m/s²",
+            "min": 5,
+            "max": 15,
+            "step": 0.5,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Qual é a energia potencial gravitacional da carga em relação ao nível de referência indicado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "gravitational_potential",
+          "unit": "J",
+          "tolerance": 0.03,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "J"
+        },
+        "hint": "A energia potencial gravitacional aumenta com a massa, a gravidade e a altura em relação ao referencial.",
+        "solution": "Use Epg = m·g·h. Considere o nível do chão como altura zero."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Energia potencial gravitacional"
+      }
+    },
+    {
+      "id": "fis1-ene-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Energia potencial elástica",
+      "topic": "Energia potencial elástica",
+      "estimated_minutes": 5,
+      "learning_objective": "Calcular a energia armazenada em uma mola ideal deformada.",
+      "context": "Uma mola é comprimida por um bloco. O estudante altera a constante elástica e a deformação e observa a energia armazenada.",
+      "simulation": {
+        "scene": "spring",
+        "description": "A mola se comprime e se distende; o indicador de energia aumenta com a deformação.",
+        "parameters": [
+          {
+            "key": "k",
+            "label": "Constante elástica",
+            "value": 200,
+            "unit": "N/m",
+            "min": 50,
+            "max": 500,
+            "step": 10,
+            "hint": ""
+          },
+          {
+            "key": "x",
+            "label": "Deformação",
+            "value": 0.3,
+            "unit": "m",
+            "min": 0.05,
+            "max": 0.6,
+            "step": 0.01,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Qual é a energia potencial elástica armazenada na mola para a deformação indicada?",
+        "answer": {
+          "type": "numeric",
+          "formula": "elastic_potential",
+          "unit": "J",
+          "tolerance": 0.04,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "J"
+        },
+        "hint": "A energia depende do quadrado da deformação: dobrar x quadruplica a energia armazenada.",
+        "solution": "Use Epe = (k·x²)/2. A constante elástica deve estar em N/m e a deformação em metros."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Energia potencial elástica"
+      }
+    },
+    {
+      "id": "fis1-ene-07",
+      "phase": 3,
+      "exercise_number": 7,
+      "title": "Conservação de energia: descida sem atrito",
+      "topic": "Conservação da energia mecânica",
+      "estimated_minutes": 5,
+      "learning_objective": "Aplicar a conservação da energia mecânica na transformação de energia potencial gravitacional em energia cinética.",
+      "context": "Um carrinho parte do repouso do alto de uma pista sem atrito e desce até o ponto mais baixo. O estudante altera a altura inicial.",
+      "simulation": {
+        "scene": "energy_hill",
+        "description": "O carrinho desce uma pista curva; barras mostram a energia potencial diminuindo e a cinética aumentando.",
+        "parameters": [
+          {
+            "key": "h",
+            "label": "Altura inicial",
+            "value": 5,
+            "unit": "m",
+            "min": 1,
+            "max": 12,
+            "step": 0.5,
+            "hint": ""
+          },
+          {
+            "key": "g",
+            "label": "Gravidade",
+            "value": 10,
+            "unit": "m/s²",
+            "min": 5,
+            "max": 15,
+            "step": 0.5,
+            "hint": ""
+          },
+          {
+            "key": "m",
+            "label": "Massa do carrinho",
+            "value": 2,
+            "unit": "kg",
+            "min": 0.5,
+            "max": 8,
+            "step": 0.5,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Desprezando o atrito, qual é a velocidade do carrinho ao chegar ao nível mais baixo? Ele parte do repouso.",
+        "answer": {
+          "type": "numeric",
+          "formula": "energy_bottom_speed",
+          "unit": "m/s",
+          "tolerance": 0.04,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "m/s"
+        },
+        "hint": "No alto, a energia é potencial gravitacional; no ponto mais baixo, ela se transforma em energia cinética.",
+        "solution": "Iguale m·g·h a m·v²/2. A massa aparece nos dois lados e pode ser simplificada: v = √(2gh)."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Conservação da energia mecânica"
+      }
+    },
+    {
+      "id": "fis1-ene-08",
+      "phase": 3,
+      "exercise_number": 8,
+      "title": "Conservação de energia: dois níveis",
+      "topic": "Conservação da energia mecânica",
+      "estimated_minutes": 5,
+      "learning_objective": "Aplicar a conservação da energia mecânica quando o corpo inicia o movimento com velocidade diferente de zero e chega a uma altura intermediária.",
+      "context": "Um skatista passa por um ponto elevado com velocidade inicial e desce até uma plataforma mais baixa. O estudante altera as alturas e a velocidade inicial.",
+      "simulation": {
+        "scene": "energy_two_heights",
+        "description": "O skatista passa por dois níveis; as barras de energia mostram a energia cinética inicial somada à conversão da energia potencial.",
+        "parameters": [
+          {
+            "key": "hi",
+            "label": "Altura inicial",
+            "value": 8,
+            "unit": "m",
+            "min": 4,
+            "max": 12,
+            "step": 0.5,
+            "hint": ""
+          },
+          {
+            "key": "hf",
+            "label": "Altura final",
+            "value": 3,
+            "unit": "m",
+            "min": 0,
+            "max": 10,
+            "step": 0.5,
+            "hint": ""
+          },
+          {
+            "key": "vi",
+            "label": "Velocidade inicial",
+            "value": 2,
+            "unit": "m/s",
+            "min": 0,
+            "max": 8,
+            "step": 0.5,
+            "hint": ""
+          },
+          {
+            "key": "g",
+            "label": "Gravidade",
+            "value": 10,
+            "unit": "m/s²",
+            "min": 5,
+            "max": 15,
+            "step": 0.5,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Sem atrito, qual é a velocidade do skatista na altura final indicada? Considere hi maior que hf.",
+        "answer": {
+          "type": "numeric",
+          "formula": "energy_two_heights_speed",
+          "unit": "m/s",
+          "tolerance": 0.04,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "m/s"
+        },
+        "hint": "A energia cinética inicial também deve entrar na conservação: Ecᵢ + Epgᵢ = Ec𝒇 + Epg𝒇.",
+        "solution": "Isole a velocidade final: vf = √(vi² + 2g(hi − hf)). A massa é simplificada na equação."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Conservação da energia mecânica"
+      }
+    },
+    {
+      "id": "fis1-gra-01",
+      "phase": 4,
+      "exercise_number": 1,
+      "title": "Lei da Gravitação Universal",
+      "topic": "Gravitação universal",
+      "estimated_minutes": 4,
+      "learning_objective": "Compreender como a força gravitacional depende das massas e da distância entre os centros dos corpos.",
+      "context": "Dois corpos celestes interagem gravitacionalmente. O estudante altera a massa de um deles e a distância entre os corpos.",
+      "simulation": {
+        "scene": "gravity_field",
+        "description": "Dois corpos são representados com linhas de campo esquemáticas e vetores de atração apontando um para o outro.",
+        "parameters": [
+          {
+            "key": "mratio",
+            "label": "Massa do corpo menor",
+            "value": 5,
+            "unit": "nível",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "hint": ""
+          },
+          {
+            "key": "distance",
+            "label": "Distância relativa",
+            "value": 5,
+            "unit": "nível",
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Qual alternativa descreve corretamente a dependência da força gravitacional entre dois corpos?",
+        "answer": {
+          "type": "choice",
+          "correct": 2,
+          "options": [
+            "Diretamente proporcional à distância.",
+            "Proporcional ao produto das massas e inversamente proporcional ao quadrado da distância.",
+            "Independe da distância entre os corpos."
+          ],
+          "explanation": "A força é diretamente proporcional ao produto das massas e inversamente proporcional ao quadrado da distância entre seus centros: F = G·m₁·m₂/r²."
+        },
+        "hint": "Observe separadamente o efeito de aumentar uma das massas e o efeito de aumentar a distância.",
+        "solution": "A Lei da Gravitação Universal é F = G·m₁·m₂/r². Se a distância dobra, mantendo as massas, a força passa a ser um quarto do valor inicial."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Gravitação universal"
+      }
+    },
+    {
+      "id": "fis1-gra-02",
+      "phase": 4,
+      "exercise_number": 2,
+      "title": "1ª Lei de Kepler: lei das órbitas",
+      "topic": "Primeira Lei de Kepler",
+      "estimated_minutes": 4,
+      "learning_objective": "Reconhecer que os planetas descrevem órbitas elípticas com o Sol localizado em um dos focos.",
+      "context": "O estudante observa uma órbita elíptica e compara a posição do Sol com o centro geométrico da elipse.",
+      "simulation": {
+        "scene": "kepler_ellipse",
+        "description": "A órbita elíptica aparece com os dois focos destacados e o Sol em um deles.",
+        "parameters": [
+          {
+            "key": "ecc",
+            "label": "Excentricidade visual",
+            "value": 0.35,
+            "unit": "",
+            "min": 0,
+            "max": 0.7,
+            "step": 0.05,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "De acordo com a 1ª Lei de Kepler, onde o Sol se localiza em relação à órbita elíptica de um planeta?",
+        "answer": {
+          "type": "choice",
+          "correct": 1,
+          "options": [
+            "No centro geométrico da elipse.",
+            "Em um dos focos da elipse.",
+            "Fora do plano da órbita."
+          ],
+          "explanation": "O Sol fica em um dos focos da elipse, e não necessariamente no centro geométrico da órbita."
+        },
+        "hint": "Observe que a elipse tem dois focos. O Sol não precisa estar no centro da figura.",
+        "solution": "A 1ª Lei de Kepler afirma que os planetas descrevem órbitas elípticas, com o Sol em um dos focos."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Primeira Lei de Kepler"
+      }
+    },
+    {
+      "id": "fis1-gra-03",
+      "phase": 4,
+      "exercise_number": 3,
+      "title": "2ª Lei de Kepler: lei das áreas",
+      "topic": "Segunda Lei de Kepler",
+      "estimated_minutes": 4,
+      "learning_objective": "Interpretar a lei das áreas e relacionar a velocidade orbital à distância do planeta ao Sol.",
+      "context": "Um planeta percorre uma órbita elíptica. O estudante observa setores varridos em intervalos de tempo iguais, próximos e distantes do Sol.",
+      "simulation": {
+        "scene": "kepler_area",
+        "description": "Um setor próximo ao Sol e outro distante são destacados em intervalos de tempo equivalentes.",
+        "parameters": [
+          {
+            "key": "ecc",
+            "label": "Excentricidade visual",
+            "value": 0.45,
+            "unit": "",
+            "min": 0.1,
+            "max": 0.7,
+            "step": 0.05,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Em intervalos de tempo iguais, como se comparam as áreas varridas pelo segmento que liga o planeta ao Sol?",
+        "answer": {
+          "type": "choice",
+          "correct": 0,
+          "options": [
+            "As áreas varridas são iguais em tempos iguais.",
+            "O planeta percorre distâncias iguais em tempos iguais.",
+            "O planeta tem velocidade constante em toda a órbita."
+          ],
+          "explanation": "As áreas são iguais. Por isso, o planeta se desloca mais rapidamente quando está próximo do Sol e mais lentamente quando está distante."
+        },
+        "hint": "Compare os setores desenhados para o mesmo intervalo de tempo, um próximo e outro distante do Sol.",
+        "solution": "A 2ª Lei de Kepler afirma que o raio vetor varre áreas iguais em tempos iguais. A velocidade orbital é maior no periélio e menor no afélio."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Segunda Lei de Kepler"
+      }
+    },
+    {
+      "id": "fis1-gra-04",
+      "phase": 4,
+      "exercise_number": 4,
+      "title": "3ª Lei de Kepler: lei dos períodos",
+      "topic": "Terceira Lei de Kepler",
+      "estimated_minutes": 4,
+      "learning_objective": "Relacionar o período orbital ao tamanho da órbita e comparar corpos que orbitam o mesmo astro.",
+      "context": "Dois planetas orbitam a mesma estrela em órbitas de tamanhos diferentes. O estudante altera os semieixos maiores e compara os períodos.",
+      "simulation": {
+        "scene": "kepler_periods",
+        "description": "Duas órbitas com raios diferentes são animadas; o planeta externo demora mais para completar uma volta.",
+        "parameters": [
+          {
+            "key": "a1",
+            "label": "Semieixo maior A",
+            "value": 1,
+            "unit": "UA (rel.)",
+            "min": 0.5,
+            "max": 2,
+            "step": 0.1,
+            "hint": ""
+          },
+          {
+            "key": "a2",
+            "label": "Semieixo maior B",
+            "value": 2,
+            "unit": "UA (rel.)",
+            "min": 0.5,
+            "max": 3,
+            "step": 0.1,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Qual planeta apresenta maior período orbital: o de menor ou o de maior semieixo maior?",
+        "answer": {
+          "type": "choice",
+          "correct": 1,
+          "options": [
+            "O de menor semieixo maior.",
+            "O de maior semieixo maior.",
+            "Os períodos são sempre iguais."
+          ],
+          "explanation": "O planeta de maior semieixo maior possui maior período orbital. Para corpos que orbitam a mesma estrela, T² é proporcional a a³."
+        },
+        "hint": "Aumentar o tamanho da órbita significa percorrer uma trajetória maior e, pela 3ª Lei, também aumenta o período.",
+        "solution": "A 3ª Lei de Kepler estabelece T²/a³ = constante para corpos que orbitam o mesmo astro central."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Terceira Lei de Kepler"
+      }
+    },
+    {
+      "id": "fis1-gra-05",
+      "phase": 4,
+      "exercise_number": 5,
+      "title": "Lei da Gravitação Universal: cálculo da força",
+      "topic": "Força gravitacional",
+      "estimated_minutes": 5,
+      "learning_objective": "Calcular a intensidade da força gravitacional entre a Terra e um satélite em uma órbita circular aproximada.",
+      "context": "Um satélite de comunicação orbita a Terra. O estudante altera sua massa e a distância entre o satélite e o centro da Terra.",
+      "simulation": {
+        "scene": "satellite_orbit",
+        "description": "A Terra e o satélite são representados em escala esquemática; uma linha indica o raio orbital e outra a força de atração.",
+        "parameters": [
+          {
+            "key": "m",
+            "label": "Massa do satélite",
+            "value": 1000,
+            "unit": "kg",
+            "min": 200,
+            "max": 3000,
+            "step": 100,
+            "hint": ""
+          },
+          {
+            "key": "r",
+            "label": "Raio orbital",
+            "value": 7000000,
+            "unit": "m",
+            "min": 6600000,
+            "max": 15000000,
+            "step": 100000,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Calcule o módulo da força gravitacional entre a Terra e o satélite. Use Mterra = 5,97×10²⁴ kg e G = 6,67×10⁻¹¹ N·m²/kg². Responda em kN.",
+        "answer": {
+          "type": "numeric",
+          "formula": "gravity_force_kn",
+          "unit": "kN",
+          "tolerance": 0.05,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "kN"
+        },
+        "hint": "A distância r é medida do centro da Terra ao satélite, e não da superfície até o satélite.",
+        "solution": "Use F = G·Mterra·msat/r². O resultado em newtons deve ser dividido por 1000 para obter quilonewtons."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Força gravitacional"
+      }
+    },
+    {
+      "id": "fis1-gra-06",
+      "phase": 4,
+      "exercise_number": 6,
+      "title": "Velocidade de um satélite",
+      "topic": "Velocidade orbital",
+      "estimated_minutes": 5,
+      "learning_objective": "Relacionar velocidade orbital, massa do astro central e raio da órbita circular.",
+      "context": "Um satélite artificial percorre uma órbita circular ao redor da Terra. O estudante altera a altitude e observa a velocidade orbital necessária.",
+      "simulation": {
+        "scene": "satellite_orbit",
+        "description": "O satélite percorre uma órbita circular; o vetor velocidade é tangente à trajetória.",
+        "parameters": [
+          {
+            "key": "alt",
+            "label": "Altitude acima da superfície",
+            "value": 400000,
+            "unit": "m",
+            "min": 200000,
+            "max": 2000000,
+            "step": 50000,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Qual é aproximadamente a velocidade orbital do satélite a essa altitude? Use Mterra = 5,97×10²⁴ kg, Rterra = 6,37×10⁶ m e G = 6,67×10⁻¹¹. Responda em km/s.",
+        "answer": {
+          "type": "numeric",
+          "formula": "orbital_speed_kms",
+          "unit": "km/s",
+          "tolerance": 0.04,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "km/s"
+        },
+        "hint": "O raio da órbita é a soma do raio da Terra com a altitude. A massa do satélite não entra na expressão ideal.",
+        "solution": "Para uma órbita circular, v = √(G·Mterra/r), com r = Rterra + altitude. Divida m/s por 1000 para obter km/s."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Velocidade orbital"
+      }
+    },
+    {
+      "id": "fis1-gra-07",
+      "phase": 4,
+      "exercise_number": 7,
+      "title": "Campo gravitacional",
+      "topic": "Campo gravitacional",
+      "estimated_minutes": 5,
+      "learning_objective": "Calcular a intensidade do campo gravitacional em uma distância definida do centro da Terra.",
+      "context": "Uma sonda mede o campo gravitacional em diferentes altitudes. O estudante altera a altitude e observa como o campo diminui com a distância.",
+      "simulation": {
+        "scene": "gravity_field",
+        "description": "A sonda muda de altitude em relação à Terra; linhas esquemáticas representam o campo gravitacional.",
+        "parameters": [
+          {
+            "key": "alt",
+            "label": "Altitude",
+            "value": 400000,
+            "unit": "m",
+            "min": 0,
+            "max": 3000000,
+            "step": 50000,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Qual é a intensidade do campo gravitacional nessa altitude? Use Mterra = 5,97×10²⁴ kg, Rterra = 6,37×10⁶ m e G = 6,67×10⁻¹¹. Responda em m/s².",
+        "answer": {
+          "type": "numeric",
+          "formula": "field_strength",
+          "unit": "m/s²",
+          "tolerance": 0.04,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "m/s²"
+        },
+        "hint": "A distância r deve ser medida a partir do centro da Terra: r = Rterra + altitude.",
+        "solution": "Use g = G·Mterra/r². À medida que a distância ao centro aumenta, o campo gravitacional diminui."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Campo gravitacional"
+      }
+    },
+    {
+      "id": "fis1-gra-08",
+      "phase": 4,
+      "exercise_number": 8,
+      "title": "Energia potencial gravitacional",
+      "topic": "Energia potencial gravitacional gravitacional",
+      "estimated_minutes": 5,
+      "learning_objective": "Interpretar o sinal e calcular a energia potencial gravitacional de um satélite em relação ao referencial no infinito.",
+      "context": "Um satélite está a uma distância r do centro da Terra. O estudante altera sua massa e o raio orbital e observa a energia potencial gravitacional.",
+      "simulation": {
+        "scene": "gravity_energy",
+        "description": "O satélite aparece em órbita e um indicador mostra a energia potencial negativa associada ao sistema Terra-satélite.",
+        "parameters": [
+          {
+            "key": "m",
+            "label": "Massa do satélite",
+            "value": 500,
+            "unit": "kg",
+            "min": 100,
+            "max": 2000,
+            "step": 50,
+            "hint": ""
+          },
+          {
+            "key": "r",
+            "label": "Raio orbital",
+            "value": 7000000,
+            "unit": "m",
+            "min": 6600000,
+            "max": 15000000,
+            "step": 100000,
+            "hint": ""
+          }
+        ],
+        "show_vectors": true,
+        "show_live_readouts": true
+      },
+      "challenge": {
+        "prompt": "Considerando energia potencial gravitacional igual a zero no infinito, qual é a energia potencial do satélite? Responda em GJ (gigajoules), incluindo o sinal.",
+        "answer": {
+          "type": "numeric",
+          "formula": "gravity_potential_gj",
+          "unit": "GJ",
+          "tolerance": 0.05,
+          "digits": 2,
+          "display_scale": 1,
+          "display_unit": "GJ"
+        },
+        "hint": "Nesse referencial, a energia potencial gravitacional de um sistema ligado é negativa.",
+        "solution": "Use U = −G·Mterra·msat/r. Converta joules para gigajoules dividindo por 10⁹."
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Energia potencial gravitacional gravitacional"
+      }
+    }
+  ]
+}
