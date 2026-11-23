@@ -5,6 +5,16 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ fase.titulo }} — Física</title>
 <style>
+
+.game-header{position:sticky;top:0;z-index:50;padding:12px clamp(16px,3vw,40px) 10px;background:rgba(2,6,23,.62);border-bottom:1px solid rgba(255,255,255,.10);backdrop-filter:blur(22px);box-shadow:0 10px 35px rgba(0,0,0,.12)}
+.game-header-main{max-width:1440px;margin:0 auto;min-height:54px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px}
+.back-link{justify-self:start;color:rgba(226,232,240,.72);font-weight:800;text-decoration:none;padding:9px 12px;border-radius:12px;transition:background .2s,color .2s}
+.back-link:hover{background:rgba(255,255,255,.07);color:#fff}
+.brand{text-align:center;min-width:0}.brand-kicker{font-size:9px;letter-spacing:.3em;font-weight:900;color:rgba(255,255,255,.48)}.brand-title{font-size:clamp(19px,2vw,27px);font-weight:1000;color:#facc15;line-height:1.15;text-shadow:0 4px 18px rgba(0,0,0,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:36vw}
+.hud{justify-self:end;display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}.hud-pill{padding:8px 11px;border-radius:11px;background:rgba(2,6,23,.55);border:1px solid rgba(255,255,255,.12);font-size:11px;font-weight:900;white-space:nowrap}.hud-pill.xp{color:#fde047;border-color:rgba(250,204,21,.2)}.hud-pill.coins{color:#93c5fd;border-color:rgba(96,165,250,.2)}.hud-pill.lives{color:#fda4af;border-color:rgba(251,113,133,.2)}.hud-pill.teacher{color:#c4b5fd}
+.phase-progress{max-width:700px;margin:7px auto 0}.phase-meta{display:flex;justify-content:space-between;gap:12px;color:rgba(255,255,255,.55);font-size:10px;font-weight:850;margin-bottom:5px}.phase-track{height:5px;border-radius:99px;background:rgba(0,0,0,.35);overflow:hidden}.phase-fill{height:100%;width:0;background:linear-gradient(90deg,#facc15,#34d399);border-radius:99px;transition:width .35s ease}
+.shell{max-width:1440px;padding:24px clamp(14px,2vw,28px) 44px}.panel{border-radius:22px;transition:transform .25s ease,border-color .25s ease}.layout{align-items:start}.scene{border-radius:16px}
+@media(max-width:760px){.game-header-main{grid-template-columns:auto 1fr;}.brand{grid-column:2;grid-row:1;text-align:right}.hud{grid-column:1/-1;justify-self:stretch;justify-content:center}.brand-title{max-width:55vw}.game-header{padding:9px 12px}.shell{padding-top:16px}}
 :root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;--page:#07111f;--page-glow:#142b45;--panel:#101f32;--panel-border:#29415e;--scene:#071525;--surface:#14263b;--text:#e5edf8;--muted:#9fb0c6;--accent:#60a5fa;background:var(--page);color:var(--text)}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,var(--page-glow),var(--page) 58%);min-height:100vh;color:var(--text)}
 body[data-theme="tema-floresta"]{--page:#0b1712;--page-glow:#1b3b2b;--panel:#14271d;--panel-border:#315640;--scene:#0b1b13;--surface:#1b3526;--muted:#a9c6b0;--accent:#69c58b}
 body[data-theme="tema-deserto"]{--page:#21170e;--page-glow:#57351d;--panel:#332316;--panel-border:#72502f;--scene:#21170e;--surface:#49301b;--muted:#dfc2a0;--accent:#f0b45d}
@@ -18,9 +28,33 @@ body[data-appearance="claro"] .readout{color:#20364d;background:#dce8f3}
 .shell{max-width:1180px;margin:auto;padding:28px 18px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}.muted{color:var(--muted)}.panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:18px;padding:22px;box-shadow:0 16px 50px #0003}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:18px}.scene{background:var(--scene);border:1px solid var(--panel-border);border-radius:14px;padding:12px}.scene canvas{display:block;width:100%;height:310px}.transport{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.transport button{background:#243b56;color:#e5edf8;border:1px solid #3b5878;border-radius:8px;padding:8px 11px;cursor:pointer}.parameters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px}.param{background:var(--surface);border-radius:12px;padding:12px}.param label{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-bottom:8px}.param input{width:100%;accent-color:var(--accent)}.readouts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.readout{background:#1b344e;border-radius:999px;padding:7px 11px;font-size:12px}.choice{display:block;width:100%;text-align:left;background:#172b42;color:#e5edf8;border:1px solid #34516f;border-radius:12px;padding:14px;margin:10px 0;cursor:pointer}.choice.selected{border-color:#60a5fa;background:#1e4266}.choice:disabled{opacity:.75;cursor:default}.answer{display:flex;gap:10px;margin-top:16px}.answer input{min-width:0;flex:1;background:#071525;border:1px solid #3b5573;border-radius:10px;padding:12px;color:white}.btn{background:var(--accent);color:white;border:0;border-radius:10px;padding:12px 18px;font-weight:700;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}.feedback{margin-top:14px;border-radius:12px;padding:14px;background:#172b42;line-height:1.5}.feedback.good{border:1px solid #16a34a}.feedback.bad{border:1px solid #d97706}.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.hidden{display:none!important}@media(max-width:800px){.layout{grid-template-columns:1fr}.shell{padding:16px 12px}.top{align-items:flex-start}}
 </style>
 </head>
+{% load static %}
 <body data-theme="{{ tema_fundo|default:'tema-padrao' }}" data-appearance="{{ aparencia_interface|default:'escuro' }}">
 <div class="shell">
- <header class="top"><div><div class="muted">MÓDULO 1 · FÍSICA</div><h1 style="margin:5px 0">{{ fase.titulo }}</h1><div class="muted" id="counter"></div></div><div class="muted">Simulação interativa</div></header>
+ <header class="game-header">
+  <div class="game-header-main">
+    <a class="back-link" href="{% url 'trilha' fase.modulo.disciplina_id %}" aria-label="Voltar ao mapa da trilha">← <span>Trilha</span></a>
+    <div class="brand">
+      <div class="brand-kicker">TRILHA</div>
+      <div class="brand-title">{{ fase.modulo.disciplina.nome }}</div>
+    </div>
+    <div class="hud">
+      {% if perfil.tipo == 'aluno' %}
+        {% include 'gamificacao/partials/controle_aparencia.html' %}
+        {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+        <span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span>
+        <span class="hud-pill coins">◎ {{ perfil.moedas }}</span>
+        <span class="hud-pill lives">♡ {{ perfil.vidas }}</span>
+      {% else %}
+        <span class="hud-pill teacher">Professor</span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="phase-progress">
+    <div class="phase-meta"><span>{{ fase.titulo }}</span><span id="counter"></span></div>
+    <div class="phase-track"><div class="phase-fill" id="phase-progress-fill"></div></div>
+  </div>
+</header>
  <main class="layout">
   <section class="panel">
    <div class="muted" id="topic"></div><h2 id="exercise-title" style="margin:7px 0 12px"></h2><p id="context" class="muted"></p>
@@ -127,7 +161,7 @@ body[data-appearance="claro"] .readout{color:#20364d;background:#dce8f3}
  function frame(now){if(!state.lastFrame)state.lastFrame=now;const dt=Math.min(.05,(now-state.lastFrame)/1000);state.lastFrame=now;if(state.playing){state.time+=dt;drawCurrent();}state.raf=requestAnimationFrame(frame);}
  function render(){
   const q=questions[index];selected=null;answered=false;currentParams={};state.params=currentParams;state.time=0;state.playing=true;
-  $('counter').textContent=`Questão ${index+1} de ${questions.length}`;$('topic').textContent=q.topic;$('exercise-title').textContent=q.title;$('context').textContent=q.context;$('prompt').textContent=q.prompt;$('simulation-description').textContent=q.simulation.description||'';
+  $('counter').textContent=`Questão ${index+1} de ${questions.length}`;const progressFill=$('phase-progress-fill');if(progressFill)progressFill.style.width=`${((index+1)/questions.length)*100}%`;$('topic').textContent=q.topic;$('exercise-title').textContent=q.title;$('context').textContent=q.context;$('prompt').textContent=q.prompt;$('simulation-description').textContent=q.simulation.description||'';
   $('feedback').className='feedback hidden';$('feedback').textContent='';$('submit').disabled=false;$('next').classList.add('hidden');$('finish').classList.add('hidden');$('hint').classList.remove('hidden');
   $('choice-list').innerHTML='';$('parameters').innerHTML='';$('readouts').innerHTML='';
   q.simulation.parameters.forEach(p=>{currentParams[p.key]=p.value;const wrap=document.createElement('div');wrap.className='param';wrap.innerHTML=`<label><span>${p.label}</span><strong data-value>${p.value} ${p.unit}</strong></label><input data-param-key="${p.key}" type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.value}">`;const input=wrap.querySelector('input');input.addEventListener('input',()=>{let next=Number(input.value);if(q.source_id==='fis1-ene-08'&&p.key==='hi'&&currentParams.hf>=next){currentParams.hf=Math.max(0,next-.5);const other=$(`[data-param-key="hf"]`);if(other)other.value=currentParams.hf;const label=other?.parentElement.querySelector('[data-value]');if(label)label.textContent=`${currentParams.hf} m`;}if(q.source_id==='fis1-ene-08'&&p.key==='hf'&&next>=currentParams.hi){next=Math.max(0,currentParams.hi-.5);input.value=next;}currentParams[p.key]=next;state.params[p.key]=next;state.params.hf=currentParams.hf;wrap.querySelector('[data-value]').textContent=`${next} ${p.unit}`;state.time=0;updateReadouts();drawCurrent()});$('parameters').appendChild(wrap)});
@@ -150,4 +184,5 @@ body[data-appearance="claro"] .readout{color:#20364d;background:#dce8f3}
  state.raf=requestAnimationFrame(frame);
 })();
 </script>
+{% include 'gamificacao/partials/paisagem_animada.html' %}
 </body></html>
