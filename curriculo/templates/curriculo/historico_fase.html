@@ -391,7 +391,14 @@
                                                 <p
                                                     class="text-slate-200 mt-1"
                                                 >
+                                                    {% if resposta.tipo_resposta_snapshot == 'numeric' %}
+                                                    {{ resposta.resposta_snapshot.value }} {{ resposta.resposta_snapshot.unit }}
+                                                {% else %}
                                                     {{ resposta.texto_opcao_snapshot }}
+                                                {% endif %}
+                                                {% if resposta.feedback_snapshot %}
+                                                    <span class="block text-sm text-slate-400 mt-2">{{ resposta.feedback_snapshot }}</span>
+                                                {% endif %}
                                                 </p>
 
                                             </div>

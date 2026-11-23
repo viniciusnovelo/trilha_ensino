@@ -59,3 +59,47 @@ class PhysicsPlayerTests(TestCase):
         history = RespostaTentativa.objects.get(questao=question)
         self.assertEqual(history.texto_opcao_snapshot, 'A')
         self.assertEqual(history.resposta_snapshot['text'], 'A')
+
+    def test_numeric_incorrect_answer_is_saved_with_feedback(self):
+        question = self._numeric_question()
+        self.client.get(reverse('physics_player', args=[self.fase.id]))
+        response = self.client.post(reverse('physics_check_answer', args=[self.fase.id]), data=json.dumps({
+            'questao_id': question.id, 'valor': 6.5, 'parameters': {'v': 2, 't': 3, 'x0': 1}
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.json()['correct'])
+        history = RespostaTentativa.objects.get(questao=question)
+        self.assertFalse(history.correta)
+        self.assertEqual(history.resposta_snapshot['value'], 6.5)
+        self.assertEqual(history.feedback_snapshot, 'Some x0 e vt.')
+
+    def test_finish_phase_updates_progress_and_xp(self):
+        question = self._numeric_question()
+        self.client.get(reverse('physics_player', args=[self.fase.id]))
+        answer = self.client.post(reverse('physics_check_answer', args=[self.fase.id]), data=json.dumps({
+            'questao_id': question.id, 'valor': 7, 'parameters': {'v': 2, 't': 3, 'x0': 1}
+        }), content_type='application/json')
+        self.assertTrue(answer.json()['correct'])
+        finished = self.client.post(reverse('physics_finish_phase', args=[self.fase.id]))
+        self.assertEqual(finished.status_code, 200)
+        self.assertTrue(finished.json()['aprovado'])
+        attempt = TentativaFase.objects.get(fase=self.fase, perfil__usuario=self.user)
+        self.assertIsNotNone(attempt.finalizada_em)
+        self.assertEqual(attempt.xp_ganho, 30)
+        from gamificacao.models import PerfilUsuario, ProgressoFase
+        profile = PerfilUsuario.objects.get(usuario=self.user)
+        progress = ProgressoFase.objects.get(perfil=profile, fase=self.fase)
+        self.assertEqual(profile.xp_total, 30)
+        self.assertTrue(progress.concluida)
+
+    def test_numeric_history_page_renders_feedback(self):
+        question = self._numeric_question()
+        self.client.get(reverse('physics_player', args=[self.fase.id]))
+        self.client.post(reverse('physics_check_answer', args=[self.fase.id]), data=json.dumps({
+            'questao_id': question.id, 'valor': 6.5, 'parameters': {'v': 2, 't': 3, 'x0': 1}
+        }), content_type='application/json')
+        response = self.client.get(reverse('historico_fase', args=[self.fase.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Some x0 e vt.')
+        history = RespostaTentativa.objects.get(questao=question)
+        self.assertEqual(history.resposta_snapshot['value'], 6.5)

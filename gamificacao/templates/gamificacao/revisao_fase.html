@@ -51,10 +51,21 @@
             <div class="grid md:grid-cols-2 gap-4 mt-5">
                 <div class="rounded-2xl bg-red-500/10 border border-red-400/20 p-4">
                     <p class="text-xs uppercase tracking-widest text-red-300 font-black">Sua resposta</p>
-                    <p class="mt-2 text-white/80">{{ resposta.texto_opcao_snapshot }}</p>
+                    <p class="mt-2 text-white/80">
+                        {% if resposta.tipo_resposta_snapshot == 'numeric' %}
+                            {{ resposta.resposta_snapshot.value }} {{ resposta.resposta_snapshot.unit }}
+                        {% else %}
+                            {{ resposta.texto_opcao_snapshot }}
+                        {% endif %}
+                    </p>
                 </div>
 
-                {% if resposta.opcao_correta_atual %}
+                {% if resposta.tipo_resposta_snapshot == 'numeric' %}
+                <div class="rounded-2xl bg-green-500/10 border border-green-400/20 p-4">
+                    <p class="text-xs uppercase tracking-widest text-green-300 font-black">Resposta correta</p>
+                    <p class="mt-2 text-white/80">{{ resposta.resposta_correta_snapshot.value }} {{ resposta.resposta_correta_snapshot.unit }}</p>
+                </div>
+                {% elif resposta.opcao_correta_atual %}
                 <div class="rounded-2xl bg-green-500/10 border border-green-400/20 p-4">
                     <p class="text-xs uppercase tracking-widest text-green-300 font-black">Resposta correta</p>
                     <p class="mt-2 text-white/80">{{ resposta.opcao_correta_atual.texto }}</p>
