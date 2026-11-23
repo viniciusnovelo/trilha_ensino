@@ -51,7 +51,7 @@ def physics_player(request, fase_id):
     request.session['physics_phase_id'] = fase.pk
     payload = {'phase': {'id': fase.id, 'title': fase.titulo}, 'attempt_id': attempt.pk,
                'questions': [_question_payload(q) for q in questions]}
-    return render(request, 'curriculo/physics_player.html', {'fase': fase, 'player_payload': payload})
+    return render(request, 'curriculo/physics_player.html', {'fase': fase, 'player_payload': payload, 'tema_fundo': perfil.tema_fundo, 'aparencia_interface': perfil.aparencia_interface})
 
 
 @login_required
