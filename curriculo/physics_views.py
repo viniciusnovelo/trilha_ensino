@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import Fase, Questao, Opcao
-from .views import fase_esta_liberada
+from .views import fase_esta_liberada, contexto_papel, papel_efetivo
 from .physics_engine import calculate, is_correct
 from gamificacao.models import PerfilUsuario, TentativaFase, RespostaTentativa, ProgressoFase
 
@@ -51,7 +51,21 @@ def physics_player(request, fase_id):
     request.session['physics_phase_id'] = fase.pk
     payload = {'phase': {'id': fase.id, 'title': fase.titulo}, 'attempt_id': attempt.pk,
                'questions': [_question_payload(q) for q in questions]}
-    return render(request, 'curriculo/physics_player.html', {'fase': fase, 'player_payload': payload, 'tema_fundo': perfil.tema_fundo, 'aparencia_interface': perfil.aparencia_interface})
+    papel = papel_efetivo(request)
+    tema_aplicado = (
+        perfil.tema_fundo
+        if papel == 'aluno'
+        else fase.modulo.disciplina.tema
+    )
+    contexto = contexto_papel(request)
+    contexto.update({
+        'fase': fase,
+        'player_payload': payload,
+        'tema_fundo': perfil.tema_fundo,
+        'tema_aplicado': tema_aplicado,
+        'aparencia_interface': perfil.aparencia_interface,
+    })
+    return render(request, 'curriculo/physics_player.html', contexto)
 
 
 @login_required
