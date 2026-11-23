@@ -26,36 +26,64 @@ body[data-appearance="claro"] .choice,body[data-appearance="claro"] .answer inpu
 body[data-appearance="claro"] .transport button{color:#17283b;background:#e2ebf4;border-color:#bdccdc}
 body[data-appearance="claro"] .readout{color:#20364d;background:#dce8f3}
 .shell{position:relative;z-index:2;max-width:1540px;margin:0 auto;padding:28px clamp(18px,3vw,48px) 48px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}.muted{color:var(--muted)}.panel{min-width:0;background:var(--panel);border:1px solid var(--panel-border);border-radius:22px;padding:clamp(18px,2vw,28px);box-shadow:0 16px 50px #0003}.layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:22px;align-items:start}.scene{background:var(--scene);border:1px solid var(--panel-border);border-radius:16px;padding:12px}.scene canvas{display:block;width:100%;height:310px}.transport{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.transport button{background:#243b56;color:#e5edf8;border:1px solid #3b5878;border-radius:8px;padding:8px 11px;cursor:pointer}.parameters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px}.param{background:var(--surface);border-radius:12px;padding:12px}.param label{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-bottom:8px}.param input{width:100%;accent-color:var(--accent)}.readouts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.readout{background:#1b344e;border-radius:999px;padding:7px 11px;font-size:12px}.choice{display:block;width:100%;text-align:left;background:#172b42;color:#e5edf8;border:1px solid #34516f;border-radius:12px;padding:14px;margin:10px 0;cursor:pointer}.choice.selected{border-color:#60a5fa;background:#1e4266}.choice:disabled{opacity:.75;cursor:default}.answer{display:flex;gap:10px;margin-top:16px}.answer input{min-width:0;flex:1;background:#071525;border:1px solid #3b5573;border-radius:10px;padding:12px;color:white}.btn{background:var(--accent);color:white;border:0;border-radius:10px;padding:12px 18px;font-weight:700;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}.feedback{margin-top:14px;border-radius:12px;padding:14px;background:#172b42;line-height:1.5}.feedback.good{border:1px solid #16a34a}.feedback.bad{border:1px solid #d97706}.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.hidden{display:none!important}@media(max-width:900px){.layout{grid-template-columns:1fr}.shell{padding:18px 14px 36px}.top{align-items:flex-start}}
+
+.game-header{position:relative;z-index:30;width:100%;padding:14px clamp(18px,3vw,40px) 12px;background:rgba(15,23,42,.48);border-bottom:1px solid rgba(255,255,255,.10);backdrop-filter:blur(22px);box-shadow:0 10px 35px rgba(0,0,0,.12)}
+.game-header-inner{max-width:1540px;margin:0 auto}
+.game-header-top{display:grid;grid-template-columns:minmax(130px,1fr) auto minmax(320px,1fr);align-items:center;gap:18px;min-height:54px}
+.back-link{justify-self:start;display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:12px;color:rgba(226,232,240,.78);font-size:14px;font-weight:800;text-decoration:none;transition:background .2s,color .2s}
+.back-link:hover{background:rgba(255,255,255,.07);color:#fff}
+.back-link svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.brand{text-align:center;min-width:0}.brand-kicker{margin:0;font-size:10px;letter-spacing:.3em;font-weight:900;color:rgba(255,255,255,.45)}.brand-title{margin:0;font-size:clamp(21px,2vw,29px);font-weight:1000;color:#facc15;line-height:1.12;text-shadow:0 4px 18px rgba(0,0,0,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
+.hud{justify-self:end;display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:nowrap}
+.hud-pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:11px;background:rgba(2,6,23,.58);border:1px solid rgba(255,255,255,.12);font-size:11px;font-weight:900;white-space:nowrap;backdrop-filter:blur(12px)}
+.hud-pill.xp{color:#fde047;border-color:rgba(250,204,21,.2)}.hud-pill.coins{color:#93c5fd;border-color:rgba(96,165,250,.2)}.hud-pill.lives{color:#fda4af;border-color:rgba(251,113,133,.2)}.hud-pill.teacher{color:#c4b5fd}.hud-pill.test{color:#fcd34d;border-color:rgba(251,191,36,.25);background:rgba(120,53,15,.25)}
+.phase-progress{max-width:760px;margin:10px auto 0}.phase-meta{display:flex;justify-content:space-between;gap:12px;color:rgba(255,255,255,.58);font-size:10px;font-weight:850;margin-bottom:6px}.phase-name{text-transform:uppercase;letter-spacing:.06em}.phase-track{height:7px;border-radius:99px;background:rgba(0,0,0,.32);overflow:hidden;border:1px solid rgba(255,255,255,.06)}.phase-fill{height:100%;width:0;background:linear-gradient(90deg,#facc15,#34d399);border-radius:99px;transition:width .4s ease}
+#controle-aparencia,#seletor-tema-usuario{position:relative;z-index:80;flex:0 0 auto}
+#botao-aparencia,#botao-tema-usuario{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2);background:rgba(2,6,23,.82);color:#fff;font-size:18px;box-shadow:0 8px 20px rgba(0,0,0,.22);cursor:pointer;transition:transform .2s,background .2s}
+#botao-aparencia:hover,#botao-tema-usuario:hover{transform:scale(1.07);background:rgba(15,23,42,.98)}
+#opcoes-aparencia,#opcoes-tema-usuario{position:absolute;top:50%;right:50px;transform:translateY(-50%);display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:999px;background:rgba(2,6,23,.96);border:1px solid rgba(255,255,255,.14);box-shadow:0 16px 36px rgba(0,0,0,.38);backdrop-filter:blur(18px);white-space:nowrap;z-index:100}
+#opcoes-aparencia.opacity-0,#opcoes-tema-usuario.opacity-0{opacity:0;visibility:hidden;pointer-events:none}
+#opcoes-aparencia:not(.opacity-0),#opcoes-tema-usuario:not(.opacity-0){opacity:1;visibility:visible;pointer-events:auto}
+#opcoes-aparencia button{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.2);cursor:pointer}
+#opcoes-tema-usuario button{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.2);cursor:pointer;flex:0 0 auto}
+#opcoes-aparencia .ring-4,#opcoes-tema-usuario .ring-4{outline:3px solid rgba(255,255,255,.85);outline-offset:2px}
+@media(max-width:900px){.game-header{padding:12px 14px}.game-header-top{grid-template-columns:auto 1fr;gap:8px}.brand{grid-column:2;grid-row:1;text-align:right}.hud{grid-column:1/-1;justify-self:stretch;justify-content:center;flex-wrap:wrap}.phase-progress{margin-top:12px}.brand-title{max-width:55vw}}
+@media(max-width:480px){.hud{gap:6px}.hud-pill{padding:7px 8px;font-size:10px}#botao-aparencia,#botao-tema-usuario{width:38px;height:38px}#opcoes-aparencia,#opcoes-tema-usuario{right:44px;gap:5px;padding:6px}#opcoes-aparencia button,#opcoes-tema-usuario button{width:31px;height:31px}}
 </style>
 </head>
 <body class="{{ tema_aplicado|default:'tema-padrao' }}" data-theme="{{ tema_aplicado|default:'tema-padrao' }}" data-appearance="{{ aparencia_interface|default:'escuro' }}">
 {% include 'gamificacao/partials/paisagem_animada.html' %}
-<div class="shell">
- <header class="game-header">
-  <div class="game-header-main">
-    <a class="back-link" href="{% url 'trilha' fase.modulo.disciplina_id %}" aria-label="Voltar ao mapa da trilha">← <span>Trilha</span></a>
-    <div class="brand">
-      <div class="brand-kicker">TRILHA</div>
-      <div class="brand-title">{{ fase.modulo.disciplina.nome }}</div>
+<header class="game-header relative z-30">
+  <div class="game-header-inner">
+    <div class="game-header-top">
+      <a class="back-link" href="{% url 'trilha' fase.modulo.disciplina_id %}" aria-label="Voltar ao mapa da trilha">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6M9 12h12"/></svg>
+        <span>Painel</span>
+      </a>
+      <div class="brand">
+        <p class="brand-kicker">TRILHA</p>
+        <h1 class="brand-title">{{ fase.modulo.disciplina.nome }}</h1>
+      </div>
+      <div class="hud">
+        {% if papel_efetivo == 'aluno' %}
+          {% include 'gamificacao/partials/controle_aparencia.html' %}
+          {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+          {% if modo_teste_ativo %}<span class="hud-pill test">🧪 TESTE</span>{% endif %}
+          <span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span>
+          <span class="hud-pill coins">◎ {{ perfil.moedas }}</span>
+          <span class="hud-pill lives">♡ {{ perfil.vidas }}</span>
+        {% else %}
+          <span class="hud-pill teacher">Professor</span>
+        {% endif %}
+      </div>
     </div>
-    <div class="hud">
-      {% if papel_efetivo == 'aluno' %}
-        {% include 'gamificacao/partials/controle_aparencia.html' %}
-        {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
-        {% if modo_teste_ativo %}<span class="hud-pill teacher">🧪 Teste</span>{% endif %}
-        <span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span>
-        <span class="hud-pill coins">◎ {{ perfil.moedas }}</span>
-        <span class="hud-pill lives">♡ {{ perfil.vidas }}</span>
-      {% else %}
-        <span class="hud-pill teacher">Professor</span>
-      {% endif %}
+    <div class="phase-progress">
+      <div class="phase-meta"><span class="phase-name">{{ fase.titulo }}</span><span id="counter"></span></div>
+      <div class="phase-track"><div class="phase-fill" id="phase-progress-fill"></div></div>
     </div>
-  </div>
-  <div class="phase-progress">
-    <div class="phase-meta"><span>{{ fase.titulo }}</span><span id="counter"></span></div>
-    <div class="phase-track"><div class="phase-fill" id="phase-progress-fill"></div></div>
   </div>
 </header>
+<div class="shell">
  <main class="layout">
   <section class="panel">
    <div class="muted" id="topic"></div><h2 id="exercise-title" style="margin:7px 0 12px"></h2><p id="context" class="muted"></p>
