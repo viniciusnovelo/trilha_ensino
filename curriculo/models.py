@@ -124,6 +124,11 @@ class Fase(models.Model):
 
 
 class Questao(models.Model):
+    TIPO_RESPOSTA_CHOICES = [
+        ('choice', 'Múltipla escolha'),
+        ('numeric', 'Numérica'),
+    ]
+
     fase = models.ForeignKey(
         Fase,
         on_delete=models.CASCADE,
@@ -134,6 +139,9 @@ class Questao(models.Model):
         blank=True,
         help_text="Feedback pedagógico exibido se o aluno errar a questão.",
     )
+    tipo_resposta = models.CharField(max_length=12, choices=TIPO_RESPOSTA_CHOICES, default='choice')
+    dados_dinamicos = models.JSONField(default=dict, blank=True)
+    codigo_fonte = models.CharField(max_length=80, unique=True, null=True, blank=True)
 
     class Meta:
         verbose_name = "Questão"

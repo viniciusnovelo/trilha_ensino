@@ -2823,6 +2823,11 @@ def fase_detalhe(
         id=fase_id,
     )
 
+    # Questões importadas de Física usam o player dinâmico.
+    if fase.questoes.filter(codigo_fonte__isnull=False).exists():
+        from .physics_views import physics_player
+        return physics_player(request, fase_id)
+
     if not fase_esta_liberada(
         request,
         fase,

@@ -307,8 +307,6 @@ class ProgressoModulo(models.Model):
             if self.concluido
             else 'Desbloqueado'
             if self.desbloqueado
-            else 'Chave disponível'
-            if self.chave_disponivel
             else 'Bloqueado'
         )
 
@@ -435,9 +433,12 @@ class RespostaTentativa(models.Model):
     # Snapshots para preservar o conteúdo histórico.
     texto_questao_snapshot = models.TextField()
 
-    texto_opcao_snapshot = models.CharField(
-        max_length=255
-    )
+    texto_opcao_snapshot = models.CharField(max_length=255, blank=True, default='')
+    tipo_resposta_snapshot = models.CharField(max_length=12, default='choice')
+    resposta_snapshot = models.JSONField(default=dict, blank=True)
+    resposta_correta_snapshot = models.JSONField(default=dict, blank=True)
+    parametros_snapshot = models.JSONField(default=dict, blank=True)
+    feedback_snapshot = models.TextField(blank=True, default='')
 
     correta = models.BooleanField(
         default=False

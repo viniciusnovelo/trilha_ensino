@@ -1,9 +1,13 @@
 from django.urls import path
 
 from . import views
+from . import physics_views
 
 
 urlpatterns = [
+    path('fisica/fase/<int:fase_id>/', physics_views.physics_player, name='physics_player'),
+    path('fisica/fase/<int:fase_id>/verificar-resposta/', physics_views.physics_check_answer, name='physics_check_answer'),
+    path('fisica/fase/<int:fase_id>/finalizar/', physics_views.physics_finish_phase, name='physics_finish_phase'),
 
     path(
         'contas/cadastro/',

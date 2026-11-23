@@ -1,0 +1,143 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ fase.titulo }} — Física</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#07111f;color:#e5edf8}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#142b45,#07111f 55%);min-height:100vh}.shell{max-width:1180px;margin:auto;padding:28px 18px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}.muted{color:#9fb0c6}.panel{background:#101f32;border:1px solid #29415e;border-radius:18px;padding:22px;box-shadow:0 16px 50px #0003}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:18px}.scene{background:#071525;border:1px solid #29415e;border-radius:14px;padding:12px}.scene canvas{display:block;width:100%;height:310px}.transport{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.transport button{background:#243b56;color:#e5edf8;border:1px solid #3b5878;border-radius:8px;padding:8px 11px;cursor:pointer}.parameters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px}.param{background:#14263b;border-radius:12px;padding:12px}.param label{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-bottom:8px}.param input{width:100%;accent-color:#60a5fa}.readouts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.readout{background:#1b344e;border-radius:999px;padding:7px 11px;font-size:12px}.choice{display:block;width:100%;text-align:left;background:#172b42;color:#e5edf8;border:1px solid #34516f;border-radius:12px;padding:14px;margin:10px 0;cursor:pointer}.choice.selected{border-color:#60a5fa;background:#1e4266}.choice:disabled{opacity:.75;cursor:default}.answer{display:flex;gap:10px;margin-top:16px}.answer input{min-width:0;flex:1;background:#071525;border:1px solid #3b5573;border-radius:10px;padding:12px;color:white}.btn{background:#2563eb;color:white;border:0;border-radius:10px;padding:12px 18px;font-weight:700;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}.feedback{margin-top:14px;border-radius:12px;padding:14px;background:#172b42;line-height:1.5}.feedback.good{border:1px solid #16a34a}.feedback.bad{border:1px solid #d97706}.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.hidden{display:none!important}@media(max-width:800px){.layout{grid-template-columns:1fr}.shell{padding:16px 12px}.top{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="shell">
+ <header class="top"><div><div class="muted">MÓDULO 1 · FÍSICA</div><h1 style="margin:5px 0">{{ fase.titulo }}</h1><div class="muted" id="counter"></div></div><div class="muted">Simulação interativa</div></header>
+ <main class="layout">
+  <section class="panel">
+   <div class="muted" id="topic"></div><h2 id="exercise-title" style="margin:7px 0 12px"></h2><p id="context" class="muted"></p>
+   <div class="scene"><canvas id="simCanvas" aria-label="Simulação física interativa"></canvas><div class="transport"><button id="playBtn" type="button">Ⅱ Pausar</button><button id="stepBtn" type="button">Avançar 1 passo</button><button id="resetBtn" type="button">↺ Reiniciar</button></div><div class="readouts" id="readouts"></div></div>
+   <div class="parameters" id="parameters"></div>
+   <p class="muted" id="simulation-description" style="font-size:13px"></p>
+  </section>
+  <section class="panel">
+   <div class="muted">DESAFIO</div><h2 style="font-size:20px;line-height:1.45" id="prompt"></h2>
+   <div id="choice-list"></div>
+   <div id="numeric-answer" class="answer hidden"><input id="numeric-value" type="number" step="any" placeholder="Digite sua resposta"><button class="btn" id="submit">Responder</button></div>
+   <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+   <div class="nav"><button class="btn" id="hint" style="background:#334155">Ver dica</button><button class="btn hidden" id="next">Próxima questão</button><button class="btn hidden" id="finish">Finalizar fase</button></div>
+   <p class="muted" style="font-size:12px;margin-top:18px">Ajuste os parâmetros da simulação antes de responder. Os valores utilizados serão guardados no histórico.</p>
+  </section>
+ </main>
+</div>
+{{ player_payload|json_script:"physics-data" }}
+<script>
+(()=>{
+ const data=JSON.parse(document.getElementById('physics-data').textContent), questions=data.questions;
+ let index=0, selected=null, answered=false, currentParams={};
+ const $=id=>document.getElementById(id);
+ const state={params:{},time:0,playing:true,lastFrame:0};
+ function current(){return questions[index]}
+ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const rad=deg=>deg*Math.PI/180;
+ const fmt=(v,d=2)=>Number.isFinite(v)?v.toLocaleString('pt-BR',{maximumFractionDigits:d,minimumFractionDigits:0}):'—';
+ const getP=key=>Number(state.params[key]??0);
+  // Canvas drawing helpers
+ let canvas=null,ctx=null,W=900,H=310,dpr=1;
+ function resizeCanvas(){canvas=$('simCanvas');if(!canvas)return;const rect=canvas.getBoundingClientRect();dpr=Math.max(1,window.devicePixelRatio||1);W=rect.width||900;H=310;canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);drawCurrent();}
+ function clear(){ctx.clearRect(0,0,W,H);ctx.fillStyle='#f7faff';ctx.fillRect(0,0,W,H);}
+ function text(s,x,y,size=13,color='#52647d',weight=600,align='left'){ctx.fillStyle=color;ctx.font=`${weight} ${size}px system-ui,sans-serif`;ctx.textAlign=align;ctx.fillText(s,x,y);ctx.textAlign='left';}
+ function line(x1,y1,x2,y2,color='#8ca0bb',width=2,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.setLineDash([]);}
+ function arrow(x1,y1,x2,y2,color='#3978e8',width=3,label='') {if(current().simulation.show_vectors===false)return;line(x1,y1,x2,y2,color,width);const a=Math.atan2(y2-y1,x2-x1),l=10;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-l*Math.cos(a-.45),y2-l*Math.sin(a-.45));ctx.lineTo(x2-l*Math.cos(a+.45),y2-l*Math.sin(a+.45));ctx.closePath();ctx.fillStyle=color;ctx.fill();if(label)text(label,(x1+x2)/2,(y1+y2)/2-9,11,color,750,'center');}
+ function circle(x,y,r,fill='#3978e8',stroke=null){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}}
+ function rounded(x,y,w,h,r,fill='#fff',stroke='#dce5f0'){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.4;ctx.stroke();}}
+ function ground(y){line(45,y,W-45,y,'#9dafc5',2);for(let x=50;x<W-40;x+=18)line(x,y+4,x-8,y+10,'#d1dbe8',1);}
+ function car(x,y,scale=1,color='#3978e8'){rounded(x,y-20*scale,58*scale,20*scale,6*scale,color,'#2b5fba');circle(x+13*scale,y+2*scale,7*scale,'#42516a');circle(x+45*scale,y+2*scale,7*scale,'#42516a');}
+ function drawScene(e){
+  const p=state.params,t=state.time,sc=e.simulation.scene;clear();
+  const cx=W/2;
+  switch(sc){
+  case 'mru_track':{
+   const y=225;ground(y);for(let i=0;i<=10;i++){const x=70+i*(W-140)/10;line(x,y-5,x,y+7,'#9aabc0',1);text(`${i*5} m`,x,y+25,9,'#8797ac',550,'center');}
+   const x0=80+(p.x0/20)*(W-180);const x=x0+((t*p.v*22)%(W-170));line(x0,y-42,x0,y-12,'#24a98d',2,[3,3]);text('x₀',x0,y-48,11,'#159b78',800,'center');car(x,y);arrow(x+10,y-43,x+60,y-43,'#3978e8',3,'v constante');text(`v = ${fmt(p.v,1)} m/s`,W-55,42,12,'#3978e8',800,'right');break;}
+  case 'incline_mru':case 'incline_mruv':case 'work_incline':{
+   const thetaValue=p.theta??25,theta=rad(thetaValue),x1=W*.22,y1=245,x2=W*.83;const rise=clamp((x2-x1)*Math.tan(theta)*.34,18,170),y2=y1-rise;line(x1,y1,x2,y2,'#879cb7',8);line(x1,y1+2,x2,y2+2,'#d3deec',2);line(x1,y1,x2,y1,'#b6c4d6',1.5);line(x2,y2,x2,y1,'#b6c4d6',1.5,[]);
+   const simT=t%4.5;let frac;if(sc==='incline_mru')frac=.08+((t*(.045+(p.v||2)*.018))%0.72);else if(sc==='incline_mruv'){const accel=(p.g||10)*Math.sin(theta);frac=.08+Math.min(.72,.5*accel*simT*simT/115);}else frac=.08+((t*.055)%0.72);const s=clamp(frac,.08,.82);const x=x1+(x2-x1)*s,y=y1+(y2-y1)*s-15;ctx.save();ctx.translate(x,y);ctx.rotate(Math.atan2(y2-y1,x2-x1));rounded(-19,-13,38,26,5,sc==='work_incline'?'#e4a23d':'#3978e8',sc==='work_incline'?'#b57b22':'#2b5fba');ctx.restore();
+   text(`θ = ${fmt(thetaValue,0)}°`,x1+18,y1+20,11,'#64748b',700);if(sc==='incline_mru')arrow(x,y-35,x+45,y-48,'#3978e8',3,'v');if(sc==='incline_mruv')arrow(x,y-36,x+55,y-36,'#e29a2d',3,'a');if(sc==='work_incline'){arrow(x-5,y-38,x+clamp(p.F*1.2,25,110),y-52,'#e29a2d',3,'F aplicada');line(x-8,y+21,x+clamp(p.d*12,25,100),y+21,'#159b78',2);text(`d = ${fmt(p.d,1)} m`,x+clamp(p.d*12,25,100),y+38,9,'#159b78',650,'center');}
+   text(sc==='incline_mru'?'Movimento uniforme':sc==='incline_mruv'?'Plano ideal sem atrito':'Força aplicada paralela à rampa',W*.55,35,12,'#52647d',750,'center');break;}
+  case 'mruv_track':{
+   const y=225;ground(y);const simT=(t%4.5),distance=getP('v0')*simT+.5*getP('a')*simT*simT;const maxDistance=Math.max(1,getP('v0')*4.5+.5*getP('a')*4.5*4.5);const prog=clamp(distance/maxDistance,0,1);const x=80+prog*(W-170);car(x,y);arrow(x+15,y-50,x+15+35+getP('v0')*3+getP('a')*4,y-50,'#3978e8',3,'v');arrow(x+25,y-82,x+70,y-82,'#e6a23c',3,'a');text('A distância entre posições sucessivas aumenta.',W/2,55,12,'#52647d',700,'center');break;}
+  case 'free_fall':{
+   const top=45,bottom=255,h=p.h;line(W*.28,top,W*.28,bottom,'#879bb5',3);line(W*.28-11,top,W*.28+11,top,'#879bb5',2);line(W*.28-11,bottom,W*.28+11,bottom,'#879bb5',2);text(`${fmt(h,0)} m`,W*.28-18,top+8,11,'#64748b',700,'right');ground(bottom);const fallTime=Math.sqrt(2*h/p.g),cycle=fallTime+.65,fallT=t%cycle,drop=Math.min(1,.5*p.g*fallT*fallT/h);const y=top+drop*(bottom-top-10);circle(W*.28+100,y,13,'#3978e8','#fff');arrow(W*.28+125,y-20,W*.28+125,y+20+drop*35,'#e29a2d',3,'v');text(`g = ${fmt(p.g,1)} m/s²`,W*.65,60,13,'#52647d',750);text('A velocidade aumenta durante a queda.',W*.65,83,11,'#8795a9',600);break;}
+  case 'circular':{
+   const r=clamp(p.r*28,50,140),cy=160;circle(cx,cy,4,'#e29a2d');ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#9cabc0';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);const a=t*2*Math.PI/p.T;const x=cx+r*Math.cos(a),y=cy+r*Math.sin(a);circle(x,y,12,'#3978e8','#fff');arrow(x,y,x-45*Math.cos(a),y-45*Math.sin(a),'#e29a2d',3,'aᶜ');arrow(x,y,x-45*Math.sin(a),y+45*Math.cos(a),'#24a98d',3,'v');text(`r = ${fmt(p.r,1)} m`,cx,cy+r+28,11,'#64748b',700,'center');text(`T = ${fmt(p.T,2)} s`,cx,35,12,'#52647d',750,'center');break;}
+  case 'inertia_bus':{
+   const brake=p.brake;const bx=110+(Math.max(0,1.6-t)*16);rounded(bx,130,300,100,17,'#3978e8','#2a60bd');rounded(bx+30,145,65,36,7,'#bde6f2','#fff');rounded(bx+110,145,65,36,7,'#bde6f2','#fff');rounded(bx+190,145,65,36,7,'#bde6f2','#fff');circle(bx+65,238,17,'#394960');circle(bx+240,238,17,'#394960');
+   const passengerX=bx+155+(t>1?Math.min(35,(t-1)*brake*3):0);circle(passengerX,105,12,'#e7ae7b');rounded(passengerX-10,118,20,32,7,'#f1a34e');arrow(passengerX+20,112,passengerX+65,112,'#e29a2d',3,'tendência');text('O ônibus reduz a velocidade; o corpo tende a manter o movimento.',W/2,48,12,'#52647d',700,'center');break;}
+  case 'forces_balance':{
+   ground(220);rounded(cx-42,167,84,45,10,'#e4a23d','#bd852d');circle(cx-23,217,9,'#45536b');circle(cx+23,217,9,'#45536b');const scale=2.6;arrow(cx-50,160,cx-50-p.left*scale,160,'#e06d70',4,`Fₑ = ${fmt(p.left,0)} N`);arrow(cx+50,160,cx+50+p.right*scale,160,'#3978e8',4,`Fᴅ = ${fmt(p.right,0)} N`);const net=p.right-p.left;arrow(cx,100,cx+clamp(net*scale, -100,100),100,'#159b78',4,`Fᵣ = ${fmt(net,1)} N`);text(net===0?'Forças equilibradas':'Força resultante diferente de zero',cx,58,13,net===0?'#159b78':'#d18a2d',800,'center');break;}
+  case 'newton_cart':{
+   ground(220);const speedFactor=8+Math.sqrt(p.F/p.m)*10;const x=130+(t*speedFactor%(W-300));car(x,220,1.25);arrow(x+25,145,x+25+clamp(p.F*2,35,110),145,'#e29a2d',4,'Fᵣ');text(`m = ${fmt(p.m,1)} kg`,W*.7,65,13,'#52647d',750);text(`a = Fᵣ / m`,W*.7,90,12,'#3978e8',750);break;}
+  case 'compare_acceleration':{
+   ground(238);const a1=p.F/p.m1,a2=p.F/p.m2;const drift1=clamp(a1*4,8,65),drift2=clamp(a2*4,8,65);rounded(100+Math.min(80,t*drift1*2),150,80,42,8,'#3978e8','#2c61b7');rounded(100+Math.min(80,t*drift2*2),215,80,42,8,'#24a98d','#14846e');text(`A · ${fmt(p.m1,1)} kg`,205,175,11,'#3978e8',800);text(`aA = ${fmt(a1,2)} m/s²`,330,175,11,'#3978e8',700);text(`B · ${fmt(p.m2,1)} kg`,205,240,11,'#159b78',800);text(`aB = ${fmt(a2,2)} m/s²`,330,240,11,'#159b78',700);arrow(180,135,180+drift1*2,135,'#3978e8',3);arrow(180,200,180+drift2*2,200,'#159b78',3);break;}
+  case 'rocket_action':{
+   const rx=cx+Math.sin(t*1.4)*24;rounded(rx-28,95,56,105,17,'#e9edf4','#97a8bf');ctx.beginPath();ctx.moveTo(rx-28,95);ctx.lineTo(rx,55);ctx.lineTo(rx+28,95);ctx.closePath();ctx.fillStyle='#e56b65';ctx.fill();ctx.fillStyle='#8ba0bb';ctx.beginPath();ctx.moveTo(rx-28,165);ctx.lineTo(rx-48,190);ctx.lineTo(rx-28,187);ctx.fill();ctx.beginPath();ctx.moveTo(rx+28,165);ctx.lineTo(rx+48,190);ctx.lineTo(rx+28,187);ctx.fill();for(let i=0;i<Math.round(3+p.thrust*.65);i++){const yy=205+((t*(28+p.thrust*3)+i*19)%78);circle(rx+(i%2?12:-12)+(Math.sin(i+t)*5),yy,3+(i%3),'#a7b6c9');}arrow(rx-12,78,rx-12,25,'#3978e8',4,'força no foguete');arrow(rx+48,185,rx+48,250,'#e29a2d',4,'força nos gases');text('Ação e reação: mesma intensidade, sentidos opostos, corpos diferentes.',cx,24,11,'#52647d',700,'center');break;}
+  case 'skaters':{
+   ground(248);const sepA=Math.min(145,t*(11+Math.sqrt(p.F/p.m1)*7)),sepB=Math.min(145,t*(11+Math.sqrt(p.F/p.m2)*7));const x1=cx-95-sepA,x2=cx+95+sepB;circle(x1,158,13,'#e9b17a');rounded(x1-12,171,24,48,8,'#3978e8');circle(x2,158,13,'#e9b17a');rounded(x2-12,171,24,48,8,'#24a98d');arrow(x1+12,170,x1-52,170,'#3978e8',3,'F');arrow(x2-12,170,x2+52,170,'#24a98d',3,'F');text(`aA = ${fmt(p.F/p.m1,2)} m/s²`,cx-220,75,12,'#3978e8',750);text(`aB = ${fmt(p.F/p.m2,2)} m/s²`,cx+80,75,12,'#159b78',750);text('Forças de interação iguais em módulo.',cx,35,11,'#65758c',650,'center');break;}
+  case 'work_wall_box':{
+   const mid=cx;line(65,235,mid-30,235,'#9dafc5',3);rounded(95,110,28,125,3,'#b9c5d5','#8295ad');arrow(132,178,132+clamp(p.push*1.5,25,150),178,'#e29a2d',4,'F');text('PAREDE',109,260,11,'#697991',800,'center');line(mid+25,235,W-60,235,'#9dafc5',3);const bx=mid+80+Math.sin(t*(.5+p.push/20))*clamp(p.push*.65,8,55);rounded(bx,193,75,42,8,'#e4a23d','#bd852d');arrow(bx-20,178,bx+clamp(p.push*1.5,25,150),178,'#e29a2d',4,'F');text('CAIXA EM MOVIMENTO',mid+170,260,11,'#697991',800,'center');text('Deslocamento = 0',110,70,11,'#d06c68',700,'center');text('Deslocamento ≠ 0',mid+180,70,11,'#159b78',700,'center');break;}
+  case 'work_horizontal':{
+   ground(235);const x=130+(t*18%350),forceLen=clamp(p.F*1.3,25,135),dispLen=clamp(p.d*22,15,165);rounded(x,190,72,42,8,'#e4a23d','#bd852d');arrow(x+25,155,x+25+forceLen*Math.cos(rad(p.alpha)),155-forceLen*Math.sin(rad(p.alpha)),'#e29a2d',4,'F');arrow(x+35,180,x+35+dispLen,180,'#159b78',2,'d');text(`α = ${fmt(p.alpha,0)}°`,W*.72,63,12,'#52647d',750);text('W = F · d · cos(α)',W*.72,88,12,'#3978e8',800);break;}
+  case 'kinetic_energy':{
+   ground(220);const x=100+(t*(6+p.v*4)%(W-220));car(x,220,1.15);rounded(W*.65,95,180,22,11,'#eaf0f7','#dae3ee');rounded(W*.65,95,180*clamp((.5*p.m*p.v*p.v)/(0.5*10*225),0,1),22,11,'#3978e8',null);text('ENERGIA CINÉTICA',W*.65,82,10,'#6d7f98',800);text(`Ec = ½ · m · v²`,W*.65,145,13,'#3978e8',800);text(`m = ${fmt(p.m,1)} kg`,W*.65,169,11,'#52647d',650);text(`v = ${fmt(p.v,1)} m/s`,W*.65,190,11,'#52647d',650);break;}
+  case 'potential_gravity':{
+   ground(245);const y=245-(p.h/15)*165;line(180,y,180,245,'#aab8ca',2,[4,4]);rounded(143,y-28,74,28,6,'#e4a23d','#bd852d');text(`${fmt(p.h,1)} m`,205,y-5,11,'#64748b',700);arrow(252,y,252,245,'#159b78',3,'h');text('Nível de referência (h = 0)',W/2,276,10,'#8593a7',600,'center');text('Energia potencial gravitacional',W*.62,82,12,'#3978e8',750);text(`Epg = m · g · h`,W*.62,108,14,'#3978e8',800);rounded(W*.62,132,175,12,6,'#eaf0f7',null);rounded(W*.62,132,175*clamp((p.m*p.g*p.h)/(10*15*10),0,1),12,6,'#24a98d',null);text(`${fmt(p.m,1)} kg · ${fmt(p.g,1)} m/s²`,W*.62,164,10,'#64748b',650);break;}
+  case 'spring':{
+   const left=120,right=360+clamp(p.x*230,15,135),y=175;line(80,230,W-70,230,'#aab8ca',2);rounded(65,100,26,130,5,'#cbd5e1','#9aa9bc');line(91,y,120,y,'#879bb5',3);const n=12;for(let i=0;i<n;i++){const x=120+(right-120)*(i/n);const yy=y+(i%2?16:-16);line(i===0?120:120+(right-120)*((i-1)/n),i===0?y:y+((i-1)%2?16:-16),x,yy,'#24a98d',2);}line(right,y,right+12,y,'#879bb5',3);rounded(right+12,145,65,60,8,'#e4a23d','#bd852d');text(`x = ${fmt(p.x,2)} m`,right+45,225,11,'#64748b',700,'center');text(`k = ${fmt(p.k,0)} N/m`,W*.68,70,12,'#52647d',750);text(`Rigidez da mola: ${p.k<180?'menor':p.k>350?'maior':'intermediária'}`,W*.68,120,10,'#64748b',650);text('Epe = ½ · k · x²',W*.68,95,13,'#159b78',800);break;}
+  case 'energy_hill':case 'energy_two_heights':{
+   const hi=sc==='energy_hill'?p.h:p.hi,hf=sc==='energy_hill'?0:p.hf;ctx.beginPath();ctx.moveTo(55,235);ctx.quadraticCurveTo(W*.28,245,W*.43,170);ctx.quadraticCurveTo(W*.58,85,W*.77,190);ctx.quadraticCurveTo(W*.88,230,W-45,230);ctx.strokeStyle='#96a9c2';ctx.lineWidth=5;ctx.stroke();const level=clamp(hi/12,0.2,.95);const bx=120+(t*24%(W-260));const y=226-level*125*(1-Math.cos((bx-120)/(W-260)*Math.PI));circle(bx,y-12,10,'#3978e8','#fff');
+   const progress=clamp((bx-120)/(W-260),0,1);const localHeight=hi-(hi-hf)*progress;const gravPart=Math.max(0,localHeight)/(Math.max(hi,0.1));const initialK=sc==='energy_two_heights'?p.vi*p.vi/(2*p.g*Math.max(hi,0.1)):0;const hPct=clamp(gravPart/(1+initialK),0,1),vPct=clamp(1-hPct,0,1);rounded(W-190,65,130,12,6,'#eaf0f7',null);rounded(W-190,65,130*hPct,12,6,'#24a98d',null);rounded(W-190,90,130,12,6,'#eaf0f7',null);rounded(W-190,90,130*vPct,12,6,'#e4a23d',null);text('E potencial',W-190,57,9,'#159b78',700);text('E cinética',W-190,82,9,'#b77b23',700);text('Energia mecânica total constante (sem atrito)',W/2,30,11,'#52647d',700,'center');break;}
+  case 'kepler_ellipse':case 'kepler_area':case 'kepler_periods':{
+   const ecc=p.ecc??0.35;const a=sc==='kepler_periods'?clamp(85+p.a2*62,120,260):Math.min(W*.32,285);const b=a*Math.sqrt(1-ecc*ecc),fx=cx-a*ecc,fy=155;ctx.beginPath();ctx.ellipse(cx,fy,a,b,0,0,Math.PI*2);ctx.strokeStyle='#8da2bd';ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);circle(fx,fy,10,'#e7a23c');text('Sol',fx,fy-19,10,'#9b6c23',800,'center');circle(cx,fy,3,'#9aabc0');
+   if(sc==='kepler_ellipse'){circle(cx+a*ecc,fy,5,'#8da2bd');text('Foco 1',fx,fy+27,9,'#7e8da2',600,'center');text('Foco 2',cx+a*ecc,fy+27,9,'#7e8da2',600,'center');}
+   if(sc==='kepler_area'){const ang= t*0.7;const px=fx+a*Math.cos(ang),py=fy+b*Math.sin(ang);circle(px,py,7,'#3978e8');ctx.beginPath();ctx.moveTo(fx,fy);ctx.lineTo(px,py);ctx.lineTo(cx+a*Math.cos(ang+.45),fy+b*Math.sin(ang+.45));ctx.closePath();ctx.fillStyle='#24b8c733';ctx.fill();ctx.strokeStyle='#24a98d';ctx.stroke();text('Áreas iguais em tempos iguais',cx,30,11,'#159b78',800,'center');}
+   if(sc==='kepler_periods'){const a1=clamp(85+p.a1*62,105,a-18),b1=a1*Math.sqrt(1-ecc*ecc),innerCenterX=fx+a1*ecc;ctx.beginPath();ctx.ellipse(innerCenterX,fy,a1,b1,0,0,Math.PI*2);ctx.strokeStyle='#24a98d';ctx.lineWidth=2;ctx.stroke();const outerRate=.75/Math.pow(Math.max(p.a2,.5),1.5),innerRate=.75/Math.pow(Math.max(p.a1,.5),1.5);const px1=fx+a*Math.cos(t*outerRate),py1=fy+b*Math.sin(t*outerRate);const px2=innerCenterX+a1*Math.cos(t*innerRate),py2=fy+b1*Math.sin(t*innerRate);circle(px1,py1,7,'#3978e8');circle(px2,py2,7,'#24a98d');text(`aA = ${fmt(p.a1,1)} · aB = ${fmt(p.a2,1)}`,cx,30,11,'#52647d',800,'center');}
+   if(sc!=='kepler_periods'){const ang=t*.65;circle(fx+a*Math.cos(ang),fy+b*Math.sin(ang),7,'#3978e8');}
+   break;}
+  case 'satellite_orbit':{
+   const earthR=78,orbitR=clamp(96+(((p.r??(6.37e6+(p.alt||0)))-6.6e6)/(15e6-6.6e6))*105,90,205);circle(cx,155,earthR,'#2f75b9','#1f5e9b');ctx.beginPath();ctx.arc(cx,155,orbitR,0,Math.PI*2);ctx.strokeStyle='#9aadc4';ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);const a=t*.8;const sx=cx+orbitR*Math.cos(a),sy=155+orbitR*Math.sin(a);circle(sx,sy,8,'#e6a23c','#fff');arrow(sx,sy,sx-38*Math.sin(a),sy+38*Math.cos(a),'#3978e8',3,'v');line(cx,155,sx,sy,'#9baec6',1,[3,4]);text(`r = ${fmt(p.r??(6370000+(p.alt||0)),0)} m`,cx,35,11,'#52647d',700,'center');text('Terra (esquema fora de escala)',cx,260,10,'#6e7f96',600,'center');break;}
+  case 'gravity_field':{
+   if(p.alt!==undefined){circle(cx,165,75,'#2f75b9','#1f5e9b');const orbit=75+clamp(p.alt/3000000*100,0,100);ctx.beginPath();ctx.arc(cx,165,orbit,0,Math.PI*2);ctx.strokeStyle='#9aadc4';ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);const x=cx+orbit,y=165;circle(x,y,7,'#e6a23c');arrow(x,y,x+42,y,'#e29a2d',3,'g');text(`r = Rterra + ${fmt(p.alt,0)} m`,cx,35,11,'#52647d',700,'center');text('O campo diminui com a distância ao centro.',cx,275,11,'#52647d',700,'center');}
+   else{const gap=55+p.distance*10,r2=clamp(10+p.mratio*2.4,13,34),leftX=cx-gap,rightX=cx+gap;circle(leftX,155,35,'#3978e8');circle(rightX,155,r2,'#e5a23c');arrow(leftX+35,155,rightX-r2,155,'#159b78',3,'atração');arrow(rightX-r2,175,leftX+35,175,'#159b78',3);text('m₁',leftX,207,12,'#52647d',750,'center');text(`m₂ · nível ${p.mratio}`,rightX,207,12,'#52647d',750,'center');text(`distância relativa = ${p.distance}`,cx,65,11,'#52647d',700,'center');text('A força cresce com as massas e diminui com r².',cx,260,11,'#52647d',700,'center');}
+   break;}
+  case 'gravity_energy':{
+   circle(cx,160,82,'#2f75b9','#1f5e9b');const angle=t*.65,rr=clamp(105+((p.r-6.6e6)/(15e6-6.6e6))*100,100,205);ctx.beginPath();ctx.arc(cx,160,rr,0,Math.PI*2);ctx.strokeStyle='#97abc3';ctx.setLineDash([4,5]);ctx.stroke();ctx.setLineDash([]);const sx=cx+rr*Math.cos(angle),sy=160+rr*Math.sin(angle);circle(sx,sy,9,'#e4a23d');line(cx,160,sx,sy,'#a8b7c9',1,[4,4]);text('U = −G·M·m/r',cx,35,14,'#3978e8',800,'center');text(`r = ${fmt(p.r,0)} m`,W-45,56,10,'#65758b',650,'right');text('Referencial: U = 0 no infinito',cx,285,10,'#65758b',650,'center');break;}
+  default:text('Simulação visual em construção',cx,155,16,'#64748b',700,'center');
+  }
+ }
+ function drawCurrent(){const e=current();if(!e||!ctx)return;drawScene(e);}
+ function frame(now){if(!state.lastFrame)state.lastFrame=now;const dt=Math.min(.05,(now-state.lastFrame)/1000);state.lastFrame=now;if(state.playing){state.time+=dt;drawCurrent();}state.raf=requestAnimationFrame(frame);}
+ function render(){
+  const q=questions[index];selected=null;answered=false;currentParams={};state.params=currentParams;state.time=0;state.playing=true;
+  $('counter').textContent=`Questão ${index+1} de ${questions.length}`;$('topic').textContent=q.topic;$('exercise-title').textContent=q.title;$('context').textContent=q.context;$('prompt').textContent=q.prompt;$('simulation-description').textContent=q.simulation.description||'';
+  $('feedback').className='feedback hidden';$('feedback').textContent='';$('next').classList.add('hidden');$('finish').classList.add('hidden');$('hint').classList.remove('hidden');
+  $('choice-list').innerHTML='';$('parameters').innerHTML='';$('readouts').innerHTML='';
+  q.simulation.parameters.forEach(p=>{currentParams[p.key]=p.value;const wrap=document.createElement('div');wrap.className='param';wrap.innerHTML=`<label><span>${p.label}</span><strong data-value>${p.value} ${p.unit}</strong></label><input data-param-key="${p.key}" type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.value}">`;const input=wrap.querySelector('input');input.addEventListener('input',()=>{let next=Number(input.value);if(q.source_id==='fis1-ene-08'&&p.key==='hi'&&currentParams.hf>=next){currentParams.hf=Math.max(0,next-.5);const other=$(`[data-param-key="hf"]`);if(other)other.value=currentParams.hf;const label=other?.parentElement.querySelector('[data-value]');if(label)label.textContent=`${currentParams.hf} m`;}if(q.source_id==='fis1-ene-08'&&p.key==='hf'&&next>=currentParams.hi){next=Math.max(0,currentParams.hi-.5);input.value=next;}currentParams[p.key]=next;state.params[p.key]=next;state.params.hf=currentParams.hf;wrap.querySelector('[data-value]').textContent=`${next} ${p.unit}`;state.time=0;updateReadouts();drawCurrent()});$('parameters').appendChild(wrap)});
+  if(q.type==='choice'){q.options.forEach(o=>{const b=document.createElement('button');b.className='choice';b.textContent=o.text;b.onclick=()=>{if(answered)return;selected=o.id;document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')};$('choice-list').appendChild(b)});$('numeric-answer').classList.add('hidden')}
+  else{$('numeric-answer').classList.remove('hidden');$('numeric-value').value='';$('submit').disabled=false}
+  updateReadouts();$('playBtn').textContent='Ⅱ Pausar';resizeCanvas();
+ }
+ function updateReadouts(){const q=questions[index];$('readouts').innerHTML='';if(!q.simulation.show_live_readouts)return;q.simulation.parameters.forEach(p=>{const s=document.createElement('span');s.className='readout';s.textContent=`${p.label}: ${currentParams[p.key]} ${p.unit}`;$('readouts').appendChild(s)})}
+ async function sendAnswer(){const q=questions[index];if(answered)return;let body={questao_id:q.id};if(q.type==='choice'){if(!selected){alert('Selecione uma alternativa.');return}body.opcao_id=selected}else{const val=$('numeric-value').value;if(val===''){alert('Informe um valor.');return}body.valor=Number(val);body.parameters=currentParams}
+  const response=await fetch(`/fisica/fase/${data.phase.id}/verificar-resposta/`,{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});const result=await response.json();if(!response.ok){alert(result.error||'Não foi possível validar a resposta.');return}answered=true;$('submit').disabled=true;document.querySelectorAll('.choice').forEach(x=>x.disabled=true);$('feedback').className='feedback '+(result.correct?'good':'bad');$('feedback').textContent=(result.correct?'Correto! ':'Ainda não. ')+result.feedback+(result.hint?' Dica: '+result.hint:'');$('hint').classList.add('hidden');if(index===questions.length-1)$('finish').classList.remove('hidden');else $('next').classList.remove('hidden');
+ }
+ function getCookie(name){const value=`; ${document.cookie}`;const parts=value.split(`; ${name}=`);return parts.length===2?decodeURIComponent(parts.pop().split(';').shift()):''}
+ $('playBtn').onclick=()=>{state.playing=!state.playing;$('playBtn').textContent=state.playing?'Ⅱ Pausar':'▶ Continuar'};
+ $('stepBtn').onclick=()=>{state.time+=0.35;drawCurrent()};
+ $('resetBtn').onclick=()=>{state.time=0;state.playing=false;$('playBtn').textContent='▶ Continuar';drawCurrent()};
+ window.addEventListener('resize',resizeCanvas);
+ $('submit').onclick=sendAnswer;$('next').onclick=()=>{index++;render()};$('hint').onclick=()=>{const q=questions[index];$('feedback').className='feedback';$('feedback').textContent='Dica: '+q.hint};
+ $('finish').onclick=async()=>{const r=await fetch(`/fisica/fase/${data.phase.id}/finalizar/`,{method:'POST',headers:{'X-CSRFToken':getCookie('csrftoken')}});const result=await r.json();if(!r.ok){alert(result.error||'Erro ao finalizar');return}$('feedback').className='feedback '+(result.aprovado?'good':'bad');$('feedback').textContent=`Fase finalizada: ${result.acertos}/${result.total} acertos (${result.aproveitamento}%). ${result.aprovado?'Aprovado! XP: '+result.xp_ganho:'Você precisa de pelo menos 60% para concluir.'}`;$('finish').disabled=true};
+ render();
+ state.raf=requestAnimationFrame(frame);
+})();
+</script>
+</body></html>
