@@ -14,6 +14,8 @@ python scripts/reset_e_importar_fisica.py --dry-run
 python scripts/reset_e_importar_fisica.py
 ```
 
+**Atenção sobre a atualização:** a branch anterior já rastreava arquivos SQLite. Por isso, o próprio `git pull` remove esses arquivos versionados do checkout ao atualizar a branch. O `--dry-run` continua sem apagar banco nem executar migrations; o comando final garante a remoção de qualquer `db.sqlite3` residual e cria o banco novo.
+
 O `--dry-run` valida os arquivos-fonte, os 28 JSONs do ZIP, a correspondência entre JSON e ZIP, as 4 fases, os 21 exercícios numéricos, os 7 de múltipla escolha, as 26 cenas e as 21 fórmulas. Não apaga o banco, não executa migrations e não cria registros.
 
 O último comando apaga completamente o `db.sqlite3` local e recria o banco pelas migrations antes de importar o Módulo 1 de Física. **Todos os usuários, dados, trilhas, módulos, fases, questões, progresso, tentativas e respostas existentes nesse banco serão perdidos.** Não é criado backup obrigatório.
