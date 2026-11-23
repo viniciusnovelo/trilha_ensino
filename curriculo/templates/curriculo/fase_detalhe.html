@@ -59,7 +59,13 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-    </style>
+    
+        body { overflow-x:hidden; }
+        .fase-enter { animation: fase-enter .55s cubic-bezier(.2,.75,.25,1) both; }
+        @keyframes fase-enter { from { opacity:0; transform:translateY(14px) scale(.992); } to { opacity:1; transform:translateY(0) scale(1); } }
+        .fase-stage { width:min(100%, 1180px); margin:0 auto; border:1px solid rgba(255,255,255,.10); background:rgba(15,23,42,.36); backdrop-filter:blur(18px); border-radius:28px; box-shadow:0 24px 70px rgba(0,0,0,.18); }
+        @media(max-width:640px){ .fase-stage{border-radius:20px;} }
+</style>
 
 </head>
 
@@ -79,137 +85,49 @@
          CABEÇALHO
          ===================================================== -->
 
-    <header
-        class="relative z-10 shrink-0 border-b border-white/10 bg-slate-950/50 backdrop-blur-xl px-4 sm:px-6 py-4"
-    >
-
-        <div
-            class="max-w-6xl mx-auto flex items-center gap-3 sm:gap-5"
-        >
-
-            <a
-                href="{% url 'trilha' trilha_id %}"
-                class="w-10 h-10 shrink-0 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition"
-                title="Voltar ao mapa"
-                aria-label="Voltar ao mapa"
-            >
-                <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15 19l-7-7 7-7"
-                    />
-                </svg>
-            </a>
-
-
-            <div class="flex-1 min-w-0">
-
-                <div class="flex items-end justify-between gap-3 mb-2">
-                    <div class="min-w-0">
-                        <p
-                            class="text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-white/40 font-black truncate"
-                        >
-                            {{ fase.get_tipo_display }}
-                        </p>
-
-                        <h1
-                            class="text-base sm:text-lg font-black text-white truncate mt-0.5"
-                            title="{{ fase.titulo }}"
-                        >
-                            {{ fase.titulo }}
-                        </h1>
+    <header class="relative z-30 shrink-0 border-b border-white/10 bg-slate-950/55 backdrop-blur-2xl sticky top-0">
+        <div class="px-4 md:px-8 py-3 sm:py-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                    <a href="{% url 'trilha' trilha_id %}" class="justify-self-start inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-black text-white/65 hover:text-white hover:bg-white/5 transition" title="Voltar ao mapa da trilha">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                        <span class="hidden sm:inline">Trilha</span>
+                    </a>
+                    <div class="text-center min-w-0">
+                        <p class="text-[9px] sm:text-[10px] uppercase tracking-[.3em] text-white/45 font-black">Trilha</p>
+                        <h1 class="text-lg sm:text-2xl font-black text-yellow-400 drop-shadow-lg truncate max-w-[42vw]" title="{{ fase.modulo.disciplina.nome }}">{{ fase.modulo.disciplina.nome }}</h1>
                     </div>
-
-                    <span
-                        class="hidden sm:inline-flex shrink-0 items-center rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-black text-white/45"
-                    >
-                        FASE {{ fase.ordem }}
-                    </span>
+                    <div class="justify-self-end flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end">
+                        {% if papel_efetivo == 'aluno' %}
+                            {% include 'gamificacao/partials/controle_aparencia.html' %}
+                            {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+                            {% if modo_teste_ativo %}
+                                <span class="hidden xl:inline-flex rounded-xl border border-amber-400/20 bg-amber-500/10 px-3 py-2 text-[10px] font-black uppercase tracking-wider text-amber-200">🧪 Teste</span>
+                            {% endif %}
+                            <span class="hidden md:inline-flex items-center rounded-xl border border-yellow-400/20 bg-slate-950/60 px-3 py-2 text-xs font-black text-yellow-300">✦ Nv. {{ perfil.nivel }}</span>
+                            <span class="hidden lg:inline-flex items-center rounded-xl border border-blue-400/20 bg-slate-950/60 px-3 py-2 text-xs font-black text-blue-300">◎ {{ perfil.moedas }}</span>
+                            <span class="inline-flex items-center rounded-xl border border-red-400/20 bg-slate-950/60 px-3 py-2 text-xs font-black text-red-300">♡ {{ perfil.vidas }}</span>
+                        {% else %}
+                            <span class="rounded-xl border border-indigo-400/15 bg-indigo-500/10 px-3 py-2 text-[10px] font-black uppercase tracking-wider text-indigo-200">Professor</span>
+                        {% endif %}
+                    </div>
                 </div>
-
-
-                <div
-                    class="h-2.5 bg-black/35 rounded-full overflow-hidden border border-white/5"
-                    aria-label="Progresso da fase"
-                >
-                    <div
-                        id="progress-bar"
-                        class="bg-gradient-to-r from-green-400 to-emerald-300 h-full transition-all duration-300"
-                        style="width: 0%"
-                    ></div>
+                <div class="mt-3 sm:mt-4 flex items-center gap-3">
+                    <div class="min-w-0 flex-1">
+                        <div class="mb-1.5 flex items-center justify-between gap-3">
+                            <div class="min-w-0">
+                                <p class="text-[9px] uppercase tracking-[.2em] text-white/40 font-black">{{ fase.get_tipo_display }} · FASE {{ fase.ordem }}</p>
+                                <p class="truncate text-sm font-bold text-white/85">{{ fase.titulo }}</p>
+                            </div>
+                            <span id="contador" class="shrink-0 text-xs sm:text-sm text-slate-300 font-black">0 / 0</span>
+                        </div>
+                        <div class="h-2 bg-black/35 rounded-full overflow-hidden border border-white/5" aria-label="Progresso da fase">
+                            <div id="progress-bar" class="bg-gradient-to-r from-green-400 to-emerald-300 h-full transition-all duration-500" style="width:0%"></div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
-
-            <div class="flex items-center gap-2 shrink-0">
-
-                {% if papel_efetivo == 'aluno' %}
-
-                    {% include 'gamificacao/partials/controle_aparencia.html' %}
-
-                    {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
-
-                    <div
-                        class="hidden md:flex items-center gap-1.5 rounded-xl border border-yellow-400/20 bg-slate-950/60 px-3 py-2 backdrop-blur-md"
-                        title="Nível atual"
-                    >
-                        <svg class="w-4 h-4 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l2.4 4.86 5.37.78-3.88.78 2.53.92L12 15.24l-4.81 2.53.92-5.35-3.88-3.78L12 3z"/>
-                        </svg>
-                        <span class="text-yellow-300 font-black">Nv. {{ perfil.nivel }}</span>
-                    </div>
-
-                    <div
-                        class="hidden lg:flex items-center gap-1.5 rounded-xl border border-blue-400/20 bg-slate-950/60 px-3 py-2 backdrop-blur-md"
-                        title="Moedas disponíveis"
-                    >
-                        <svg class="w-4 h-4 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="8"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.5 9.5h5M9.5 12h4M9.5 14.5h5"/>
-                        </svg>
-                        <span class="text-blue-300 font-black">{{ perfil.moedas }}</span>
-                    </div>
-
-                    <div
-                        class="flex items-center gap-1.5 rounded-xl border border-red-400/20 bg-slate-950/60 px-3 py-2 backdrop-blur-md"
-                        title="Vidas disponíveis"
-                    >
-                        <svg class="w-4 h-4 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/>
-                        </svg>
-                        <span class="text-red-300 font-black">{{ perfil.vidas }}</span>
-                    </div>
-
-                {% else %}
-
-                    <span
-                        class="rounded-xl border border-indigo-400/15 bg-indigo-500/10 px-3 py-2 text-[10px] font-black uppercase tracking-wider text-indigo-200"
-                    >
-                        Professor
-                    </span>
-
-                {% endif %}
-
-
-                <div
-                    id="contador"
-                    class="min-w-[64px] sm:min-w-[80px] text-right text-xs sm:text-sm text-slate-400 font-black"
-                >
-                    0 / 0
-                </div>
-
-            </div>
-
         </div>
-
     </header>
 
 
@@ -291,8 +209,9 @@
          ===================================================== -->
 
     <main
-        class="relative z-10 flex-1 flex flex-col items-center justify-center p-6 max-w-4xl mx-auto w-full"
+        class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-6 sm:px-6 sm:py-8 max-w-7xl mx-auto w-full fase-enter"
     >
+      <div class="fase-stage w-full px-4 py-6 sm:px-8 sm:py-8">
 
         <h2
             id="enunciado"
@@ -375,6 +294,7 @@
 
         </div>
 
+      </div>
     </main>
 
 
