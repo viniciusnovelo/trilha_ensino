@@ -200,9 +200,12 @@
         }
 
         .module-lock {
-            color: rgba(148,163,184,.5);
-            background: rgba(15,23,42,.38);
-            border: 1px solid rgba(148,163,184,.12);
+            color: color-mix(in srgb, var(--module-color) 82%, white);
+            background: color-mix(in srgb, var(--module-color) 13%, rgba(15,23,42,.72));
+            border: 1px solid color-mix(in srgb, var(--module-color) 48%, transparent);
+            box-shadow:
+                0 0 0 1px color-mix(in srgb, var(--module-color) 10%, transparent),
+                0 0 13px var(--module-glow);
         }
 
         .module-check {
@@ -230,6 +233,22 @@
             justify-content: center;
             z-index: 10;
             flex-shrink: 0;
+            transform: translateY(
+                calc(var(--saved-y, 0px) + var(--wave-y, 0px))
+            ) !important;
+        }
+
+        /*
+           Alternância suave: o caminho serpenteia sem mudar a
+           ordem das fases nem as posições salvas pelo professor.
+        */
+        .module-group > .fase-item:nth-of-type(4n + 2),
+        .module-group > .fase-item:nth-of-type(4n + 2) ~ .fase-item:nth-of-type(4n + 2) {
+            --wave-y: -34px;
+        }
+
+        .module-group > .fase-item:nth-of-type(4n) {
+            --wave-y: 34px;
         }
 
         .fase-node {
@@ -313,12 +332,13 @@
         .fase-node.locked {
             width: 76px;
             height: 76px;
-            background: #334155;
-            border-bottom-color: #1e293b;
-            color: #64748b;
+            background: color-mix(in srgb, var(--module-color) 18%, #1e293b);
+            border-bottom-color: color-mix(in srgb, var(--module-dark) 58%, #0f172a);
+            color: color-mix(in srgb, var(--module-color) 68%, #cbd5e1);
             box-shadow:
-                0 9px 20px rgba(0,0,0,.32);
-            opacity: .82;
+                0 9px 20px rgba(0,0,0,.32),
+                0 0 15px color-mix(in srgb, var(--module-glow) 78%, transparent);
+            opacity: .94;
         }
 
         .fase-name {
@@ -539,6 +559,14 @@
                 width: 64px;
                 min-width: 64px;
                 height: 195px;
+            }
+
+            .module-group > .fase-item:nth-of-type(4n + 2) {
+                --wave-y: -25px;
+            }
+
+            .module-group > .fase-item:nth-of-type(4n) {
+                --wave-y: 25px;
             }
 
             .fase-connector {
@@ -960,7 +988,7 @@
 
                             <div
                                 class="fase-item"
-                                style="transform: translateY({{ fase.deslocamento_y }}px);"
+                                style="--saved-y: {{ fase.deslocamento_y }}px;"
                             >
 
                                 {% if papel_exibicao == 'professor' %}
@@ -1196,7 +1224,7 @@
                                     >
 
                                         <path
-                                            d="M0 {{ fase.svg_y1 }} C 25 {{ fase.svg_y1 }} 75 {{ fase.svg_y2 }} 100 {{ fase.svg_y2 }}"
+                                            d="M0 110 C 25 110 75 110 100 110"
                                             fill="none"
                                             class="linha-conector"
                                             stroke-width="12"
@@ -1204,7 +1232,7 @@
                                         />
 
                                         <path
-                                            d="M0 {{ fase.svg_y1 }} C 25 {{ fase.svg_y1 }} 75 {{ fase.svg_y2 }} 100 {{ fase.svg_y2 }}"
+                                            d="M0 110 C 25 110 75 110 100 110"
                                             fill="none"
                                             class="linha-tracejada"
                                             stroke-width="5"
@@ -1239,12 +1267,12 @@
                             >
 
                                 <path
-                                    d="M0 {{ modulo.transicao_svg_y1 }} C 24 {{ modulo.transicao_svg_y1 }} 76 {{ modulo.transicao_svg_y2 }} 100 {{ modulo.transicao_svg_y2 }}"
+                                    d="M0 110 C 24 110 76 110 100 110"
                                     class="module-transition-base"
                                 />
 
                                 <path
-                                    d="M0 {{ modulo.transicao_svg_y1 }} C 24 {{ modulo.transicao_svg_y1 }} 76 {{ modulo.transicao_svg_y2 }} 100 {{ modulo.transicao_svg_y2 }}"
+                                    d="M0 110 C 24 110 76 110 100 110"
                                     class="module-transition-inner"
                                 />
 
@@ -1450,6 +1478,63 @@
                 'pointerleave',
                 finalizarArrasto
             );
+        }
+
+        /*
+         * Ajusta os conectores à posição real dos nós após aplicar
+         * a curva visual e os deslocamentos personalizados do editor.
+         * Assim cada fase continua ligada à seguinte, inclusive entre módulos.
+         */
+        function atualizarCaminhosDaTrilha() {
+            const desenharConector = (svg, noAnterior, noSeguinte, classeBase, classeInterna) => {
+                if (!svg || !noAnterior || !noSeguinte) return;
+
+                const caixa = svg.getBoundingClientRect();
+                const anterior = noAnterior.getBoundingClientRect();
+                const seguinte = noSeguinte.getBoundingClientRect();
+
+                if (!caixa.height) return;
+
+                const escalaY = 220 / caixa.height;
+                const y1 = ((anterior.top + anterior.height / 2 - caixa.top) * escalaY);
+                const y2 = ((seguinte.top + seguinte.height / 2 - caixa.top) * escalaY);
+                const caminho = `M0 ${y1.toFixed(2)} C 25 ${y1.toFixed(2)} 75 ${y2.toFixed(2)} 100 ${y2.toFixed(2)}`;
+
+                svg.querySelectorAll(`.\${classeBase}, .\${classeInterna}`).forEach((path) => {
+                    path.setAttribute('d', caminho);
+                });
+            };
+
+            document.querySelectorAll('.fase-connector').forEach((conector) => {
+                const anterior = conector.previousElementSibling?.querySelector('.fase-node');
+                const seguinte = conector.nextElementSibling?.querySelector('.fase-node');
+                desenharConector(conector.querySelector('svg'), anterior, seguinte, 'linha-conector', 'linha-tracejada');
+            });
+
+            document.querySelectorAll('.module-transition').forEach((transicao) => {
+                const moduloAnterior = transicao.previousElementSibling;
+                const moduloSeguinte = transicao.nextElementSibling;
+                const anterior = moduloAnterior?.querySelector('.fase-item:last-of-type .fase-node');
+                const seguinte = moduloSeguinte?.querySelector('.fase-item .fase-node');
+                desenharConector(transicao.querySelector('svg'), anterior, seguinte, 'module-transition-base', 'module-transition-inner');
+            });
+        }
+
+        let quadroCaminhoPendente = false;
+        const agendarAtualizacaoCaminhos = () => {
+            if (quadroCaminhoPendente) return;
+            quadroCaminhoPendente = true;
+            requestAnimationFrame(() => {
+                quadroCaminhoPendente = false;
+                atualizarCaminhosDaTrilha();
+            });
+        };
+
+        agendarAtualizacaoCaminhos();
+        window.addEventListener('resize', agendarAtualizacaoCaminhos);
+        window.addEventListener('load', agendarAtualizacaoCaminhos);
+        if (document.fonts?.ready) {
+            document.fonts.ready.then(agendarAtualizacaoCaminhos);
         }
     </script>
 
