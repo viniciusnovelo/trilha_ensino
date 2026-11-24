@@ -27,7 +27,7 @@ def _question_payload(question):
         'context': data['context'],
         'prompt': challenge['prompt'],
         'type': question.tipo_resposta,
-        'hint': challenge.get('hint', ''),
+        'hint': challenge.get('hint') or challenge.get('answer', {}).get('hint', ''),
         'simulation': simulation,
         'options': [{'id': option.id, 'text': option.texto} for option in question.opcoes.all()] if question.tipo_resposta == 'choice' else [],
     }
@@ -81,6 +81,21 @@ def physics_check_answer(request, fase_id):
         question = get_object_or_404(Questao, pk=int(payload['questao_id']), fase=fase)
         dynamic = question.dados_dinamicos
         answer = dynamic['challenge']['answer']
+        source_parameters = dynamic['simulation']['parameters']
+        allowed = {item['key']: item for item in source_parameters}
+        supplied = payload.get('parameters') or {}
+        if set(supplied) - set(allowed):
+            return JsonResponse({'error': 'Parâmetros desconhecidos.'}, status=400)
+        parameters = {key: float(supplied.get(key, item['value'])) for key, item in allowed.items()}
+        for key, value in parameters.items():
+            item = allowed[key]
+            if not item['min'] <= value <= item['max']:
+                return JsonResponse({'error': f'Parâmetro fora do limite: {key}.'}, status=400)
+            steps = (value - float(item['min'])) / float(item['step'])
+            if abs(steps - round(steps)) > 1e-6:
+                return JsonResponse({'error': f'Parâmetro não respeita o incremento configurado: {key}.'}, status=400)
+        from .physics_engine import validate_scene_parameters
+        validate_scene_parameters(dynamic['simulation']['scene'], parameters)
         if question.tipo_resposta == 'choice':
             option = get_object_or_404(Opcao, pk=int(payload['opcao_id']), questao=question)
             correct = bool(option.e_correta)
@@ -89,26 +104,12 @@ def physics_check_answer(request, fase_id):
             correct_snapshot = {'option_id': correct_option.pk, 'text': correct_option.texto}
             feedback = answer.get('explanation', '')
             chosen_option = option
-            parameters = {}
             expected_value = None
         else:
             submitted = float(payload['valor'])
-            source_parameters = dynamic['simulation']['parameters']
-            allowed = {item['key']: item for item in source_parameters}
-            supplied = payload.get('parameters') or {}
-            if set(supplied) - set(allowed):
-                return JsonResponse({'error': 'Parâmetros desconhecidos.'}, status=400)
-            parameters = {key: float(supplied.get(key, item['value'])) for key, item in allowed.items()}
-            if dynamic.get('id') == 'fis1-ene-08' and parameters.get('hf', 0) >= parameters.get('hi', 0):
+                        if dynamic.get('id') == 'fis1-ene-08' and parameters.get('hf', 0) >= parameters.get('hi', 0):
                 return JsonResponse({'error': 'A altura final deve ser menor que a altura inicial.'}, status=400)
-            for key, value in parameters.items():
-                item = allowed[key]
-                if not item['min'] <= value <= item['max']:
-                    return JsonResponse({'error': f'Parâmetro fora do limite: {key}.'}, status=400)
-                steps = (value - float(item['min'])) / float(item['step'])
-                if abs(steps - round(steps)) > 1e-6:
-                    return JsonResponse({'error': f'Parâmetro não respeita o incremento configurado: {key}.'}, status=400)
-            constants = dynamic.get('source_constants', {})
+                        constants = dynamic.get('source_constants', {})
             expected_value = calculate(answer['formula'], parameters, constants)
             correct = is_correct(submitted, expected_value, answer['tolerance'])
             submitted_snapshot = {'value': submitted, 'unit': answer.get('unit', '')}

@@ -1,0 +1,1935 @@
+{
+  "schema_version": "1.0.0",
+  "language": "pt-BR",
+  "subject": "Física",
+  "module": 2,
+  "title": "Calor, transformações, ondas e luz",
+  "source_alignment": {
+    "document": "Roteiro módulos de ensino(1).pdf",
+    "scope": "Física - 2º Módulo",
+    "note": "A sequência e os títulos temáticos das quatro fases e dos 34 exercícios seguem o roteiro anexado. Contextos, objetivos operacionais, parâmetros, questões, alternativas, gabaritos, resoluções e propostas de simulação foram elaborados como complementos didáticos."
+  },
+  "constants": {
+    "celsius_kelvin_offset": 273.15,
+    "water_specific_heat": 4200,
+    "latent_heat_fusion_ice": 334,
+    "speed_of_light": 299792458,
+    "water_density_kg_l": 1
+  },
+  "phases": [
+    {
+      "id": "fis2-fase-1",
+      "number": 1,
+      "title": "Termologia e Calorimetria",
+      "description": "Investigar temperatura, calor, escalas termométricas, capacidade térmica, calor sensível, calor latente e equilíbrio térmico.",
+      "exercise_ids": [
+        "fis2-ter-01",
+        "fis2-ter-02",
+        "fis2-ter-03",
+        "fis2-ter-04",
+        "fis2-ter-05",
+        "fis2-ter-06",
+        "fis2-ter-07",
+        "fis2-ter-08"
+      ]
+    },
+    {
+      "id": "fis2-fase-2",
+      "number": 2,
+      "title": "Termodinâmica",
+      "description": "Compreender as leis da Termodinâmica, as transformações gasosas, o trabalho e o rendimento de máquinas térmicas.",
+      "exercise_ids": [
+        "fis2-td-01",
+        "fis2-td-02",
+        "fis2-td-03",
+        "fis2-td-04",
+        "fis2-td-05",
+        "fis2-td-06",
+        "fis2-td-07",
+        "fis2-td-08"
+      ]
+    },
+    {
+      "id": "fis2-fase-3",
+      "number": 3,
+      "title": "Ondulatória",
+      "description": "Classificar ondas e explorar propagação, reflexão, refração, difração, interferência, polarização e ressonância.",
+      "exercise_ids": [
+        "fis2-ond-01",
+        "fis2-ond-02",
+        "fis2-ond-03",
+        "fis2-ond-04",
+        "fis2-ond-05",
+        "fis2-ond-06",
+        "fis2-ond-07",
+        "fis2-ond-08",
+        "fis2-ond-09",
+        "fis2-ond-10"
+      ]
+    },
+    {
+      "id": "fis2-fase-4",
+      "number": 4,
+      "title": "Óptica Geométrica",
+      "description": "Investigar reflexão, refração, absorção, espelhos, lentes e formação de imagens no olho humano.",
+      "exercise_ids": [
+        "fis2-opt-01",
+        "fis2-opt-02",
+        "fis2-opt-03",
+        "fis2-opt-04",
+        "fis2-opt-05",
+        "fis2-opt-06",
+        "fis2-opt-07",
+        "fis2-opt-08"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "fis2-ter-01",
+      "phase": 1,
+      "exercise_number": 1,
+      "title": "Conceitos de temperatura e calor",
+      "topic": "Temperatura e calor",
+      "estimated_minutes": 5,
+      "learning_objective": "Diferenciar temperatura de calor e reconhecer o sentido espontâneo da transferência térmica.",
+      "context": "Dois recipientes com água estão a temperaturas diferentes. Ao aproximá-los por uma parede condutora, energia térmica é transferida até que atinjam o equilíbrio.",
+      "simulation": {
+        "scene": "heat_concepts",
+        "description": "Dois recipientes com água estão a temperaturas diferentes. Ao aproximá-los por uma parede condutora, energia térmica é transferida até que atinjam o equilíbrio.",
+        "parameters": [
+          {
+            "key": "Th",
+            "label": "Temperatura do corpo quente",
+            "value": 80,
+            "unit": "°C",
+            "min": 40,
+            "max": 100,
+            "step": 1
+          },
+          {
+            "key": "Tc",
+            "label": "Temperatura do corpo frio",
+            "value": 20,
+            "unit": "°C",
+            "min": 0,
+            "max": 60,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Ao colocar os corpos em contato térmico, qual afirmação descreve corretamente o fenômeno?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Calor é a temperatura armazenada no corpo mais quente.",
+            "A energia térmica é transferida espontaneamente do corpo de maior temperatura para o de menor temperatura.",
+            "A temperatura sempre passa do corpo quente para o frio.",
+            "Os dois corpos necessariamente possuem a mesma energia interna antes do contato."
+          ],
+          "correct": 1,
+          "explanation": "Temperatura caracteriza o estado térmico. Calor é energia em trânsito devido à diferença de temperatura; espontaneamente, flui do corpo mais quente para o mais frio até o equilíbrio térmico."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Temperatura e calor"
+      }
+    },
+    {
+      "id": "fis2-ter-02",
+      "phase": 1,
+      "exercise_number": 2,
+      "title": "Calor sensível e calor latente",
+      "topic": "Calor sensível e latente",
+      "estimated_minutes": 5,
+      "learning_objective": "Distinguir variação de temperatura de mudança de estado físico durante uma troca de calor.",
+      "context": "Uma amostra de gelo recebe energia. Em alguns trechos sua temperatura aumenta; durante a fusão, a energia recebida promove a mudança de estado sem elevar a temperatura enquanto coexistem gelo e água.",
+      "simulation": {
+        "scene": "latent_curve",
+        "description": "Uma amostra de gelo recebe energia. Em alguns trechos sua temperatura aumenta; durante a fusão, a energia recebida promove a mudança de estado sem elevar a temperatura enquanto coexistem gelo e água.",
+        "parameters": [
+          {
+            "key": "m",
+            "label": "Massa da amostra",
+            "value": 1,
+            "unit": "kg",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "key": "Q",
+            "label": "Energia fornecida",
+            "value": 500,
+            "unit": "kJ",
+            "min": 0,
+            "max": 900,
+            "step": 10
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Durante a fusão de uma substância pura, à pressão constante, o que ocorre com a energia recebida?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A temperatura aumenta continuamente enquanto o sólido derrete.",
+            "A energia recebida é usada na mudança de fase e a temperatura permanece constante durante a fusão.",
+            "A substância deixa de receber energia.",
+            "A massa da amostra diminui necessariamente."
+          ],
+          "correct": 1,
+          "explanation": "No calor latente, a energia altera a organização/interação entre partículas e promove a mudança de fase. Para uma substância pura e pressão constante, a temperatura fica constante durante a transição."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Calor sensível e latente"
+      }
+    },
+    {
+      "id": "fis2-ter-03",
+      "phase": 1,
+      "exercise_number": 3,
+      "title": "Conversão de escalas (Celsius, Fahrenheit, Kelvin)",
+      "topic": "Escalas termométricas",
+      "estimated_minutes": 5,
+      "learning_objective": "Converter temperaturas entre as escalas Celsius, Fahrenheit e Kelvin.",
+      "context": "Um laboratório registra uma temperatura em Celsius e precisa apresentá-la também em Fahrenheit e Kelvin. O estudante ajusta a temperatura no termômetro e compara as três leituras.",
+      "simulation": {
+        "scene": "temperature_scales",
+        "description": "Um laboratório registra uma temperatura em Celsius e precisa apresentá-la também em Fahrenheit e Kelvin. O estudante ajusta a temperatura no termômetro e compara as três leituras.",
+        "parameters": [
+          {
+            "key": "tempC",
+            "label": "Temperatura em Celsius",
+            "value": 25,
+            "unit": "°C",
+            "min": -20,
+            "max": 100,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a temperatura correspondente em Fahrenheit para o valor em Celsius indicado na simulação? Use °F = (9/5)·°C + 32.",
+        "answer": {
+          "type": "numeric",
+          "formula": "celsius_to_fahrenheit",
+          "unit": "°F",
+          "display_unit": "°F",
+          "digits": 1,
+          "tolerance": 0.01,
+          "hint": "Substitua a leitura em Celsius na relação °F = (9/5)·°C + 32.",
+          "solution": "Multiplique a temperatura em Celsius por 1,8 e some 32. A leitura em Kelvin também é mostrada para comparar as três escalas."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Escalas termométricas"
+      }
+    },
+    {
+      "id": "fis2-ter-04",
+      "phase": 1,
+      "exercise_number": 4,
+      "title": "Calor sensível",
+      "topic": "Calor sensível",
+      "estimated_minutes": 5,
+      "learning_objective": "Calcular a quantidade de calor necessária para variar a temperatura sem mudança de estado.",
+      "context": "Uma resistência elétrica aquece água em um recipiente isolado. Altere a massa, o calor específico e a variação de temperatura para investigar a energia necessária.",
+      "simulation": {
+        "scene": "sensible_heat",
+        "description": "Uma resistência elétrica aquece água em um recipiente isolado. Altere a massa, o calor específico e a variação de temperatura para investigar a energia necessária.",
+        "parameters": [
+          {
+            "key": "m",
+            "label": "Massa de água",
+            "value": 0.5,
+            "unit": "kg",
+            "min": 0.1,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "key": "c",
+            "label": "Calor específico",
+            "value": 4200,
+            "unit": "J/(kg·°C)",
+            "min": 1000,
+            "max": 5000,
+            "step": 100
+          },
+          {
+            "key": "dT",
+            "label": "Variação de temperatura",
+            "value": 20,
+            "unit": "°C",
+            "min": 5,
+            "max": 60,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a quantidade de calor sensível recebida pela água? Informe o resultado em kJ.",
+        "answer": {
+          "type": "numeric",
+          "formula": "sensible_heat_kj",
+          "unit": "kJ",
+          "display_unit": "kJ",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Use Q = m·c·ΔT. Como o resultado deve ser em kJ, divida o valor em joules por 1.000.",
+          "solution": "Q = 0,5 × 4.200 × 20 = 42.000 J = 42,0 kJ."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Calor sensível"
+      }
+    },
+    {
+      "id": "fis2-ter-05",
+      "phase": 1,
+      "exercise_number": 5,
+      "title": "Capacidade térmica",
+      "topic": "Capacidade térmica",
+      "estimated_minutes": 5,
+      "learning_objective": "Relacionar capacidade térmica, massa e calor específico de um corpo.",
+      "context": "Dois blocos recebem a mesma quantidade de energia. O bloco com maior capacidade térmica sofre uma variação de temperatura menor. Ajuste a massa e o material do bloco.",
+      "simulation": {
+        "scene": "heat_capacity",
+        "description": "Dois blocos recebem a mesma quantidade de energia. O bloco com maior capacidade térmica sofre uma variação de temperatura menor. Ajuste a massa e o material do bloco.",
+        "parameters": [
+          {
+            "key": "m",
+            "label": "Massa do bloco",
+            "value": 0.4,
+            "unit": "kg",
+            "min": 0.1,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "key": "c",
+            "label": "Calor específico",
+            "value": 900,
+            "unit": "J/(kg·°C)",
+            "min": 300,
+            "max": 2500,
+            "step": 50
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a capacidade térmica do bloco configurado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "thermal_capacity",
+          "unit": "J/°C",
+          "display_unit": "J/°C",
+          "digits": 0,
+          "tolerance": 0.02,
+          "hint": "A capacidade térmica é C = m·c. Multiplique a massa pelo calor específico.",
+          "solution": "C = 0,4 × 900 = 360 J/°C."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Capacidade térmica"
+      }
+    },
+    {
+      "id": "fis2-ter-06",
+      "phase": 1,
+      "exercise_number": 6,
+      "title": "Calor latente",
+      "topic": "Calor latente",
+      "estimated_minutes": 5,
+      "learning_objective": "Calcular a energia envolvida em uma mudança de estado físico.",
+      "context": "Uma quantidade de gelo está a 0 °C e recebe energia para derreter. A temperatura permanece constante enquanto ocorre a fusão. Altere a massa e o calor latente de fusão.",
+      "simulation": {
+        "scene": "latent_heat",
+        "description": "Uma quantidade de gelo está a 0 °C e recebe energia para derreter. A temperatura permanece constante enquanto ocorre a fusão. Altere a massa e o calor latente de fusão.",
+        "parameters": [
+          {
+            "key": "m",
+            "label": "Massa de gelo",
+            "value": 0.25,
+            "unit": "kg",
+            "min": 0.05,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "key": "L",
+            "label": "Calor latente de fusão",
+            "value": 334,
+            "unit": "kJ/kg",
+            "min": 250,
+            "max": 400,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a energia necessária para fundir toda a amostra, em kJ?",
+        "answer": {
+          "type": "numeric",
+          "formula": "latent_heat_kj",
+          "unit": "kJ",
+          "display_unit": "kJ",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Use Q = m·L, pois há mudança de estado sem variação de temperatura.",
+          "solution": "Q = 0,25 × 334 = 83,5 kJ."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Calor latente"
+      }
+    },
+    {
+      "id": "fis2-ter-07",
+      "phase": 1,
+      "exercise_number": 7,
+      "title": "Equilíbrio térmico",
+      "topic": "Equilíbrio térmico",
+      "estimated_minutes": 5,
+      "learning_objective": "Determinar a temperatura final de equilíbrio entre corpos da mesma substância, sem perdas para o ambiente.",
+      "context": "Duas porções de água, inicialmente em temperaturas diferentes, são colocadas em um recipiente termicamente isolado. A simulação acompanha o fluxo de energia até o equilíbrio.",
+      "simulation": {
+        "scene": "thermal_mixing",
+        "description": "Duas porções de água, inicialmente em temperaturas diferentes, são colocadas em um recipiente termicamente isolado. A simulação acompanha o fluxo de energia até o equilíbrio.",
+        "parameters": [
+          {
+            "key": "m1",
+            "label": "Massa quente",
+            "value": 0.2,
+            "unit": "kg",
+            "min": 0.1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "key": "T1",
+            "label": "Temperatura quente",
+            "value": 80,
+            "unit": "°C",
+            "min": 40,
+            "max": 100,
+            "step": 1
+          },
+          {
+            "key": "m2",
+            "label": "Massa fria",
+            "value": 0.3,
+            "unit": "kg",
+            "min": 0.1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "key": "T2",
+            "label": "Temperatura fria",
+            "value": 20,
+            "unit": "°C",
+            "min": 0,
+            "max": 50,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual será a temperatura final de equilíbrio da mistura? Considere o mesmo calor específico para as duas porções.",
+        "answer": {
+          "type": "numeric",
+          "formula": "mix_temperature",
+          "unit": "°C",
+          "display_unit": "°C",
+          "digits": 1,
+          "tolerance": 0.03,
+          "hint": "Em um sistema isolado, o calor cedido pela porção quente é igual ao calor recebido pela porção fria. Para a mesma substância, use a média ponderada pelas massas.",
+          "solution": "Tf = (m1·T1 + m2·T2)/(m1 + m2). Com os valores iniciais: Tf = (0,2×80 + 0,3×20)/0,5 = 44 °C."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Equilíbrio térmico"
+      }
+    },
+    {
+      "id": "fis2-ter-08",
+      "phase": 1,
+      "exercise_number": 8,
+      "title": "Equilíbrio térmico",
+      "topic": "Equilíbrio térmico com materiais diferentes",
+      "estimated_minutes": 5,
+      "learning_objective": "Calcular o equilíbrio térmico considerando massas e calores específicos diferentes.",
+      "context": "Um bloco metálico aquecido é colocado em água dentro de um recipiente idealmente isolado. Como os materiais têm calores específicos diferentes, o equilíbrio depende das capacidades térmicas de cada corpo.",
+      "simulation": {
+        "scene": "thermal_mixing_capacity",
+        "description": "Um bloco metálico aquecido é colocado em água dentro de um recipiente idealmente isolado. Como os materiais têm calores específicos diferentes, o equilíbrio depende das capacidades térmicas de cada corpo.",
+        "parameters": [
+          {
+            "key": "m1",
+            "label": "Massa do bloco",
+            "value": 0.3,
+            "unit": "kg",
+            "min": 0.1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "key": "c1",
+            "label": "Calor específico do bloco",
+            "value": 900,
+            "unit": "J/(kg·°C)",
+            "min": 300,
+            "max": 1500,
+            "step": 50
+          },
+          {
+            "key": "T1",
+            "label": "Temperatura do bloco",
+            "value": 100,
+            "unit": "°C",
+            "min": 50,
+            "max": 150,
+            "step": 1
+          },
+          {
+            "key": "m2",
+            "label": "Massa de água",
+            "value": 0.5,
+            "unit": "kg",
+            "min": 0.1,
+            "max": 1.5,
+            "step": 0.05
+          },
+          {
+            "key": "c2",
+            "label": "Calor específico da água",
+            "value": 4200,
+            "unit": "J/(kg·°C)",
+            "min": 3000,
+            "max": 4500,
+            "step": 50
+          },
+          {
+            "key": "T2",
+            "label": "Temperatura da água",
+            "value": 20,
+            "unit": "°C",
+            "min": 0,
+            "max": 60,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a temperatura final de equilíbrio do conjunto? Desconsidere perdas para o ambiente e para o recipiente.",
+        "answer": {
+          "type": "numeric",
+          "formula": "mix_temperature_capacity",
+          "unit": "°C",
+          "display_unit": "°C",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Iguale o calor cedido ao calor recebido: m1·c1·(T1−Tf) = m2·c2·(Tf−T2).",
+          "solution": "Tf = (m1·c1·T1 + m2·c2·T2)/(m1·c1 + m2·c2). O resultado depende das capacidades térmicas m·c."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "mastery_tag": "Equilíbrio térmico com materiais diferentes"
+      }
+    },
+    {
+      "id": "fis2-td-01",
+      "phase": 2,
+      "exercise_number": 1,
+      "title": "Lei zero da Termodinâmica",
+      "topic": "Lei zero",
+      "estimated_minutes": 5,
+      "learning_objective": "Compreender o equilíbrio térmico como base para a definição operacional de temperatura.",
+      "context": "Um termômetro é colocado em contato com o corpo A e, depois, com o corpo B. Em ambas as situações, o termômetro atinge equilíbrio térmico e apresenta a mesma leitura.",
+      "simulation": {
+        "scene": "zeroth_law",
+        "description": "Um termômetro é colocado em contato com o corpo A e, depois, com o corpo B. Em ambas as situações, o termômetro atinge equilíbrio térmico e apresenta a mesma leitura.",
+        "parameters": [
+          {
+            "key": "TA",
+            "label": "Temperatura do corpo A",
+            "value": 30,
+            "unit": "°C",
+            "min": 0,
+            "max": 80,
+            "step": 1
+          },
+          {
+            "key": "TB",
+            "label": "Temperatura do corpo B",
+            "value": 30,
+            "unit": "°C",
+            "min": 0,
+            "max": 80,
+            "step": 1
+          },
+          {
+            "key": "TT",
+            "label": "Leitura do termômetro",
+            "value": 30,
+            "unit": "°C",
+            "min": 0,
+            "max": 80,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "A Lei Zero da Termodinâmica permite concluir que:",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Se A está em equilíbrio térmico com C e B também está em equilíbrio térmico com C, então A e B estão em equilíbrio térmico entre si.",
+            "Dois corpos em equilíbrio térmico precisam ter a mesma massa.",
+            "O calor sempre flui do corpo de menor temperatura para o de maior temperatura.",
+            "A energia interna de todos os corpos em equilíbrio é necessariamente igual."
+          ],
+          "correct": 0,
+          "explanation": "A Lei Zero estabelece a transitividade do equilíbrio térmico e fundamenta a comparação de temperaturas com termômetros."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Lei zero"
+      }
+    },
+    {
+      "id": "fis2-td-02",
+      "phase": 2,
+      "exercise_number": 2,
+      "title": "Primeira e segunda lei da Termodinâmica",
+      "topic": "Leis da Termodinâmica",
+      "estimated_minutes": 5,
+      "learning_objective": "Distinguir conservação de energia e sentido espontâneo dos processos térmicos.",
+      "context": "Uma máquina térmica recebe energia de uma fonte quente, transforma parte em trabalho e rejeita outra parte para uma fonte fria. A simulação mostra os fluxos de energia e a direção espontânea do processo.",
+      "simulation": {
+        "scene": "thermo_laws",
+        "description": "Uma máquina térmica recebe energia de uma fonte quente, transforma parte em trabalho e rejeita outra parte para uma fonte fria. A simulação mostra os fluxos de energia e a direção espontânea do processo.",
+        "parameters": [
+          {
+            "key": "Qh",
+            "label": "Calor recebido",
+            "value": 2000,
+            "unit": "J",
+            "min": 500,
+            "max": 5000,
+            "step": 100
+          },
+          {
+            "key": "W",
+            "label": "Trabalho útil",
+            "value": 600,
+            "unit": "J",
+            "min": 0,
+            "max": 2500,
+            "step": 50
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual alternativa relaciona corretamente a primeira e a segunda lei da Termodinâmica?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A primeira lei trata da conservação da energia; a segunda estabelece restrições ao sentido dos processos e ao aproveitamento do calor em trabalho.",
+            "A primeira lei afirma que todo calor pode ser convertido integralmente em trabalho em um ciclo; a segunda trata apenas da pressão.",
+            "As duas leis afirmam que a temperatura de um sistema isolado sempre aumenta.",
+            "A segunda lei permite que o calor passe espontaneamente do frio para o quente sem outra alteração."
+          ],
+          "correct": 0,
+          "explanation": "A primeira lei expressa o balanço de energia. A segunda lei introduz a irreversibilidade e limita a conversão integral de calor em trabalho em processos cíclicos."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Leis da Termodinâmica"
+      }
+    },
+    {
+      "id": "fis2-td-03",
+      "phase": 2,
+      "exercise_number": 3,
+      "title": "Sistemas isotérmicos, isocóricos, adiabáticos e isobáricos",
+      "topic": "Transformações gasosas",
+      "estimated_minutes": 5,
+      "learning_objective": "Reconhecer transformações termodinâmicas a partir da grandeza que permanece constante.",
+      "context": "Um gás ideal é levado por diferentes caminhos em um diagrama pressão × volume. A simulação permite comparar processos em que a temperatura, o volume, a pressão ou a troca de calor permanece constante.",
+      "simulation": {
+        "scene": "pv_process",
+        "description": "Um gás ideal é levado por diferentes caminhos em um diagrama pressão × volume. A simulação permite comparar processos em que a temperatura, o volume, a pressão ou a troca de calor permanece constante.",
+        "parameters": [
+          {
+            "key": "P",
+            "label": "Pressão inicial",
+            "value": 200,
+            "unit": "kPa",
+            "min": 80,
+            "max": 400,
+            "step": 10
+          },
+          {
+            "key": "V",
+            "label": "Volume inicial",
+            "value": 2,
+            "unit": "L",
+            "min": 1,
+            "max": 5,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Em uma transformação adiabática, qual condição caracteriza o processo?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A temperatura permanece necessariamente constante.",
+            "O volume permanece constante.",
+            "Não há troca de calor entre o sistema e o meio externo (Q = 0).",
+            "A pressão permanece constante."
+          ],
+          "correct": 2,
+          "explanation": "Adiabática significa ausência de troca de calor com o ambiente. Isotérmica mantém a temperatura; isocórica mantém o volume; isobárica mantém a pressão."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Transformações gasosas"
+      }
+    },
+    {
+      "id": "fis2-td-04",
+      "phase": 2,
+      "exercise_number": 4,
+      "title": "Primeira lei: conservação de energia em sistemas térmicos",
+      "topic": "Primeira lei",
+      "estimated_minutes": 5,
+      "learning_objective": "Aplicar a primeira lei para determinar a variação da energia interna de um gás.",
+      "context": "Um gás em um cilindro recebe calor e realiza trabalho ao empurrar um êmbolo. O balanço entre a energia recebida e o trabalho realizado determina a variação da energia interna.",
+      "simulation": {
+        "scene": "first_law",
+        "description": "Um gás em um cilindro recebe calor e realiza trabalho ao empurrar um êmbolo. O balanço entre a energia recebida e o trabalho realizado determina a variação da energia interna.",
+        "parameters": [
+          {
+            "key": "Q",
+            "label": "Calor recebido pelo gás",
+            "value": 850,
+            "unit": "J",
+            "min": 100,
+            "max": 1500,
+            "step": 25
+          },
+          {
+            "key": "W",
+            "label": "Trabalho realizado pelo gás",
+            "value": 320,
+            "unit": "J",
+            "min": 0,
+            "max": 1000,
+            "step": 20
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a variação da energia interna do gás? Adote ΔU = Q − W, em que W é o trabalho realizado pelo gás.",
+        "answer": {
+          "type": "numeric",
+          "formula": "internal_energy_change",
+          "unit": "J",
+          "display_unit": "J",
+          "digits": 0,
+          "tolerance": 0.02,
+          "hint": "Use a convenção ΔU = Q − W: calor recebido é positivo e trabalho realizado pelo gás é positivo.",
+          "solution": "ΔU = 850 − 320 = 530 J."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Primeira lei"
+      }
+    },
+    {
+      "id": "fis2-td-05",
+      "phase": 2,
+      "exercise_number": 5,
+      "title": "Segunda lei: eficiência e rendimento",
+      "topic": "Rendimento de máquina térmica",
+      "estimated_minutes": 5,
+      "learning_objective": "Calcular o rendimento de uma máquina térmica a partir dos calores recebidos e rejeitados.",
+      "context": "Uma máquina térmica opera entre uma fonte quente e uma fonte fria. Nem toda a energia recebida pode ser convertida em trabalho; parte é rejeitada para a fonte fria.",
+      "simulation": {
+        "scene": "engine_efficiency",
+        "description": "Uma máquina térmica opera entre uma fonte quente e uma fonte fria. Nem toda a energia recebida pode ser convertida em trabalho; parte é rejeitada para a fonte fria.",
+        "parameters": [
+          {
+            "key": "Qh",
+            "label": "Calor recebido da fonte quente",
+            "value": 2500,
+            "unit": "J",
+            "min": 1500,
+            "max": 5000,
+            "step": 100
+          },
+          {
+            "key": "Qc",
+            "label": "Calor rejeitado à fonte fria",
+            "value": 1500,
+            "unit": "J",
+            "min": 100,
+            "max": 2000,
+            "step": 100
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é o rendimento térmico da máquina, em porcentagem?",
+        "answer": {
+          "type": "numeric",
+          "formula": "heat_engine_efficiency_pct",
+          "unit": "%",
+          "display_unit": "%",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Primeiro calcule o trabalho útil W = Qh − Qc. Depois use η = W/Qh × 100%.",
+          "solution": "W = 2.500 − 1.500 = 1.000 J. η = 1.000/2.500 × 100% = 40%."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Rendimento de máquina térmica"
+      }
+    },
+    {
+      "id": "fis2-td-06",
+      "phase": 2,
+      "exercise_number": 6,
+      "title": "Calcular o trabalho a partir de gráfico P × V",
+      "topic": "Trabalho em diagrama P × V",
+      "estimated_minutes": 5,
+      "learning_objective": "Interpretar a área sob uma curva em um diagrama pressão × volume como trabalho realizado pelo gás.",
+      "context": "Um gás se expande sob pressão constante. No gráfico P × V, o trabalho corresponde à área sob a curva entre o volume inicial e o final.",
+      "simulation": {
+        "scene": "pv_work",
+        "description": "Um gás se expande sob pressão constante. No gráfico P × V, o trabalho corresponde à área sob a curva entre o volume inicial e o final.",
+        "parameters": [
+          {
+            "key": "P",
+            "label": "Pressão constante",
+            "value": 180,
+            "unit": "kPa",
+            "min": 50,
+            "max": 400,
+            "step": 10
+          },
+          {
+            "key": "Vi",
+            "label": "Volume inicial",
+            "value": 2,
+            "unit": "L",
+            "min": 0.5,
+            "max": 5,
+            "step": 0.1
+          },
+          {
+            "key": "Vf",
+            "label": "Volume final",
+            "value": 5,
+            "unit": "L",
+            "min": 1,
+            "max": 8,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é o trabalho realizado pelo gás durante a expansão? Considere pressão constante e informe em joules.",
+        "answer": {
+          "type": "numeric",
+          "formula": "pv_work_j",
+          "unit": "J",
+          "display_unit": "J",
+          "digits": 0,
+          "tolerance": 0.02,
+          "hint": "Para pressão constante, W = P·ΔV. Use a equivalência 1 kPa·L = 1 J.",
+          "solution": "ΔV = 5 − 2 = 3 L. W = 180 × 3 = 540 J."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Trabalho em diagrama P × V"
+      }
+    },
+    {
+      "id": "fis2-td-07",
+      "phase": 2,
+      "exercise_number": 7,
+      "title": "Ciclo de Carnot",
+      "topic": "Ciclo de Carnot e rendimento máximo",
+      "estimated_minutes": 5,
+      "learning_objective": "Determinar o rendimento máximo teórico de uma máquina que opera entre duas temperaturas absolutas.",
+      "context": "Uma máquina ideal de Carnot opera entre uma fonte quente e uma fonte fria. Ajuste as temperaturas em kelvin e observe como a diferença entre elas limita o rendimento máximo.",
+      "simulation": {
+        "scene": "carnot_efficiency",
+        "description": "Uma máquina ideal de Carnot opera entre uma fonte quente e uma fonte fria. Ajuste as temperaturas em kelvin e observe como a diferença entre elas limita o rendimento máximo.",
+        "parameters": [
+          {
+            "key": "Th",
+            "label": "Temperatura da fonte quente",
+            "value": 600,
+            "unit": "K",
+            "min": 450,
+            "max": 900,
+            "step": 10
+          },
+          {
+            "key": "Tc",
+            "label": "Temperatura da fonte fria",
+            "value": 300,
+            "unit": "K",
+            "min": 150,
+            "max": 400,
+            "step": 10
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é o rendimento máximo teórico do ciclo de Carnot, em porcentagem?",
+        "answer": {
+          "type": "numeric",
+          "formula": "carnot_efficiency_pct",
+          "unit": "%",
+          "display_unit": "%",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Use temperaturas absolutas em kelvin: η = 1 − Tc/Th. Multiplique por 100 para obter porcentagem.",
+          "solution": "η = (1 − 300/600) × 100% = 50%."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Ciclo de Carnot e rendimento máximo"
+      }
+    },
+    {
+      "id": "fis2-td-08",
+      "phase": 2,
+      "exercise_number": 8,
+      "title": "Ciclo de Carnot",
+      "topic": "Ciclo de Carnot e calor rejeitado",
+      "estimated_minutes": 5,
+      "learning_objective": "Aplicar as relações do ciclo de Carnot para calcular o calor rejeitado à fonte fria.",
+      "context": "Uma máquina ideal recebe calor da fonte quente e rejeita parte à fonte fria. A razão entre os calores trocados é determinada pelas temperaturas absolutas dos reservatórios.",
+      "simulation": {
+        "scene": "carnot_heat",
+        "description": "Uma máquina ideal recebe calor da fonte quente e rejeita parte à fonte fria. A razão entre os calores trocados é determinada pelas temperaturas absolutas dos reservatórios.",
+        "parameters": [
+          {
+            "key": "Qh",
+            "label": "Calor absorvido",
+            "value": 2000,
+            "unit": "J",
+            "min": 500,
+            "max": 5000,
+            "step": 100
+          },
+          {
+            "key": "Th",
+            "label": "Temperatura quente",
+            "value": 500,
+            "unit": "K",
+            "min": 400,
+            "max": 900,
+            "step": 10
+          },
+          {
+            "key": "Tc",
+            "label": "Temperatura fria",
+            "value": 300,
+            "unit": "K",
+            "min": 150,
+            "max": 350,
+            "step": 10
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "No ciclo de Carnot ideal, quanto calor é rejeitado à fonte fria? Informe em joules.",
+        "answer": {
+          "type": "numeric",
+          "formula": "carnot_rejected_heat",
+          "unit": "J",
+          "display_unit": "J",
+          "digits": 0,
+          "tolerance": 0.02,
+          "hint": "Para um ciclo reversível de Carnot, Qc/Qh = Tc/Th.",
+          "solution": "Qc = Qh·Tc/Th = 2.000 × 300/500 = 1.200 J."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "mastery_tag": "Ciclo de Carnot e calor rejeitado"
+      }
+    },
+    {
+      "id": "fis2-ond-01",
+      "phase": 3,
+      "exercise_number": 1,
+      "title": "Natureza das ondas: mecânicas e eletromagnéticas",
+      "topic": "Natureza das ondas",
+      "estimated_minutes": 5,
+      "learning_objective": "Diferenciar ondas mecânicas e eletromagnéticas quanto à necessidade de meio material.",
+      "context": "Uma onda sonora é produzida em uma câmara e uma onda luminosa atravessa o espaço entre uma estrela e um observador. Compare o que é necessário para cada onda se propagar.",
+      "simulation": {
+        "scene": "wave_nature",
+        "description": "Uma onda sonora é produzida em uma câmara e uma onda luminosa atravessa o espaço entre uma estrela e um observador. Compare o que é necessário para cada onda se propagar.",
+        "parameters": [
+          {
+            "key": "f",
+            "label": "Frequência ilustrativa",
+            "value": 2,
+            "unit": "Hz",
+            "min": 1,
+            "max": 5,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual afirmação está correta sobre a natureza das ondas?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Ondas mecânicas e eletromagnéticas precisam de um meio material.",
+            "Ondas mecânicas precisam de meio material; ondas eletromagnéticas podem se propagar no vácuo.",
+            "Ondas eletromagnéticas só se propagam em líquidos.",
+            "O som é uma onda eletromagnética."
+          ],
+          "correct": 1,
+          "explanation": "O som é uma onda mecânica e depende de um meio material. A luz é eletromagnética e pode se propagar no vácuo."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Natureza das ondas"
+      }
+    },
+    {
+      "id": "fis2-ond-02",
+      "phase": 3,
+      "exercise_number": 2,
+      "title": "Direção de propagação e direção de vibração",
+      "topic": "Ondas transversais e longitudinais",
+      "estimated_minutes": 5,
+      "learning_objective": "Classificar ondas pela orientação da vibração em relação à propagação.",
+      "context": "Uma corda é movimentada para cima e para baixo, enquanto uma mola é comprimida e esticada ao longo de seu eixo. Compare as direções de vibração e propagação.",
+      "simulation": {
+        "scene": "wave_direction",
+        "description": "Uma corda é movimentada para cima e para baixo, enquanto uma mola é comprimida e esticada ao longo de seu eixo. Compare as direções de vibração e propagação.",
+        "parameters": [
+          {
+            "key": "amplitude",
+            "label": "Amplitude ilustrativa",
+            "value": 1,
+            "unit": "unid.",
+            "min": 0.3,
+            "max": 1.5,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Em uma onda longitudinal, como se relacionam a vibração das partículas do meio e a direção de propagação?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "São perpendiculares entre si.",
+            "São paralelas (ou antiparalelas).",
+            "A vibração ocorre apenas em círculos.",
+            "Não há vibração das partículas."
+          ],
+          "correct": 1,
+          "explanation": "Nas ondas longitudinais, as partículas oscilam na mesma direção da propagação. Nas transversais, a vibração é perpendicular à propagação."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Ondas transversais e longitudinais"
+      }
+    },
+    {
+      "id": "fis2-ond-03",
+      "phase": 3,
+      "exercise_number": 3,
+      "title": "Equação fundamental da velocidade",
+      "topic": "Velocidade de propagação de onda",
+      "estimated_minutes": 5,
+      "learning_objective": "Relacionar velocidade, comprimento de onda e frequência.",
+      "context": "Ondas periódicas percorrem uma corda. Ao modificar o comprimento de onda e a frequência, a simulação altera a velocidade de propagação de acordo com a relação fundamental.",
+      "simulation": {
+        "scene": "wave_speed",
+        "description": "Ondas periódicas percorrem uma corda. Ao modificar o comprimento de onda e a frequência, a simulação altera a velocidade de propagação de acordo com a relação fundamental.",
+        "parameters": [
+          {
+            "key": "lambda",
+            "label": "Comprimento de onda",
+            "value": 2.4,
+            "unit": "m",
+            "min": 0.5,
+            "max": 5,
+            "step": 0.1
+          },
+          {
+            "key": "f",
+            "label": "Frequência",
+            "value": 5,
+            "unit": "Hz",
+            "min": 1,
+            "max": 12,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a velocidade de propagação da onda?",
+        "answer": {
+          "type": "numeric",
+          "formula": "wave_speed",
+          "unit": "m/s",
+          "display_unit": "m/s",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Use v = λ·f. O comprimento de onda deve estar em metros e a frequência em hertz.",
+          "solution": "v = 2,4 × 5 = 12 m/s."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Velocidade de propagação de onda"
+      }
+    },
+    {
+      "id": "fis2-ond-04",
+      "phase": 3,
+      "exercise_number": 4,
+      "title": "Equação fundamental da velocidade",
+      "topic": "Determinação da frequência de uma onda",
+      "estimated_minutes": 5,
+      "learning_objective": "Isolar a frequência na equação fundamental da ondulatória.",
+      "context": "Uma onda se propaga em uma corda com velocidade conhecida. O estudante altera o comprimento de onda e observa como a frequência muda para aquele meio.",
+      "simulation": {
+        "scene": "wave_frequency",
+        "description": "Uma onda se propaga em uma corda com velocidade conhecida. O estudante altera o comprimento de onda e observa como a frequência muda para aquele meio.",
+        "parameters": [
+          {
+            "key": "v",
+            "label": "Velocidade de propagação",
+            "value": 24,
+            "unit": "m/s",
+            "min": 5,
+            "max": 60,
+            "step": 1
+          },
+          {
+            "key": "lambda",
+            "label": "Comprimento de onda",
+            "value": 3,
+            "unit": "m",
+            "min": 0.5,
+            "max": 8,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a frequência da onda configurada?",
+        "answer": {
+          "type": "numeric",
+          "formula": "wave_frequency",
+          "unit": "Hz",
+          "display_unit": "Hz",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Reorganize v = λ·f para obter f = v/λ.",
+          "solution": "f = 24/3 = 8 Hz."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Determinação da frequência de uma onda"
+      }
+    },
+    {
+      "id": "fis2-ond-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Reflexão",
+      "topic": "Reflexão de pulsos em uma extremidade fixa",
+      "estimated_minutes": 5,
+      "learning_objective": "Reconhecer a inversão de fase de um pulso refletido em uma extremidade fixa.",
+      "context": "Um pulso se desloca por uma corda em direção a uma extremidade presa. Ao refletir, o pulso retorna invertido em relação ao pulso incidente.",
+      "simulation": {
+        "scene": "wave_reflection",
+        "description": "Um pulso se desloca por uma corda em direção a uma extremidade presa. Ao refletir, o pulso retorna invertido em relação ao pulso incidente.",
+        "parameters": [
+          {
+            "key": "amplitude",
+            "label": "Amplitude do pulso",
+            "value": 1,
+            "unit": "unid.",
+            "min": 0.5,
+            "max": 1.5,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Quando um pulso transversal atinge a extremidade fixa de uma corda ideal, como ocorre a reflexão?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "O pulso retorna sem inversão.",
+            "O pulso refletido retorna invertido.",
+            "O pulso atravessa a extremidade fixa.",
+            "O pulso é sempre absorvido integralmente."
+          ],
+          "correct": 1,
+          "explanation": "Na extremidade fixa, o ponto de apoio não pode oscilar; o pulso refletido apresenta inversão de fase (inversão do sentido da deformação)."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Reflexão de pulsos em uma extremidade fixa"
+      }
+    },
+    {
+      "id": "fis2-ond-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Refração",
+      "topic": "Refração de ondas",
+      "estimated_minutes": 5,
+      "learning_objective": "Compreender a mudança de velocidade e comprimento de onda quando uma onda passa para outro meio.",
+      "context": "Frentes de onda atravessam a fronteira entre duas regiões com velocidades de propagação diferentes. A frequência é determinada pela fonte e permanece constante na passagem.",
+      "simulation": {
+        "scene": "wave_refraction",
+        "description": "Frentes de onda atravessam a fronteira entre duas regiões com velocidades de propagação diferentes. A frequência é determinada pela fonte e permanece constante na passagem.",
+        "parameters": [
+          {
+            "key": "v1",
+            "label": "Velocidade no meio 1",
+            "value": 12,
+            "unit": "m/s",
+            "min": 4,
+            "max": 20,
+            "step": 0.5
+          },
+          {
+            "key": "v2",
+            "label": "Velocidade no meio 2",
+            "value": 8,
+            "unit": "m/s",
+            "min": 3,
+            "max": 18,
+            "step": 0.5
+          },
+          {
+            "key": "f",
+            "label": "Frequência da fonte",
+            "value": 4,
+            "unit": "Hz",
+            "min": 1,
+            "max": 10,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Na refração de uma onda ao passar de um meio para outro, sem alteração da fonte, qual grandeza permanece constante?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A velocidade de propagação.",
+            "O comprimento de onda.",
+            "A frequência.",
+            "A amplitude em qualquer situação."
+          ],
+          "correct": 2,
+          "explanation": "A frequência permanece constante. A velocidade depende do meio; por v = λf, o comprimento de onda também muda quando a velocidade muda."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Refração de ondas"
+      }
+    },
+    {
+      "id": "fis2-ond-07",
+      "phase": 3,
+      "exercise_number": 7,
+      "title": "Difração",
+      "topic": "Difração em uma abertura",
+      "estimated_minutes": 5,
+      "learning_objective": "Relacionar a intensidade da difração à razão entre comprimento de onda e dimensão da abertura.",
+      "context": "Frentes de onda planas encontram uma barreira com uma abertura. Quando a abertura tem dimensão comparável ao comprimento de onda, as frentes se espalham significativamente após a passagem.",
+      "simulation": {
+        "scene": "wave_diffraction",
+        "description": "Frentes de onda planas encontram uma barreira com uma abertura. Quando a abertura tem dimensão comparável ao comprimento de onda, as frentes se espalham significativamente após a passagem.",
+        "parameters": [
+          {
+            "key": "lambda",
+            "label": "Comprimento de onda",
+            "value": 1,
+            "unit": "m",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "key": "aperture",
+            "label": "Largura da abertura",
+            "value": 1,
+            "unit": "m",
+            "min": 0.2,
+            "max": 3,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Em qual situação a difração tende a ser mais perceptível?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Quando a abertura é muito maior que o comprimento de onda.",
+            "Quando a abertura tem dimensão comparável ou menor que o comprimento de onda.",
+            "A difração só ocorre quando a onda para.",
+            "A difração independe da dimensão da abertura."
+          ],
+          "correct": 1,
+          "explanation": "A difração é mais evidente quando a dimensão da abertura ou obstáculo é da ordem do comprimento de onda."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Difração em uma abertura"
+      }
+    },
+    {
+      "id": "fis2-ond-08",
+      "phase": 3,
+      "exercise_number": 8,
+      "title": "Interferência",
+      "topic": "Interferência construtiva e destrutiva",
+      "estimated_minutes": 5,
+      "learning_objective": "Diferenciar interferência construtiva e destrutiva pela diferença de fase entre ondas.",
+      "context": "Duas fontes coerentes produzem ondas na mesma região. A sobreposição pode reforçar ou reduzir a amplitude resultante, dependendo da diferença de fase.",
+      "simulation": {
+        "scene": "wave_interference",
+        "description": "Duas fontes coerentes produzem ondas na mesma região. A sobreposição pode reforçar ou reduzir a amplitude resultante, dependendo da diferença de fase.",
+        "parameters": [
+          {
+            "key": "phase",
+            "label": "Diferença de fase",
+            "value": 0,
+            "unit": "°",
+            "min": 0,
+            "max": 360,
+            "step": 15
+          },
+          {
+            "key": "A",
+            "label": "Amplitude de cada onda",
+            "value": 1,
+            "unit": "unid.",
+            "min": 0.5,
+            "max": 1.5,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Quando duas ondas de mesma frequência chegam em fase a um ponto, ocorre:",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Interferência destrutiva total em qualquer situação.",
+            "Interferência construtiva, com reforço da amplitude resultante.",
+            "Refração obrigatória.",
+            "Polarização das ondas."
+          ],
+          "correct": 1,
+          "explanation": "Ondas em fase se somam construtivamente: as cristas coincidem com cristas e os vales com vales, produzindo reforço."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Interferência construtiva e destrutiva"
+      }
+    },
+    {
+      "id": "fis2-ond-09",
+      "phase": 3,
+      "exercise_number": 9,
+      "title": "Polarização",
+      "topic": "Polarização de ondas",
+      "estimated_minutes": 5,
+      "learning_objective": "Reconhecer a polarização como seleção de uma direção de vibração de ondas transversais.",
+      "context": "Uma onda eletromagnética atravessa um polarizador. Ao girar o eixo do filtro, a componente do campo elétrico alinhada ao eixo é transmitida, enquanto a componente perpendicular é bloqueada.",
+      "simulation": {
+        "scene": "wave_polarization",
+        "description": "Uma onda eletromagnética atravessa um polarizador. Ao girar o eixo do filtro, a componente do campo elétrico alinhada ao eixo é transmitida, enquanto a componente perpendicular é bloqueada.",
+        "parameters": [
+          {
+            "key": "angle",
+            "label": "Ângulo do polarizador",
+            "value": 0,
+            "unit": "°",
+            "min": 0,
+            "max": 180,
+            "step": 5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Por que a polarização é característica de ondas transversais?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Porque exige que a vibração possa ocorrer em direções perpendiculares à propagação.",
+            "Porque ondas longitudinais não transportam energia.",
+            "Porque a polarização altera a frequência da onda.",
+            "Porque somente ondas sonoras podem ser polarizadas."
+          ],
+          "correct": 0,
+          "explanation": "A polarização seleciona uma direção de oscilação transversal à propagação. Ondas longitudinais ideais não apresentam esse grau de liberdade transversal."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Polarização de ondas"
+      }
+    },
+    {
+      "id": "fis2-ond-10",
+      "phase": 3,
+      "exercise_number": 10,
+      "title": "Ressonância",
+      "topic": "Ressonância",
+      "estimated_minutes": 5,
+      "learning_objective": "Relacionar o aumento de amplitude de oscilação à proximidade entre frequência externa e frequência natural.",
+      "context": "Um sistema oscilante é submetido a uma força periódica. Ao ajustar a frequência de excitação para próximo da frequência natural, a amplitude da oscilação cresce consideravelmente.",
+      "simulation": {
+        "scene": "wave_resonance",
+        "description": "Um sistema oscilante é submetido a uma força periódica. Ao ajustar a frequência de excitação para próximo da frequência natural, a amplitude da oscilação cresce consideravelmente.",
+        "parameters": [
+          {
+            "key": "fn",
+            "label": "Frequência natural",
+            "value": 2,
+            "unit": "Hz",
+            "min": 0.5,
+            "max": 5,
+            "step": 0.1
+          },
+          {
+            "key": "fd",
+            "label": "Frequência de excitação",
+            "value": 1.8,
+            "unit": "Hz",
+            "min": 0.5,
+            "max": 5,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Em qual condição a ressonância ocorre de maneira mais intensa?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Quando a frequência de excitação está muito distante da frequência natural.",
+            "Quando a frequência de excitação se aproxima da frequência natural do sistema.",
+            "Quando a amplitude inicial é sempre zero.",
+            "Quando não existe força periódica externa."
+          ],
+          "correct": 1,
+          "explanation": "Na ressonância, a frequência da excitação coincide ou fica muito próxima da frequência natural, favorecendo grande transferência de energia e aumento da amplitude."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Ressonância"
+      }
+    },
+    {
+      "id": "fis2-opt-01",
+      "phase": 4,
+      "exercise_number": 1,
+      "title": "Reflexão e refração da luz",
+      "topic": "Reflexão e refração",
+      "estimated_minutes": 5,
+      "learning_objective": "Interpretar a reflexão e a refração com base na normal e nos ângulos envolvidos.",
+      "context": "Um feixe de luz incide sobre a superfície que separa o ar e o vidro. Parte da luz é refletida e parte atravessa a interface, mudando de direção ao entrar no segundo meio.",
+      "simulation": {
+        "scene": "light_reflection_refraction",
+        "description": "Um feixe de luz incide sobre a superfície que separa o ar e o vidro. Parte da luz é refletida e parte atravessa a interface, mudando de direção ao entrar no segundo meio.",
+        "parameters": [
+          {
+            "key": "theta",
+            "label": "Ângulo de incidência",
+            "value": 40,
+            "unit": "°",
+            "min": 5,
+            "max": 80,
+            "step": 1
+          },
+          {
+            "key": "n1",
+            "label": "Índice do meio 1",
+            "value": 1,
+            "unit": "",
+            "min": 1,
+            "max": 1.5,
+            "step": 0.01
+          },
+          {
+            "key": "n2",
+            "label": "Índice do meio 2",
+            "value": 1.5,
+            "unit": "",
+            "min": 1.1,
+            "max": 2,
+            "step": 0.01
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Pela lei da reflexão, o ângulo de reflexão é medido em relação à normal e:",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "É sempre o dobro do ângulo de incidência.",
+            "É igual ao ângulo de incidência.",
+            "Depende exclusivamente do índice de refração do segundo meio.",
+            "É sempre igual a 90°."
+          ],
+          "correct": 1,
+          "explanation": "A lei da reflexão estabelece θr = θi, com os dois ângulos medidos em relação à normal à superfície."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Reflexão e refração"
+      }
+    },
+    {
+      "id": "fis2-opt-02",
+      "phase": 4,
+      "exercise_number": 2,
+      "title": "Absorção",
+      "topic": "Absorção da luz",
+      "estimated_minutes": 5,
+      "learning_objective": "Relacionar absorção, reflexão e características da superfície iluminada.",
+      "context": "Uma fonte ilumina duas superfícies com acabamentos diferentes. A superfície escura e fosca tende a absorver uma fração maior da radiação incidente do que uma superfície clara e refletora.",
+      "simulation": {
+        "scene": "light_absorption",
+        "description": "Uma fonte ilumina duas superfícies com acabamentos diferentes. A superfície escura e fosca tende a absorver uma fração maior da radiação incidente do que uma superfície clara e refletora.",
+        "parameters": [
+          {
+            "key": "intensity",
+            "label": "Intensidade incidente",
+            "value": 100,
+            "unit": "%",
+            "min": 20,
+            "max": 100,
+            "step": 5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Sob a mesma iluminação, qual superfície tende a absorver maior parcela da luz visível?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Uma superfície preta e fosca.",
+            "Uma superfície branca e muito refletora.",
+            "Um espelho ideal.",
+            "Todas absorvem obrigatoriamente a mesma fração."
+          ],
+          "correct": 0,
+          "explanation": "Superfícies escuras e foscas tendem a absorver mais radiação visível, enquanto superfícies claras ou espelhadas tendem a refletir uma parcela maior. O comportamento real depende do material e do comprimento de onda."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Absorção da luz"
+      }
+    },
+    {
+      "id": "fis2-opt-03",
+      "phase": 4,
+      "exercise_number": 3,
+      "title": "Espelho plano",
+      "topic": "Espelho plano",
+      "estimated_minutes": 5,
+      "learning_objective": "Relacionar as distâncias do objeto e da imagem em um espelho plano.",
+      "context": "Uma pessoa se aproxima de um espelho plano. A imagem virtual parece estar atrás do espelho à mesma distância que a pessoa está à frente dele.",
+      "simulation": {
+        "scene": "plane_mirror",
+        "description": "Uma pessoa se aproxima de um espelho plano. A imagem virtual parece estar atrás do espelho à mesma distância que a pessoa está à frente dele.",
+        "parameters": [
+          {
+            "key": "p",
+            "label": "Distância do objeto ao espelho",
+            "value": 1.8,
+            "unit": "m",
+            "min": 0.3,
+            "max": 4,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "A que distância atrás do espelho plano se forma a imagem?",
+        "answer": {
+          "type": "numeric",
+          "formula": "plane_mirror_distance",
+          "unit": "m",
+          "display_unit": "m",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Em um espelho plano, a distância da imagem ao espelho tem o mesmo módulo da distância do objeto.",
+          "solution": "q = p = 1,8 m. A imagem é virtual, direita e do mesmo tamanho do objeto."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Espelho plano"
+      }
+    },
+    {
+      "id": "fis2-opt-04",
+      "phase": 4,
+      "exercise_number": 4,
+      "title": "Espelho convexo",
+      "topic": "Espelho convexo",
+      "estimated_minutes": 5,
+      "learning_objective": "Identificar as características da imagem formada por um espelho esférico convexo.",
+      "context": "Um espelho convexo é utilizado para ampliar o campo de visão em uma esquina. Os raios refletidos divergem e seus prolongamentos parecem partir de uma imagem atrás do espelho.",
+      "simulation": {
+        "scene": "convex_mirror",
+        "description": "Um espelho convexo é utilizado para ampliar o campo de visão em uma esquina. Os raios refletidos divergem e seus prolongamentos parecem partir de uma imagem atrás do espelho.",
+        "parameters": [
+          {
+            "key": "p",
+            "label": "Distância do objeto",
+            "value": 2,
+            "unit": "m",
+            "min": 0.5,
+            "max": 5,
+            "step": 0.1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Para um objeto real diante de um espelho convexo, a imagem formada é sempre:",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Real, invertida e maior.",
+            "Virtual, direita e menor.",
+            "Real, direita e do mesmo tamanho.",
+            "Virtual, invertida e maior."
+          ],
+          "correct": 1,
+          "explanation": "Para objetos reais, o espelho convexo forma imagem virtual, direita e reduzida, independentemente da posição do objeto."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Espelho convexo"
+      }
+    },
+    {
+      "id": "fis2-opt-05",
+      "phase": 4,
+      "exercise_number": 5,
+      "title": "Espelho côncavo",
+      "topic": "Espelho côncavo",
+      "estimated_minutes": 5,
+      "learning_objective": "Aplicar a equação dos espelhos esféricos para encontrar a posição da imagem.",
+      "context": "Um objeto é colocado diante de um espelho côncavo além do centro de curvatura. Altere a distância focal e a posição do objeto e acompanhe a formação da imagem.",
+      "simulation": {
+        "scene": "concave_mirror",
+        "description": "Um objeto é colocado diante de um espelho côncavo além do centro de curvatura. Altere a distância focal e a posição do objeto e acompanhe a formação da imagem.",
+        "parameters": [
+          {
+            "key": "f",
+            "label": "Distância focal",
+            "value": 15,
+            "unit": "cm",
+            "min": 5,
+            "max": 18,
+            "step": 1
+          },
+          {
+            "key": "p",
+            "label": "Distância do objeto",
+            "value": 45,
+            "unit": "cm",
+            "min": 20,
+            "max": 80,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a distância da imagem ao vértice do espelho? Use a convenção cartesiana usual para espelho côncavo e informe o módulo em cm.",
+        "answer": {
+          "type": "numeric",
+          "formula": "concave_mirror_image",
+          "unit": "cm",
+          "display_unit": "cm",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Use 1/f = 1/p + 1/q. Isolando: q = f·p/(p − f). Para os valores indicados, o objeto está além do foco.",
+          "solution": "q = 15×45/(45−15) = 675/30 = 22,5 cm. A imagem é real e invertida."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Espelho côncavo"
+      }
+    },
+    {
+      "id": "fis2-opt-06",
+      "phase": 4,
+      "exercise_number": 6,
+      "title": "Lentes convergentes",
+      "topic": "Lentes convergentes",
+      "estimated_minutes": 5,
+      "learning_objective": "Determinar a posição da imagem em uma lente convergente pela equação de Gauss.",
+      "context": "Raios paralelos ao eixo principal convergem após atravessar uma lente convergente. A posição do objeto e a distância focal determinam a posição da imagem.",
+      "simulation": {
+        "scene": "converging_lens",
+        "description": "Raios paralelos ao eixo principal convergem após atravessar uma lente convergente. A posição do objeto e a distância focal determinam a posição da imagem.",
+        "parameters": [
+          {
+            "key": "f",
+            "label": "Distância focal",
+            "value": 12,
+            "unit": "cm",
+            "min": 5,
+            "max": 14,
+            "step": 1
+          },
+          {
+            "key": "p",
+            "label": "Distância do objeto",
+            "value": 36,
+            "unit": "cm",
+            "min": 15,
+            "max": 70,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a distância da imagem à lente? Considere a convenção de sinais usual e informe em cm.",
+        "answer": {
+          "type": "numeric",
+          "formula": "converging_lens_image",
+          "unit": "cm",
+          "display_unit": "cm",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Use 1/f = 1/p + 1/q, portanto q = f·p/(p − f).",
+          "solution": "q = 12×36/(36−12) = 432/24 = 18 cm. Como q é positivo, a imagem é real."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Lentes convergentes"
+      }
+    },
+    {
+      "id": "fis2-opt-07",
+      "phase": 4,
+      "exercise_number": 7,
+      "title": "Lentes divergentes",
+      "topic": "Lentes divergentes",
+      "estimated_minutes": 5,
+      "learning_objective": "Aplicar a equação das lentes delgadas considerando distância focal negativa para lente divergente.",
+      "context": "Um feixe paralelo ao eixo principal atravessa uma lente divergente e emerge afastando-se do eixo. Os prolongamentos dos raios refratados se encontram em um foco virtual no lado de incidência.",
+      "simulation": {
+        "scene": "diverging_lens",
+        "description": "Um feixe paralelo ao eixo principal atravessa uma lente divergente e emerge afastando-se do eixo. Os prolongamentos dos raios refratados se encontram em um foco virtual no lado de incidência.",
+        "parameters": [
+          {
+            "key": "f",
+            "label": "Distância focal (negativa)",
+            "value": -15,
+            "unit": "cm",
+            "min": -30,
+            "max": -5,
+            "step": 1
+          },
+          {
+            "key": "p",
+            "label": "Distância do objeto",
+            "value": 30,
+            "unit": "cm",
+            "min": 10,
+            "max": 60,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a posição da imagem em relação à lente? Informe a distância orientada em cm: valores negativos indicam imagem virtual no mesmo lado do objeto.",
+        "answer": {
+          "type": "numeric",
+          "formula": "diverging_lens_image",
+          "unit": "cm",
+          "display_unit": "cm",
+          "digits": 1,
+          "tolerance": 0.02,
+          "hint": "Use 1/f = 1/p + 1/q. Mantenha f negativo para a lente divergente e isole q.",
+          "solution": "q = f·p/(p−f) = (−15×30)/(30−(−15)) = −450/45 = −10 cm. A imagem é virtual, direita e reduzida."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Lentes divergentes"
+      }
+    },
+    {
+      "id": "fis2-opt-08",
+      "phase": 4,
+      "exercise_number": 8,
+      "title": "Funcionamento do olho humano, miopia e hipermetropia",
+      "topic": "Olho humano e ametropias",
+      "estimated_minutes": 5,
+      "learning_objective": "Diferenciar miopia e hipermetropia e reconhecer o tipo de lente corretiva.",
+      "context": "O olho forma imagens na retina por meio do sistema córnea-cristalino. Na miopia, a imagem de objetos distantes tende a se formar antes da retina; na hipermetropia, tende a se formar depois da retina.",
+      "simulation": {
+        "scene": "human_eye",
+        "description": "O olho forma imagens na retina por meio do sistema córnea-cristalino. Na miopia, a imagem de objetos distantes tende a se formar antes da retina; na hipermetropia, tende a se formar depois da retina.",
+        "parameters": [
+          {
+            "key": "focus",
+            "label": "Deslocamento do foco",
+            "value": 12,
+            "unit": "mm",
+            "min": 4,
+            "max": 20,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual associação entre ametropia e lente corretiva está correta?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Miopia: lente convergente; hipermetropia: lente divergente.",
+            "Miopia: lente divergente; hipermetropia: lente convergente.",
+            "As duas são corrigidas exclusivamente por espelhos planos.",
+            "Miopia e hipermetropia não envolvem a formação da imagem em relação à retina."
+          ],
+          "correct": 1,
+          "explanation": "A lente divergente desloca o foco efetivo para trás, corrigindo a miopia. A lente convergente auxilia a trazer para a retina o foco que, na hipermetropia, tenderia a ficar atrás dela."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Olho humano e ametropias"
+      }
+    }
+  ]
+}

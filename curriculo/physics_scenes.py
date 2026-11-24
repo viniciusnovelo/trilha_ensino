@@ -29,6 +29,43 @@ SCENE_METADATA = {
     'gravity_field': {'label': 'Campo gravitacional', 'kind': 'field'},
     'gravity_energy': {'label': 'Energia gravitacional', 'kind': 'field'},
 }
+SCENE_METADATA.update({
+    'heat_concepts': {'label': 'heat concepts', 'kind': 'module2'},
+    'latent_curve': {'label': 'latent curve', 'kind': 'module2'},
+    'temperature_scales': {'label': 'temperature scales', 'kind': 'module2'},
+    'sensible_heat': {'label': 'sensible heat', 'kind': 'module2'},
+    'heat_capacity': {'label': 'heat capacity', 'kind': 'module2'},
+    'latent_heat': {'label': 'latent heat', 'kind': 'module2'},
+    'thermal_mixing': {'label': 'thermal mixing', 'kind': 'module2'},
+    'thermal_mixing_capacity': {'label': 'thermal mixing capacity', 'kind': 'module2'},
+    'zeroth_law': {'label': 'zeroth law', 'kind': 'module2'},
+    'thermo_laws': {'label': 'thermo laws', 'kind': 'module2'},
+    'pv_process': {'label': 'pv process', 'kind': 'module2'},
+    'first_law': {'label': 'first law', 'kind': 'module2'},
+    'engine_efficiency': {'label': 'engine efficiency', 'kind': 'module2'},
+    'pv_work': {'label': 'pv work', 'kind': 'module2'},
+    'carnot_efficiency': {'label': 'carnot efficiency', 'kind': 'module2'},
+    'carnot_heat': {'label': 'carnot heat', 'kind': 'module2'},
+    'wave_nature': {'label': 'wave nature', 'kind': 'module2'},
+    'wave_direction': {'label': 'wave direction', 'kind': 'module2'},
+    'wave_speed': {'label': 'wave speed', 'kind': 'module2'},
+    'wave_frequency': {'label': 'wave frequency', 'kind': 'module2'},
+    'wave_reflection': {'label': 'wave reflection', 'kind': 'module2'},
+    'wave_refraction': {'label': 'wave refraction', 'kind': 'module2'},
+    'wave_diffraction': {'label': 'wave diffraction', 'kind': 'module2'},
+    'wave_interference': {'label': 'wave interference', 'kind': 'module2'},
+    'wave_polarization': {'label': 'wave polarization', 'kind': 'module2'},
+    'wave_resonance': {'label': 'wave resonance', 'kind': 'module2'},
+    'light_reflection_refraction': {'label': 'light reflection refraction', 'kind': 'module2'},
+    'light_absorption': {'label': 'light absorption', 'kind': 'module2'},
+    'plane_mirror': {'label': 'plane mirror', 'kind': 'module2'},
+    'convex_mirror': {'label': 'convex mirror', 'kind': 'module2'},
+    'concave_mirror': {'label': 'concave mirror', 'kind': 'module2'},
+    'converging_lens': {'label': 'converging lens', 'kind': 'module2'},
+    'diverging_lens': {'label': 'diverging lens', 'kind': 'module2'},
+    'human_eye': {'label': 'human eye', 'kind': 'module2'},
+})
+
 assert set(SCENE_METADATA) == SCENES
 
 
