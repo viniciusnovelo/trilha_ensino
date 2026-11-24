@@ -1,1 +1,1858 @@
-PLACEHOLDER
+{
+  "schema_version": "1.0.0",
+  "language": "pt-BR",
+  "subject": "Física",
+  "module": 3,
+  "title": "Circuitos, campos e Física Moderna",
+  "source_alignment": {
+    "document": "Roteiro módulos de ensino(2).pdf",
+    "scope": "Física - 3º Módulo",
+    "note": "A sequência, os títulos e a quantidade de exercícios das três fases seguem o roteiro anexado. Contextos, objetivos operacionais, parâmetros, questões, alternativas, gabaritos, resoluções e propostas de simulação foram elaborados como complementos didáticos."
+  },
+  "constants": {
+    "vacuum_permeability": 1.2566370614359173e-06,
+    "elementary_charge": 1.602176634e-19,
+    "speed_of_light": 299792458,
+    "planck_constant": 6.62607015e-34
+  },
+  "phases": [
+    {
+      "id": "fis3-fase-1",
+      "number": 1,
+      "title": "Eletrodinâmica",
+      "description": "Investigar tensão, corrente, resistência, leis de Ohm, associações de resistores, análise de malhas e potência elétrica.",
+      "folder": "fase-1-eletrodinamica",
+      "exercise_ids": [
+        "fis3-ele-01",
+        "fis3-ele-02",
+        "fis3-ele-03",
+        "fis3-ele-04",
+        "fis3-ele-05",
+        "fis3-ele-06",
+        "fis3-ele-07",
+        "fis3-ele-08",
+        "fis3-ele-09",
+        "fis3-ele-10",
+        "fis3-ele-11",
+        "fis3-ele-12"
+      ]
+    },
+    {
+      "id": "fis3-fase-2",
+      "number": 2,
+      "title": "Eletromagnetismo",
+      "description": "Explorar campos magnéticos e elétricos, força magnética, fluxo, indução eletromagnética e motores de indução.",
+      "folder": "fase-2-eletromagnetismo",
+      "exercise_ids": [
+        "fis3-mag-01",
+        "fis3-mag-02",
+        "fis3-mag-03",
+        "fis3-mag-04",
+        "fis3-mag-05",
+        "fis3-mag-06",
+        "fis3-mag-07",
+        "fis3-mag-08",
+        "fis3-mag-09",
+        "fis3-mag-10",
+        "fis3-mag-11",
+        "fis3-mag-12"
+      ]
+    },
+    {
+      "id": "fis3-fase-3",
+      "number": 3,
+      "title": "Física Moderna",
+      "description": "Introduzir relatividade geral e restrita, quantização, dualidade onda-partícula e fenômenos de radiação.",
+      "folder": "fase-3-fisica-moderna",
+      "exercise_ids": [
+        "fis3-mod-01",
+        "fis3-mod-02",
+        "fis3-mod-03",
+        "fis3-mod-04",
+        "fis3-mod-05",
+        "fis3-mod-06"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "fis3-ele-01",
+      "phase": 1,
+      "exercise_number": 1,
+      "title": "Tensão, corrente e resistência (questão teórica)",
+      "topic": "Grandezas elétricas",
+      "estimated_minutes": 6,
+      "learning_objective": "Distinguir diferença de potencial, corrente elétrica e resistência em um circuito simples.",
+      "context": "Uma bateria alimenta uma lâmpada por meio de fios condutores. O estudante observa a diferença de potencial entre os terminais, o movimento ordenado de cargas e a oposição oferecida pelo componente.",
+      "simulation": {
+        "scene": "circuit_concepts",
+        "description": "Uma bateria alimenta uma lâmpada por meio de fios condutores. O estudante observa a diferença de potencial entre os terminais, o movimento ordenado de cargas e a oposição oferecida pelo componente.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 12,
+            "unit": "V",
+            "min": 3,
+            "max": 24,
+            "step": 1
+          },
+          {
+            "key": "R",
+            "label": "Resistência da lâmpada",
+            "value": 6,
+            "unit": "Ω",
+            "min": 2,
+            "max": 20,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual alternativa associa corretamente as três grandezas elétricas?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Tensão é o fluxo de cargas; corrente é a oposição ao movimento; resistência é a energia da bateria.",
+            "Tensão é a diferença de potencial, corrente é a taxa de fluxo de cargas e resistência é a oposição à corrente.",
+            "Tensão e corrente são a mesma grandeza, medidas em ampères.",
+            "Resistência é a quantidade de carga armazenada no fio."
+          ],
+          "correct": 1,
+          "explanation": "Tensão (volt) representa diferença de potencial; corrente (ampère) mede a taxa de passagem de carga; resistência (ohm) expressa a oposição à corrente. Para um resistor ôhmico, V = R·I.",
+          "hint": "Observe os indicadores da bateria, do amperímetro e do resistor. Pense no que cada instrumento mede.",
+          "solution": "A diferença de potencial fornece energia por unidade de carga. A corrente é I = ΔQ/Δt. A resistência relaciona tensão e corrente pela Lei de Ohm, V = R·I."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Grandezas elétricas"
+      }
+    },
+    {
+      "id": "fis3-ele-02",
+      "phase": 1,
+      "exercise_number": 2,
+      "title": "1ª Lei de Ohm",
+      "topic": "Lei de Ohm",
+      "estimated_minutes": 7,
+      "learning_objective": "Aplicar V = R·I para determinar a corrente em um resistor ôhmico.",
+      "context": "Uma fonte ideal de tensão está conectada a um resistor. Altere a tensão e a resistência para perceber como a corrente responde.",
+      "simulation": {
+        "scene": "ohm_law",
+        "description": "Uma fonte ideal de tensão está conectada a um resistor. Altere a tensão e a resistência para perceber como a corrente responde.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão aplicada",
+            "value": 12,
+            "unit": "V",
+            "min": 3,
+            "max": 24,
+            "step": 1
+          },
+          {
+            "key": "R",
+            "label": "Resistência",
+            "value": 4,
+            "unit": "Ω",
+            "min": 1,
+            "max": 20,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Com os valores indicados na simulação, determine a corrente elétrica no resistor.",
+        "answer": {
+          "type": "numeric",
+          "formula": "ohm_current",
+          "unit": "A",
+          "display_unit": "A",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Use I = V/R. Divida a tensão aplicada pela resistência.",
+          "solution": "Pela 1ª Lei de Ohm: I = V/R. Substitua os valores indicados e expresse o resultado em ampères."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Lei de Ohm"
+      }
+    },
+    {
+      "id": "fis3-ele-03",
+      "phase": 1,
+      "exercise_number": 3,
+      "title": "2ª Lei de ohm",
+      "topic": "Resistividade e geometria do condutor",
+      "estimated_minutes": 7,
+      "learning_objective": "Relacionar a resistência elétrica ao material, comprimento e área de seção transversal do fio.",
+      "context": "Um fio metálico liga dois pontos de um circuito. A resistência depende da resistividade do material, do comprimento e da área de seção transversal: R = ρL/A. Para os parâmetros exibidos, use ρ em Ω·mm²/m e A em mm².",
+      "simulation": {
+        "scene": "ohm_second_law",
+        "description": "Um fio metálico liga dois pontos de um circuito. A resistência depende da resistividade do material, do comprimento e da área de seção transversal: R = ρL/A. Para os parâmetros exibidos, use ρ em Ω·mm²/m e A em mm².",
+        "parameters": [
+          {
+            "key": "rho",
+            "label": "Resistividade",
+            "value": 0.0175,
+            "unit": "Ω·mm²/m",
+            "min": 0.005,
+            "max": 0.08,
+            "step": 0.0025
+          },
+          {
+            "key": "L",
+            "label": "Comprimento do fio",
+            "value": 20,
+            "unit": "m",
+            "min": 2,
+            "max": 60,
+            "step": 1
+          },
+          {
+            "key": "A",
+            "label": "Área da seção",
+            "value": 1,
+            "unit": "mm²",
+            "min": 0.25,
+            "max": 4,
+            "step": 0.05
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Calcule a resistência elétrica do fio, em ohms.",
+        "answer": {
+          "type": "numeric",
+          "formula": "wire_resistance",
+          "unit": "Ω",
+          "display_unit": "Ω",
+          "digits": 3,
+          "tolerance": 0.03,
+          "hint": "Aplique R = ρ·L/A. Atenção: as unidades de ρ, L e A já foram escolhidas para que o resultado saia em ohms.",
+          "solution": "Multiplique a resistividade pelo comprimento e divida pela área da seção transversal: R = ρL/A. Fios mais longos oferecem maior resistência; maior área reduz a resistência."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Resistividade e geometria do condutor"
+      }
+    },
+    {
+      "id": "fis3-ele-04",
+      "phase": 1,
+      "exercise_number": 4,
+      "title": "Associação de resistências em série",
+      "topic": "Resistores em série",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular a resistência equivalente de resistores conectados em série.",
+      "context": "Três resistores estão conectados um após o outro em um único caminho. A corrente é a mesma em todos eles, enquanto a tensão total se divide entre os componentes.",
+      "simulation": {
+        "scene": "series_circuit",
+        "description": "Três resistores estão conectados um após o outro em um único caminho. A corrente é a mesma em todos eles, enquanto a tensão total se divide entre os componentes.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 18,
+            "unit": "V",
+            "min": 6,
+            "max": 30,
+            "step": 1
+          },
+          {
+            "key": "R1",
+            "label": "Resistor R₁",
+            "value": 4,
+            "unit": "Ω",
+            "min": 1,
+            "max": 15,
+            "step": 0.5
+          },
+          {
+            "key": "R2",
+            "label": "Resistor R₂",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 15,
+            "step": 0.5
+          },
+          {
+            "key": "R3",
+            "label": "Resistor R₃",
+            "value": 10,
+            "unit": "Ω",
+            "min": 1,
+            "max": 15,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine a resistência equivalente da associação em série.",
+        "answer": {
+          "type": "numeric",
+          "formula": "series_resistance",
+          "unit": "Ω",
+          "display_unit": "Ω",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Em série, some diretamente os valores de todas as resistências.",
+          "solution": "A resistência equivalente em série é Rₑq = R₁ + R₂ + R₃. A corrente percorre o mesmo caminho e atravessa todos os resistores."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Resistores em série"
+      }
+    },
+    {
+      "id": "fis3-ele-05",
+      "phase": 1,
+      "exercise_number": 5,
+      "title": "Associação de resistências em paralelo",
+      "topic": "Resistores em paralelo",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular a resistência equivalente de dois resistores em paralelo.",
+      "context": "Duas lâmpadas estão ligadas em ramos diferentes entre os mesmos dois nós. A tensão nos ramos é igual, e a corrente total se divide entre eles.",
+      "simulation": {
+        "scene": "parallel_circuit",
+        "description": "Duas lâmpadas estão ligadas em ramos diferentes entre os mesmos dois nós. A tensão nos ramos é igual, e a corrente total se divide entre eles.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 12,
+            "unit": "V",
+            "min": 4,
+            "max": 24,
+            "step": 1
+          },
+          {
+            "key": "R1",
+            "label": "Resistor do ramo 1",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 20,
+            "step": 0.5
+          },
+          {
+            "key": "R2",
+            "label": "Resistor do ramo 2",
+            "value": 3,
+            "unit": "Ω",
+            "min": 1,
+            "max": 20,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine a resistência equivalente dos dois resistores em paralelo.",
+        "answer": {
+          "type": "numeric",
+          "formula": "parallel_resistance",
+          "unit": "Ω",
+          "display_unit": "Ω",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Para dois resistores: Rₑq = (R₁·R₂)/(R₁+R₂). A equivalente deve ser menor que o menor resistor do paralelo.",
+          "solution": "Use 1/Rₑq = 1/R₁ + 1/R₂. Para dois resistores, isso equivale a Rₑq = R₁R₂/(R₁+R₂)."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Resistores em paralelo"
+      }
+    },
+    {
+      "id": "fis3-ele-06",
+      "phase": 1,
+      "exercise_number": 6,
+      "title": "Cálculo das quedas de tensão em circuito de uma malha",
+      "topic": "Lei das malhas e divisor de tensão",
+      "estimated_minutes": 7,
+      "learning_objective": "Determinar a queda de tensão em um resistor de uma associação em série.",
+      "context": "Uma fonte de 24 V alimenta dois resistores em série. A corrente é a mesma em todos os elementos, e a soma das quedas de tensão é igual à tensão da fonte.",
+      "simulation": {
+        "scene": "single_loop_drop",
+        "description": "Uma fonte de 24 V alimenta dois resistores em série. A corrente é a mesma em todos os elementos, e a soma das quedas de tensão é igual à tensão da fonte.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 24,
+            "unit": "V",
+            "min": 6,
+            "max": 36,
+            "step": 1
+          },
+          {
+            "key": "R1",
+            "label": "Resistência R₁",
+            "value": 4,
+            "unit": "Ω",
+            "min": 1,
+            "max": 15,
+            "step": 0.5
+          },
+          {
+            "key": "R2",
+            "label": "Resistência R₂",
+            "value": 8,
+            "unit": "Ω",
+            "min": 1,
+            "max": 20,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual é a queda de tensão no resistor R₂?",
+        "answer": {
+          "type": "numeric",
+          "formula": "single_loop_vdrop_r2",
+          "unit": "V",
+          "display_unit": "V",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Primeiro calcule I = V/(R₁+R₂). Depois use V₂ = I·R₂.",
+          "solution": "A resistência total é Rₜ = R₁+R₂. A corrente é I = V/Rₜ. A queda de tensão em R₂ é V₂ = I·R₂; confira que V₁+V₂ = V."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Lei das malhas e divisor de tensão"
+      }
+    },
+    {
+      "id": "fis3-ele-07",
+      "phase": 1,
+      "exercise_number": 7,
+      "title": "Cálculo da corrente total em circuito de uma malha",
+      "topic": "Corrente em circuito série",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular a corrente total de um circuito de uma malha com três resistores.",
+      "context": "Uma bateria alimenta três resistores em série. Como há apenas um caminho, a corrente total é a mesma em cada componente.",
+      "simulation": {
+        "scene": "single_loop_current",
+        "description": "Uma bateria alimenta três resistores em série. Como há apenas um caminho, a corrente total é a mesma em cada componente.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 18,
+            "unit": "V",
+            "min": 6,
+            "max": 36,
+            "step": 1
+          },
+          {
+            "key": "R1",
+            "label": "Resistência R₁",
+            "value": 3,
+            "unit": "Ω",
+            "min": 1,
+            "max": 15,
+            "step": 0.5
+          },
+          {
+            "key": "R2",
+            "label": "Resistência R₂",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 15,
+            "step": 0.5
+          },
+          {
+            "key": "R3",
+            "label": "Resistência R₃",
+            "value": 9,
+            "unit": "Ω",
+            "min": 1,
+            "max": 20,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine a corrente total fornecida pela fonte.",
+        "answer": {
+          "type": "numeric",
+          "formula": "single_loop_current",
+          "unit": "A",
+          "display_unit": "A",
+          "digits": 3,
+          "tolerance": 0.03,
+          "hint": "Some as três resistências para obter Rₜ e aplique I = V/Rₜ.",
+          "solution": "Em uma única malha, Rₜ = R₁+R₂+R₃. Pela Lei de Ohm, Iₜ = V/Rₜ."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Corrente em circuito série"
+      }
+    },
+    {
+      "id": "fis3-ele-08",
+      "phase": 1,
+      "exercise_number": 8,
+      "title": "Cálculo das quedas de tensão em circuito de duas malhas",
+      "topic": "Circuito misto e análise de malhas",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular a tensão em um ramo paralelo após um resistor comum.",
+      "context": "O circuito possui um resistor R₁ em série com dois ramos paralelos (R₂ e R₃), formando duas malhas. A queda de tensão na associação paralela é a mesma em R₂ e R₃.",
+      "simulation": {
+        "scene": "two_mesh_circuit",
+        "description": "O circuito possui um resistor R₁ em série com dois ramos paralelos (R₂ e R₃), formando duas malhas. A queda de tensão na associação paralela é a mesma em R₂ e R₃.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 18,
+            "unit": "V",
+            "min": 6,
+            "max": 36,
+            "step": 1
+          },
+          {
+            "key": "R1",
+            "label": "Resistor comum R₁",
+            "value": 3,
+            "unit": "Ω",
+            "min": 1,
+            "max": 12,
+            "step": 0.5
+          },
+          {
+            "key": "R2",
+            "label": "Ramo R₂",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          },
+          {
+            "key": "R3",
+            "label": "Ramo R₃",
+            "value": 3,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine a queda de tensão no resistor R₂.",
+        "answer": {
+          "type": "numeric",
+          "formula": "two_mesh_branch_voltage",
+          "unit": "V",
+          "display_unit": "V",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Calcule primeiro R₂ e R₃ em paralelo. Some essa equivalente a R₁ e use divisor de tensão para achar a tensão no bloco paralelo.",
+          "solution": "Rₚ = (R₂R₃)/(R₂+R₃). A corrente total é I = V/(R₁+Rₚ). A tensão nos ramos é Vₚ = I·Rₚ; portanto V₂ = Vₚ."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Circuito misto e análise de malhas"
+      }
+    },
+    {
+      "id": "fis3-ele-09",
+      "phase": 1,
+      "exercise_number": 9,
+      "title": "Cálculo das correntes em circuito de duas malhas",
+      "topic": "Correntes em ramos paralelos",
+      "estimated_minutes": 7,
+      "learning_objective": "Determinar a corrente em um dos ramos de um circuito com duas malhas.",
+      "context": "Um resistor comum R₁ alimenta dois ramos paralelos. A tensão nos dois ramos é igual, mas as correntes dependem de cada resistência.",
+      "simulation": {
+        "scene": "two_mesh_circuit",
+        "description": "Um resistor comum R₁ alimenta dois ramos paralelos. A tensão nos dois ramos é igual, mas as correntes dependem de cada resistência.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 18,
+            "unit": "V",
+            "min": 6,
+            "max": 36,
+            "step": 1
+          },
+          {
+            "key": "R1",
+            "label": "Resistor comum R₁",
+            "value": 3,
+            "unit": "Ω",
+            "min": 1,
+            "max": 12,
+            "step": 0.5
+          },
+          {
+            "key": "R2",
+            "label": "Ramo R₂",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          },
+          {
+            "key": "R3",
+            "label": "Ramo R₃",
+            "value": 3,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine a corrente que atravessa o ramo do resistor R₃.",
+        "answer": {
+          "type": "numeric",
+          "formula": "two_mesh_branch_current_r3",
+          "unit": "A",
+          "display_unit": "A",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Encontre a tensão no bloco paralelo e divida essa tensão pela resistência R₃.",
+          "solution": "A associação paralela tem Rₚ = R₂R₃/(R₂+R₃). A tensão nos ramos é Vₚ = V·Rₚ/(R₁+Rₚ). Assim, I₃ = Vₚ/R₃."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Correntes em ramos paralelos"
+      }
+    },
+    {
+      "id": "fis3-ele-10",
+      "phase": 1,
+      "exercise_number": 10,
+      "title": "Cálculo das quedas de tensão e correntes em circuito de três malhas",
+      "topic": "Circuito de três malhas",
+      "estimated_minutes": 7,
+      "learning_objective": "Determinar a corrente em um ramo de uma rede com um resistor comum e três ramos paralelos.",
+      "context": "O resistor R₁ está em série com um conjunto de três ramos paralelos (R₂, R₃ e R₄). O simulador apresenta a corrente total, as correntes de ramo e as quedas de tensão para explorar a Lei dos Nós e a Lei das Malhas.",
+      "simulation": {
+        "scene": "three_mesh_circuit",
+        "description": "O resistor R₁ está em série com um conjunto de três ramos paralelos (R₂, R₃ e R₄). O simulador apresenta a corrente total, as correntes de ramo e as quedas de tensão para explorar a Lei dos Nós e a Lei das Malhas.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 24,
+            "unit": "V",
+            "min": 8,
+            "max": 48,
+            "step": 1
+          },
+          {
+            "key": "R1",
+            "label": "Resistor comum R₁",
+            "value": 2,
+            "unit": "Ω",
+            "min": 1,
+            "max": 12,
+            "step": 0.5
+          },
+          {
+            "key": "R2",
+            "label": "Ramo R₂",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          },
+          {
+            "key": "R3",
+            "label": "Ramo R₃",
+            "value": 3,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          },
+          {
+            "key": "R4",
+            "label": "Ramo R₄",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine a corrente que atravessa o ramo do resistor R₃.",
+        "answer": {
+          "type": "numeric",
+          "formula": "three_mesh_branch_current_r3",
+          "unit": "A",
+          "display_unit": "A",
+          "digits": 3,
+          "tolerance": 0.03,
+          "hint": "Calcule a equivalente dos três resistores em paralelo, encontre a tensão sobre o conjunto e divida pela resistência R₃.",
+          "solution": "1/Rₚ = 1/R₂ + 1/R₃ + 1/R₄. A corrente total é I = V/(R₁+Rₚ). A tensão nos ramos é Vₚ = I·Rₚ; então I₃ = Vₚ/R₃."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Circuito de três malhas"
+      }
+    },
+    {
+      "id": "fis3-ele-11",
+      "phase": 1,
+      "exercise_number": 11,
+      "title": "Potência elétrica",
+      "topic": "Potência elétrica",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular a potência dissipada por um resistor a partir da tensão e da resistência.",
+      "context": "Uma lâmpada resistiva está conectada a uma fonte. A potência indica a taxa de transformação de energia elétrica em outras formas, como luz e calor.",
+      "simulation": {
+        "scene": "electric_power",
+        "description": "Uma lâmpada resistiva está conectada a uma fonte. A potência indica a taxa de transformação de energia elétrica em outras formas, como luz e calor.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão aplicada",
+            "value": 12,
+            "unit": "V",
+            "min": 3,
+            "max": 24,
+            "step": 1
+          },
+          {
+            "key": "R",
+            "label": "Resistência",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 24,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Calcule a potência elétrica dissipada no resistor.",
+        "answer": {
+          "type": "numeric",
+          "formula": "electric_power",
+          "unit": "W",
+          "display_unit": "W",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Use P = V²/R ou, primeiro, calcule I = V/R e depois P = V·I.",
+          "solution": "A potência elétrica é P = V·I. Pela Lei de Ohm, também pode ser calculada por P = V²/R ou P = I²R."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Potência elétrica"
+      }
+    },
+    {
+      "id": "fis3-ele-12",
+      "phase": 1,
+      "exercise_number": 12,
+      "title": "Cálculo das dissipações de potência nos resistores em circuito de duas malhas",
+      "topic": "Potência em circuito misto",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular a potência dissipada em um dos resistores de um circuito de duas malhas.",
+      "context": "O circuito tem R₁ em série com os ramos paralelos R₂ e R₃. A potência em cada resistor depende da corrente que o atravessa e da tensão em seus terminais.",
+      "simulation": {
+        "scene": "two_mesh_power",
+        "description": "O circuito tem R₁ em série com os ramos paralelos R₂ e R₃. A potência em cada resistor depende da corrente que o atravessa e da tensão em seus terminais.",
+        "parameters": [
+          {
+            "key": "V",
+            "label": "Tensão da fonte",
+            "value": 24,
+            "unit": "V",
+            "min": 8,
+            "max": 48,
+            "step": 1
+          },
+          {
+            "key": "R1",
+            "label": "Resistor comum R₁",
+            "value": 2,
+            "unit": "Ω",
+            "min": 1,
+            "max": 12,
+            "step": 0.5
+          },
+          {
+            "key": "R2",
+            "label": "Ramo R₂",
+            "value": 6,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          },
+          {
+            "key": "R3",
+            "label": "Ramo R₃",
+            "value": 3,
+            "unit": "Ω",
+            "min": 1,
+            "max": 18,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine a potência dissipada no resistor R₃.",
+        "answer": {
+          "type": "numeric",
+          "formula": "two_mesh_power_r3",
+          "unit": "W",
+          "display_unit": "W",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Encontre a tensão no conjunto paralelo e aplique P₃ = Vₚ²/R₃.",
+          "solution": "A equivalente paralela é Rₚ = R₂R₃/(R₂+R₃). A tensão nos ramos é Vₚ = V·Rₚ/(R₁+Rₚ). A potência em R₃ é P₃ = Vₚ²/R₃."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Potência em circuito misto"
+      }
+    },
+    {
+      "id": "fis3-mag-01",
+      "phase": 2,
+      "exercise_number": 1,
+      "title": "Campo Magnético (questão teórica)",
+      "topic": "Campo magnético",
+      "estimated_minutes": 6,
+      "learning_objective": "Reconhecer a existência de campo magnético ao redor de ímãs e correntes elétricas.",
+      "context": "Uma bússola é aproximada de um fio percorrido por corrente. A agulha sofre desvio, indicando que a corrente elétrica produz um campo magnético ao redor do condutor.",
+      "simulation": {
+        "scene": "magnetic_field",
+        "description": "Uma bússola é aproximada de um fio percorrido por corrente. A agulha sofre desvio, indicando que a corrente elétrica produz um campo magnético ao redor do condutor.",
+        "parameters": [
+          {
+            "key": "I",
+            "label": "Corrente no fio",
+            "value": 5,
+            "unit": "A",
+            "min": 1,
+            "max": 12,
+            "step": 0.5
+          },
+          {
+            "key": "r",
+            "label": "Distância da bússola",
+            "value": 5,
+            "unit": "cm",
+            "min": 2,
+            "max": 15,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "O que a experiência com a bússola evidencia?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Uma corrente elétrica pode produzir um campo magnético ao redor do fio.",
+            "O campo magnético só existe dentro de ímãs permanentes.",
+            "A bússola mede diretamente a resistência elétrica do fio.",
+            "A corrente elimina o campo magnético terrestre."
+          ],
+          "correct": 0,
+          "explanation": "A experiência de Oersted mostra que uma corrente elétrica gera campo magnético. Ao redor de um fio retilíneo longo, as linhas de campo são circunferências centradas no fio; o sentido segue a regra da mão direita.",
+          "hint": "Observe as linhas circulares ao redor do condutor e o desvio da bússola.",
+          "solution": "Aponte o polegar da mão direita no sentido da corrente convencional. Os dedos curvados indicam o sentido do campo magnético ao redor do fio."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Campo magnético"
+      }
+    },
+    {
+      "id": "fis3-mag-02",
+      "phase": 2,
+      "exercise_number": 2,
+      "title": "Lei de Faraday, Indução Eletromagnética (questão teórica)",
+      "topic": "Indução eletromagnética",
+      "estimated_minutes": 6,
+      "learning_objective": "Compreender que uma variação do fluxo magnético pode induzir força eletromotriz em um circuito.",
+      "context": "Um ímã é movimentado para dentro e para fora de uma bobina ligada a um galvanômetro. O instrumento indica corrente induzida quando o fluxo magnético através da bobina varia.",
+      "simulation": {
+        "scene": "faraday_concept",
+        "description": "Um ímã é movimentado para dentro e para fora de uma bobina ligada a um galvanômetro. O instrumento indica corrente induzida quando o fluxo magnético através da bobina varia.",
+        "parameters": [
+          {
+            "key": "v",
+            "label": "Velocidade do ímã",
+            "value": 0.8,
+            "unit": "m/s",
+            "min": 0.1,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "key": "N",
+            "label": "Número de espiras",
+            "value": 100,
+            "unit": "espiras",
+            "min": 20,
+            "max": 200,
+            "step": 10
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Em qual situação surge uma força eletromotriz induzida na bobina?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Somente quando a bobina está parada e o campo é constante.",
+            "Quando o fluxo magnético através da bobina varia com o tempo.",
+            "Sempre que há um ímã perto da bobina, mesmo sem qualquer variação de fluxo.",
+            "Apenas quando a bobina é feita de material isolante."
+          ],
+          "correct": 1,
+          "explanation": "A Lei de Faraday estabelece que a fem induzida está relacionada à taxa de variação do fluxo magnético. Pode haver indução por movimento relativo, mudança de intensidade do campo, área ou orientação da espira.",
+          "hint": "Compare o galvanômetro com o ímã em movimento e com o ímã parado dentro da bobina.",
+          "solution": "A fem induzida é ε = −N·ΔΦ/Δt. O sinal negativo está associado à Lei de Lenz: a corrente induzida se opõe à variação do fluxo que a produziu."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Indução eletromagnética"
+      }
+    },
+    {
+      "id": "fis3-mag-03",
+      "phase": 2,
+      "exercise_number": 3,
+      "title": "Campo Magnético em um fio retilíneo longo",
+      "topic": "Campo de fio retilíneo",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular o módulo do campo magnético a uma distância conhecida de um fio retilíneo longo.",
+      "context": "Um fio retilíneo muito longo conduz corrente. No modelo ideal, o campo magnético a uma distância r é B = μ₀I/(2πr). O resultado é apresentado em microteslas (μT).",
+      "simulation": {
+        "scene": "magnetic_wire",
+        "description": "Um fio retilíneo muito longo conduz corrente. No modelo ideal, o campo magnético a uma distância r é B = μ₀I/(2πr). O resultado é apresentado em microteslas (μT).",
+        "parameters": [
+          {
+            "key": "I",
+            "label": "Corrente elétrica",
+            "value": 5,
+            "unit": "A",
+            "min": 1,
+            "max": 15,
+            "step": 0.5
+          },
+          {
+            "key": "r",
+            "label": "Distância ao fio",
+            "value": 0.05,
+            "unit": "m",
+            "min": 0.01,
+            "max": 0.2,
+            "step": 0.005
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Calcule o campo magnético produzido pelo fio no ponto indicado, em microteslas (μT).",
+        "answer": {
+          "type": "numeric",
+          "formula": "magnetic_wire_uT",
+          "unit": "μT",
+          "display_unit": "μT",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Use B = μ₀I/(2πr), com μ₀ = 4π×10⁻⁷ T·m/A. Converta tesla para microtesla multiplicando por 10⁶.",
+          "solution": "Substitua I e r em B = μ₀I/(2πr). Para apresentar em μT, multiplique o resultado em tesla por 10⁶."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Campo de fio retilíneo"
+      }
+    },
+    {
+      "id": "fis3-mag-04",
+      "phase": 2,
+      "exercise_number": 4,
+      "title": "Campo Magnético no centro de uma espira circular",
+      "topic": "Campo de espira circular",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular o campo magnético no centro de uma espira circular percorrida por corrente.",
+      "context": "Uma espira circular de uma volta é percorrida por corrente. No centro da espira, o campo ideal é B = μ₀I/(2R). O resultado solicitado será expresso em microteslas.",
+      "simulation": {
+        "scene": "magnetic_loop",
+        "description": "Uma espira circular de uma volta é percorrida por corrente. No centro da espira, o campo ideal é B = μ₀I/(2R). O resultado solicitado será expresso em microteslas.",
+        "parameters": [
+          {
+            "key": "I",
+            "label": "Corrente na espira",
+            "value": 2,
+            "unit": "A",
+            "min": 0.5,
+            "max": 10,
+            "step": 0.25
+          },
+          {
+            "key": "R",
+            "label": "Raio da espira",
+            "value": 0.1,
+            "unit": "m",
+            "min": 0.03,
+            "max": 0.3,
+            "step": 0.01
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine o campo magnético no centro da espira, em microteslas (μT).",
+        "answer": {
+          "type": "numeric",
+          "formula": "magnetic_loop_uT",
+          "unit": "μT",
+          "display_unit": "μT",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Aplique B = μ₀I/(2R), considerando uma única volta. Converta o resultado de tesla para microtesla.",
+          "solution": "Para uma espira circular: B = μ₀I/(2R). Caso existissem N voltas justapostas, o campo seria multiplicado por N."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Campo de espira circular"
+      }
+    },
+    {
+      "id": "fis3-mag-05",
+      "phase": 2,
+      "exercise_number": 5,
+      "title": "Força Magnética",
+      "topic": "Força magnética sobre carga",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular a força magnética sobre uma carga em movimento em um campo magnético uniforme.",
+      "context": "Uma partícula carregada atravessa uma região de campo magnético. O módulo da força é F = |q|vB·sen(θ), sendo θ o ângulo entre a velocidade e o campo. A resposta será dada em milinewtons (mN).",
+      "simulation": {
+        "scene": "magnetic_force",
+        "description": "Uma partícula carregada atravessa uma região de campo magnético. O módulo da força é F = |q|vB·sen(θ), sendo θ o ângulo entre a velocidade e o campo. A resposta será dada em milinewtons (mN).",
+        "parameters": [
+          {
+            "key": "q",
+            "label": "Módulo da carga",
+            "value": 2,
+            "unit": "μC",
+            "min": 0.5,
+            "max": 8,
+            "step": 0.25
+          },
+          {
+            "key": "v",
+            "label": "Velocidade",
+            "value": 3000,
+            "unit": "m/s",
+            "min": 500,
+            "max": 8000,
+            "step": 100
+          },
+          {
+            "key": "B",
+            "label": "Campo magnético",
+            "value": 0.4,
+            "unit": "T",
+            "min": 0.05,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "key": "theta",
+            "label": "Ângulo entre v e B",
+            "value": 90,
+            "unit": "°",
+            "min": 0,
+            "max": 180,
+            "step": 5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Calcule o módulo da força magnética sobre a partícula, em milinewtons (mN).",
+        "answer": {
+          "type": "numeric",
+          "formula": "magnetic_force_mN",
+          "unit": "mN",
+          "display_unit": "mN",
+          "digits": 3,
+          "tolerance": 0.03,
+          "hint": "Use F = |q|vB·sen(θ). Converta a carga de microcoulombs para coulombs e o resultado de newtons para milinewtons.",
+          "solution": "Converta q: 1 μC = 10⁻⁶ C. Calcule F = |q|vB·sen(θ) e multiplique por 1000 para obter mN. A força é máxima a 90° e nula quando v é paralela a B."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Força magnética sobre carga"
+      }
+    },
+    {
+      "id": "fis3-mag-06",
+      "phase": 2,
+      "exercise_number": 6,
+      "title": "Fluxo Magnético",
+      "topic": "Fluxo magnético",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular o fluxo magnético através de uma superfície plana em campo uniforme.",
+      "context": "Uma espira plana está imersa em um campo magnético uniforme. O fluxo depende do campo, da área e do ângulo entre o campo e a normal à superfície: Φ = BA·cos(θ). A resposta será expressa em miliwebers (mWb).",
+      "simulation": {
+        "scene": "magnetic_flux",
+        "description": "Uma espira plana está imersa em um campo magnético uniforme. O fluxo depende do campo, da área e do ângulo entre o campo e a normal à superfície: Φ = BA·cos(θ). A resposta será expressa em miliwebers (mWb).",
+        "parameters": [
+          {
+            "key": "B",
+            "label": "Campo magnético",
+            "value": 0.5,
+            "unit": "T",
+            "min": 0.1,
+            "max": 1.5,
+            "step": 0.05
+          },
+          {
+            "key": "A",
+            "label": "Área da espira",
+            "value": 0.2,
+            "unit": "m²",
+            "min": 0.05,
+            "max": 0.8,
+            "step": 0.05
+          },
+          {
+            "key": "theta",
+            "label": "Ângulo entre B e a normal",
+            "value": 30,
+            "unit": "°",
+            "min": 0,
+            "max": 90,
+            "step": 5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine o fluxo magnético através da espira, em miliwebers (mWb).",
+        "answer": {
+          "type": "numeric",
+          "formula": "magnetic_flux_mWb",
+          "unit": "mWb",
+          "display_unit": "mWb",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Use Φ = B·A·cos(θ). O ângulo é medido entre o campo magnético e a normal à superfície. Multiplique o resultado em weber por 1000.",
+          "solution": "Substitua B, A e θ em Φ = BA cos(θ). Converta Wb para mWb multiplicando por 1000. Se o campo for paralelo ao plano da espira, o fluxo será zero."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Fluxo magnético"
+      }
+    },
+    {
+      "id": "fis3-mag-07",
+      "phase": 2,
+      "exercise_number": 7,
+      "title": "Lei de Faraday",
+      "topic": "Força eletromotriz induzida",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular o módulo da força eletromotriz média induzida a partir da variação do fluxo.",
+      "context": "Uma bobina com várias espiras sofre uma variação de fluxo magnético em um intervalo de tempo. A fem média induzida é ε = N·|ΔΦ|/Δt.",
+      "simulation": {
+        "scene": "faraday_law",
+        "description": "Uma bobina com várias espiras sofre uma variação de fluxo magnético em um intervalo de tempo. A fem média induzida é ε = N·|ΔΦ|/Δt.",
+        "parameters": [
+          {
+            "key": "N",
+            "label": "Número de espiras",
+            "value": 100,
+            "unit": "espiras",
+            "min": 10,
+            "max": 300,
+            "step": 10
+          },
+          {
+            "key": "dPhi",
+            "label": "Variação de fluxo por espira",
+            "value": 0.002,
+            "unit": "Wb",
+            "min": 0.0005,
+            "max": 0.01,
+            "step": 0.0005
+          },
+          {
+            "key": "dt",
+            "label": "Intervalo de tempo",
+            "value": 0.1,
+            "unit": "s",
+            "min": 0.02,
+            "max": 0.5,
+            "step": 0.01
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Calcule o módulo da força eletromotriz média induzida, em volts (V).",
+        "answer": {
+          "type": "numeric",
+          "formula": "faraday_emf",
+          "unit": "V",
+          "display_unit": "V",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Use ε = N·|ΔΦ|/Δt. Verifique se ΔΦ representa a variação de fluxo em cada espira.",
+          "solution": "Multiplique o módulo da variação do fluxo pelo número de espiras e divida pelo intervalo de tempo: ε = N|ΔΦ|/Δt."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Força eletromotriz induzida"
+      }
+    },
+    {
+      "id": "fis3-mag-08",
+      "phase": 2,
+      "exercise_number": 8,
+      "title": "Lei de Lenz (questão teórica)",
+      "topic": "Sentido da corrente induzida",
+      "estimated_minutes": 6,
+      "learning_objective": "Interpretar o sentido da corrente induzida como oposição à variação do fluxo magnético.",
+      "context": "O polo norte de um ímã aproxima-se de uma bobina. A corrente induzida cria um campo magnético que reage à variação do fluxo produzida pelo movimento do ímã.",
+      "simulation": {
+        "scene": "lenz_law",
+        "description": "O polo norte de um ímã aproxima-se de uma bobina. A corrente induzida cria um campo magnético que reage à variação do fluxo produzida pelo movimento do ímã.",
+        "parameters": [
+          {
+            "key": "v",
+            "label": "Velocidade de aproximação",
+            "value": 0.8,
+            "unit": "m/s",
+            "min": 0.1,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "key": "N",
+            "label": "Número de espiras",
+            "value": 100,
+            "unit": "espiras",
+            "min": 20,
+            "max": 200,
+            "step": 10
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "De acordo com a Lei de Lenz, qual é a característica do campo magnético produzido pela corrente induzida?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Sempre aponta no mesmo sentido do campo externo, independentemente do movimento.",
+            "Se opõe à variação do fluxo magnético que originou a indução.",
+            "Anula permanentemente o campo magnético da Terra.",
+            "É sempre nulo, pois a corrente induzida não produz campo."
+          ],
+          "correct": 1,
+          "explanation": "A Lei de Lenz determina o sentido da corrente induzida: o campo criado por ela se opõe à variação do fluxo magnético que a produziu. Isso expressa a conservação da energia.",
+          "hint": "Observe como o polo da bobina voltado para o ímã reage quando o ímã se aproxima ou se afasta.",
+          "solution": "Ao aproximar o polo norte, a bobina tende a apresentar um polo norte na face próxima para se opor à aproximação. Ao afastar o ímã, a corrente inverte o sentido para se opor à diminuição do fluxo."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Sentido da corrente induzida"
+      }
+    },
+    {
+      "id": "fis3-mag-09",
+      "phase": 2,
+      "exercise_number": 9,
+      "title": "Campo Elétrico (questão teórica)",
+      "topic": "Campo elétrico",
+      "estimated_minutes": 6,
+      "learning_objective": "Reconhecer o campo elétrico como grandeza vetorial associada à força sobre uma carga de prova positiva.",
+      "context": "Uma carga positiva de prova é colocada em diferentes pontos próximos de cargas fonte. As setas indicam o sentido da força que atuaria sobre a carga de prova positiva.",
+      "simulation": {
+        "scene": "electric_field",
+        "description": "Uma carga positiva de prova é colocada em diferentes pontos próximos de cargas fonte. As setas indicam o sentido da força que atuaria sobre a carga de prova positiva.",
+        "parameters": [
+          {
+            "key": "qsource",
+            "label": "Carga fonte",
+            "value": 2,
+            "unit": "μC",
+            "min": 0.5,
+            "max": 6,
+            "step": 0.5
+          },
+          {
+            "key": "r",
+            "label": "Distância de referência",
+            "value": 0.2,
+            "unit": "m",
+            "min": 0.05,
+            "max": 0.5,
+            "step": 0.025
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual afirmação descreve corretamente o sentido das linhas de campo elétrico?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Saem das cargas positivas e chegam às cargas negativas.",
+            "Saem das cargas negativas e chegam às positivas.",
+            "Formam sempre círculos fechados ao redor de uma carga pontual.",
+            "Não têm relação com a força sobre uma carga de prova."
+          ],
+          "correct": 0,
+          "explanation": "Por convenção, o campo elétrico aponta no sentido da força que atuaria sobre uma carga de prova positiva. As linhas saem de cargas positivas e chegam a cargas negativas.",
+          "hint": "Observe as setas ao redor da carga positiva e imagine a direção da força sobre uma pequena carga de prova positiva.",
+          "solution": "O campo elétrico é definido por E = F/q₀ para q₀ positiva. O vetor E aponta para fora de uma carga fonte positiva e para dentro de uma carga fonte negativa."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Campo elétrico"
+      }
+    },
+    {
+      "id": "fis3-mag-10",
+      "phase": 2,
+      "exercise_number": 10,
+      "title": "Campo Elétrico",
+      "topic": "Intensidade do campo elétrico",
+      "estimated_minutes": 7,
+      "learning_objective": "Determinar o módulo do campo elétrico a partir da força sobre uma carga de prova.",
+      "context": "Uma carga de prova positiva é submetida a uma força elétrica em determinada região. O campo elétrico local é E = F/q. A carga indicada está em microcoulombs.",
+      "simulation": {
+        "scene": "electric_field_calc",
+        "description": "Uma carga de prova positiva é submetida a uma força elétrica em determinada região. O campo elétrico local é E = F/q. A carga indicada está em microcoulombs.",
+        "parameters": [
+          {
+            "key": "F",
+            "label": "Força elétrica",
+            "value": 0.012,
+            "unit": "N",
+            "min": 0.002,
+            "max": 0.05,
+            "step": 0.001
+          },
+          {
+            "key": "q",
+            "label": "Carga de prova",
+            "value": 3,
+            "unit": "μC",
+            "min": 0.5,
+            "max": 10,
+            "step": 0.5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Calcule a intensidade do campo elétrico no ponto, em newtons por coulomb (N/C).",
+        "answer": {
+          "type": "numeric",
+          "formula": "electric_field_NC",
+          "unit": "N/C",
+          "display_unit": "N/C",
+          "digits": 1,
+          "tolerance": 0.03,
+          "hint": "Converta q de μC para C e use E = F/q.",
+          "solution": "A intensidade do campo é E = F/q. Como q está em μC, converta para coulombs antes de dividir."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Intensidade do campo elétrico"
+      }
+    },
+    {
+      "id": "fis3-mag-11",
+      "phase": 2,
+      "exercise_number": 11,
+      "title": "Força Elétrica em um Campo Elétrico",
+      "topic": "Força elétrica",
+      "estimated_minutes": 7,
+      "learning_objective": "Calcular a força elétrica exercida sobre uma carga imersa em um campo elétrico uniforme.",
+      "context": "Uma partícula carregada está em uma região de campo elétrico uniforme. O módulo da força é F = |q|E. A resposta será expressa em milinewtons (mN).",
+      "simulation": {
+        "scene": "electric_force",
+        "description": "Uma partícula carregada está em uma região de campo elétrico uniforme. O módulo da força é F = |q|E. A resposta será expressa em milinewtons (mN).",
+        "parameters": [
+          {
+            "key": "q",
+            "label": "Módulo da carga",
+            "value": 2,
+            "unit": "μC",
+            "min": 0.5,
+            "max": 8,
+            "step": 0.25
+          },
+          {
+            "key": "E",
+            "label": "Campo elétrico",
+            "value": 5000,
+            "unit": "N/C",
+            "min": 500,
+            "max": 12000,
+            "step": 250
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Determine o módulo da força elétrica sobre a partícula, em milinewtons (mN).",
+        "answer": {
+          "type": "numeric",
+          "formula": "electric_force_mN",
+          "unit": "mN",
+          "display_unit": "mN",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Use F = |q|E. Converta a carga de μC para C e o resultado de N para mN.",
+          "solution": "Converta q para coulombs e calcule F = |q|E. Para obter mN, multiplique o valor em newtons por 1000. O sentido depende do sinal da carga."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "mastery_tag": "Força elétrica"
+      }
+    },
+    {
+      "id": "fis3-mag-12",
+      "phase": 2,
+      "exercise_number": 12,
+      "title": "Funcionamento de um motor de indução (questão teórica)",
+      "topic": "Motor de indução",
+      "estimated_minutes": 6,
+      "learning_objective": "Compreender qualitativamente como um campo magnético variável induz correntes no rotor de um motor de indução.",
+      "context": "Um motor de indução possui um estator que produz um campo magnético girante. Esse campo induz correntes no rotor, e a interação magnética gera torque.",
+      "simulation": {
+        "scene": "induction_motor",
+        "description": "Um motor de indução possui um estator que produz um campo magnético girante. Esse campo induz correntes no rotor, e a interação magnética gera torque.",
+        "parameters": [
+          {
+            "key": "f",
+            "label": "Frequência da alimentação",
+            "value": 60,
+            "unit": "Hz",
+            "min": 30,
+            "max": 90,
+            "step": 1
+          },
+          {
+            "key": "p",
+            "label": "Número de polos",
+            "value": 4,
+            "unit": "polos",
+            "min": 2,
+            "max": 8,
+            "step": 2
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual alternativa descreve corretamente o princípio de funcionamento do motor de indução?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "O rotor recebe energia apenas por contato elétrico direto com a rede.",
+            "O campo girante do estator induz correntes no rotor; a interação magnética produz torque.",
+            "O motor funciona porque os fios do rotor aquecem e se expandem.",
+            "O rotor precisa girar exatamente à mesma velocidade do campo para que exista torque de indução."
+          ],
+          "correct": 1,
+          "explanation": "No motor de indução, o campo magnético girante do estator induz correntes no rotor. A interação entre o campo e as correntes gera torque. O rotor costuma girar com velocidade ligeiramente inferior à síncrona, fenômeno chamado escorregamento.",
+          "hint": "Observe o campo girante no estator e o rotor que acompanha esse campo com pequena diferença de velocidade.",
+          "solution": "A frequência da rede e o número de polos determinam a velocidade síncrona nₛ = 120f/P (rpm). Para existir indução e torque no motor convencional, há escorregamento entre campo girante e rotor."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Motor de indução"
+      }
+    },
+    {
+      "id": "fis3-mod-01",
+      "phase": 3,
+      "exercise_number": 1,
+      "title": "Introdução à relatividade geral (questão teórica)",
+      "topic": "Relatividade geral",
+      "estimated_minutes": 6,
+      "learning_objective": "Reconhecer a gravidade, na relatividade geral, como associada à curvatura do espaço-tempo pela massa e energia.",
+      "context": "Uma grande massa deforma a representação em grade do espaço-tempo. Um corpo próximo segue uma trajetória influenciada por essa geometria, como ocorre com órbitas planetárias.",
+      "simulation": {
+        "scene": "general_relativity",
+        "description": "Uma grande massa deforma a representação em grade do espaço-tempo. Um corpo próximo segue uma trajetória influenciada por essa geometria, como ocorre com órbitas planetárias.",
+        "parameters": [
+          {
+            "key": "M",
+            "label": "Massa central ilustrativa",
+            "value": 1,
+            "unit": "unidade relativa",
+            "min": 0.5,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "key": "r",
+            "label": "Distância orbital ilustrativa",
+            "value": 3,
+            "unit": "unidades",
+            "min": 1.5,
+            "max": 6,
+            "step": 0.25
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual ideia central está associada à teoria da Relatividade Geral de Einstein?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A gravidade é uma força de atrito entre superfícies celestes.",
+            "Massa e energia curvam o espaço-tempo, e essa geometria influencia o movimento dos corpos.",
+            "A gravidade desaparece em regiões sem ar.",
+            "A luz não é afetada pela gravidade em nenhuma circunstância."
+          ],
+          "correct": 1,
+          "explanation": "Na Relatividade Geral, a gravidade é descrita pela geometria do espaço-tempo: massa e energia influenciam sua curvatura, e corpos e luz seguem trajetórias nessa geometria.",
+          "hint": "Observe a grade deformada pela massa central e a trajetória do corpo ao redor dela.",
+          "solution": "A analogia da malha elástica é apenas uma visualização bidimensional. A teoria descreve a geometria do espaço-tempo em quatro dimensões e prevê, entre outros efeitos, a deflexão da luz e a precessão orbital."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Relatividade geral"
+      }
+    },
+    {
+      "id": "fis3-mod-02",
+      "phase": 3,
+      "exercise_number": 2,
+      "title": "Introdução à relatividade restrita (questão teórica)",
+      "topic": "Relatividade restrita",
+      "estimated_minutes": 6,
+      "learning_objective": "Identificar a invariância da velocidade da luz no vácuo e compreender qualitativamente a dilatação temporal.",
+      "context": "Um relógio de luz é representado por dois espelhos entre os quais um pulso luminoso se desloca. Quando o relógio se move em relação ao observador, o caminho da luz é observado como mais longo.",
+      "simulation": {
+        "scene": "special_relativity",
+        "description": "Um relógio de luz é representado por dois espelhos entre os quais um pulso luminoso se desloca. Quando o relógio se move em relação ao observador, o caminho da luz é observado como mais longo.",
+        "parameters": [
+          {
+            "key": "beta",
+            "label": "Velocidade relativa (v/c)",
+            "value": 0.6,
+            "unit": "fração de c",
+            "min": 0,
+            "max": 0.9,
+            "step": 0.05
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual afirmação está de acordo com a Relatividade Restrita?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A velocidade da luz no vácuo depende da velocidade da fonte para qualquer observador inercial.",
+            "O tempo medido por relógios em movimento relativo pode diferir, enquanto a velocidade da luz no vácuo é a mesma para observadores inerciais.",
+            "A massa de um objeto altera a velocidade da luz no vácuo local.",
+            "A dilatação temporal só ocorre em relógios mecânicos defeituosos."
+          ],
+          "correct": 1,
+          "explanation": "A Relatividade Restrita postula a mesma velocidade da luz no vácuo para observadores inerciais e descreve efeitos como dilatação temporal e contração do comprimento em movimentos relativos.",
+          "hint": "Aumente a velocidade relativa β = v/c e observe o percurso diagonal da luz no referencial externo.",
+          "solution": "No modelo do relógio de luz, o observador externo vê a luz percorrer um caminho maior. Como a velocidade da luz é c, o intervalo de tempo medido é maior. O fator relativístico é γ = 1/√(1−β²)."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Relatividade restrita"
+      }
+    },
+    {
+      "id": "fis3-mod-03",
+      "phase": 3,
+      "exercise_number": 3,
+      "title": "Física Quântica, quantização da energia de elétrons e prótons (questão teórica)",
+      "topic": "Quantização da energia",
+      "estimated_minutes": 6,
+      "learning_objective": "Compreender que sistemas microscópicos, como elétrons em átomos e estados nucleares envolvendo prótons, apresentam energias permitidas e transições quantizadas.",
+      "context": "Um elétron em um átomo é representado em níveis de energia permitidos. Ao absorver ou emitir um fóton com energia compatível com a diferença entre níveis, ocorre uma transição. A cena ilustra níveis eletrônicos atômicos; a quantização também aparece em sistemas nucleares envolvendo prótons.",
+      "simulation": {
+        "scene": "quantum_levels",
+        "description": "Um elétron em um átomo é representado em níveis de energia permitidos. Ao absorver ou emitir um fóton com energia compatível com a diferença entre níveis, ocorre uma transição. A cena ilustra níveis eletrônicos atômicos; a quantização também aparece em sistemas nucleares envolvendo prótons.",
+        "parameters": [
+          {
+            "key": "Ephoton",
+            "label": "Energia do fóton ilustrativa",
+            "value": 1,
+            "unit": "unidades de energia",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "key": "n",
+            "label": "Nível inicial",
+            "value": 1,
+            "unit": "nível",
+            "min": 1,
+            "max": 3,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Por que um átomo emite ou absorve fótons com determinadas energias características?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Porque os elétrons podem ocupar qualquer energia contínua dentro do átomo, sem restrições.",
+            "Porque as transições ocorrem entre níveis de energia permitidos, e o fóton tem energia igual à diferença entre esses níveis.",
+            "Porque o núcleo absorve sempre toda a energia cinética do elétron.",
+            "Porque a energia do fóton depende apenas da cor do recipiente onde o átomo está."
+          ],
+          "correct": 1,
+          "explanation": "Em modelos quânticos, os estados ligados possuem energias permitidas. Um fóton é absorvido ou emitido quando sua energia corresponde à diferença entre dois níveis: ΔE = h·f. A ilustração mostra níveis eletrônicos; em núcleos, prótons e nêutrons também ocupam estados quantizados.",
+          "hint": "Observe os degraus de energia: a transição só ocorre quando a energia do fóton corresponde à diferença entre os níveis.",
+          "solution": "A energia do fóton é E = h·f. Na absorção, o sistema passa a um nível maior; na emissão, vai para um nível menor e libera um fóton cuja energia corresponde a ΔE. O desenho do exercício representa níveis eletrônicos, mas o princípio de estados discretos também é aplicado a sistemas nucleares."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Quantização da energia"
+      }
+    },
+    {
+      "id": "fis3-mod-04",
+      "phase": 3,
+      "exercise_number": 4,
+      "title": "Dualidade onda-partícula (questão teórica)",
+      "topic": "Dualidade onda-partícula",
+      "estimated_minutes": 6,
+      "learning_objective": "Reconhecer que entidades quânticas podem manifestar propriedades ondulatórias e corpusculares conforme a experiência.",
+      "context": "Um experimento de dupla fenda é representado. Cada detecção aparece como um ponto localizado, mas a distribuição de muitos eventos pode formar um padrão de interferência.",
+      "simulation": {
+        "scene": "wave_particle",
+        "description": "Um experimento de dupla fenda é representado. Cada detecção aparece como um ponto localizado, mas a distribuição de muitos eventos pode formar um padrão de interferência.",
+        "parameters": [
+          {
+            "key": "slit",
+            "label": "Abertura entre fendas",
+            "value": 0.25,
+            "unit": "unidade relativa",
+            "min": 0.1,
+            "max": 0.5,
+            "step": 0.025
+          },
+          {
+            "key": "events",
+            "label": "Número de detecções ilustradas",
+            "value": 60,
+            "unit": "eventos",
+            "min": 10,
+            "max": 120,
+            "step": 5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual interpretação representa melhor a dualidade onda-partícula?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A luz é sempre apenas uma onda clássica e nunca apresenta comportamento corpuscular.",
+            "Elétrons são pequenas esferas clássicas e não apresentam interferência.",
+            "Objetos quânticos podem produzir detecções localizadas e, em conjunto, padrões de interferência característicos de comportamento ondulatório.",
+            "A dualidade significa que uma partícula muda de massa ao atravessar uma fenda."
+          ],
+          "correct": 2,
+          "explanation": "A dualidade onda-partícula indica que sistemas quânticos exibem aspectos ondulatórios e corpusculares. Na dupla fenda, detecções individuais são localizadas, mas a distribuição acumulada pode revelar interferência.",
+          "hint": "Compare os pontos individuais de detecção com o padrão que surge quando muitos eventos são acumulados.",
+          "solution": "A descrição quântica não é simplesmente uma alternância entre uma onda clássica e uma bolinha clássica. O estado quântico permite prever probabilidades; a medição registra eventos localizados, e a distribuição pode apresentar interferência."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Dualidade onda-partícula"
+      }
+    },
+    {
+      "id": "fis3-mod-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Física das radiações (questão teórica)",
+      "topic": "Radiações e interação com a matéria",
+      "estimated_minutes": 6,
+      "learning_objective": "Comparar qualitativamente o poder de penetração e a interação de diferentes tipos de radiação com a matéria.",
+      "context": "Três tipos de radiação atravessam materiais de proteção diferentes. O modelo ilustra que partículas alfa são barradas com facilidade, beta possui penetração intermediária e gama é mais penetrante, exigindo blindagens apropriadas.",
+      "simulation": {
+        "scene": "radiation_penetration",
+        "description": "Três tipos de radiação atravessam materiais de proteção diferentes. O modelo ilustra que partículas alfa são barradas com facilidade, beta possui penetração intermediária e gama é mais penetrante, exigindo blindagens apropriadas.",
+        "parameters": [
+          {
+            "key": "intensity",
+            "label": "Intensidade inicial ilustrativa",
+            "value": 100,
+            "unit": "%",
+            "min": 40,
+            "max": 100,
+            "step": 5
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual associação entre radiação e blindagem é a mais adequada, em termos gerais?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Alfa: folha de papel; beta: lâmina de alumínio; gama: blindagem espessa de chumbo ou concreto.",
+            "Alfa: concreto espesso; beta: papel; gama: tecido fino.",
+            "Todas as radiações são barradas completamente por uma folha de papel.",
+            "A radiação gama é sempre menos penetrante que a alfa."
+          ],
+          "correct": 0,
+          "explanation": "Em condições típicas, partículas alfa têm baixo poder de penetração e podem ser barradas por papel ou pela camada externa da pele; beta requer materiais como alumínio; gama exige blindagem mais espessa e depende da energia.",
+          "hint": "Observe as camadas atravessadas por cada tipo de radiação. A representação é qualitativa, não uma especificação de proteção.",
+          "solution": "O poder de penetração depende da energia e do material. A blindagem real deve ser dimensionada tecnicamente; o esquema serve apenas para comparar tendências gerais e não substitui normas de radioproteção."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Radiações e interação com a matéria"
+      }
+    },
+    {
+      "id": "fis3-mod-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Radiação ionizante e radiação eletromagnética (questão teórica)",
+      "topic": "Radiação ionizante",
+      "estimated_minutes": 6,
+      "learning_objective": "Distinguir radiações eletromagnéticas de radiações corpusculares e relacionar a energia do fóton à frequência para compreender a ionização.",
+      "context": "O espectro eletromagnético é apresentado da região de baixa frequência à alta frequência. A energia de cada fóton cresce com a frequência, e radiações de maior energia podem ionizar átomos. No esquema, a energia relativa do fóton acompanha a frequência (E = h·f).",
+      "simulation": {
+        "scene": "ionizing_radiation",
+        "description": "O espectro eletromagnético é apresentado da região de baixa frequência à alta frequência. A energia de cada fóton cresce com a frequência, e radiações de maior energia podem ionizar átomos. No esquema, a energia relativa do fóton acompanha a frequência (E = h·f).",
+        "parameters": [
+          {
+            "key": "frequency",
+            "label": "Frequência relativa",
+            "value": 6,
+            "unit": "escala ilustrativa",
+            "min": 1,
+            "max": 10,
+            "step": 1
+          }
+        ],
+        "show_live_readouts": true,
+        "show_vectors": true
+      },
+      "challenge": {
+        "prompt": "Qual alternativa está correta sobre radiação ionizante e radiação eletromagnética?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Toda radiação eletromagnética é ionizante, independentemente da frequência.",
+            "Raios X e raios gama são eletromagnéticos e ionizantes; partículas alfa e beta são radiações corpusculares, não ondas eletromagnéticas.",
+            "Partículas alfa e beta são ondas eletromagnéticas de baixa frequência.",
+            "A capacidade de ionização não tem relação com a energia transferida."
+          ],
+          "correct": 1,
+          "explanation": "Raios X e gama são radiações eletromagnéticas capazes de ionizar. Alfa (núcleos de hélio) e beta (elétrons ou pósitrons) são partículas. A ionização depende da energia e do tipo de interação.",
+          "hint": "Observe o crescimento conjunto da frequência e da energia dos fótons no espectro. Nem todas as radiações são eletromagnéticas.",
+          "solution": "Para fótons, E = h·f: frequências maiores correspondem a fótons mais energéticos. Raios X e gama são eletromagnéticos e ionizantes. Alfa e beta também são ionizantes, mas são partículas materiais, não radiação eletromagnética."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "mastery_tag": "Radiação ionizante"
+      }
+    }
+  ]
+}
