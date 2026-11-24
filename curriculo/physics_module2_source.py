@@ -72,6 +72,8 @@ def validate_source(data: dict) -> dict:
             formulas.add(formula)
     if counts != PHASE_COUNTS:
         raise ValueError(f"distribuição de exercícios inválida: {counts}")
+    if types != {'choice': 17, 'numeric': 17}:
+        raise ValueError(f'distribuição por tipo inválida: {types}')
     if len(scenes) != 34 or len(formulas) != 17:
         raise ValueError(f"catálogo incompleto: {len(scenes)} cenas / {len(formulas)} fórmulas")
     for p in phases:
