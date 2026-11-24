@@ -199,197 +199,73 @@ def preparar_progressao_modulos(
     perfil,
     modulos,
 ):
-    """
-    Calcula o estado da jornada do aluno.
-
-    A progressão possui dois níveis:
-    - as fases avançam uma por vez dentro do módulo;
-    - o próximo módulo é liberado automaticamente quando todas
-      as fases do módulo anterior forem concluídas.
-
-    O mapa atual não possui um cadeado central para módulos,
-    portanto a liberação precisa ser persistida diretamente.
-    """
-
+    """Calcula o progresso de cada módulo sem dependência entre módulos."""
     progressos = {
         progresso.fase_id: progresso
         for progresso in ProgressoFase.objects.filter(
-            perfil=perfil,
-            fase__modulo__in=modulos,
+            perfil=perfil, fase__modulo__in=modulos,
         )
     }
-
     progressos_modulo = {
         progresso.modulo_id: progresso
         for progresso in ProgressoModulo.objects.filter(
-            perfil=perfil,
-            modulo__in=modulos,
+            perfil=perfil, modulo__in=modulos,
         )
     }
-
     agora = timezone.now()
 
-    modulo_anterior_concluido = True
-    primeiro_modulo = True
-
     for modulo in modulos:
-        fases = list(
-            modulo.fases.all()
-        )
-
-        modulo.total_fases = len(
-            fases
-        )
-
+        fases = list(modulo.fases.all())
+        modulo.total_fases = len(fases)
         modulo.fases_concluidas = sum(
-            1
-            for fase in fases
-            if (
-                progressos.get(fase.id)
-                and progressos[fase.id].concluida
-            )
+            1 for fase in fases
+            if progressos.get(fase.id) and progressos[fase.id].concluida
         )
-
         modulo.percentual_progresso = (
-            round(
-                (
-                    modulo.fases_concluidas
-                    / modulo.total_fases
-                )
-                * 100
-            )
-            if modulo.total_fases
-            else 0
+            round(modulo.fases_concluidas / modulo.total_fases * 100)
+            if modulo.total_fases else 0
         )
-
         modulo.concluido = (
             modulo.total_fases > 0
-            and modulo.fases_concluidas
-            == modulo.total_fases
+            and modulo.fases_concluidas == modulo.total_fases
         )
 
-        progresso_modulo = (
-            progressos_modulo.get(
-                modulo.id
-            )
-        )
-
+        progresso_modulo = progressos_modulo.get(modulo.id)
         if progresso_modulo is None:
-            progresso_modulo = (
-                ProgressoModulo.objects.create(
-                    perfil=perfil,
-                    modulo=modulo,
-                    desbloqueado=(
-                        primeiro_modulo
-                        or modulo_anterior_concluido
-                    ),
-                    concluido=False,
-                    data_desbloqueio=(
-                        agora
-                        if primeiro_modulo
-                        or modulo_anterior_concluido
-                        else None
-                    ),
-                )
+            progresso_modulo = ProgressoModulo.objects.create(
+                perfil=perfil, modulo=modulo, desbloqueado=True,
+                concluido=modulo.concluido, data_desbloqueio=agora,
+                data_conclusao=agora if modulo.concluido else None,
             )
-
-            progressos_modulo[
-                modulo.id
-            ] = progresso_modulo
-
+            progressos_modulo[modulo.id] = progresso_modulo
         else:
             atualizacoes = []
-
-            deve_desbloquear = (
-                primeiro_modulo
-                or modulo_anterior_concluido
-            )
-
-            if (
-                deve_desbloquear
-                and not progresso_modulo.desbloqueado
-            ):
+            if not progresso_modulo.desbloqueado:
                 progresso_modulo.desbloqueado = True
-                progresso_modulo.data_desbloqueio = (
-                    progresso_modulo.data_desbloqueio
-                    or agora
-                )
-                atualizacoes.extend([
-                    'desbloqueado',
-                    'data_desbloqueio',
-                ])
-
-            if atualizacoes:
-                progresso_modulo.save(
-                    update_fields=(
-                        list(
-                            dict.fromkeys(
-                                atualizacoes
-                            )
-                        )
-                    )
-                )
-
-        modulo.desbloqueado = bool(
-            progresso_modulo.desbloqueado
-        )
-
-        modulo.data_desbloqueio = (
-            progresso_modulo.data_desbloqueio
-        )
-
-        if modulo.concluido:
-            if not progresso_modulo.concluido:
+                progresso_modulo.data_desbloqueio = progresso_modulo.data_desbloqueio or agora
+                atualizacoes.extend(["desbloqueado", "data_desbloqueio"])
+            if modulo.concluido and not progresso_modulo.concluido:
                 progresso_modulo.concluido = True
-                progresso_modulo.data_conclusao = (
-                    progresso_modulo.data_conclusao
-                    or agora
-                )
-                progresso_modulo.save(
-                    update_fields=[
-                        'concluido',
-                        'data_conclusao',
-                    ]
-                )
+                progresso_modulo.data_conclusao = progresso_modulo.data_conclusao or agora
+                atualizacoes.extend(["concluido", "data_conclusao"])
+            if atualizacoes:
+                progresso_modulo.save(update_fields=atualizacoes)
 
-            modulo.status = 'concluido'
-
-        elif modulo.desbloqueado:
-            modulo.status = 'atual'
-
-        else:
-            modulo.status = 'bloqueado'
+        modulo.desbloqueado = True
+        modulo.data_desbloqueio = progresso_modulo.data_desbloqueio
+        modulo.status = "concluido" if modulo.concluido else "atual"
 
         encontrou_fase_atual = False
-
         for fase in fases:
-            progresso = progressos.get(
-                fase.id
-            )
-
-            if (
-                progresso
-                and progresso.concluida
-            ):
-                fase.status = 'concluida'
-
-            elif (
-                modulo.status == 'atual'
-                and not encontrou_fase_atual
-            ):
-                fase.status = 'atual'
+            progresso = progressos.get(fase.id)
+            if progresso and progresso.concluida:
+                fase.status = "concluida"
+            elif not encontrou_fase_atual:
+                fase.status = "atual"
                 encontrou_fase_atual = True
-
             else:
-                fase.status = 'bloqueada'
-
+                fase.status = "bloqueada"
             fase.modulo_status = modulo.status
-
-        modulo_anterior_concluido = (
-            modulo.concluido
-        )
-
-        primeiro_modulo = False
 
     return modulos
 
@@ -422,38 +298,9 @@ def modulo_esta_desbloqueado(
     anterior. A liberação é automática, sem chave manual.
     """
 
-    primeira_ordem = (
-        Modulo.objects
-        .filter(
-            disciplina=modulo.disciplina,
-        )
-        .order_by(
-            'ordem',
-            'id',
-        )
-        .values_list(
-            'id',
-            flat=True,
-        )
-        .first()
-    )
-
-    if primeira_ordem == modulo.id:
-        return True
-
-    progresso_modulo = (
-        ProgressoModulo.objects
-        .filter(
-            perfil=perfil,
-            modulo=modulo,
-        )
-        .first()
-    )
-
-    return bool(
-        progresso_modulo
-        and progresso_modulo.desbloqueado
-    )
+    # Todos os módulos podem ser iniciados independentemente.
+    # A ordem das fases continua sendo validada em fase_esta_liberada().
+    return True
 
 
 def proximo_modulo_da_trilha(
