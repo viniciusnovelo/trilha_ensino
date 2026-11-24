@@ -1,4 +1,4 @@
-"""Registro das cenas aceitas pelo player do Módulo 1."""
+"""Registro das cenas aceitas pelos players de Física dos Módulos 1, 2 e 3."""
 from .physics_engine import SCENES
 
 SCENE_METADATA = {
