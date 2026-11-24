@@ -104,7 +104,6 @@ def build_plan(sources, Disciplina, Modulo, Fase, Questao, Opcao, Materia):
         topics = []
         for phase_number in sorted(phases_by_number):
             source_phase = phases_by_number[phase_number]
-            # A ordem original do JSON é a ordem pedagógica oficial.
             exercises = grouped[phase_number]
             topic_module = Modulo.objects.filter(
                 disciplina=game, ordem=phase_number
@@ -166,10 +165,8 @@ def build_plan(sources, Disciplina, Modulo, Fase, Questao, Opcao, Materia):
 
 def apply_plan(materia, legacy, plan, Disciplina, Modulo, Fase, Questao):
     from django.db import transaction
-    from django.utils import timezone
     from gamificacao.models import ProgressoFase, RespostaTentativa
 
-    now = timezone.now()
     report = {"games": [], "questions_moved": 0, "progress_rows_created": 0}
 
     # Keep the old hierarchy available for audit/history; it is hidden from students.
@@ -224,8 +221,6 @@ def apply_plan(materia, legacy, plan, Disciplina, Modulo, Fase, Questao):
                     defaults={
                         "titulo": title[:150],
                         "tipo": "quiz",
-                        "xp_recompensa": 0,
-                        "moedas_recompensa": 0,
                         "deslocamento_y": 0,
                     },
                 )
@@ -235,8 +230,8 @@ def apply_plan(materia, legacy, plan, Disciplina, Modulo, Fase, Questao):
                     question.save(update_fields=["fase"])
                     report["questions_moved"] += 1
 
-                # Rebuild per-question progress from the immutable answer history.
-                # Legacy topic-level progress remains intact on the archived phase.
+                # Rebuild per-question progress from immutable answer history.
+                # Existing progress is retained and never downgraded.
                 responses = RespostaTentativa.objects.filter(questao=question)
                 by_profile = defaultdict(list)
                 for response in responses.select_related("tentativa__perfil").order_by("respondida_em", "id"):
@@ -260,7 +255,6 @@ def apply_plan(materia, legacy, plan, Disciplina, Modulo, Fase, Questao):
                     if created:
                         report["progress_rows_created"] += 1
                     else:
-                        # Existing progress is never downgraded by a rerun.
                         if correct_answers and not progress.concluida:
                             progress.concluida = True
                             progress.data_conclusao = correct_answers[-1].respondida_em
