@@ -49,8 +49,22 @@ def physics_player(request, fase_id):
     )
     request.session['physics_attempt_id'] = attempt.pk
     request.session['physics_phase_id'] = fase.pk
-    payload = {'phase': {'id': fase.id, 'title': fase.titulo}, 'attempt_id': attempt.pk,
-               'questions': [_question_payload(q) for q in questions]}
+    fases_modulo = list(fase.modulo.fases.order_by('ordem', 'id'))
+    posicao_fase = next(
+        (indice for indice, item in enumerate(fases_modulo, start=1) if item.id == fase.id),
+        1,
+    )
+    payload = {
+        'phase': {
+            'id': fase.id,
+            'title': fase.titulo,
+            'module_title': fase.modulo.titulo,
+            'order': posicao_fase,
+            'total_phases': len(fases_modulo),
+        },
+        'attempt_id': attempt.pk,
+        'questions': [_question_payload(q) for q in questions],
+    }
     papel = papel_efetivo(request)
     tema_aplicado = (
         perfil.tema_fundo
