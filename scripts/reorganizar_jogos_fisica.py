@@ -104,7 +104,8 @@ def build_plan(sources, Disciplina, Modulo, Fase, Questao, Opcao, Materia):
         topics = []
         for phase_number in sorted(phases_by_number):
             source_phase = phases_by_number[phase_number]
-            exercises = sorted(grouped[phase_number], key=lambda item: item["id"])
+            # A ordem original do JSON é a ordem pedagógica oficial.
+            exercises = grouped[phase_number]
             topic_module = Modulo.objects.filter(
                 disciplina=game, ordem=phase_number
             ).first() if game else None
