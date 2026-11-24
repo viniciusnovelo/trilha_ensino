@@ -68,6 +68,11 @@
             flex-shrink: 0;
         }
 
+        /* Espaço visual entre mapas de módulos independentes. */
+        .module-group + .module-group {
+            margin-left: 110px;
+        }
+
         /* =====================================================
            COR DOS MÓDULOS
            A cor do módulo é herdada pelas fases daquele bloco.
@@ -1251,35 +1256,7 @@
                     </div>
 
 
-                    <!-- LINHA NORMAL ENTRE MÓDULOS -->
-
-                    {% if not forloop.last %}
-
-                        <div
-                            class="module-transition"
-                            aria-hidden="true"
-                        >
-
-                            <svg
-                                viewBox="0 0 100 220"
-                                preserveAspectRatio="none"
-                            >
-
-                                <path
-                                    d="M0 110 C 24 110 76 110 100 110"
-                                    class="module-transition-base"
-                                />
-
-                                <path
-                                    d="M0 110 C 24 110 76 110 100 110"
-                                    class="module-transition-inner"
-                                />
-
-                            </svg>
-
-                        </div>
-
-                    {% endif %}
+                    {# Módulos independentes: não há conexão entre seus mapas. #}
 
                 {% endfor %}
 
