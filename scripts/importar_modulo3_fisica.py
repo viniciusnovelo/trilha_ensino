@@ -16,77 +16,10 @@ from curriculo.physics_module3_source import validate_source, validate_zip_archi
 
 
 def import_module(data: dict) -> dict:
-    """Inicializa Django e grava somente os registros identificados como Módulo 3."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
-    import django
-    django.setup()
-
-    from django.db import transaction
-    from curriculo.models import Materia, Disciplina, Modulo, Fase, Questao, Opcao
-
-    @transaction.atomic
-    def save():
-        summary = validate_source(data)
-        materia, _ = Materia.objects.update_or_create(slug='fisica', defaults={
-            'nome': 'Física', 'descricao': 'Mecânica, termologia, ondas, circuitos e Física Moderna',
-            'icone': 'atom', 'ordem': 1, 'ativo': True,
-        })
-        disciplina, _ = Disciplina.objects.update_or_create(slug='fisica', defaults={
-            'nome': 'Física', 'descricao': 'Trilha de Física', 'materia': materia,
-            'icone': 'atom', 'ordem': 1, 'ativo': True, 'autor': None,
-        })
-        modulo, _ = Modulo.objects.update_or_create(disciplina=disciplina, ordem=3, defaults={
-            'titulo': 'Módulo 3', 'descricao': data.get('title', 'Circuitos, campos e Física Moderna'),
-        })
-
-        phases = {phase['number']: phase for phase in data['phases']}
-        phase_objects = {}
-        for number, phase in phases.items():
-            obj, _ = Fase.objects.update_or_create(
-                modulo=modulo, ordem=number,
-                defaults={'titulo': phase['title'], 'tipo': 'quiz', 'xp_recompensa': 0, 'moedas_recompensa': 0},
-            )
-            phase_objects[number] = obj
-
-        expected_ids = []
-        for exercise in data['exercises']:
-            expected_ids.append(exercise['id'])
-            answer = exercise['challenge']['answer']
-            kind = answer['type']
-            dynamic = {
-                **exercise,
-                'source_schema_version': data.get('schema_version'),
-                'source_constants': data.get('constants', {}),
-                'source_module': 3,
-                'source_phase_id': phases[exercise['phase']]['id'],
-                'source_phase_metadata': phases[exercise['phase']],
-                'source_exercise_id': exercise['id'],
-            }
-            question, _ = Questao.objects.update_or_create(
-                fase=phase_objects[exercise['phase']], codigo_fonte=exercise['id'],
-                defaults={
-                    'enunciado': exercise['challenge']['prompt'],
-                    'explicacao_erro': answer.get('explanation', answer.get('solution', '')),
-                    'tipo_resposta': kind, 'codigo_fonte': exercise['id'],
-                    'dados_dinamicos': dynamic,
-                },
-            )
-            question.opcoes.all().delete()
-            if kind == 'choice':
-                choices = answer.get('choices', answer.get('options', []))
-                Opcao.objects.bulk_create([
-                    Opcao(questao=question, texto=label, e_correta=(index == answer['correct']), ordem=index + 1)
-                    for index, label in enumerate(choices)
-                ])
-
-        return {
-            **summary, 'materia_id': materia.pk, 'disciplina_id': disciplina.pk,
-            'modulo_id': modulo.pk,
-            'phase_ids': {str(number): phase.pk for number, phase in phase_objects.items()},
-            'exercise_ids': sorted(expected_ids),
-        }
-
-    return save()
+    """Importa o conteúdo oficial como o jogo Física 3."""
+    summary = validate_source(data)
+    from curriculo.physics_game_import import import_physics_game
+    return import_physics_game(data, 3, summary)
 
 
 def main():
