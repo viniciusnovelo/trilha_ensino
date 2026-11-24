@@ -34,6 +34,32 @@ class PhysicsGameStructureTests(TestCase):
         self.assertEqual(result["phases"], 30)
         self.assertEqual(result["questions"], 30)
 
+    def test_all_three_games_keep_official_topic_and_exercise_counts(self):
+        expected = {
+            1: (4, 28),
+            2: (4, 34),
+            3: (3, 30),
+        }
+        root = Path(__file__).resolve().parent.parent
+        for number, (topic_count, question_count) in expected.items():
+            data = json.loads(
+                (root / f"modulo{number}_fisica.json").read_text(encoding="utf-8")
+            )
+            result = import_physics_game(data, number, {})
+            game = Disciplina.objects.get(slug=f"fisica-{number}")
+            self.assertEqual(game.modulos.count(), topic_count)
+            self.assertEqual(
+                Fase.objects.filter(modulo__disciplina=game).count(),
+                question_count,
+            )
+            self.assertEqual(
+                Questao.objects.filter(fase__modulo__disciplina=game).count(),
+                question_count,
+            )
+            self.assertEqual(result["questions"], question_count)
+            for phase in Fase.objects.filter(modulo__disciplina=game):
+                self.assertEqual(phase.questoes.count(), 1)
+
     def test_reimport_is_idempotent_for_structure_and_question_codes(self):
         import_physics_game(self.data, 3, {})
         import_physics_game(self.data, 3, {})
