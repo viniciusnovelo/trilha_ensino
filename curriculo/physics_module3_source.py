@@ -125,6 +125,8 @@ def validate_zip_archive(zip_path, exercises):
                 continue
             item = json.loads(archive.read(name).decode('utf-8'))
             exercise_id = item.get('id')
+            if not exercise_id and name.lower().endswith('manifest.json'):
+                continue
             if not exercise_id or exercise_id in found:
                 raise ValueError(f'ID ausente ou duplicado no ZIP: {name}')
             found[exercise_id] = item
