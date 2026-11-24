@@ -93,16 +93,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--json', default=str(PROJECT_ROOT / 'modulo3_fisica.json'),
                         help='Caminho para o JSON oficial do Módulo 3.')
-    parser.add_argument('--zip', default=str(PROJECT_ROOT / 'exercicios.zip'),
-                        help='ZIP com os exercícios individuais para comparação.')
+    parser.add_argument('--zip', default=None,
+                        help='Opcional: ZIP oficial do Módulo 3 com os exercícios individuais para comparação.')
     parser.add_argument('--dry-run', action='store_true',
                         help='Valida JSON e ZIP sem inicializar Django ou modificar o banco.')
     args = parser.parse_args()
 
     data = json.loads(Path(args.json).read_text(encoding='utf-8'))
     summary = validate_source(data)
-    zip_path = Path(args.zip)
-    if zip_path.is_file():
+    if args.zip:
+        zip_path = Path(args.zip)
+        if not zip_path.is_file():
+            parser.error(f'ZIP informado não encontrado: {zip_path}')
         summary['zip_validation'] = validate_zip_archive(zip_path, data['exercises'])
     if args.dry_run:
         print(json.dumps({'status': 'dry_run_ok', **summary}, ensure_ascii=False, indent=2))
