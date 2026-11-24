@@ -2,240 +2,1932 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Editor Visual: {{ trilha.nome }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estúdio · {{ trilha.nome }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        
-        /* TEMAS COM IMAGENS REALISTAS */
-        .tema-padrao { background: linear-gradient(to bottom, #0f172a, #1e293b); }
-        .tema-floresta { background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2000') center/cover fixed; }
-        .tema-deserto { background: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?q=80&w=2000') center/cover fixed; }
-        .tema-masmorra { background: url('https://images.unsplash.com/photo-1519074002996-a69e7ac46a42?q=80&w=2000') center/cover fixed; }
-        
-        .glass-overlay { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); }
-        .linha-conector { stroke: rgba(255, 255, 255, 0.2); }
-        .linha-tracejada { stroke: rgba(255, 255, 255, 0.6); }
-        .cursor-grab { cursor: grab; }
-        .cursor-grabbing { cursor: grabbing !important; }
-        .modal-bg { display: none; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
-        .modal-active { display: flex; }
+        .scrollbar-hide::-webkit-scrollbar { display:none; }
+        .scrollbar-thin::-webkit-scrollbar { height:7px; width:7px; }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background:rgba(148,163,184,.28); border-radius:999px; }
+        html, body { min-height:100%; }
+        body.editor-page { height:100vh; min-height:100vh; overflow:hidden; }
+        .editor-shell { height:100vh; min-height:0; overflow:hidden; }
+        .editor-main { min-height:0; overflow:hidden; display:flex; flex-direction:column; }
+        .editor-workspace { min-height:0; flex:1 1 auto; }
+        .editor-workspace-panel { min-height:0; height:100%; }
+        .editor-map-viewport { min-height:0; overflow:auto; position:relative; }
+        .editor-structure-viewport { min-height:0; overflow-y:auto; }
+        .editor-details-viewport { min-height:0; overflow-y:auto; }
+        .editor-selectable { transition:background .18s ease, border-color .18s ease, box-shadow .18s ease; cursor:pointer; }
+        .editor-selectable.editor-selected { background:rgba(99,102,241,.14); border-color:rgba(129,140,248,.55); box-shadow:0 0 0 1px rgba(129,140,248,.18), 0 10px 30px rgba(30,41,59,.22); }
+        .editor-fase-circle.editor-selected { box-shadow:0 0 0 5px rgba(255,255,255,.18), 0 0 0 9px var(--editor-module-glow, rgba(99,102,241,.28)), 0 12px 30px rgba(0,0,0,.35); filter:brightness(1.1); }
+        .editor-phase-title.editor-selected { color:#fff; text-shadow:0 0 16px rgba(255,255,255,.28), 0 3px 10px rgba(0,0,0,.5); }
+        .editor-module-label.editor-selected .editor-module-number { box-shadow:0 0 0 4px rgba(255,255,255,.12), 0 0 22px var(--editor-module-glow, rgba(99,102,241,.25)); border-color:rgba(255,255,255,.45); }
+        .editor-map-canvas { transform-origin:top left; will-change:transform; }
+        .editor-details-empty { background:rgba(2,6,23,.18); border:1px dashed rgba(255,255,255,.10); }
+        .editor-details-action { min-height:40px; }
+        .editor-workspace { --editor-content-width:300px; --editor-details-width:320px; }
+        .editor-workspace.details-open { grid-template-columns:var(--editor-content-width) minmax(0,1fr) var(--editor-details-width); }
+        .editor-workspace.details-collapsed { grid-template-columns:var(--editor-content-width) minmax(0,1fr); }
+        .editor-details-panel { transition:opacity .18s ease, transform .18s ease; }
+        .editor-workspace.details-collapsed #editor-details-panel { display:none; }
+        .editor-accordion-content { overflow:hidden; transition:max-height .2s ease, opacity .18s ease, transform .18s ease; max-height:5000px; opacity:1; }
+        .editor-accordion-content[hidden] { display:block; max-height:0; opacity:0; transform:translateY(-4px); pointer-events:none; }
+        .editor-expand-toggle { width:18px; height:22px; display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; border:0; background:transparent; border-radius:6px; color:rgba(255,255,255,.42); transition:color .18s ease, transform .18s ease; }
+        .editor-expand-toggle:hover, .editor-expand-toggle:focus-visible { color:rgba(255,255,255,.9); outline:none; }
+        .editor-expand-toggle:focus-visible { box-shadow:0 0 0 2px rgba(129,140,248,.35); }
+        .editor-expand-chevron { display:block; line-height:1; font-size:18px; font-weight:500; transform-origin:center; transition:transform .2s ease, color .18s ease; }
+        .editor-expand-toggle[aria-expanded="true"] .editor-expand-chevron { transform:rotate(90deg); color:rgba(255,255,255,.78); }
+         .editor-structure-actions { opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; transform:translateY(2px); }
+        .editor-selectable { position:relative; }
+        .editor-selectable::before { content:""; position:absolute; left:0; top:7px; bottom:7px; width:2px; border-radius:999px; background:transparent; transition:background .16s ease, box-shadow .16s ease; }
+        .editor-selectable.editor-selected::before { background:rgba(129,140,248,.85); box-shadow:0 0 12px rgba(99,102,241,.25); }
+        .editor-selectable.editor-selected > .editor-structure-header { color:rgba(255,255,255,.98); }
+        .editor-selection-target { position:relative; z-index:1; }
+        .editor-structure-header { position:relative; z-index:3; pointer-events:none; }
+        .editor-structure-header button { pointer-events:auto; }
+        .editor-accordion-content .editor-selection-target { z-index:2; }
+        .editor-selectable:hover .editor-structure-actions,
+        .editor-selectable:focus-within .editor-structure-actions,
+        .editor-selectable.editor-selected .editor-structure-actions { opacity:1; pointer-events:auto; transform:translateY(0); }
+         .editor-module-content { padding-left:12px; }
+        .editor-phase-content { margin-left:18px; padding-left:12px; border-left:1px solid rgba(255,255,255,.09); }
+        .editor-module-content > .editor-selectable { background:transparent !important; border-color:transparent !important; border-radius:12px; padding:5px 6px 6px 4px; }
+        .editor-module-content > .editor-selectable + .editor-selectable { margin-top:2px; }
+        .editor-phase-content > article { background:transparent !important; border-color:transparent !important; border-radius:8px; padding:5px 4px; margin-top:1px !important; }
+        .editor-phase-content > article::before { top:4px; bottom:4px; }
+        .editor-phase-content > button { background:transparent !important; border-color:transparent !important; text-align:left; padding:5px 4px; }
+        .editor-phase-content > button:hover { background:rgba(255,255,255,.035) !important; }
+        .editor-structure-actions button { border:0 !important; background:transparent !important; }
+        .editor-structure-actions button:hover { background:rgba(255,255,255,.07) !important; }
+         .editor-question-editor { color:rgba(255,255,255,.92); }
+        .editor-question-label { display:block; margin-bottom:7px; font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.42); }
+        .editor-question-input, .editor-question-textarea { width:100%; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.035); color:rgba(255,255,255,.92); border-radius:10px; outline:none; transition:border-color .16s ease, background .16s ease, box-shadow .16s ease; }
+        .editor-question-input { padding:9px 10px; font-size:11px; }
+        .editor-question-textarea { padding:10px; font-size:11px; line-height:1.45; resize:vertical; }
+        .editor-question-input:focus, .editor-question-textarea:focus { border-color:rgba(52,211,153,.45); background:rgba(255,255,255,.055); box-shadow:0 0 0 3px rgba(16,185,129,.08); }
+        .editor-question-option { border-radius:9px; transition:background .14s ease; }
+        .editor-question-option:hover { background:rgba(255,255,255,.025); }
+        .editor-question-option input[type="radio"] { accent-color:#34d399; }
+        .editor-details-close { min-width:36px; min-height:36px; }
+        #editor-details-backdrop { display:none; }
+        @media (max-width: 1279px) and (min-width: 1024px) { .editor-workspace { --editor-content-width:300px; --editor-details-width:270px; } }
+        @media (max-width: 1023px) {
+            .editor-workspace.details-collapsed #editor-details-panel { display:none; }
+            .editor-workspace.details-open #editor-details-panel {
+                display:flex;
+                position:fixed;
+                top:12px;
+                right:12px;
+                bottom:12px;
+                width:min(92vw,380px);
+                height:auto;
+                z-index:120;
+                box-shadow:0 30px 80px rgba(0,0,0,.55);
+                border:1px solid rgba(255,255,255,.14);
+            }
+            .editor-workspace.details-open #editor-details-backdrop {
+                display:block;
+                position:fixed;
+                inset:0;
+                z-index:110;
+                background:rgba(2,6,23,.48);
+                backdrop-filter:blur(3px);
+            }
+        }
+        @media (max-width: 1023px) {
+            body.editor-page { height:auto; min-height:100vh; overflow:auto; }
+            .editor-shell { height:auto; min-height:100vh; overflow:visible; }
+            .editor-main { overflow:visible; display:block; }
+            .editor-workspace { height:auto; min-height:0; }
+            .editor-workspace-panel { height:auto; min-height:420px; }
+            .editor-map-viewport { min-height:520px; }
+            .editor-details-viewport { max-height:520px; }
+        }
+        .cursor-grab { cursor:grab; }
+        .cursor-grabbing { cursor:grabbing !important; }
+        /* O modal precisa permanecer fora do fluxo da página e acima do editor. */
+        .modal-bg { position:fixed !important; inset:0 !important; z-index:200 !important; display:none; background:rgba(2,6,23,.72); backdrop-filter:blur(10px); }
+        .modal-active { display:flex; }
+        .linha-conector { stroke:rgba(255,255,255,.15); }
+        .linha-tracejada { stroke:rgba(255,255,255,.45); }
+        .glass-card { background:rgba(15,23,42,.72); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(18px); }
+        .fase-node .fase-actions { opacity:0; pointer-events:auto; transform:translateY(6px); transition:opacity .16s ease, transform .16s ease; }
+        .fase-node.editor-selected .fase-actions { opacity:1; pointer-events:auto; transform:translateY(0); }
+        .editor-mapa-track {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-width: 100%;
+            width: max-content;
+            min-height: 100%;
+            padding: 52px 55px 92px;
+            justify-content: center;
+        }
+
+        .editor-inicio {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: .70;
+        }
+
+        .editor-module-label {
+            position: relative;
+            width: 0;
+            min-width: 0;
+            z-index: 40;
+            top: -48px;
+            margin-right: -18px;
+            flex: 0 0 auto;
+        }
+
+        .editor-module-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,.12);
+            color: var(--editor-module-color, #a5b4fc);
+            background: rgba(2,6,23,.55);
+            font-size: 9px;
+            font-weight: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .editor-fase-node {
+            position: relative;
+            width: 76px;
+            min-width: 76px;
+            height: 200px;
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .editor-fase-circle {
+            position: relative;
+            z-index: 20;
+            width: 70px;
+            height: 70px;
+            border-radius: 999px;
+            border-bottom: 6px solid var(--editor-module-dark, #3730a3);
+            background: var(--editor-module-color, #6366f1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 10px 24px rgba(0,0,0,.30),
+                0 5px 16px var(--editor-module-glow, rgba(99,102,241,.22));
+            transition: transform .18s ease, filter .18s ease;
+        }
+
+        .editor-fase-circle:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+
+        .editor-module-label > div { max-width: 150px; }
+        .editor-module-label > div span:last-child { line-height:1.15; }
+
+        .editor-phase-title {
+            position: absolute;
+            top: calc(50% + 48px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 145px;
+            text-align: center;
+            color: rgba(255,255,255,.76);
+            font-size: 10px;
+            line-height: 1.2;
+            font-weight: 900;
+            text-shadow: 0 3px 10px rgba(0,0,0,.40);
+            pointer-events: none;
+        }
+
+        .editor-connector {
+            position: relative;
+            width: 76px;
+            min-width: 76px;
+            height: 200px;
+            flex: 0 0 auto;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .editor-connector svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .editor-module-1 {
+            --editor-module-color: #f59e0b;
+            --editor-module-dark: #b45309;
+            --editor-module-glow: rgba(245,158,11,.25);
+        }
+
+        .editor-module-2 {
+            --editor-module-color: #22c55e;
+            --editor-module-dark: #15803d;
+            --editor-module-glow: rgba(34,197,94,.24);
+        }
+
+        .editor-module-3 {
+            --editor-module-color: #38bdf8;
+            --editor-module-dark: #0369a1;
+            --editor-module-glow: rgba(56,189,248,.24);
+        }
+
+        .editor-module-4 {
+            --editor-module-color: #a855f7;
+            --editor-module-dark: #7e22ce;
+            --editor-module-glow: rgba(168,85,247,.24);
+        }
+
+        .editor-module-5 {
+            --editor-module-color: #ec4899;
+            --editor-module-dark: #be185d;
+            --editor-module-glow: rgba(236,72,153,.24);
+        }
+
+        .editor-module-6 {
+            --editor-module-color: #14b8a6;
+            --editor-module-dark: #0f766e;
+            --editor-module-glow: rgba(20,184,166,.24);
+        }
+
+        @media (max-width: 767px) {
+            .fase-node .fase-actions { opacity:1; transform:none; }
+        }
     </style>
 </head>
-<body class="{{ trilha.tema }} text-white h-screen flex flex-col font-sans overflow-hidden select-none relative transition-all duration-1000">
-    
-    <div class="glass-overlay absolute inset-0 z-0"></div> 
 
-    <header class="pt-6 pb-4 z-20 shrink-0 border-b border-white/10 bg-slate-900/80 backdrop-blur-md px-8 flex justify-between items-center shadow-lg">
-        <a href="{% url 'dashboard_professor' %}" class="text-slate-400 hover:text-white flex items-center font-bold">
-            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            Sair do Editor
-        </a>
-        <div class="text-center">
-            <h1 class="text-2xl font-extrabold text-indigo-400">Editor Visual: {{ trilha.nome }}</h1>
-        </div>
-        <div class="flex space-x-3 items-center">
-            <!-- SELETOR DE TEMAS EM TEMPO REAL -->
-            <select id="seletor-tema" onchange="mudarTema(this.value)" class="bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none cursor-pointer">
-                <option value="tema-padrao" {% if trilha.tema == 'tema-padrao' %}selected{% endif %}>Noite (Padrão)</option>
-                <option value="tema-floresta" {% if trilha.tema == 'tema-floresta' %}selected{% endif %}>Floresta</option>
-                <option value="tema-deserto" {% if trilha.tema == 'tema-deserto' %}selected{% endif %}>Deserto</option>
-                <option value="tema-masmorra" {% if trilha.tema == 'tema-masmorra' %}selected{% endif %}>Masmorra</option>
-            </select>
+<body class="{{ trilha.tema }} editor-page text-white font-sans relative">
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 
-            <button onclick="openModal('modal-modulo')" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg font-bold text-sm">+ Módulo</button>
-            <button onclick="openModal('modal-fase')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-bold text-sm">+ Fase</button>
-            <button onclick="window.location.reload()" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm">↻ Atualizar</button>
-        </div>
-    </header>
-
-    <!-- Área do Mapa -->
-    <div class="flex-1 overflow-x-auto scrollbar-hide flex items-center relative z-10">
-        <div class="flex flex-row items-center w-max px-24 min-h-[500px]">
-            <div class="mr-6 flex flex-col items-center opacity-70">
-                <div class="w-5 h-5 rounded-full bg-white/50 mb-2"></div><span class="text-xs font-bold uppercase text-white/80">Início</span>
-            </div>
-
-            {% for fase in fases %}
-                <div class="fase-node relative flex flex-col items-center group z-10 w-24 h-24 transition-transform duration-75" data-id="{{ fase.id }}" data-index="{{ forloop.counter0 }}" data-y="{{ fase.deslocamento_y }}" style="transform: translateY({{ fase.deslocamento_y }}px);">
-                    <div class="w-20 h-20 rounded-full border-b-8 border-indigo-900 bg-indigo-600 flex items-center justify-center shadow-2xl relative z-20">
-                        <span class="text-2xl font-black text-white opacity-50">{{ forloop.counter }}</span>
+    <div class="editor-shell relative z-10 flex flex-col">
+        <header class="shrink-0 border-b border-white/10 bg-slate-950/75 backdrop-blur-2xl">
+            <div class="max-w-[1500px] mx-auto w-full px-4 sm:px-6 py-3">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <a href="{% url 'dashboard_professor' %}" class="inline-flex items-center gap-2 text-sm text-white/55 hover:text-white transition font-bold">
+                            ← Voltar ao estúdio
+                        </a>
+                        <div class="mt-1 flex flex-wrap items-center gap-3">
+                            <h1 class="text-xl sm:text-2xl font-black truncate max-w-[70vw]">{{ trilha.nome }}</h1>
+                            {% if trilha.ativo %}
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-300 text-[11px] font-black uppercase tracking-wider">Publicado</span>
+                            {% else %}
+                                <span class="px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-300 text-[11px] font-black uppercase tracking-wider">Rascunho</span>
+                            {% endif %}
+                        </div>
+                        <p class="text-xs sm:text-sm text-white/45 mt-1">Monte o jogo na ordem: jogo → módulos → fases → questões → publicação.</p>
                     </div>
-                    <span class="absolute -top-12 whitespace-nowrap text-xs font-bold text-white bg-slate-800 border border-slate-600 px-3 py-1 rounded-xl shadow-lg pointer-events-none">{{ fase.titulo }}</span>
-                    
-                    <div class="absolute top-20 flex flex-col items-center space-y-2 mt-4 opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                        <button class="drag-handle bg-slate-700 hover:bg-slate-500 text-white px-3 py-1.5 rounded font-bold text-xs cursor-grab flex items-center border border-slate-500">↕ Arrastar</button>
-                        <button onclick="openQuestaoModal({{ fase.id }}, '{{ fase.titulo|escapejs }}')" class="bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded font-bold text-xs w-full">+ Questão ({{ fase.questoes.count }})</button>
+
+                    <div class="flex items-center gap-2">
+                        {% include 'gamificacao/partials/controle_aparencia.html' %}
+
+                        <div class="relative z-[90]" id="seletor-tema-trilha">
+                            <button type="button" id="botao-tema-trilha"
+                                class="w-11 h-11 rounded-full border border-white/20 bg-slate-950/90 backdrop-blur-xl flex items-center justify-center text-lg shadow-xl hover:scale-110 transition"
+                                title="Tema padrão desta trilha">🎨</button>
+
+                            <div id="opcoes-tema-trilha"
+                                class="absolute top-1/2 right-14 -translate-y-1/2 flex flex-wrap items-center justify-end gap-2 rounded-2xl bg-slate-950/95 border border-white/10 backdrop-blur-xl px-3 py-2 shadow-2xl opacity-0 scale-90 pointer-events-none transition-all duration-200 origin-right max-w-[340px]">
+                                <button type="button" data-trilha-theme="tema-padrao" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#020617,#334155)" title="Noite Estrelada"></button>
+                                <button type="button" data-trilha-theme="tema-floresta" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#052e16,#16a34a,#022c22)" title="Floresta Encantada"></button>
+                                <button type="button" data-trilha-theme="tema-deserto" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#451a03,#d97706,#78350f)" title="Deserto Escaldante"></button>
+                                <button type="button" data-trilha-theme="tema-masmorra" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#020617,#312e81,#111827)" title="Masmorra Sombria"></button>
+                                <button type="button" data-trilha-theme="tema-aurora" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#082f49,#22d3ee,#172554)" title="Aurora Boreal"></button>
+                                <button type="button" data-trilha-theme="tema-oceano" class="tema-trilha-option w-10 h-10 rounded-full border-2 border-white/20 hover:scale-110 transition" style="background:linear-gradient(135deg,#082f49,#0ea5e9,#075985)" title="Oceano Profundo"></button>
+                            </div>
+                        </div>
+
+                        <a
+                            href="{% url 'trilha' trilha.id %}?preview=aluno"
+                            class="inline-flex px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-400/20 text-emerald-200 font-black text-sm transition"
+                            title="Abrir a jornada usando a mesma tela do aluno"
+                        >
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 5l11 7-11 7V5z"/>
+                            </svg>
+                            Prévia
+                        </a>
+
+                        <button type="button" onclick="openModal('modal-modulo')" class="hidden sm:inline-flex px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 font-black text-sm">＋ Módulo</button>
+                        <button type="button" onclick="openModal('modal-fase')" class="hidden sm:inline-flex px-3 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black text-sm shadow-lg shadow-indigo-950/30">＋ Fase</button>
+
+                        <form action="{% url 'alternar_publicacao' trilha.id %}" method="post">
+                            {% csrf_token %}
+                            {% if trilha.ativo %}
+                                <button type="submit" class="px-3 py-2 rounded-xl bg-amber-400/10 hover:bg-amber-400 hover:text-slate-950 border border-amber-300/20 text-amber-200 font-black text-sm transition">Rascunho</button>
+                            {% else %}
+                                <button type="submit" class="px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 font-black text-sm transition shadow-lg shadow-emerald-950/30">Publicar</button>
+                            {% endif %}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </header>
 
-                {% if not forloop.last %}
-                    <div class="w-32 h-[200px] flex-shrink-0 -mx-4 z-0 pointer-events-none">
-                        <svg viewBox="0 0 100 200" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-                            <path id="path-base-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-conector" stroke-width="14" stroke-linecap="round" />
-                            <path id="path-dash-{{ forloop.counter0 }}" d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}" fill="none" class="linha-tracejada" stroke-width="6" stroke-dasharray="10 10" stroke-linecap="round" />
-                        </svg>
+        <main class="editor-main max-w-[1500px] mx-auto w-full flex-1 min-h-0 px-4 sm:px-6 py-3 sm:py-4">
+            <section class="glass-card rounded-2xl px-3 sm:px-4 py-2 mb-2">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <nav aria-label="Etapas da construção" class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-[.12em] text-white/45">
+                        <span class="text-indigo-200">Jogo</span><span class="text-white/20">›</span>
+                        <span class="text-sky-200">Módulos</span><span class="text-white/20">›</span>
+                        <span class="text-violet-200">Fases</span><span class="text-white/20">›</span>
+                        <span class="text-emerald-200">Questões</span><span class="text-white/20">›</span>
+                        <span class="text-amber-200">Publicar</span>
+                    </nav>
+                    <div class="flex items-center gap-3 text-xs text-white/50">
+                        <span><strong class="text-white/80">{{ modulos|length }}</strong> módulos</span>
+                        <span><strong class="text-white/80">{{ fases|length }}</strong> fases</span>
+                        <span><strong class="text-white/80">{{ total_questoes }}</strong> questões</span>
                     </div>
-                {% endif %}
-            {% empty %}
-                <p class="text-slate-400">Mapa vazio. Comece criando um Módulo e uma Fase lá em cima!</p>
-            {% endfor %}
-            <div class="w-48"></div>
-        </div>
+                </div>
+            </section>
+
+            <div class="editor-workspace details-collapsed grid lg:grid-cols-[300px_minmax(0,1fr)_300px] gap-3 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
+                <aside class="editor-workspace-panel glass-card rounded-3xl overflow-hidden flex flex-col">
+                    <div class="p-3 border-b border-white/10">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">Estrutura do jogo</p>
+                                <h2 class="text-base font-black mt-0.5">Conteúdo</h2>
+                            </div>
+                            <button type="button" onclick="openModal('modal-modulo')" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 font-black text-lg" title="Novo módulo">＋</button>
+                        </div>
+                    </div>
+
+                    <div class="editor-structure-viewport flex-1 scrollbar-thin p-2.5 space-y-2">
+                        {% for modulo in modulos %}
+                            <article class="editor-selectable rounded-2xl bg-black/15 border border-white/10 overflow-hidden" data-editor-type="modulo" data-editor-id="{{ modulo.id }}" data-editor-select="modulo">
+                                <div class="editor-structure-header p-2.5 flex items-start gap-2.5">
+                                    <button
+                                        type="button"
+                                        class="editor-expand-toggle"
+                                        data-editor-toggle="modulo"
+                                        data-modulo-id="{{ modulo.id }}"
+                                        aria-expanded="false"
+                                        aria-controls="editor-module-content-{{ modulo.id }}"
+                                        aria-label="Expandir módulo {{ modulo.titulo }}"
+                                        title="Expandir/recolher módulo"
+                                    ><span class="editor-expand-chevron" aria-hidden="true">›</span></button>
+                                    <div class="w-8 h-8 shrink-0 rounded-full bg-white/5 text-sky-100 border border-white/10 flex items-center justify-center text-sm font-black">{{ modulo.ordem }}</div>
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex items-start justify-between gap-2">
+                                            <button
+                                                type="button"
+                                                class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0"
+                                                data-editor-select="modulo"
+                                                data-editor-id="{{ modulo.id }}"
+
+                                            >
+                                                <h3 class="font-black truncate text-sm">{{ modulo.titulo }}</h3>
+                                                {% if modulo.descricao %}
+                                                    <p class="text-[11px] text-white/40 mt-0.5 line-clamp-1">{{ modulo.descricao }}</p>
+                                                {% endif %}
+                                            </button>
+                                            <div class="editor-structure-actions flex items-center gap-1 shrink-0">
+                                                <button type="button" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" data-editor-action="editar-modulo" data-modulo-id="{{ modulo.id }}" title="Editar módulo">✎</button>
+                                                <button type="button" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200 text-xs" data-editor-action="excluir-modulo" data-modulo-id="{{ modulo.id }}" data-modulo-titulo="{{ modulo.titulo|escape }}" title="Excluir módulo">×</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="editor-module-content-{{ modulo.id }}" class="editor-accordion-content editor-module-content" hidden>
+                                    <div class="px-2 pb-2.5 space-y-2">
+                                        {% for fase in modulo.fases.all %}
+                                            <div class="editor-selectable rounded-xl bg-slate-950/35 border border-white/7 p-2.5" data-editor-type="fase" data-editor-id="{{ fase.id }}" data-editor-select="fase">
+                                                <div class="editor-structure-header flex items-start gap-2">
+                                                    <button
+                                                        type="button"
+                                                        class="editor-expand-toggle"
+                                                        data-editor-toggle="fase"
+                                                        data-fase-id="{{ fase.id }}"
+                                                        aria-expanded="false"
+                                                        aria-controls="editor-phase-content-{{ fase.id }}"
+                                                        aria-label="Expandir fase {{ fase.titulo }}"
+                                                        title="Expandir/recolher fase"
+                                                    ><span class="editor-expand-chevron" aria-hidden="true">›</span></button>
+                                                    <div class="w-7 h-7 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-300/20 flex items-center justify-center text-[10px] font-black text-indigo-200">{{ fase.ordem }}</div>
+                                                    <div class="min-w-0 flex-1">
+                                                        <div class="flex items-start justify-between gap-2">
+                                                            <button
+                                                                type="button"
+                                                                class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0"
+                                                                data-editor-select="fase"
+                                                                data-editor-id="{{ fase.id }}"
+
+                                                            >
+                                                                <p class="font-bold text-xs truncate">{{ fase.titulo }}</p>
+                                                                <p class="text-[10px] text-white/40 mt-0.5">{{ fase.get_tipo_display }} · {{ fase.questoes.count }} questão(ões)</p>
+                                                            </button>
+                                                            <div class="editor-structure-actions flex gap-1 shrink-0">
+                                                                <button type="button" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" data-editor-action="editar-fase" data-fase-id="{{ fase.id }}" title="Editar fase">✎</button>
+                                                                <button type="button" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/10 border border-red-400/10 text-red-200 text-xs" data-editor-action="excluir-fase" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" title="Excluir fase">×</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="editor-phase-content-{{ fase.id }}" class="editor-accordion-content editor-phase-content" hidden>
+                                                    <button type="button" data-editor-action="adicionar-questao" data-fase-id="{{ fase.id }}" data-fase-titulo="{{ fase.titulo|escape }}" class="mt-2 w-full rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 px-3 py-2 text-[11px] font-black text-emerald-200 transition">＋ Adicionar questão</button>
+                                                    {% for questao in fase.questoes.all %}
+                                                        <article id="questao-card-{{ questao.id }}" class="editor-selectable mt-2 rounded-xl bg-white/[0.035] border border-white/10 p-2.5" data-editor-type="questao" data-editor-id="{{ questao.id }}" data-editor-select="questao">
+                                                            <div class="flex items-start gap-2">
+                                                                <button
+                                                                    type="button"
+                                                                    class="editor-selection-target min-w-0 flex-1 text-left bg-transparent border-0 p-0 flex items-start gap-2"
+                                                                    data-editor-select="questao"
+                                                                    data-editor-id="{{ questao.id }}"
+
+                                                                >
+                                                                    <div class="w-6 h-6 shrink-0 rounded-lg bg-emerald-400/10 border border-emerald-300/10 text-emerald-200 flex items-center justify-center text-[10px] font-black">Q</div>
+                                                                    <div class="min-w-0 flex-1 text-left">
+                                                                        <p class="text-[11px] font-bold text-white/80 line-clamp-2">{{ questao.enunciado }}</p>
+                                                                        <p class="text-[9px] text-white/35 mt-0.5">{{ questao.opcoes.count }} alternativa(s)</p>
+                                                                    </div>
+                                                                </button>
+                                                                <div class="editor-structure-actions flex gap-1 shrink-0">
+                                                                    <button type="button" data-editor-action="editar-questao" data-questao-id="{{ questao.id }}" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs" title="Editar questão">✎</button>
+                                                                    <button type="button" data-editor-action="excluir-questao" data-questao-id="{{ questao.id }}" data-questao-enunciado="{{ questao.enunciado|escape }}" class="w-7 h-7 rounded-lg bg-red-400/5 hover:bg-red-400/15 border border-red-400/10 text-red-200 text-xs" title="Excluir questão">×</button>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                    {% empty %}
+                                                        <p class="mt-2 text-[10px] text-white/30 text-center">Nenhuma atividade criada nesta fase.</p>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% empty %}
+                                            <div class="rounded-xl border border-dashed border-white/10 p-3 text-center text-[11px] text-white/35">Ainda não há fases neste módulo.</div>
+                                        {% endfor %}
+
+                                        <button type="button" data-editor-action="nova-fase-modulo" data-modulo-id="{{ modulo.id }}" class="w-full rounded-xl border border-dashed border-indigo-300/20 hover:border-indigo-300/40 hover:bg-indigo-400/5 px-3 py-2 text-[11px] font-black text-indigo-200 transition">＋ Nova fase neste módulo</button>
+                                    </div>
+                                </div>
+                            </article>
+                        {% empty %}
+                            <div class="rounded-2xl border border-dashed border-white/10 p-6 text-center">
+                                <div class="text-4xl">🧩</div>
+                                <p class="font-black mt-3">Comece pelos módulos</p>
+                                <p class="text-xs text-white/40 mt-1">Crie um módulo para organizar as etapas da sua trilha.</p>
+                                <button type="button" onclick="openModal('modal-modulo')" class="mt-4 px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black text-sm">Criar primeiro módulo</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </aside>
+
+                <section class="editor-workspace-panel glass-card rounded-3xl overflow-hidden min-w-0 flex flex-col" id="editor-map-panel">
+
+                    <div class="p-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
+
+                        <div>
+                            <p class="text-[11px] uppercase tracking-widest text-emerald-300 font-black">
+                                Pré-visualização
+                            </p>
+
+                            <h2 class="text-lg font-black mt-1">
+                                Mapa da jornada
+                            </h2>
+
+                            <p class="text-xs text-white/40 mt-1">
+                                A mesma organização visual que o aluno verá. Selecione nós para sincronizar o editor.
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-2 text-xs text-white/40">
+                            <span class="hidden sm:inline-flex items-center gap-1">● arraste</span>
+                            <div class="inline-flex items-center rounded-xl bg-black/20 border border-white/10 p-1">
+                                <button type="button" onclick="changeMapZoom(-0.1)" class="w-8 h-8 rounded-lg hover:bg-white/10 font-black" title="Diminuir zoom">−</button>
+                                <span id="map-zoom-value" class="w-12 text-center font-black text-white/65">100%</span>
+                                <button type="button" onclick="changeMapZoom(0.1)" class="w-8 h-8 rounded-lg hover:bg-white/10 font-black" title="Aumentar zoom">＋</button>
+                            </div>
+                            <button type="button" onclick="fitMapToViewport()" class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white/65">Ajustar</button>
+                            <button
+                                type="button"
+                                onclick="window.location.reload()"
+                                class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 font-bold text-white/65"
+                            >
+                                Atualizar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="editor-map-viewport flex-1 scrollbar-thin">
+
+                        <div id="editor-map-canvas" class="editor-mapa-track">
+
+                            <div class="editor-inicio shrink-0 mr-8">
+
+                                <div class="w-5 h-5 rounded-full bg-white/55 shadow-lg shadow-white/10"></div>
+
+                                <span class="text-[10px] font-black uppercase tracking-widest text-white/55 mt-2">
+                                    Início
+                                </span>
+
+                            </div>
+
+
+                            {% for fase in fases %}
+
+                                {% if fase.primeira_do_modulo %}
+
+                                    <div class="editor-module-label editor-selectable" data-editor-type="modulo" data-editor-id="{{ fase.modulo.id }}" data-editor-select="modulo">
+
+                                        <span class="editor-module-number editor-module-{{ fase.modulo.ordem }}">
+                                            {{ fase.modulo.ordem }}
+                                        </span>
+
+                                        <div>
+                                            <span class="block text-[8px] uppercase tracking-[.18em] text-white/35 font-black">
+                                                Módulo {{ fase.modulo.ordem }}
+                                            </span>
+
+                                            <span class="block text-xs font-black text-white/75 mt-1">
+                                                {{ fase.modulo.titulo }}
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div
+                                    class="fase-node editor-fase-node editor-module-{{ fase.modulo.ordem }}"
+                                    data-id="{{ fase.id }}"
+                                    data-modulo-id="{{ fase.modulo.id }}"
+                                    data-modulo-index="{{ fase.modulo.ordem }}"
+                                    data-module-phase-index="{{ fase.ordem }}"
+                                    data-index="{{ forloop.counter0 }}"
+                                    data-y="{{ fase.deslocamento_y }}"
+                                    style="transform:translateY(0px);" data-custom-y="{{ fase.deslocamento_y }}" data-auto-y="0" data-render-y="{{ fase.deslocamento_y }}"
+                                    tabindex="0"
+                                >
+
+                                    <button
+                                        type="button"
+                                        data-editor-type="fase"
+                                        data-editor-id="{{ fase.id }}"
+                                        data-editor-select="fase"
+
+                                        class="editor-fase-circle"
+                                        title="Selecionar {{ fase.titulo }}"
+                                    >
+
+                                        {% if fase.tipo == 'teoria' %}
+
+                                            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5.5A3.5 3.5 0 018.5 2H20v18H8.5A3.5 3.5 0 015 16.5v-11z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h7M9 10.5h7M9 14h5"/>
+                                            </svg>
+
+                                        {% elif fase.tipo == 'desafio' %}
+
+                                            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 2L4 13h6l-1 9 9-13h-6l1-7z"/>
+                                            </svg>
+
+                                        {% else %}
+
+                                            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <rect x="4" y="4" width="16" height="16" rx="4"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 8.5l5 3.5-5 3.5v-7z" fill="currentColor" stroke="none"/>
+                                            </svg>
+
+                                        {% endif %}
+
+                                    </button>
+
+
+                                    <div class="editor-phase-title" data-editor-phase-title="{{ fase.id }}">
+                                        {{ fase.titulo }}
+                                    </div>
+
+
+                                    <div class="fase-actions absolute top-full mt-4 flex items-center gap-2 z-50">
+
+                                        <button
+                                            type="button"
+                                            class="drag-handle bg-slate-900/90 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] cursor-grab border border-white/10"
+                                            title="Arrastar verticalmente"
+                                        >
+                                            ↕
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                {% if not forloop.last %}
+
+                                    <div class="editor-connector" data-connector-index="{{ forloop.counter0 }}">
+
+                                        <svg
+                                            viewBox="0 0 100 200"
+                                            preserveAspectRatio="none"
+                                        >
+
+                                            <path
+                                                id="path-base-{{ forloop.counter0 }}"
+                                                d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}"
+                                                fill="none"
+                                                class="linha-conector"
+                                                stroke-width="12"
+                                                stroke-linecap="round"
+                                            />
+
+                                            <path
+                                                id="path-dash-{{ forloop.counter0 }}"
+                                                d="M 0,{{ fase.svg_y1 }} C 50,{{ fase.svg_y1 }} 50,{{ fase.svg_y2 }} 100,{{ fase.svg_y2 }}"
+                                                fill="none"
+                                                class="linha-tracejada"
+                                                stroke-width="5"
+                                                stroke-dasharray="9 9"
+                                                stroke-linecap="round"
+                                            />
+
+                                        </svg>
+
+                                    </div>
+
+                                {% endif %}
+
+                            {% empty %}
+
+                                <div class="w-full text-center text-white/40 py-16">
+
+                                    <div class="text-5xl">
+                                        🗺️
+                                    </div>
+
+                                    <p class="font-black mt-3">
+                                        O mapa ainda está vazio.
+                                    </p>
+
+                                    <p class="text-sm mt-1">
+                                        Crie um módulo e uma fase para começar a desenhar a jornada.
+                                    </p>
+
+                                </div>
+
+                            {% endfor %}
+
+
+                            <div class="w-48 shrink-0"></div>
+
+                        </div>
+
+                    </div>                    <div class="sm:hidden border-t border-white/10 p-3 flex gap-2">
+                        <button type="button" onclick="openModal('modal-modulo')" class="flex-1 px-3 py-2 rounded-xl bg-white/10 border border-white/10 font-black text-sm">＋ Módulo</button>
+                        <button type="button" onclick="openModal('modal-fase')" class="flex-1 px-3 py-2 rounded-xl bg-indigo-500 font-black text-sm">＋ Fase</button>
+                    </div>
+                </section>
+
+                <div id="editor-details-backdrop" aria-hidden="true"></div>
+                <aside id="editor-details-panel" class="editor-details-panel editor-workspace-panel glass-card rounded-3xl overflow-hidden flex flex-col">
+                    <div class="p-3 border-b border-white/10">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <p class="text-[10px] uppercase tracking-widest text-violet-300 font-black">Seleção</p>
+                                <h2 class="text-base font-black mt-0.5">Detalhes</h2>
+                                <p id="editor-details-context" class="text-xs text-white/40 mt-0.5">Selecione um módulo, fase ou questão.</p>
+                            </div>
+                            <button type="button" id="editor-details-close" class="editor-details-close rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70" title="Recolher detalhes" aria-label="Recolher detalhes">×</button>
+                        </div>
+                    </div>
+                    <div id="editor-details-viewport" class="editor-details-viewport flex-1 p-3">
+                        <div id="editor-details-empty" class="editor-details-empty rounded-2xl p-4 text-center mt-1">
+                            <div class="text-3xl">✦</div>
+                            <p class="font-black mt-3">Nada selecionado</p>
+                            <p class="text-xs text-white/40 mt-1">Clique em um item da estrutura ou em um nó do mapa para ver seus detalhes.</p>
+                        </div>
+                        <div id="editor-details-content" class="hidden space-y-3"></div>
+                    </div>
+                </aside>
+            </div>
+        </main>
     </div>
 
-    <!-- MODAL: NOVO MÓDULO -->
-    <div id="modal-modulo" class="modal-bg absolute inset-0 z-50 items-center justify-center">
-        <div class="bg-white rounded-2xl w-full max-w-md p-6 text-slate-800 shadow-2xl relative">
-            <h2 class="text-2xl font-bold mb-4 text-indigo-700">Criar Novo Módulo</h2>
+    <!-- MODAL MÓDULO -->
+    <div id="modal-modulo" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-lg rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-sky-300 font-black">Estrutura</p>
+                    <h2 class="text-2xl font-black mt-1">Novo módulo</h2>
+                    <p class="text-sm text-white/45 mt-1">Dê um nome claro para o conjunto de fases.</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-modulo')" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10">×</button>
+            </div>
             <form id="form-modulo" onsubmit="submitAjax(event, '{% url 'ajax_criar_modulo' trilha.id %}')" class="space-y-4">
                 {% csrf_token %}
-                <div><label class="font-bold text-sm">Título do Módulo</label><input type="text" name="titulo" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-                <div><label class="font-bold text-sm">Ordem (Ex: 1, 2, 3)</label><input type="number" name="ordem" value="1" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-                <div class="flex space-x-3 pt-4">
-                    <button type="button" onclick="closeModal('modal-modulo')" class="flex-1 bg-slate-200 text-slate-700 font-bold py-3 rounded-xl">Fechar</button>
-                    <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700">Salvar Módulo</button>
+                <input type="text" name="titulo" placeholder="Ex.: Introdução às Funções" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-sky-400/60">
+                <textarea name="descricao" rows="3" placeholder="Resumo rápido do que será estudado neste módulo (opcional)." class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-sky-400/60 resize-none"></textarea>
+                <input type="number" name="ordem" value="{{ modulos|length|add:1 }}" min="1" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-sky-400/60">
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeModal('modal-modulo')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black">Criar módulo</button>
                 </div>
-                <p class="success-msg text-green-600 font-bold text-center hidden">✅ Módulo Salvo! Crie outro ou feche.</p>
+                <p class="success-msg text-emerald-300 font-bold text-sm text-center hidden">Módulo criado. Atualizando o estúdio…</p>
+                <p class="error-msg text-red-300 font-bold text-sm text-center hidden"></p>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: NOVA FASE -->
-    <div id="modal-fase" class="modal-bg absolute inset-0 z-50 items-center justify-center">
-        <div class="bg-white rounded-2xl w-full max-w-md p-6 text-slate-800 shadow-2xl relative">
-            <h2 class="text-2xl font-bold mb-4 text-indigo-700">Criar Nova Fase</h2>
+    <!-- MODAL FASE -->
+    <div id="modal-fase" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-indigo-300 font-black">Estrutura</p>
+                    <h2 class="text-2xl font-black mt-1">Nova fase</h2>
+                    <p class="text-sm text-white/45 mt-1">Uma fase é uma parada da jornada do aluno.</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-fase')" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10">×</button>
+            </div>
+
             <form id="form-fase" onsubmit="submitAjax(event, '{% url 'ajax_criar_fase' trilha.id %}')" class="space-y-4">
                 {% csrf_token %}
                 <div>
-                    <label class="font-bold text-sm">A qual Módulo pertence?</label>
-                    <select name="modulo_id" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300">
-                        {% for mod in modulos %}<option value="{{ mod.id }}">Módulo {{ mod.ordem }}: {{ mod.titulo }}</option>{% endfor %}
+                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Módulo</label>
+                    <select id="select-fase-modulo" name="modulo_id" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                        {% for mod in modulos %}<option value="{{ mod.id }}">Módulo {{ mod.ordem }} · {{ mod.titulo }}</option>{% endfor %}
                     </select>
                 </div>
-                <div><label class="font-bold text-sm">Título da Fase</label><input type="text" name="titulo" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-                <div><label class="font-bold text-sm">Ordem dentro do Módulo</label><input type="number" name="ordem" value="1" required class="w-full p-3 bg-slate-100 rounded-lg border border-slate-300"></div>
-                <div class="flex space-x-3 pt-4">
-                    <button type="button" onclick="closeModal('modal-fase')" class="flex-1 bg-slate-200 text-slate-700 font-bold py-3 rounded-xl">Fechar</button>
-                    <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700">Salvar Fase</button>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Título</label>
+                    <input type="text" name="titulo" placeholder="Ex.: Identificando a lei de formação" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-indigo-400/60">
                 </div>
-                <p class="success-msg text-green-600 font-bold text-center hidden">✅ Fase Salva! Crie outra ou feche e clique em Atualizar Tela.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Ordem no módulo</label>
+                        <input type="number" name="ordem" value="1" min="1" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Tipo</label>
+                        <select name="tipo" class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                            <option value="teoria">Conteúdo teórico</option>
+                            <option value="quiz" selected>Quiz / exercícios</option>
+                            <option value="desafio">Desafio de recuperação</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">XP</label>
+                        <input type="number" name="xp_recompensa" value="50" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Moedas</label>
+                        <input type="number" name="moedas_recompensa" value="10" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 outline-none">
+                    </div>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeModal('modal-fase')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black">Criar fase</button>
+                </div>
+                <p class="success-msg text-emerald-300 font-bold text-sm text-center hidden">Fase criada. Atualizando o estúdio…</p>
+                <p class="error-msg text-red-300 font-bold text-sm text-center hidden"></p>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: NOVA QUESTÃO -->
-    <div id="modal-questao" class="modal-bg absolute inset-0 z-50 items-center justify-center p-4">
-        <div class="bg-slate-100 rounded-2xl w-full max-w-3xl p-8 text-slate-800 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-2 text-indigo-700">Adicionar Questão rápida</h2>
-            <p id="questao-fase-nome" class="text-slate-500 font-bold mb-6">Fase: </p>
-            
-            <form id="form-questao" onsubmit="submitAjax(event, '{% url 'ajax_criar_questao' %}')" class="space-y-6">
+    <!-- MODAL QUESTÃO -->
+    <div id="modal-questao" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl bg-slate-100 text-slate-900 shadow-2xl p-6">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-emerald-700 font-black">Banco de questões</p>
+                    <h2 class="text-2xl font-black mt-1">Adicionar questão</h2>
+                    <p id="questao-fase-nome" class="text-sm text-slate-500 font-bold mt-1">Fase: —</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-questao')" class="w-9 h-9 rounded-lg bg-slate-200 hover:bg-slate-300">×</button>
+            </div>
+
+            <form id="form-questao" onsubmit="submitAjax(event, '{% url 'ajax_criar_questao' %}')" class="space-y-5">
                 {% csrf_token %}
                 <input type="hidden" name="fase_id" id="input-questao-fase-id">
-                
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                    <label class="block font-bold text-sm mb-2">Enunciado da Pergunta</label>
-                    <textarea name="enunciado" required rows="2" class="w-full p-3 bg-slate-50 rounded-lg border border-slate-300 focus:border-indigo-500"></textarea>
-                    
-                    <label class="block font-bold text-sm mt-4 mb-2">Feedback de Erro (Opcional)</label>
-                    <input type="text" name="explicacao_erro" class="w-full p-3 bg-slate-50 rounded-lg border border-slate-300">
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                    <label class="block text-sm font-black mb-2">Enunciado</label>
+                    <textarea name="enunciado" required rows="4" placeholder="Escreva a pergunta exatamente como o aluno deverá recebê-la." class="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-indigo-500 resize-none"></textarea>
+                    <label class="block text-sm font-black mt-4 mb-2">Explicação e resolução</label>
+                    <textarea name="explicacao_erro" rows="5" placeholder="Explique como pensar na questão e apresente a resolução passo a passo. Esse texto será mostrado ao aluno após a resposta." class="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-indigo-500 resize-none"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Dica: mostre o raciocínio, as fórmulas usadas e onde o aluno pode se confundir.</p>
                 </div>
 
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                    <h3 class="font-bold text-sm mb-4 border-b pb-2">Preencha as opções e marque a <span class="text-green-600">correta</span>:</h3>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                    <div class="flex items-center justify-between gap-3 mb-4">
+                        <h3 class="font-black">Alternativas</h3>
+                        <span class="text-xs text-slate-500 font-bold">Marque apenas uma como correta.</span>
+                    </div>
                     <div class="space-y-3">
                         {% for i in "0123"|make_list %}
-                        <div class="flex items-center space-x-3">
-                            <input type="radio" name="op_correta" value="{{ forloop.counter0 }}" required class="w-6 h-6 text-green-600 cursor-pointer">
-                            <input type="text" name="op_texto_{{ forloop.counter0 }}" placeholder="Opção {{ forloop.counter }}" required class="flex-1 p-3 bg-slate-50 rounded-lg border border-slate-300">
-                        </div>
+                            <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-indigo-300 transition">
+                                <input type="radio" name="op_correta" value="{{ forloop.counter0 }}" required class="w-5 h-5 text-emerald-600">
+                                <input type="text" name="op_texto_{{ forloop.counter0 }}" placeholder="Alternativa {{ forloop.counter }}" required class="min-w-0 flex-1 p-2.5 bg-white rounded-lg border border-slate-200 outline-none">
+                            </label>
                         {% endfor %}
                     </div>
                 </div>
 
-                <div class="flex space-x-4 pt-2">
-                    <button type="button" onclick="closeModal('modal-questao')" class="w-1/3 bg-slate-300 text-slate-700 font-bold py-4 rounded-xl hover:bg-slate-400">Fechar</button>
-                    <button type="submit" class="w-2/3 bg-green-600 text-white text-lg font-bold py-4 rounded-xl hover:bg-green-700 shadow-md">Salvar e Adicionar Outra</button>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('modal-questao')" class="flex-1 bg-slate-200 hover:bg-slate-300 px-4 py-3 rounded-xl font-bold">Cancelar</button>
+                    <button type="submit" class="flex-[2] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-xl font-black">Salvar questão</button>
                 </div>
-                <p class="success-msg text-green-600 font-bold text-center text-lg hidden p-4 bg-green-100 rounded-xl">✅ Questão Salva com Sucesso! A tela foi limpa para você digitar a próxima.</p>
+                <p class="success-msg text-emerald-700 font-black text-center hidden">Questão salva. Abrindo outra…</p>
+                <p class="error-msg text-red-600 font-bold text-sm text-center hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR QUESTÃO -->
+    <div id="modal-editar-questao" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl bg-slate-100 text-slate-900 shadow-2xl p-6">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-emerald-700 font-black">Banco de questões</p>
+                    <h2 class="text-2xl font-black mt-1">Editar questão</h2>
+                    <p id="editar-questao-fase-nome" class="text-sm text-slate-500 font-bold mt-1">Fase: —</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-editar-questao')" class="w-9 h-9 rounded-lg bg-slate-200 hover:bg-slate-300">×</button>
+            </div>
+
+            <form id="form-editar-questao" class="space-y-5">
+                {% csrf_token %}
+                <input type="hidden" name="questao_id" id="editar-questao-id">
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                    <label class="block text-sm font-black mb-2">Enunciado</label>
+                    <textarea name="enunciado" id="editar-questao-enunciado" required rows="4" class="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-indigo-500 resize-none"></textarea>
+
+                    <label class="block text-sm font-black mt-4 mb-2">Explicação e resolução</label>
+                    <textarea name="explicacao_erro" id="editar-questao-explicacao" rows="5" placeholder="Explique como pensar na questão e apresente a resolução passo a passo." class="w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-indigo-500 resize-none"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Essa explicação aparece para o aluno depois da resposta.</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                    <div class="flex items-center justify-between gap-3 mb-4">
+                        <h3 class="font-black">Alternativas</h3>
+                        <span class="text-xs text-slate-500 font-bold">Marque apenas uma como correta.</span>
+                    </div>
+                    <div class="space-y-3">
+                        {% for i in "0123"|make_list %}
+                            <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-indigo-300 transition">
+                                <input type="radio" name="op_correta" value="{{ forloop.counter0 }}" class="w-5 h-5 text-emerald-600">
+                                <input type="text" name="op_texto_{{ forloop.counter0 }}" id="editar-questao-op-{{ forloop.counter0 }}" placeholder="Alternativa {{ forloop.counter }}" class="min-w-0 flex-1 p-2.5 bg-white rounded-lg border border-slate-200 outline-none">
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('modal-editar-questao')" class="flex-1 bg-slate-200 hover:bg-slate-300 px-4 py-3 rounded-xl font-bold">Cancelar</button>
+                    <button type="submit" class="flex-[2] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-xl font-black">Salvar alterações</button>
+                </div>
+                <p id="editar-questao-erro" class="text-red-600 font-bold text-sm text-center hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR MÓDULO -->
+    <div id="modal-editar-modulo" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-lg rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-sky-300 font-black">Edição</p>
+                    <h2 class="text-2xl font-black mt-1">Editar módulo</h2>
+                </div>
+                <button type="button" onclick="closeModal('modal-editar-modulo')" class="w-9 h-9 rounded-lg bg-white/5">×</button>
+            </div>
+            <form id="form-editar-modulo" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" name="modulo_id" id="editar-modulo-id">
+                <input type="text" name="titulo" id="editar-modulo-titulo" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <textarea name="descricao" id="editar-modulo-descricao" rows="3" class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 resize-none"></textarea>
+                <input type="number" name="ordem" id="editar-modulo-ordem" min="1" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('modal-editar-modulo')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-sky-500 text-slate-950 font-black">Salvar alterações</button>
+                </div>
+                <p id="editar-modulo-erro" class="text-red-300 font-bold text-sm text-center hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR FASE -->
+    <div id="modal-editar-fase" class="modal-bg fixed inset-0 z-[200] items-center justify-center p-4">
+        <div class="w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl bg-slate-950 border border-white/10 shadow-2xl p-6 text-white">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-indigo-300 font-black">Edição</p>
+                    <h2 class="text-2xl font-black mt-1">Editar fase</h2>
+                </div>
+                <button type="button" onclick="closeModal('modal-editar-fase')" class="w-9 h-9 rounded-lg bg-white/5">×</button>
+            </div>
+            <form id="form-editar-fase" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" name="fase_id" id="editar-fase-id">
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-white/45 mb-2">Módulo</label>
+                    <select name="modulo_id" id="editar-fase-modulo" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                        {% for mod in modulos %}<option value="{{ mod.id }}">Módulo {{ mod.ordem }} · {{ mod.titulo }}</option>{% endfor %}
+                    </select>
+                </div>
+                <input type="text" name="titulo" id="editar-fase-titulo" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" name="ordem" id="editar-fase-ordem" min="1" required placeholder="Ordem" class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                    <select name="tipo" id="editar-fase-tipo" class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                        <option value="teoria">Conteúdo teórico</option>
+                        <option value="quiz">Quiz / exercícios</option>
+                        <option value="desafio">Desafio de recuperação</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" name="xp_recompensa" id="editar-fase-xp" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                    <input type="number" name="moedas_recompensa" id="editar-fase-moedas" min="0" required class="w-full p-3.5 rounded-xl bg-white/5 border border-white/10">
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeModal('modal-editar-fase')" class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 px-4 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black">Salvar alterações</button>
+                </div>
+                <p id="editar-fase-erro" class="text-red-300 font-bold text-sm text-center hidden"></p>
             </form>
         </div>
     </div>
 
     <script>
+        const questoesEditor = {
+            {% for modulo in modulos %}
+                {% for fase in modulo.fases.all %}
+                    {% for questao in fase.questoes.all %}
+                        '{{ questao.id }}': {
+                            faseId: {{ questao.fase_id }},
+                            faseTitulo: '{{ questao.fase.titulo|escapejs }}',
+                            enunciado: '{{ questao.enunciado|escapejs }}',
+                            explicacao: '{{ questao.explicacao_erro|default_if_none:""|escapejs }}',
+                            opcoes: [
+                                {% for opcao in questao.opcoes.all %}
+                                    {
+                                        texto: '{{ opcao.texto|escapejs }}',
+                                        correta: {% if opcao.e_correta %}true{% else %}false{% endif %}
+                                    }{% if not forloop.last %},{% endif %}
+                                {% endfor %}
+                            ]
+                        },
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        };
+
+        const editorModulos = {
+            {% for modulo in modulos %}
+                '{{ modulo.id }}': { id: {{ modulo.id }}, titulo: '{{ modulo.titulo|escapejs }}', descricao: '{{ modulo.descricao|default_if_none:""|escapejs }}', ordem: {{ modulo.ordem }}, fases: {{ modulo.fases.count }} },
+            {% endfor %}
+        };
+
+        const editorFases = {
+            {% for modulo in modulos %}
+                {% for fase in modulo.fases.all %}
+                    '{{ fase.id }}': { id: {{ fase.id }}, titulo: '{{ fase.titulo|escapejs }}', moduloId: {{ fase.modulo_id }}, moduloTitulo: '{{ fase.modulo.titulo|escapejs }}', tipo: '{{ fase.get_tipo_display|escapejs }}', tipoCodigo: '{{ fase.tipo }}', ordem: {{ fase.ordem }}, xp: {{ fase.xp_recompensa }}, moedas: {{ fase.moedas_recompensa }}, questoes: {{ fase.questoes.count }}, url: '{% url "fase_detalhe" fase.id %}' },
+                {% endfor %}
+            {% endfor %}
+        };
+
         const csrfToken = '{{ csrf_token }}';
+        const trilhaId = {{ trilha.id }};
+        const editorAjaxUrls = {
+            criarQuestao: '{% url "ajax_criar_questao" %}',
+            editarModulo: '{% url "ajax_editar_modulo" 0 %}',
+            excluirModulo: '{% url "ajax_excluir_modulo" 0 %}',
+            editarFase: '{% url "ajax_editar_fase" 0 %}',
+            excluirFase: '{% url "ajax_excluir_fase" 0 %}',
+            editarQuestao: '{% url "ajax_editar_questao" 0 %}',
+            excluirQuestao: '{% url "ajax_excluir_questao" 0 %}',
+            atualizarYFase: '{% url "atualizar_y_fase" 0 %}',
+        };
+        const temasTrilha = ['tema-padrao','tema-floresta','tema-deserto','tema-masmorra','tema-aurora','tema-oceano'];
 
-        // ALTERAR O TEMA DO MAPA NATIVAMENTE
-        function mudarTema(novoTema) {
-            document.body.className = `${novoTema} text-white h-screen flex flex-col font-sans overflow-hidden select-none relative transition-all duration-1000`;
-            fetch(`/estudio/trilha/{{ trilha.id }}/atualizar-tema/`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrfToken},
-                body: JSON.stringify({tema: novoTema})
-            });
-        }
-
-        // Modais e Ajax de Criação (Mantidos)
-        function openModal(id) { document.getElementById(id).classList.add('modal-active'); }
-        function closeModal(id) { 
-            document.getElementById(id).classList.remove('modal-active');
-            document.querySelectorAll('.success-msg').forEach(msg => msg.classList.add('hidden'));
-        }
-        function openQuestaoModal(faseId, faseTitulo) {
-            document.getElementById('input-questao-fase-id').value = faseId;
-            document.getElementById('questao-fase-nome').innerText = "Fase Destino: " + faseTitulo;
-            openModal('modal-questao');
-        }
-        function submitAjax(e, url) {
-            e.preventDefault();
-            const form = e.target;
-            fetch(url, { method: 'POST', body: new FormData(form) })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'ok') {
-                    form.reset(); 
-                    const successMsg = form.querySelector('.success-msg');
-                    successMsg.classList.remove('hidden'); 
-                    setTimeout(() => successMsg.classList.add('hidden'), 3000); 
-                } else { alert('Erro ao salvar.'); }
-            });
+        function editorAjaxUrl(name, id) {
+            const template = editorAjaxUrls[name];
+            if (!template) throw new Error('Endpoint do editor não configurado: ' + name);
+            return template.replace('/0/', '/' + encodeURIComponent(id) + '/');
         }
 
-        // Drag and Drop (Mantido)
-        let isDragging = false, activeNode = null, startCursorY = 0, initialNodeY = 0;
-        document.querySelectorAll('.drag-handle').forEach(handle => {
-            handle.addEventListener('mousedown', (e) => {
-                isDragging = true; activeNode = e.target.closest('.fase-node');
-                initialNodeY = parseInt(activeNode.getAttribute('data-y')) || 0;
-                startCursorY = e.clientY; document.body.classList.add('cursor-grabbing'); e.target.classList.replace('cursor-grab', 'cursor-grabbing');
-            });
-        });
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging || !activeNode) return;
-            let newY = initialNodeY + (e.clientY - startCursorY);
-            if (newY > 150) newY = 150; if (newY < -150) newY = -150;
-            activeNode.style.transform = `translateY(${newY}px)`; activeNode.setAttribute('data-y', newY);
-            const index = parseInt(activeNode.getAttribute('data-index'));
-            const updateLine = (i, y1, y2) => {
-                const b = document.getElementById(`path-base-${i}`), d = document.getElementById(`path-dash-${i}`);
-                if(b && d) { const path = `M 0,${100+y1} C 50,${100+y1} 50,${100+y2} 100,${100+y2}`; b.setAttribute('d', path); d.setAttribute('d', path); }
+        function openModal(id) {
+            const modal=document.getElementById(id);
+            if(!modal) {
+                console.error('Modal não encontrado:', id);
+                return;
             }
-            const nextNode = document.querySelector(`.fase-node[data-index="${index+1}"]`);
-            updateLine(index, newY, nextNode ? parseInt(nextNode.getAttribute('data-y')) : 0);
-            const prevNode = document.querySelector(`.fase-node[data-index="${index-1}"]`);
-            updateLine(index-1, prevNode ? parseInt(prevNode.getAttribute('data-y')) : 0, newY);
-        });
-        document.addEventListener('mouseup', () => {
-            if (!isDragging || !activeNode) return;
-            document.body.classList.remove('cursor-grabbing');
-            activeNode.querySelector('.drag-handle').classList.replace('cursor-grabbing', 'cursor-grab');
-            fetch(`/estudio/fase/${activeNode.getAttribute('data-id')}/atualizar-y/`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
-                body: JSON.stringify({y: activeNode.getAttribute('data-y')})
+            modal.classList.add('modal-active');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal(id) {
+            const modal=document.getElementById(id);
+            if(!modal) {
+                console.error('Modal não encontrado:', id);
+                return;
+            }
+            modal.classList.remove('modal-active');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function showFormMessage(form, type, message='') {
+            const success=form.querySelector('.success-msg');
+            const error=form.querySelector('.error-msg');
+            if(success) success.classList.toggle('hidden',type!=='success');
+            if(error) {
+                error.textContent=message;
+                error.classList.toggle('hidden',type!=='error');
+            }
+        }
+
+        async function submitAjax(event, url) {
+            event.preventDefault();
+            const form=event.target;
+            showFormMessage(form, 'none');
+
+            try {
+                const response=await fetch(url,{method:'POST',body:new FormData(form)});
+                const data=await response.json();
+
+                if(!response.ok || data.status!=='ok') {
+                    throw new Error(data.msg || 'Não foi possível salvar.');
+                }
+
+                showFormMessage(form,'success');
+                setTimeout(()=>window.location.reload(),650);
+            } catch(error) {
+                showFormMessage(form,'error',error.message);
+            }
+        }
+
+        function renderQuestionEditor(mode, id) {
+            const content=document.getElementById('editor-details-content');
+            const empty=document.getElementById('editor-details-empty');
+            const context=document.getElementById('editor-details-context');
+            if(!content||!empty||!context) return;
+            const editing=mode==='edit';
+            const questao=editing ? questoesEditor[String(id)] : null;
+            const fase=editing ? editorFases[String(questao?.faseId)] : editorFases[String(id)];
+            if(editing && !questao) return;
+            if(!fase) return;
+            const alternativas=editing ? (questao.opcoes||[]) : [];
+            const opcoesHtml=[0,1,2,3].map((index)=>{
+                const opcao=alternativas[index]||{};
+                return '<label class="editor-question-option flex items-center gap-3 py-2.5"><input type="radio" name="op_correta" value="'+index+'" '+(opcao.correta?'checked':'')+' '+(editing?'':'required')+' class="shrink-0"><span class="text-[10px] font-black text-white/35 w-5">'+String.fromCharCode(65+index)+'</span><input type="text" name="op_texto_'+index+'" value="'+escapeEditorHtml(opcao.texto||'')+'" placeholder="Alternativa '+(index+1)+'" '+(editing?'':'required')+' class="editor-question-input flex-1" autocomplete="off"></label>';
+            }).join('');
+            const submitLabel=editing?'Salvar alterações':'Salvar questão';
+            const title=editing?'Editar questão':'Nova questão';
+            const actionUrl=editing ? editorAjaxUrl('editarQuestao',id) : editorAjaxUrls.criarQuestao;
+            const formId=editing?'context-edit-question-form':'context-new-question-form';
+            context.textContent=editing?'Editando questão':'Nova questão';
+            empty.classList.add('hidden');
+            content.classList.remove('hidden');
+            content.innerHTML='<form id="'+formId+'" class="editor-question-editor space-y-4" data-question-mode="'+mode+'"><div class="flex items-start justify-between gap-3 pb-3 border-b border-white/10"><div><p class="text-[10px] uppercase tracking-[.16em] text-emerald-300 font-black">Conteúdo</p><h3 class="text-lg font-black mt-1">'+title+'</h3><p class="text-[11px] text-white/40 mt-1">Fase: '+escapeEditorHtml(fase.titulo)+'</p></div><button type="button" class="editor-question-cancel rounded-lg px-2 py-1.5 text-white/45 hover:text-white hover:bg-white/5" title="Cancelar">×</button></div><input type="hidden" name="'+(editing?'questao_id':'fase_id')+'" value="'+(editing?id:fase.id)+'"><div><label class="editor-question-label">Enunciado</label><textarea name="enunciado" required rows="4" class="editor-question-textarea" placeholder="Escreva a pergunta exatamente como o aluno deverá recebê-la.">'+(editing?escapeEditorHtml(questao.enunciado):'')+'</textarea></div><div><div class="flex items-center justify-between gap-2"><label class="editor-question-label mb-0">Alternativas</label><span class="text-[9px] text-white/30">Marque uma correta</span></div><div class="mt-1 divide-y divide-white/5">'+opcoesHtml+'</div></div><div><label class="editor-question-label">Feedback</label><textarea name="explicacao_erro" rows="4" class="editor-question-textarea" placeholder="Explique o raciocínio e a resolução para o aluno.">'+(editing?escapeEditorHtml(questao.explicacao||''):'')+'</textarea></div><p class="editor-question-error hidden text-xs text-red-300 font-bold"></p><div class="flex gap-2 pt-1"><button type="button" class="editor-question-cancel flex-1 rounded-xl bg-white/5 border border-white/10 px-3 py-2.5 font-bold text-xs">Cancelar</button><button type="submit" class="flex-[1.4] rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3 py-2.5 font-black text-xs">'+submitLabel+'</button></div></form>';
+            content.querySelectorAll('.editor-question-cancel').forEach((button)=>button.addEventListener('click',()=>{ if(selectedEditorType==='questao') renderEditorDetails('questao',selectedEditorId); else renderEditorDetails('fase',fase.id); }));
+            content.querySelector('form').addEventListener('submit',async(event)=>{
+                event.preventDefault();
+                const form=event.currentTarget;
+                const error=form.querySelector('.editor-question-error');
+                error.classList.add('hidden');
+                try {
+                    const body=Object.fromEntries(new FormData(form).entries());
+                    if(editing) await postAction(actionUrl,body);
+                    else {
+                        const response=await fetch(actionUrl,{method:'POST',headers:{'X-CSRFToken':csrfToken},body:new FormData(form)});
+                        const data=await response.json();
+                        if(!response.ok || data.status!=='ok') throw new Error(data.msg||'Não foi possível salvar a questão.');
+                    }
+                    window.location.reload();
+                } catch(err) { error.textContent=err.message; error.classList.remove('hidden'); }
             });
-            isDragging = false; activeNode = null;
+        }
+
+        function openQuestaoModal(faseId, faseTitulo) { renderQuestionEditor('create',faseId); }
+
+        function openEditQuestao(questaoId) {
+            if (!questoesEditor[String(questaoId)]) { alert('Não foi possível carregar esta questão.'); return; }
+            renderQuestionEditor('edit',questaoId);
+        }
+
+        async function deleteQuestao(id, enunciado) {
+            if (!confirm('Excluir esta atividade?\n\n"' + enunciado + '"')) {
+                return;
+            }
+
+            try {
+                await postAction(editorAjaxUrl('excluirQuestao', id));
+                window.location.reload();
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        document.getElementById('form-editar-questao').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const form = event.target;
+            const id = document.getElementById('editar-questao-id').value;
+            const error = document.getElementById('editar-questao-erro');
+
+            error.classList.add('hidden');
+
+            try {
+                await postAction(
+                    editorAjaxUrl('editarQuestao', id),
+                    Object.fromEntries(new FormData(form).entries())
+                );
+                window.location.reload();
+            } catch (err) {
+                error.textContent = err.message;
+                error.classList.remove('hidden');
+            }
         });
+
+        function openPhaseForModule(moduloId) {
+            document.getElementById('select-fase-modulo').value=String(moduloId);
+            openModal('modal-fase');
+        }
+
+        function openEditModulo(id,titulo,descricao,ordem) {
+            document.getElementById('editar-modulo-id').value=id;
+            document.getElementById('editar-modulo-titulo').value=titulo;
+            document.getElementById('editar-modulo-descricao').value=descricao;
+            document.getElementById('editar-modulo-ordem').value=ordem;
+            document.getElementById('editar-modulo-erro').classList.add('hidden');
+            openModal('modal-editar-modulo');
+        }
+
+        function openEditFase(id,moduloId,titulo,ordem,tipo,xp,moedas) {
+            document.getElementById('editar-fase-id').value=id;
+            document.getElementById('editar-fase-modulo').value=moduloId;
+            document.getElementById('editar-fase-titulo').value=titulo;
+            document.getElementById('editar-fase-ordem').value=ordem;
+            document.getElementById('editar-fase-tipo').value=tipo;
+            document.getElementById('editar-fase-xp').value=xp;
+            document.getElementById('editar-fase-moedas').value=moedas;
+            document.getElementById('editar-fase-erro').classList.add('hidden');
+            openModal('modal-editar-fase');
+        }
+
+        async function postAction(url,body={}) {
+            const formData=new FormData();
+            Object.entries(body).forEach(([key,value])=>formData.append(key,value));
+            const response=await fetch(url,{
+                method:'POST',
+                headers:{'X-CSRFToken':csrfToken},
+                body:formData
+            });
+            const data=await response.json();
+            if(!response.ok || data.status!=='ok') throw new Error(data.msg || 'Não foi possível concluir a operação.');
+            return data;
+        }
+
+        async function deleteModulo(id,titulo) {
+            if(!confirm('Excluir o módulo "'+titulo+'"? Todas as fases e questões dele também serão removidas.')) return;
+            try {
+                await postAction(editorAjaxUrl('excluirModulo', id));
+                window.location.reload();
+            } catch(error) {
+                alert(error.message);
+            }
+        }
+
+        async function deleteFase(id,titulo) {
+            if(!confirm('Excluir a fase "'+titulo+'"? As questões desta fase também serão removidas.')) return;
+            try {
+                await postAction(editorAjaxUrl('excluirFase', id));
+                window.location.reload();
+            } catch(error) {
+                alert(error.message);
+            }
+        }
+
+        document.getElementById('form-editar-modulo').addEventListener('submit',async(event)=>{
+            event.preventDefault();
+            const form=event.target;
+            const id=document.getElementById('editar-modulo-id').value;
+            const error=document.getElementById('editar-modulo-erro');
+            error.classList.add('hidden');
+            try {
+                await postAction(editorAjaxUrl('editarModulo', id),Object.fromEntries(new FormData(form).entries()));
+                window.location.reload();
+            } catch(err) {
+                error.textContent=err.message;
+                error.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('form-editar-fase').addEventListener('submit',async(event)=>{
+            event.preventDefault();
+            const form=event.target;
+            const id=document.getElementById('editar-fase-id').value;
+            const error=document.getElementById('editar-fase-erro');
+            error.classList.add('hidden');
+            try {
+                await postAction(editorAjaxUrl('editarFase', id),Object.fromEntries(new FormData(form).entries()));
+                window.location.reload();
+            } catch(err) {
+                error.textContent=err.message;
+                error.classList.remove('hidden');
+            }
+        });
+
+        const temaTrilhaRoot=document.getElementById('seletor-tema-trilha');
+        const temaTrilhaButton=document.getElementById('botao-tema-trilha');
+        const temaTrilhaPanel=document.getElementById('opcoes-tema-trilha');
+        const temaAtualTrilha='{{ trilha.tema }}';
+
+        function abrirTemaTrilha(abrir) {
+            temaTrilhaButton.setAttribute('aria-expanded',String(abrir));
+            temaTrilhaPanel.classList.toggle('opacity-0',!abrir);
+            temaTrilhaPanel.classList.toggle('scale-90',!abrir);
+            temaTrilhaPanel.classList.toggle('pointer-events-none',!abrir);
+        }
+
+        temaTrilhaButton.addEventListener('click',(event)=>{
+            event.stopPropagation();
+            abrirTemaTrilha(temaTrilhaButton.getAttribute('aria-expanded')!=='true');
+        });
+
+        document.addEventListener('click',(event)=>{
+            if(temaTrilhaRoot && !temaTrilhaRoot.contains(event.target)) abrirTemaTrilha(false);
+        });
+
+        document.querySelectorAll('[data-trilha-theme]').forEach((button)=>{
+            if(button.dataset.trilhaTheme===temaAtualTrilha){
+                button.classList.add('ring-4','ring-white/80','scale-110');
+            }
+
+            button.addEventListener('click',async()=>{
+                const novoTema=button.dataset.trilhaTheme;
+                document.body.classList.remove(...temasTrilha);
+                document.body.classList.add(novoTema);
+
+                try {
+                    const response=await fetch('{% url "ajax_atualizar_tema" trilha.id %}',{
+                        method:'POST',
+                        headers:{'Content-Type':'application/json','X-CSRFToken':csrfToken},
+                        body:JSON.stringify({tema:novoTema})
+                    });
+                    if(!response.ok) throw new Error('Não foi possível salvar o tema da trilha.');
+                    document.querySelectorAll('.tema-trilha-option').forEach(item=>item.classList.remove('ring-4','ring-white/80','scale-110'));
+                    button.classList.add('ring-4','ring-white/80','scale-110');
+                    abrirTemaTrilha(false);
+                } catch(error) {
+                    alert(error.message);
+                    window.location.reload();
+                }
+            });
+        });
+
+        let selectedEditorType = null;
+        let selectedEditorId = null;
+        let mapScale = 1;
+
+        function escapeEditorHtml(value) {
+            return String(value ?? '').replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
+        }
+
+        function setEditorAccordion(kind,id,expanded) {
+            const normalizedId=String(id);
+            const contentId=kind==='modulo'
+                ? 'editor-module-content-'+normalizedId
+                : 'editor-phase-content-'+normalizedId;
+            const content=document.getElementById(contentId);
+            const toggle=document.querySelector('[data-editor-toggle="'+kind+'"][data-'+kind+'-id="'+normalizedId+'"]');
+            if(!content || !toggle) return;
+            content.hidden=!expanded;
+            toggle.setAttribute('aria-expanded',String(expanded));
+            toggle.setAttribute('aria-label',(expanded?'Recolher ':'Expandir ')+(kind==='modulo'?'módulo ':'fase ')+normalizedId);
+        }
+
+        function collapseEditorAccordions(kind,exceptId=null) {
+            document.querySelectorAll('[data-editor-toggle="'+kind+'"]').forEach(toggle=>{
+                const id=toggle.dataset[kind+'Id'];
+                if(exceptId!==null && String(id)===String(exceptId)) return;
+                setEditorAccordion(kind,id,false);
+            });
+        }
+
+        function ensureEditorHierarchy(type,id) {
+            if(type==='modulo') {
+                collapseEditorAccordions('modulo',id);
+                collapseEditorAccordions('fase');
+                setEditorAccordion('modulo',id,true);
+                return;
+            }
+            const item=type==='fase' ? editorFases[String(id)] : questoesEditor[String(id)];
+            if(!item) return;
+            const faseId=type==='fase' ? String(id) : String(item.faseId);
+            const moduloId=type==='fase' ? String(item.moduloId) : String(editorFases[faseId]?.moduloId);
+            if(!moduloId) return;
+            collapseEditorAccordions('modulo',moduloId);
+            collapseEditorAccordions('fase',faseId);
+            setEditorAccordion('modulo',moduloId,true);
+            setEditorAccordion('fase',faseId,true);
+        }
+
+        function openDetailsPanel() {
+            const workspace=document.querySelector('.editor-workspace');
+            if(!workspace) return;
+            workspace.classList.remove('details-collapsed');
+            workspace.classList.add('details-open');
+        }
+
+        function closeDetailsPanel() {
+            const workspace=document.querySelector('.editor-workspace');
+            if(!workspace) return;
+            workspace.classList.remove('details-open');
+            workspace.classList.add('details-collapsed');
+        }
+
+        function selectEditorItem(type,id) {
+            const normalizedId=String(id);
+            selectedEditorType=type;
+            selectedEditorId=normalizedId;
+            ensureEditorHierarchy(type,normalizedId);
+            openDetailsPanel();
+
+            document.querySelectorAll('.editor-selected').forEach((element)=>element.classList.remove('editor-selected'));
+            document.querySelectorAll('[data-editor-select="'+type+'"][data-editor-id="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
+
+            if(type==='fase') {
+                document.querySelectorAll('.fase-node[data-id="'+normalizedId+'"] .editor-fase-circle').forEach((element)=>element.classList.add('editor-selected'));
+                document.querySelectorAll('[data-editor-phase-title="'+normalizedId+'"]').forEach((element)=>element.classList.add('editor-selected'));
+            }
+
+            renderEditorDetails(type,normalizedId);
+        }
+
+        function handleEditorInteraction(event) {
+            const selectionTarget = event.target.closest('.editor-selection-target');
+            if (selectionTarget) {
+                event.preventDefault();
+                event.stopPropagation();
+                selectEditorItem(selectionTarget.dataset.editorSelect, selectionTarget.dataset.editorId);
+                return;
+            }
+
+            const target = event.target.closest('[data-editor-action], [data-editor-select], [data-editor-toggle]');
+            if (!target) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (target.dataset.editorToggle) {
+                const kind=target.dataset.editorToggle;
+                const id=target.dataset[kind+'Id'];
+                const content=document.getElementById('editor-'+(kind==='modulo'?'module':'phase')+'-content-'+id);
+                const expanded=content ? !content.hidden : false;
+                if (kind==='modulo') collapseEditorAccordions('modulo',id);
+                else collapseEditorAccordions('fase',id);
+                setEditorAccordion(kind,id,!expanded);
+                return;
+            }
+
+            if (target.dataset.editorSelect) {
+                selectEditorItem(target.dataset.editorSelect, target.dataset.editorId);
+                return;
+            }
+
+            const action = target.dataset.editorAction;
+            switch (action) {
+                case 'editar-modulo': {
+                    const modulo = editorModulos[target.dataset.moduloId];
+                    if (modulo) {
+                        openEditModulo(modulo.id, modulo.titulo, modulo.descricao, modulo.ordem);
+                    }
+                    break;
+                }
+                case 'excluir-modulo':
+                    deleteModulo(target.dataset.moduloId, target.dataset.moduloTitulo || '');
+                    break;
+                case 'editar-fase': {
+                    const fase = editorFases[target.dataset.faseId];
+                    if (!fase) break;
+                    const node = document.querySelector('.fase-node[data-id="' + fase.id + '"]');
+                    openEditFase(fase.id, fase.moduloId, fase.titulo, fase.ordem, fase.tipoCodigo, fase.xp, fase.moedas);
+                    break;
+                }
+                case 'excluir-fase':
+                    deleteFase(target.dataset.faseId, target.dataset.faseTitulo || '');
+                    break;
+                case 'editar-questao':
+                    openEditQuestao(target.dataset.questaoId);
+                    break;
+                case 'excluir-questao':
+                    deleteQuestao(target.dataset.questaoId, target.dataset.questaoEnunciado || '');
+                    break;
+                case 'adicionar-questao':
+                    openQuestaoModal(target.dataset.faseId, target.dataset.faseTitulo || '');
+                    break;
+                case 'nova-fase-modulo':
+                    openPhaseForModule(target.dataset.moduloId);
+                    break;
+                case 'editar-selecao-modulo':
+                    openSelectedModulo();
+                    break;
+                case 'excluir-selecao-modulo':
+                    deleteSelectedModulo();
+                    break;
+                case 'editar-selecao-fase':
+                    openSelectedFase();
+                    break;
+                case 'excluir-selecao-fase':
+                    deleteSelectedFase();
+                    break;
+            }
+        }
+
+        document.addEventListener('click', handleEditorInteraction);
+
+        // Mantém a seleção ligada diretamente aos alvos reais do editor.
+        // A delegação continua cobrindo ações e conteúdo renderizado dinamicamente.
+        document.querySelectorAll(
+            '.editor-selection-target, .editor-fase-circle, .editor-module-label'
+        ).forEach((element)=>{
+            element.addEventListener('click',(event)=>{
+                event.preventDefault();
+                event.stopPropagation();
+                selectEditorItem(element.dataset.editorSelect,element.dataset.editorId);
+            });
+        });
+
+        document.getElementById('editor-details-close')?.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            closeDetailsPanel();
+        });
+        document.getElementById('editor-details-backdrop')?.addEventListener('click', closeDetailsPanel);
+
+        function renderEditorDetails(type,id) {
+            const empty=document.getElementById('editor-details-empty');
+            const content=document.getElementById('editor-details-content');
+            const context=document.getElementById('editor-details-context');
+            if(!empty||!content||!context)return;
+            let html='';
+            if(type==='modulo') {
+                const modulo=editorModulos[id]; if(!modulo)return;
+                context.textContent='Módulo selecionado';
+                html='<div class="rounded-2xl bg-sky-400/10 border border-sky-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-sky-300 font-black">MÓDULO '+escapeEditorHtml(modulo.ordem)+'</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(modulo.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(modulo.descricao||'Sem descrição cadastrada.')+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Fases</p><p class="text-xl font-black mt-1">'+modulo.fases+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Ordem</p><p class="text-xl font-black mt-1">'+modulo.ordem+'</p></div></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-4 py-3" data-editor-action="editar-modulo" data-modulo-id="'+id+'">Editar módulo</button><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" data-editor-action="excluir-modulo" data-modulo-id="'+id+'" data-modulo-titulo="'+escapeEditorHtml(modulo.titulo)+'">Excluir módulo</button></div>';
+            } else if(type==='fase') {
+                const fase=editorFases[id]; if(!fase)return;
+                context.textContent='Fase selecionada';
+                html='<div class="rounded-2xl bg-indigo-400/10 border border-indigo-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-indigo-300 font-black">FASE</span><h3 class="text-xl font-black mt-2">'+escapeEditorHtml(fase.titulo)+'</h3><p class="text-xs text-white/45 mt-2">'+escapeEditorHtml(fase.moduloTitulo)+' · '+escapeEditorHtml(fase.tipo)+'</p></div><div class="grid grid-cols-2 gap-2"><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">Questões</p><p class="text-xl font-black mt-1">'+fase.questoes+'</p></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-wider text-white/35 font-black">XP</p><p class="text-xl font-black mt-1">'+fase.xp+'</p></div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3 text-xs text-white/55">Recompensa: <strong class="text-white">'+fase.moedas+' moedas</strong></div><div class="space-y-2"><button type="button" class="editor-details-action w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 font-black px-4 py-3" data-editor-action="editar-fase" data-fase-id="'+id+'">Editar fase</button><a href="'+fase.url+'" class="editor-details-action flex items-center justify-center w-full rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-black px-4 py-3">Abrir fase</a><button type="button" class="editor-details-action w-full rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-400/15 text-emerald-200 font-black px-4 py-3" data-editor-action="adicionar-questao" data-fase-id="'+id+'" data-fase-titulo="'+escapeEditorHtml(fase.titulo)+'">Adicionar questão <span class="ml-1 text-emerald-300/70">('+fase.questoes+')</span></button><button type="button" class="editor-details-action w-full rounded-xl bg-red-400/10 hover:bg-red-400/20 border border-red-400/15 text-red-200 font-black px-4 py-3" data-editor-action="excluir-fase" data-fase-id="'+id+'" data-fase-titulo="'+escapeEditorHtml(fase.titulo)+'">Excluir fase</button></div>';
+            } else if(type==='questao') {
+                const questao=questoesEditor[id]; if(!questao)return;
+                context.textContent='Questão selecionada';
+                const opcoes=(questao.opcoes||[]).map((opcao,index)=>'<div class="rounded-xl border '+(opcao.correta?'border-emerald-400/35 bg-emerald-400/10':'border-white/10 bg-white/[0.03]')+' p-3"><div class="flex gap-2"><span class="text-[10px] font-black '+(opcao.correta?'text-emerald-300':'text-white/35')+'">'+(index+1)+'</span><span class="text-xs text-white/75">'+escapeEditorHtml(opcao.texto||'Alternativa vazia')+(opcao.correta?' <strong class="text-emerald-300">· correta</strong>':'')+'</span></div></div>').join('');
+                html='<div class="rounded-2xl bg-emerald-400/10 border border-emerald-300/15 p-4"><span class="text-[10px] uppercase tracking-widest text-emerald-300 font-black">QUESTÃO</span><p class="text-sm font-black leading-relaxed mt-2">'+escapeEditorHtml(questao.enunciado)+'</p></div><div><p class="text-[10px] uppercase tracking-widest text-white/35 font-black mb-2">Alternativas</p><div class="space-y-2">'+(opcoes||'<p class="text-xs text-white/35">Nenhuma alternativa cadastrada.</p>')+'</div></div><div class="rounded-xl bg-white/5 border border-white/10 p-3"><p class="text-[10px] uppercase tracking-widest text-white/35 font-black">Feedback</p><p class="text-xs text-white/55 mt-2">'+escapeEditorHtml(questao.explicacao||'Sem feedback cadastrado.')+'</p></div><button type="button" class="editor-details-action w-full rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-3" data-editor-action="editar-questao" data-questao-id="'+id+'">Editar questão</button>';
+            }
+            empty.classList.add('hidden'); content.classList.remove('hidden'); content.innerHTML=html;
+        }
+
+        function openSelectedModulo(){
+            if(selectedEditorType!=='modulo' || !selectedEditorId) return;
+            const modulo=editorModulos[selectedEditorId];
+            if(!modulo) return;
+            openEditModulo(modulo.id,modulo.titulo,modulo.descricao,modulo.ordem);
+        }
+        function openSelectedFase(){
+            if(selectedEditorType!=='fase' || !selectedEditorId) return;
+            const fase=editorFases[selectedEditorId];
+            if(!fase) return;
+            const node=document.querySelector('.fase-node[data-id="'+fase.id+'"]');
+            openEditFase(fase.id,fase.moduloId,fase.titulo,fase.ordem,fase.tipoCodigo,fase.xp,fase.moedas);
+        }
+        function deleteSelectedModulo(){
+            if(selectedEditorType!=='modulo' || !selectedEditorId) return;
+            const modulo=editorModulos[selectedEditorId];
+            if(modulo) deleteModulo(modulo.id,modulo.titulo);
+        }
+        function deleteSelectedFase(){
+            if(selectedEditorType!=='fase' || !selectedEditorId) return;
+            const fase=editorFases[selectedEditorId];
+            if(fase) deleteFase(fase.id,fase.titulo);
+        }
+        function applyMapScale(){const canvas=document.getElementById('editor-map-canvas');const label=document.getElementById('map-zoom-value');if(!canvas)return;canvas.style.transform='scale('+mapScale+')';if(label)label.textContent=Math.round(mapScale*100)+'%';}
+        function changeMapZoom(delta){mapScale=Math.max(0.65,Math.min(1.35,Math.round((mapScale+delta)*100)/100));applyMapScale();}
+        function fitMapToViewport(){const viewport=document.querySelector('.editor-map-viewport');const canvas=document.getElementById('editor-map-canvas');if(!viewport||!canvas)return;const availableHeight=Math.max(320,viewport.clientHeight-40);mapScale=Math.max(0.65,Math.min(1.35,availableHeight/canvas.offsetHeight));mapScale=Math.round(mapScale*100)/100;applyMapScale();requestAnimationFrame(()=>{viewport.scrollLeft=Math.max(0,(canvas.offsetWidth*mapScale-viewport.clientWidth)/2);viewport.scrollTop=Math.max(0,(canvas.offsetHeight*mapScale-viewport.clientHeight)/2);});}
+        applyMapScale();
+
+        /*
+         * Trajetória dinâmica global:
+         * - existe uma única sequência de fases, independentemente dos módulos;
+         * - o eixo X continua monotônico pela ordem global;
+         * - o Y automático é escolhido por uma composição determinística com
+         *   pequeno olhar à frente, vizinhança e continuidade de direção;
+         * - deslocamento_y permanece exclusivamente como ajuste persistido;
+         * - cada conector é derivado dos dois nós consecutivos.
+         *
+         * A ideia não é desenhar uma onda. Cada fase escolhe entre níveis
+         * verticais possíveis e a escolha considera também como a próxima
+         * transição ficará. Assim, a forma final emerge da sequência inteira.
+         */
+        /*
+         * Trajetória por trechos:
+         * - a jornada continua sendo uma única sequência global;
+         * - cada módulo de três fases é composto como um pequeno trecho;
+         * - o último ponto de um módulo define a entrada do próximo;
+         * - os perfis são determinísticos e escolhidos por custo de composição,
+         *   nunca por aleatoriedade ou função periódica;
+         * - deslocamento_y continua sendo exclusivamente o ajuste persistido.
+         */
+        const EDITOR_TITLE_HALF = 72;
+        const EDITOR_NODE_RADIUS = 35;
+        const EDITOR_MIN_NODE_GAP = 78;
+        const EDITOR_MAX_AUTO_Y = 112;
+        const EDITOR_PROFILE_LIMIT = 108;
+
+        const EDITOR_JOURNEY_PROFILES = [
+            {id:'A', offsets:[0,-54,-104], signature:'--', mirror:'B'},
+            {id:'B', offsets:[0,54,104], signature:'++', mirror:'A'},
+            {id:'C', offsets:[0,70,16], signature:'+-', mirror:'D'},
+            {id:'D', offsets:[0,-70,-16], signature:'-+', mirror:'C'},
+            {id:'E', offsets:[0,58,-10], signature:'+-', mirror:'F'},
+            {id:'F', offsets:[0,-58,10], signature:'-+', mirror:'E'},
+            {id:'G', offsets:[0,44,-48], signature:'--', mirror:'H'},
+            {id:'H', offsets:[0,-44,48], signature:'++', mirror:'G'},
+            {id:'I', offsets:[0,24,72], signature:'++', mirror:'B'}
+        ];
+
+        function getMapPhaseNodes() {
+            return Array.from(document.querySelectorAll('.fase-node[data-index]'))
+                .sort((a,b)=>Number(a.dataset.index)-Number(b.dataset.index));
+        }
+
+        function clampEditorNumber(value,min,max) {
+            return Math.max(min,Math.min(max,value));
+        }
+
+        function getCustomMapY(node) {
+            return Number(node.dataset.customY ?? node.dataset.y ?? 0) || 0;
+        }
+
+        function getRenderMapY(node) {
+            return Number(node.dataset.renderY ?? 0) || 0;
+        }
+
+        function getPhaseModuleIndex(node) {
+            return Number(node.dataset.moduloIndex || node.dataset.moduloId || 0) || 0;
+        }
+
+        function getPhaseWithinModule(node) {
+            return Number(node.dataset.modulePhaseIndex || 0) || 0;
+        }
+
+        function getVisualY(nodes,index,candidateAutoY) {
+            return candidateAutoY + getCustomMapY(nodes[index]);
+        }
+
+        function getModuleGroups(nodes) {
+            const groups=[];
+
+            nodes.forEach(node=>{
+                const moduleIndex=getPhaseModuleIndex(node);
+                let group=groups[groups.length-1];
+
+                if(!group || group.moduleIndex!==moduleIndex) {
+                    group={moduleIndex,nodes:[]};
+                    groups.push(group);
+                }
+
+                group.nodes.push(node);
+            });
+
+            return groups;
+        }
+
+        function getProfileById(profileId) {
+            return EDITOR_JOURNEY_PROFILES.find(profile=>profile.id===profileId)
+                || EDITOR_JOURNEY_PROFILES[0];
+        }
+
+        function getProfileVisualPositions(group,baseY,profile) {
+            return group.nodes.map((node,index)=>
+                baseY + profile.offsets[index] + getCustomMapY(node)
+            );
+        }
+
+        function getProfileSignature(profile) {
+            return profile.signature;
+        }
+
+        function getProfileScore(
+            groups,
+            groupIndex,
+            baseY,
+            profile,
+            previousProfile,
+            previousPreviousProfile,
+            usedSignatures
+        ) {
+            const group=groups[groupIndex];
+            const automaticPositions=profile.offsets.map(offset=>baseY+offset);
+            const visualPositions=getProfileVisualPositions(
+                group,
+                baseY,
+                profile
+            );
+
+            let score=0;
+
+            const automaticMin=Math.min(...automaticPositions);
+            const automaticMax=Math.max(...automaticPositions);
+
+            score += Math.max(
+                0,
+                automaticMax-EDITOR_PROFILE_LIMIT
+            )*4;
+            score += Math.max(
+                0,
+                -EDITOR_PROFILE_LIMIT-automaticMin
+            )*4;
+
+            if(previousProfile) {
+                if(profile.id===previousProfile.id) {
+                    score += 1000;
+                }
+
+                if(profile.mirror===previousProfile.id) {
+                    score += 16;
+                }
+
+                if(
+                    getProfileSignature(profile)===
+                    getProfileSignature(previousProfile)
+                ) {
+                    score += 18;
+                }
+
+                score += Math.abs(
+                    profile.offsets[2]-previousProfile.offsets[2]
+                )*0.08;
+            }
+
+            if(
+                previousPreviousProfile &&
+                profile.id===previousPreviousProfile.id
+            ) {
+                score += 28;
+            }
+
+            if(usedSignatures.includes(getProfileSignature(profile))) {
+                score += 26;
+            }
+
+            for(let i=0;i<visualPositions.length;i++) {
+                for(let j=Math.max(0,i-1);j<i;j++) {
+                    const distance=Math.abs(
+                        visualPositions[i]-visualPositions[j]
+                    );
+
+                    if(distance<EDITOR_MIN_NODE_GAP) {
+                        score += Math.pow(
+                            EDITOR_MIN_NODE_GAP-distance,
+                            2
+                        )*0.30;
+                    }
+                }
+            }
+
+            if(groupIndex>0) {
+                const previousGroup=groups[groupIndex-1];
+
+                previousGroup.nodes.forEach(previousNode=>{
+                    const previousVisual=getRenderMapY(previousNode);
+
+                    visualPositions.forEach(visual=>{
+                        const distance=Math.abs(visual-previousVisual);
+
+                        if(distance<EDITOR_MIN_NODE_GAP) {
+                            score += Math.pow(
+                                EDITOR_MIN_NODE_GAP-distance,
+                                2
+                            )*0.12;
+                        }
+
+                        const titleBand=EDITOR_TITLE_HALF+EDITOR_NODE_RADIUS;
+
+                        if(distance<titleBand && distance>=EDITOR_MIN_NODE_GAP) {
+                            score += (
+                                titleBand-distance
+                            )*0.08;
+                        }
+                    });
+                });
+            }
+
+            /*
+             * Um pequeno desempate determinístico evita que a ordem dos
+             * objetos JavaScript vire um padrão visual implícito.
+             */
+            score += (
+                (group.moduleIndex*19 + profile.id.charCodeAt(0)*7)%17
+            )*0.01;
+
+            return score;
+        }
+
+        function chooseJourneyProfile(
+            groups,
+            groupIndex,
+            baseY,
+            previousProfile,
+            previousPreviousProfile,
+            usedSignatures
+        ) {
+            let bestProfile=EDITOR_JOURNEY_PROFILES[0];
+            let bestScore=Infinity;
+
+            EDITOR_JOURNEY_PROFILES.forEach(profile=>{
+                const score=getProfileScore(
+                    groups,
+                    groupIndex,
+                    baseY,
+                    profile,
+                    previousProfile,
+                    previousPreviousProfile,
+                    usedSignatures
+                );
+
+                if(score<bestScore) {
+                    bestScore=score;
+                    bestProfile=profile;
+                }
+            });
+
+            return bestProfile;
+        }
+
+        function applyMapNodePosition(
+            node,
+            autoY=Number(node.dataset.autoY||0)
+        ) {
+            const customY=getCustomMapY(node);
+            const renderY=autoY+customY;
+
+            node.dataset.autoY=String(autoY);
+            node.dataset.customY=String(customY);
+            node.dataset.y=String(customY);
+            node.dataset.renderY=String(renderY);
+            node.style.transform='translateY('+renderY+'px)';
+        }
+
+        function rebuildDynamicLayout(nodes) {
+            const groups=getModuleGroups(nodes);
+            let baseY=0;
+            let previousProfile=null;
+            let previousPreviousProfile=null;
+            const usedSignatures=[];
+
+            groups.forEach((group,groupIndex)=>{
+                const profile=chooseJourneyProfile(
+                    groups,
+                    groupIndex,
+                    baseY,
+                    previousProfile,
+                    previousPreviousProfile,
+                    usedSignatures
+                );
+
+                group.nodes.forEach((node,phaseIndex)=>{
+                    const autoY=baseY+profile.offsets[phaseIndex];
+                    node.dataset.layoutCalculated='true';
+                    node.dataset.layoutProfile=profile.id;
+                    node.dataset.autoY=String(autoY);
+                    applyMapNodePosition(node,autoY);
+                });
+
+                baseY += profile.offsets[profile.offsets.length-1];
+                previousPreviousProfile=previousProfile;
+                previousProfile=profile;
+                usedSignatures.push(getProfileSignature(profile));
+            });
+        }
+
+        function updateMapConnector(index) {
+            const nodes=getMapPhaseNodes();
+            const source=nodes[index];
+            const target=nodes[index+1];
+            const connector=document.querySelector('.editor-connector[data-connector-index="'+index+'"]');
+            if(!source || !target || !connector) return;
+
+            const sourceY=100+getRenderMapY(source);
+            const targetY=100+getRenderMapY(target);
+            const delta=targetY-sourceY;
+            const distance=Math.abs(delta);
+            const bend=clampEditorNumber(46-distance*0.16,22,46);
+
+            const moduleTransition=
+                getPhaseModuleIndex(source)!==getPhaseModuleIndex(target);
+            const transitionBend=moduleTransition
+                ? clampEditorNumber(bend+4,24,50)
+                : bend;
+
+            const path='M 0,'+sourceY+
+                ' C '+transitionBend+','+sourceY+
+                ' '+(100-transitionBend)+','+targetY+
+                ' 100,'+targetY;
+
+            const base=connector.querySelector('.linha-conector');
+            const dash=connector.querySelector('.linha-tracejada');
+            if(base) base.setAttribute('d',path);
+            if(dash) dash.setAttribute('d',path);
+        }
+
+        function updateAllMapGeometry() {
+            const nodes=getMapPhaseNodes();
+            rebuildDynamicLayout(nodes);
+            document.querySelectorAll('.editor-connector[data-connector-index]').forEach((_,index)=>{
+                updateMapConnector(index);
+            });
+        }
+
+        updateAllMapGeometry();
+
+        let isDragging=false;
+        let activeNode=null;
+        let startCursorY=0;
+        let initialCustomY=0;
+
+        function applyDraggedMapY(event) {
+            if(!isDragging || !activeNode) return;
+            event.preventDefault();
+
+            const newCustomY=clampEditorNumber(
+                Math.round(initialCustomY+((event.clientY-startCursorY)/mapScale)),
+                -150,
+                150
+            );
+
+            activeNode.dataset.customY=String(newCustomY);
+            activeNode.dataset.y=String(newCustomY);
+            applyMapNodePosition(activeNode);
+            updateMapConnector(Number(activeNode.dataset.index));
+            updateMapConnector(Number(activeNode.dataset.index)-1);
+        }
+
+        async function finishDraggedMapPhase() {
+            if(!isDragging || !activeNode) return;
+            const node=activeNode;
+            document.body.classList.remove('cursor-grabbing');
+            node.querySelector('.drag-handle')?.classList.remove('cursor-grabbing');
+
+            try {
+                const response=await fetch(editorAjaxUrl('atualizarYFase', node.getAttribute('data-id')),{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json','X-CSRFToken':csrfToken},
+                    body:JSON.stringify({y:node.dataset.customY})
+                });
+                if(!response.ok) throw new Error('Não foi possível salvar a posição.');
+            } catch(error) {
+                alert(error.message);
+                window.location.reload();
+            } finally {
+                isDragging=false;
+                activeNode=null;
+            }
+        }
+
+        document.querySelectorAll('.drag-handle').forEach(handle=>{
+            handle.addEventListener('pointerdown',(event)=>{
+                const node=event.currentTarget.closest('.fase-node');
+                if(!node) return;
+                event.preventDefault();
+                isDragging=true;
+                activeNode=node;
+                initialCustomY=getCustomMapY(node);
+                startCursorY=event.clientY;
+                document.body.classList.add('cursor-grabbing');
+                handle.classList.add('cursor-grabbing');
+                handle.setPointerCapture?.(event.pointerId);
+            });
+        });
+
+        document.addEventListener('pointermove',applyDraggedMapY);
+        document.addEventListener('pointerup',finishDraggedMapPhase);
+
+        window.addEventListener('resize',updateAllMapGeometry);
     </script>
 </body>
 </html>

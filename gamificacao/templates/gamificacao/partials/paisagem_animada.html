@@ -1,0 +1,423 @@
+<div class="paisagem-animada" aria-hidden="true">
+    <div class="paisagem-estrelas"></div>
+    <div class="paisagem-celeste"></div>
+    <div class="paisagem-aurora"></div>
+    <div class="paisagem-forma paisagem-forma-1"></div>
+    <div class="paisagem-forma paisagem-forma-2"></div>
+    <div class="paisagem-forma paisagem-forma-3"></div>
+    <div class="paisagem-bruma"></div>
+    <div class="paisagem-particulas"></div>
+    <div class="paisagem-ondas"></div>
+</div>
+
+<style>
+    body.has-landscape {
+        background: transparent !important;
+        overflow-x: hidden;
+        isolation: isolate;
+    }
+
+    /* A paisagem é uma camada de fundo. Todo conteúdo real da página
+       fica explicitamente acima dela, evitando problemas de empilhamento
+       com elementos posicionados e stacking contexts. */
+    body.has-landscape > :not(.paisagem-animada):not(style):not(script) {
+        position: relative;
+        z-index: 1;
+    }
+
+    .paisagem-animada {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+        background: #07111f;
+        transition: background 900ms ease, opacity 500ms ease;
+    }
+
+    .paisagem-estrelas,
+    .paisagem-estrelas::before,
+    .paisagem-estrelas::after {
+        position: absolute;
+        inset: -20%;
+        content: "";
+        background-image:
+            radial-gradient(circle at 10% 20%, rgba(255,255,255,.95) 0 1px, transparent 2px),
+            radial-gradient(circle at 22% 35%, rgba(255,255,255,.7) 0 1px, transparent 2px),
+            radial-gradient(circle at 38% 14%, rgba(255,255,255,.9) 0 1px, transparent 2px),
+            radial-gradient(circle at 54% 31%, rgba(255,255,255,.65) 0 1px, transparent 2px),
+            radial-gradient(circle at 71% 16%, rgba(255,255,255,.9) 0 1px, transparent 2px),
+            radial-gradient(circle at 84% 38%, rgba(255,255,255,.7) 0 1px, transparent 2px),
+            radial-gradient(circle at 92% 13%, rgba(255,255,255,.95) 0 1px, transparent 2px),
+            radial-gradient(circle at 63% 48%, rgba(255,255,255,.55) 0 1px, transparent 2px);
+        background-size: 280px 180px;
+        animation: estrelas-flutuar 26s linear infinite;
+        opacity: .72;
+    }
+
+    .paisagem-estrelas::before {
+        transform: scale(1.4);
+        opacity: .3;
+        animation-duration: 39s;
+    }
+
+    .paisagem-estrelas::after {
+        transform: scale(.8);
+        opacity: .4;
+        animation-duration: 19s;
+        animation-direction: reverse;
+    }
+
+    .paisagem-celeste {
+        position: absolute;
+        width: 11rem;
+        height: 11rem;
+        border-radius: 999px;
+        right: 10%;
+        top: 10%;
+        background: radial-gradient(circle at 35% 35%, #fff 0 8%, #dbeafe 9% 25%, rgba(147,197,253,.3) 26% 58%, transparent 59%);
+        filter: blur(.2px);
+        opacity: .9;
+        animation: celeste-pulso 7s ease-in-out infinite;
+    }
+
+    .paisagem-aurora {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        background:
+            radial-gradient(ellipse at 50% -10%, rgba(34,211,238,.35), transparent 45%),
+            radial-gradient(ellipse at 70% 0%, rgba(139,92,246,.3), transparent 42%),
+            linear-gradient(115deg, transparent 35%, rgba(52,211,153,.18) 48%, transparent 62%);
+        filter: blur(18px);
+        animation: aurora-mover 12s ease-in-out infinite alternate;
+    }
+
+    .paisagem-forma {
+        position: absolute;
+        bottom: -5%;
+        width: 65%;
+        height: 44%;
+        border-radius: 50% 50% 0 0;
+        transform-origin: bottom center;
+        transition: background 800ms ease, transform 800ms ease;
+    }
+
+    .paisagem-forma-1 {
+        left: -10%;
+        background: linear-gradient(160deg, rgba(15,23,42,.95), rgba(30,41,59,.92));
+        clip-path: polygon(0 100%, 0 56%, 16% 42%, 29% 61%, 45% 25%, 58% 53%, 76% 32%, 100% 59%, 100% 100%);
+    }
+
+    .paisagem-forma-2 {
+        right: -12%;
+        height: 39%;
+        background: linear-gradient(160deg, rgba(2,6,23,.98), rgba(15,23,42,.96));
+        clip-path: polygon(0 100%, 0 61%, 20% 46%, 34% 62%, 51% 32%, 66% 55%, 84% 39%, 100% 57%, 100% 100%);
+    }
+
+    .paisagem-forma-3 {
+        left: 18%;
+        bottom: -10%;
+        width: 66%;
+        height: 25%;
+        background: linear-gradient(180deg, rgba(15,23,42,.45), rgba(2,6,23,.95));
+        filter: blur(1px);
+        clip-path: ellipse(50% 75% at 50% 100%);
+    }
+
+    .paisagem-bruma {
+        position: absolute;
+        inset: auto -20% 0;
+        height: 35%;
+        background:
+            radial-gradient(ellipse at 20% 50%, rgba(255,255,255,.08), transparent 45%),
+            radial-gradient(ellipse at 60% 40%, rgba(255,255,255,.06), transparent 48%),
+            linear-gradient(180deg, transparent, rgba(2,6,23,.56));
+        filter: blur(10px);
+        animation: bruma-mover 18s ease-in-out infinite alternate;
+    }
+
+    .paisagem-particulas,
+    .paisagem-particulas::before,
+    .paisagem-particulas::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background-image:
+            radial-gradient(circle at 16% 72%, rgba(255,255,255,.5) 0 2px, transparent 3px),
+            radial-gradient(circle at 34% 60%, rgba(255,255,255,.4) 0 1px, transparent 2px),
+            radial-gradient(circle at 67% 70%, rgba(255,255,255,.45) 0 2px, transparent 3px),
+            radial-gradient(circle at 82% 62%, rgba(255,255,255,.3) 0 1px, transparent 2px);
+        animation: particulas-subir 11s linear infinite;
+        opacity: 0;
+    }
+
+    .paisagem-particulas::before {
+        transform: translateX(80px);
+        animation-duration: 15s;
+    }
+
+    .paisagem-particulas::after {
+        transform: translateX(-70px);
+        animation-duration: 18s;
+    }
+
+    .paisagem-ondas {
+        position: absolute;
+        left: -5%;
+        right: -5%;
+        bottom: -7%;
+        height: 33%;
+        opacity: 0;
+        background:
+            radial-gradient(ellipse at 15% 75%, rgba(125,211,252,.23), transparent 25%),
+            radial-gradient(ellipse at 48% 55%, rgba(56,189,248,.22), transparent 32%),
+            radial-gradient(ellipse at 85% 70%, rgba(14,165,233,.2), transparent 24%);
+        animation: ondas 7s ease-in-out infinite alternate;
+    }
+
+    /* NOITE */
+    body.tema-padrao .paisagem-animada {
+        background:
+            radial-gradient(circle at 75% 15%, rgba(129,140,248,.13), transparent 28%),
+            linear-gradient(180deg, #020617 0%, #0f172a 58%, #111827 100%);
+    }
+
+    /* FLORESTA */
+    body.tema-floresta .paisagem-animada {
+        background:
+            radial-gradient(circle at 75% 18%, rgba(253,224,71,.14), transparent 18%),
+            linear-gradient(180deg, #052e16 0%, #064e3b 52%, #022c22 100%);
+    }
+
+    body.tema-floresta .paisagem-celeste {
+        width: 8rem;
+        height: 8rem;
+        right: 14%;
+        top: 11%;
+        background: radial-gradient(circle, #fef3c7 0 15%, #fde68a 16% 30%, rgba(253,230,138,.18) 31% 56%, transparent 57%);
+        opacity: .8;
+    }
+
+    body.tema-floresta .paisagem-forma-1 {
+        background: #052e16;
+        clip-path: polygon(0 100%, 0 57%, 7% 52%, 12% 64%, 17% 42%, 22% 64%, 27% 49%, 34% 69%, 40% 44%, 48% 67%, 56% 39%, 64% 67%, 73% 47%, 81% 67%, 90% 43%, 100% 65%, 100% 100%);
+    }
+
+    body.tema-floresta .paisagem-forma-2 {
+        background: #022c22;
+        clip-path: polygon(0 100%, 0 67%, 8% 49%, 14% 72%, 21% 39%, 28% 71%, 36% 51%, 44% 74%, 51% 43%, 59% 70%, 69% 47%, 79% 70%, 88% 40%, 100% 69%, 100% 100%);
+    }
+
+    body.tema-floresta .paisagem-bruma {
+        background:
+            radial-gradient(ellipse at 25% 45%, rgba(167,243,208,.13), transparent 35%),
+            radial-gradient(ellipse at 70% 60%, rgba(110,231,183,.1), transparent 42%);
+    }
+
+    body.tema-floresta .paisagem-particulas {
+        opacity: 1;
+        background-image:
+            radial-gradient(circle at 17% 69%, rgba(253,224,71,.85) 0 2px, transparent 3px),
+            radial-gradient(circle at 41% 58%, rgba(253,224,71,.6) 0 2px, transparent 3px),
+            radial-gradient(circle at 72% 72%, rgba(250,204,21,.75) 0 2px, transparent 3px);
+    }
+
+    /* DESERTO */
+    body.tema-deserto .paisagem-animada {
+        background:
+            radial-gradient(circle at 75% 20%, rgba(251,191,36,.26), transparent 15%),
+            linear-gradient(180deg, #451a03 0%, #78350f 55%, #7c2d12 100%);
+    }
+
+    body.tema-deserto .paisagem-celeste {
+        width: 8rem;
+        height: 8rem;
+        right: 14%;
+        top: 12%;
+        background: radial-gradient(circle, #fff7ed 0 15%, #fed7aa 16% 30%, rgba(253,186,116,.2) 31% 52%, transparent 53%);
+        opacity: .95;
+    }
+
+    body.tema-deserto .paisagem-forma-1,
+    body.tema-deserto .paisagem-forma-2 {
+        filter: blur(.2px);
+        clip-path: ellipse(75% 70% at 50% 100%);
+    }
+
+    body.tema-deserto .paisagem-forma-1 {
+        background: #92400e;
+        height: 38%;
+    }
+
+    body.tema-deserto .paisagem-forma-2 {
+        background: #78350f;
+        height: 31%;
+    }
+
+    body.tema-deserto .paisagem-bruma {
+        height: 32%;
+        animation-duration: 11s;
+        background: linear-gradient(180deg, transparent, rgba(120,53,15,.25), rgba(69,26,3,.65));
+    }
+
+    body.tema-deserto .paisagem-particulas {
+        opacity: .65;
+        background-image:
+            radial-gradient(circle at 18% 64%, rgba(255,237,213,.65) 0 1px, transparent 2px),
+            radial-gradient(circle at 47% 52%, rgba(254,215,170,.5) 0 1px, transparent 2px),
+            radial-gradient(circle at 79% 68%, rgba(254,215,170,.55) 0 1px, transparent 2px);
+        animation-duration: 7s;
+    }
+
+    /* MASMORRA */
+    body.tema-masmorra .paisagem-animada {
+        background:
+            radial-gradient(circle at 18% 35%, rgba(168,85,247,.09), transparent 18%),
+            radial-gradient(circle at 82% 40%, rgba(239,68,68,.08), transparent 16%),
+            linear-gradient(180deg, #020617 0%, #111827 60%, #030712 100%);
+    }
+
+    body.tema-masmorra .paisagem-celeste {
+        width: 6rem;
+        height: 6rem;
+        right: auto;
+        left: 18%;
+        top: 18%;
+        background: radial-gradient(circle, rgba(239,68,68,.85) 0 10%, rgba(249,115,22,.35) 11% 36%, transparent 37%);
+        animation: tocha 2s ease-in-out infinite alternate;
+    }
+
+    body.tema-masmorra .paisagem-forma-1 {
+        background: #111827;
+        clip-path: polygon(0 100%, 0 20%, 14% 14%, 24% 72%, 34% 26%, 44% 72%, 58% 18%, 69% 72%, 79% 28%, 90% 72%, 100% 16%, 100% 100%);
+    }
+
+    body.tema-masmorra .paisagem-forma-2 {
+        background: #030712;
+        clip-path: polygon(0 100%, 0 24%, 12% 18%, 21% 71%, 35% 23%, 46% 72%, 59% 16%, 70% 70%, 84% 25%, 100% 70%, 100% 100%);
+    }
+
+    body.tema-masmorra .paisagem-particulas {
+        opacity: .45;
+    }
+
+    /* AURORA */
+    body.tema-aurora .paisagem-animada {
+        background:
+            radial-gradient(ellipse at 50% 0%, rgba(34,211,238,.17), transparent 38%),
+            linear-gradient(180deg, #082f49 0%, #172554 58%, #020617 100%);
+    }
+
+    body.tema-aurora .paisagem-aurora {
+        opacity: 1;
+    }
+
+    body.tema-aurora .paisagem-celeste {
+        width: 6rem;
+        height: 6rem;
+        right: 12%;
+        top: 13%;
+        background: radial-gradient(circle, #f8fafc 0 14%, #bae6fd 15% 28%, rgba(125,211,252,.15) 29% 55%, transparent 56%);
+    }
+
+    body.tema-aurora .paisagem-forma-1 {
+        background: linear-gradient(160deg, #0f172a, #164e63);
+    }
+
+    body.tema-aurora .paisagem-forma-2 {
+        background: linear-gradient(160deg, #020617, #0c4a6e);
+    }
+
+    /* OCEANO */
+    body.tema-oceano .paisagem-animada {
+        background:
+            radial-gradient(circle at 72% 16%, rgba(186,230,253,.19), transparent 18%),
+            linear-gradient(180deg, #082f49 0%, #075985 50%, #0c4a6e 100%);
+    }
+
+    body.tema-oceano .paisagem-celeste {
+        width: 7rem;
+        height: 7rem;
+        right: 16%;
+        top: 11%;
+        background: radial-gradient(circle, #f0f9ff 0 12%, #bae6fd 13% 28%, rgba(186,230,253,.12) 29% 56%, transparent 57%);
+        opacity: .86;
+    }
+
+    body.tema-oceano .paisagem-forma-1,
+    body.tema-oceano .paisagem-forma-2 {
+        bottom: -12%;
+        height: 31%;
+        border-radius: 50%;
+        filter: blur(1px);
+    }
+
+    body.tema-oceano .paisagem-forma-1 {
+        background: linear-gradient(180deg, rgba(14,116,144,.8), #082f49);
+        clip-path: none;
+        left: -10%;
+        width: 70%;
+    }
+
+    body.tema-oceano .paisagem-forma-2 {
+        background: linear-gradient(180deg, rgba(2,132,199,.54), #0c4a6e);
+        clip-path: none;
+        right: -10%;
+        width: 70%;
+    }
+
+    body.tema-oceano .paisagem-ondas {
+        opacity: 1;
+    }
+
+    @keyframes estrelas-flutuar {
+        from { transform: translate3d(0, 0, 0); }
+        to { transform: translate3d(80px, 40px, 0); }
+    }
+
+    @keyframes celeste-pulso {
+        0%,100% { transform: scale(1); opacity: .82; }
+        50% { transform: scale(1.06); opacity: 1; }
+    }
+
+    @keyframes aurora-mover {
+        from { transform: translateX(-5%) translateY(0) scale(1); }
+        to { transform: translateX(7%) translateY(4%) scale(1.08); }
+    }
+
+    @keyframes bruma-mover {
+        from { transform: translateX(-2%) scale(1); }
+        to { transform: translateX(8%) scale(1.06); }
+    }
+
+    @keyframes particulas-subir {
+        from { transform: translateY(16%) translateX(0); }
+        to { transform: translateY(-24%) translateX(35px); }
+    }
+
+    @keyframes ondas {
+        from { transform: translateX(-2%) translateY(0); }
+        to { transform: translateX(2%) translateY(-8px); }
+    }
+
+    @keyframes tocha {
+        from { opacity: .55; transform: scale(.92); }
+        to { opacity: 1; transform: scale(1.08); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .paisagem-animada *,
+        .paisagem-animada *::before,
+        .paisagem-animada *::after {
+            animation-duration: .001ms !important;
+            animation-iteration-count: 1 !important;
+            scroll-behavior: auto !important;
+        }
+    }
+</style>
+
+<script>
+    document.body.classList.add('has-landscape');
+</script>

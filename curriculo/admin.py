@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Disciplina, Modulo, Fase, Questao, Opcao
+from .models import Materia, Disciplina, Modulo, Fase, Questao, Opcao
 
 class OpcaoInline(admin.TabularInline):
     model = Opcao
@@ -29,7 +29,19 @@ class ModuloAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'disciplina', 'ordem')
     list_filter = ('disciplina',)
 
+@admin.register(Materia)
+class MateriaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'ordem', 'ativo', 'total_jogos')
+    prepopulated_fields = {'slug': ('nome',)}
+    list_filter = ('ativo',)
+
+    def total_jogos(self, obj):
+        return obj.jogos.count()
+
+    total_jogos.short_description = 'Jogos'
+
+
 @admin.register(Disciplina)
 class DisciplinaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'ordem')
+    list_display = ('nome', 'materia', 'ordem', 'ativo')
     prepopulated_fields = {'slug': ('nome',)}

@@ -41,7 +41,6 @@ venv.bak/
 # Backups locais do banco permanecem ignorados.
 db.sqlite3.*
 local_settings.py
-db.sqlite3-journal
 media/
 staticfiles/
 
@@ -102,3 +101,7 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# Banco local e relatórios do reset destrutivo de Física
+db.sqlite3*
+fisica_reset_resultado.json
+fisica_reset_resultado.txt

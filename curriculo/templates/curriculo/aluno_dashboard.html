@@ -2,523 +2,654 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Painel do Jogador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Aluno · Trilha Ensino</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        .tema-padrao { background: linear-gradient(135deg,#0f172a,#1e293b); }
+        .tema-floresta { background: linear-gradient(135deg,#052e16,#14532d,#064e3b); }
+        .tema-deserto { background: linear-gradient(135deg,#451a03,#78350f,#92400e); }
+        .tema-masmorra { background: linear-gradient(135deg,#020617,#1e1b4b,#171717); }
+        .tema-aurora { background: linear-gradient(135deg,#082f49,#0e7490,#172554); }
+        .tema-oceano { background: linear-gradient(135deg,#082f49,#0369a1,#164e63); }
+
+        .catalogo-card {
+            background: rgba(15,23,42,.72);
+            border: 1px solid rgba(255,255,255,.09);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 18px 55px rgba(0,0,0,.18);
+        }
+
+        .catalogo-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,.16);
+            box-shadow: 0 24px 65px rgba(0,0,0,.24);
+        }
+
+        .materia-shell {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .materia-shell::after {
+            content: "";
+            position: absolute;
+            inset: auto -10% -65% auto;
+            width: 260px;
+            height: 260px;
+            border-radius: 999px;
+            background: var(--materia-glow);
+            filter: blur(35px);
+            pointer-events: none;
+        }
+
+        .materia-1 {
+            --materia-color: #f59e0b;
+            --materia-soft: rgba(245,158,11,.13);
+            --materia-border: rgba(245,158,11,.22);
+            --materia-glow: rgba(245,158,11,.12);
+        }
+
+        .materia-2 {
+            --materia-color: #38bdf8;
+            --materia-soft: rgba(56,189,248,.13);
+            --materia-border: rgba(56,189,248,.22);
+            --materia-glow: rgba(56,189,248,.12);
+        }
+
+        .materia-3 {
+            --materia-color: #22c55e;
+            --materia-soft: rgba(34,197,94,.13);
+            --materia-border: rgba(34,197,94,.22);
+            --materia-glow: rgba(34,197,94,.10);
+        }
+
+        .materia-4 {
+            --materia-color: #a855f7;
+            --materia-soft: rgba(168,85,247,.13);
+            --materia-border: rgba(168,85,247,.22);
+            --materia-glow: rgba(168,85,247,.10);
+        }
+
+        .materia-index {
+            color: var(--materia-color);
+            background: var(--materia-soft);
+            border-color: var(--materia-border);
+        }
+
+        .game-mini {
+            background: rgba(2,6,23,.30);
+            border: 1px solid rgba(255,255,255,.07);
+            transition: transform .2s ease, border-color .2s ease, background .2s ease;
+        }
+
+        .game-mini:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,.045);
+            border-color: var(--materia-border);
+        }
+
+        .progress-track {
+            background: rgba(2,6,23,.48);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+        }
+    </style>
 </head>
 
+<body class="{{ perfil.tema_fundo }} text-white min-h-screen font-sans relative">
 
-<body
-    class="bg-[#0b1120] text-white min-h-screen font-sans"
->
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
 
-
-    <div
-        class="fixed inset-0 pointer-events-none overflow-hidden"
-    >
-
-        <div
-            class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"
-        ></div>
-
-        <div
-            class="absolute top-1/2 -right-32 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"
-        ></div>
-
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute inset-0 hero-grid opacity-40"></div>
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 -right-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
     </div>
 
 
-    <!-- =====================================================
-         CABEÇALHO
-         ===================================================== -->
+    <div class="relative z-10 min-h-screen">
 
-    <header
-        class="relative z-10 border-b border-white/10 bg-slate-900/70 backdrop-blur-xl"
-    >
+        <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/58 backdrop-blur-2xl">
 
-        <div
-            class="max-w-6xl mx-auto px-6 py-5 flex flex-wrap justify-between items-center gap-6"
-        >
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
 
-            <div>
+                <div class="flex flex-wrap items-center justify-between gap-4">
 
-                <p
-                    class="text-xs uppercase tracking-[0.25em] text-slate-500 font-bold"
-                >
-                    Central do Jogador
-                </p>
-
-                <h1
-                    class="text-2xl md:text-3xl font-black mt-1"
-                >
-                    Olá,
-                    <span class="text-yellow-400">
-                        {{ user.username }}
-                    </span>
-                    👋
-                </h1>
-
-            </div>
-
-
-            <div class="flex items-center gap-3">
-
-                {% if modo_teste_ativo %}
-
-                    <a
-                        href="{% url 'alternar_papel' %}"
-                        class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
-                    >
-                        🧪
-                        Mudar para Professor
-                    </a>
-
-                {% else %}
-
-                    <a
-                        href="{% url 'alternar_papel' %}"
-                        class="bg-indigo-500/10 hover:bg-indigo-500 border border-indigo-400/30 text-indigo-300 hover:text-white font-bold px-4 py-2 rounded-xl transition"
-                    >
-                        🧪
-                        Modo de teste: Professor
-                    </a>
-
-                {% endif %}
-
-
-                <form
-                    action="{% url 'logout' %}"
-                    method="post"
-                >
-
-                    {% csrf_token %}
-
-                    <button
-                        type="submit"
-                        class="text-slate-400 hover:text-red-400 font-bold transition"
-                    >
-                        Sair
-                    </button>
-
-                </form>
-
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <!-- =====================================================
-         INDICADOR DE MODO DE TESTE
-         ===================================================== -->
-
-    {% if modo_teste_ativo %}
-
-        <div
-            class="relative z-10 bg-indigo-950/80 border-b border-indigo-400/20"
-        >
-
-            <div
-                class="max-w-6xl mx-auto px-6 py-2 text-center text-xs text-indigo-300 font-bold"
-            >
-
-                🧪
-                MODO DE TESTE ATIVO
-                ·
-                Papel atual:
-                {{ papel_efetivo|capfirst }}
-
-                ·
-                O PerfilUsuario oficial permanece:
-                {{ papel_oficial|capfirst }}
-
-            </div>
-
-        </div>
-
-    {% endif %}
-
-
-    <!-- =====================================================
-         CONTEÚDO
-         ===================================================== -->
-
-    <main
-        class="relative z-10 max-w-6xl mx-auto px-6 py-8"
-    >
-
-
-        <!-- =================================================
-             HUD DO JOGADOR
-             ================================================= -->
-
-        <section
-            class="bg-slate-800/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl mb-8"
-        >
-
-            <div
-                class="grid grid-cols-1 lg:grid-cols-[auto_1fr_auto_auto] gap-6 items-center"
-            >
-
-                <div
-                    class="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-700 flex items-center justify-center shadow-lg"
-                >
-
-                    <span class="text-5xl">
-                        🧙
-                    </span>
-
-                </div>
-
-
-                <div>
-
-                    <div
-                        class="flex flex-wrap justify-between items-end gap-2"
-                    >
-
-                        <div>
-
-                            <p
-                                class="text-xs uppercase tracking-widest text-slate-500 font-bold"
-                            >
-                                Nível
-                            </p>
-
-                            <p
-                                class="text-3xl font-black text-yellow-400"
-                            >
-                                {{ perfil.nivel }}
-                            </p>
-
-                        </div>
-
-
-                        <div
-                            class="text-right"
-                        >
-
-                            <p
-                                class="text-sm text-slate-400"
-                            >
-                                {{ perfil.xp_no_nivel }}
-                                /
-                                {{ perfil.XP_POR_NIVEL }}
-                                XP
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div
-                        class="mt-3 bg-slate-700 rounded-full h-4 overflow-hidden"
-                    >
-
-                        <div
-                            class="h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transition-all duration-700"
-                            style="width: {{ perfil.progresso_nivel }}%;"
-                        ></div>
-
-                    </div>
-
-
-                    <div
-                        class="flex justify-between mt-2 text-xs"
-                    >
-
-                        <span class="text-slate-500">
-                            XP total:
-                            <strong class="text-slate-300">
-                                {{ perfil.xp_total }}
-                            </strong>
-                        </span>
-
-
-                        <span class="text-slate-500">
-                            Faltam:
-                            <strong class="text-yellow-400">
-                                {{ perfil.xp_faltante }}
-                            </strong>
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    class="bg-slate-900/70 border border-blue-500/20 rounded-2xl p-5 min-w-[150px]"
-                >
-
-                    <p
-                        class="text-xs uppercase tracking-widest text-slate-500 font-bold"
-                    >
-                        Moedas
-                    </p>
-
-                    <p
-                        class="text-3xl font-black text-blue-400 mt-2"
-                    >
-                        🪙 {{ perfil.moedas }}
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="bg-slate-900/70 border border-red-500/20 rounded-2xl p-5 min-w-[150px]"
-                >
-
-                    <p
-                        class="text-xs uppercase tracking-widest text-slate-500 font-bold"
-                    >
-                        Vidas
-                    </p>
-
-                    <p
-                        class="text-3xl font-black text-red-400 mt-2"
-                    >
-                        ❤️ {{ perfil.vidas }}
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             TÍTULO
-             ================================================= -->
-
-        <div
-            class="flex flex-wrap justify-between items-end gap-4 mb-6"
-        >
-
-            <div>
-
-                <p
-                    class="text-xs uppercase tracking-widest text-slate-500 font-bold"
-                >
-                    Mundos disponíveis
-                </p>
-
-                <h2
-                    class="text-3xl font-black mt-1"
-                >
-                    Suas Trilhas
-                </h2>
-
-            </div>
-
-            <p
-                class="text-slate-500 text-sm"
-            >
-                Escolha um jogo para continuar sua jornada.
-            </p>
-
-        </div>
-
-
-        <!-- =================================================
-             TRILHAS
-             ================================================= -->
-
-        <div
-            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
-        >
-
-            {% for trilha in trilhas %}
-
-                <article
-                    class="group bg-slate-800/80 border border-white/10 rounded-3xl overflow-hidden hover:border-green-500/50 hover:-translate-y-1 transition-all duration-300 shadow-xl"
-                >
-
-                    <div
-                        class="h-36 relative overflow-hidden {% if trilha.tema == 'tema-floresta' %}bg-emerald-950{% elif trilha.tema == 'tema-deserto' %}bg-amber-950{% elif trilha.tema == 'tema-masmorra' %}bg-slate-950{% else %}bg-indigo-950{% endif %}"
-                    >
-
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-white/5 to-black/40"
-                        ></div>
-
-
-                        <div
-                            class="relative h-full p-6 flex items-end justify-between"
-                        >
-
-                            <div>
-
-                                <p
-                                    class="text-xs uppercase tracking-widest text-white/50 font-bold"
-                                >
-                                    Jogo
-                                </p>
-
-                                <h3
-                                    class="text-2xl font-black mt-1"
-                                >
-                                    {{ trilha.nome }}
-                                </h3>
-
-                            </div>
-
-
-                            <div
-                                class="text-5xl opacity-80"
-                            >
-                                🎮
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div
-                        class="p-6"
-                    >
-
-                        <p
-                            class="text-slate-400 text-sm leading-relaxed min-h-[40px]"
-                        >
-                            {{ trilha.descricao }}
+                    <div class="min-w-0">
+                        <p class="text-[10px] uppercase tracking-[.28em] text-white/40 font-black">
+                            Trilha Ensino · Ensino Médio
                         </p>
 
-
-                        <div
-                            class="mt-5 flex justify-between items-center text-sm"
-                        >
-
-                            <span class="text-slate-500">
-
-                                {{ trilha.fases_concluidas }}
-                                /
-                                {{ trilha.total_fases }}
-                                fases
-
+                        <h1 class="text-2xl sm:text-3xl font-black mt-1 truncate">
+                            Olá,
+                            <span class="text-yellow-400">
+                                {{ user.first_name|default:user.username }}
                             </span>
+                            <span aria-hidden="true">👋</span>
+                        </h1>
 
-
-                            {% if trilha.concluida %}
-
-                                <span
-                                    class="text-green-400 font-black"
-                                >
-                                    ✓ Concluída
-                                </span>
-
-                            {% elif trilha.total_fases == 0 %}
-
-                                <span
-                                    class="text-slate-500 font-bold"
-                                >
-                                    Em preparação
-                                </span>
-
-                            {% elif trilha.percentual_progresso == 0 %}
-
-                                <span
-                                    class="text-slate-400 font-bold"
-                                >
-                                    Não iniciada
-                                </span>
-
-                            {% else %}
-
-                                <span
-                                    class="text-yellow-400 font-black"
-                                >
-                                    {{ trilha.percentual_progresso }}%
-                                </span>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <div
-                            class="mt-3 bg-slate-700 rounded-full h-3 overflow-hidden"
-                        >
-
-                            <div
-                                class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-700"
-                                style="width: {{ trilha.percentual_progresso }}%;"
-                            ></div>
-
-                        </div>
-
-
-                        <a
-                            href="{% url 'trilha' trilha.id %}"
-                            class="mt-6 block w-full text-center bg-green-500 hover:bg-green-400 text-white font-black py-3 rounded-xl transition shadow-lg"
-                        >
-
-                            {% if trilha.concluida %}
-
-                                Jogar novamente
-
-                            {% elif trilha.percentual_progresso > 0 %}
-
-                                Continuar jornada
-
-                            {% else %}
-
-                                Começar jornada
-
-                            {% endif %}
-
-                        </a>
-
+                        <p class="text-xs sm:text-sm text-white/45 mt-1">
+                            Escolha uma matéria e entre em um jogo para continuar aprendendo.
+                        </p>
                     </div>
 
-                </article>
 
-            {% empty %}
+                    <div class="flex items-center gap-2 shrink-0">
 
-                <div
-                    class="md:col-span-2 xl:col-span-3 bg-slate-800 border border-slate-700 rounded-3xl p-12 text-center"
-                >
+                        {% include 'gamificacao/partials/controle_aparencia.html' %}
 
-                    <div
-                        class="text-6xl mb-5"
-                    >
-                        🗺️
+                        {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+
+                        {% if modo_teste_disponivel %}
+                            <form action="{% url 'alternar_papel' %}" method="post">
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="hidden sm:inline-flex items-center gap-2 rounded-xl border border-indigo-400/20 bg-indigo-500/10 hover:bg-indigo-500 hover:text-white px-3 py-2 text-xs font-black text-indigo-200 transition"
+                                    title="Alternar papel apenas para testes locais"
+                                >
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h8m-8 0l3-3m-3 3l3 3M16 17H8m8 0l-3-3m3 3l-3 3"/>
+                                    </svg>
+                                    {% if papel_efetivo == 'professor' %}
+                                        Aluno
+                                    {% else %}
+                                        Professor
+                                    {% endif %}
+                                </button>
+                            </form>
+                        {% endif %}
+
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button
+                                type="submit"
+                                class="px-3 py-2 rounded-xl text-xs font-black text-white/45 hover:text-red-300 hover:bg-red-500/10 transition"
+                            >
+                                Sair
+                            </button>
+                        </form>
+
                     </div>
-
-                    <h3
-                        class="text-2xl font-black"
-                    >
-                        Nenhuma trilha disponível
-                    </h3>
-
-                    <p
-                        class="text-slate-400 mt-3"
-                    >
-                        Aguarde até que um professor publique um jogo.
-                    </p>
 
                 </div>
 
-            {% endfor %}
 
-        </div>
+                {% if modo_teste_ativo %}
+                    <div class="mt-3 rounded-xl border border-indigo-400/20 bg-indigo-500/10 px-3 py-2 text-center text-[10px] font-black uppercase tracking-wider text-indigo-200">
+                        🧪 Modo de teste · papel atual: {{ papel_efetivo|capfirst }} · perfil oficial: {{ papel_oficial|capfirst }}
+                    </div>
+                {% endif %}
 
-    </main>
+            </div>
+
+        </header>
+
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 py-7 sm:py-10">
+
+
+            <section class="grid lg:grid-cols-[1fr_auto] gap-5 items-stretch mb-8">
+
+                <div class="catalogo-card rounded-3xl p-6 sm:p-7">
+
+                    <div class="flex flex-wrap items-start justify-between gap-5">
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[.25em] text-indigo-300 font-black">
+                                Seu progresso
+                            </p>
+
+                            <h2 class="text-2xl sm:text-3xl font-black mt-1">
+                                Pronto para a próxima missão?
+                            </h2>
+
+                            <p class="text-sm text-white/45 mt-2 max-w-2xl">
+                                Explore as matérias, escolha um jogo e avance fase por fase.
+                                Seu XP, suas moedas e suas vidas acompanham toda a jornada.
+                            </p>
+                        </div>
+
+
+                        <div class="flex gap-2">
+
+                            <div class="rounded-2xl border border-yellow-400/15 bg-yellow-500/8 px-4 py-3 min-w-[88px]">
+                                <p class="text-[9px] uppercase tracking-widest text-white/35 font-black">
+                                    Nível
+                                </p>
+                                <p class="text-xl font-black text-yellow-300 mt-1">
+                                    {{ perfil.nivel }}
+                                </p>
+                            </div>
+
+                            <div class="rounded-2xl border border-blue-400/15 bg-blue-500/8 px-4 py-3 min-w-[88px]">
+                                <p class="text-[9px] uppercase tracking-widest text-white/35 font-black">
+                                    Moedas
+                                </p>
+                                <p class="text-xl font-black text-blue-300 mt-1">
+                                    🪙 {{ perfil.moedas }}
+                                </p>
+                            </div>
+
+                            <div class="rounded-2xl border border-red-400/15 bg-red-500/8 px-4 py-3 min-w-[88px]">
+                                <p class="text-[9px] uppercase tracking-widest text-white/35 font-black">
+                                    Vidas
+                                </p>
+                                <p class="text-xl font-black text-red-300 mt-1">
+                                    ❤️ {{ perfil.vidas }}
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mt-6 max-w-3xl">
+
+                        <div class="flex justify-between items-center text-xs mb-2">
+                            <span class="text-white/35 font-black uppercase tracking-widest">
+                                XP do nível
+                            </span>
+
+                            <span class="text-white/65 font-black">
+                                {{ perfil.xp_no_nivel }} / {{ perfil.XP_POR_NIVEL }}
+                            </span>
+                        </div>
+
+                        <div class="progress-track h-3 rounded-full overflow-hidden border border-white/5">
+                            <div
+                                class="h-full bg-gradient-to-r from-yellow-400 via-orange-400 to-amber-500 rounded-full"
+                                style="width: {{ perfil.progresso_nivel }}%;"
+                            ></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="{% url 'loja' %}"
+                    class="catalogo-card rounded-3xl p-6 sm:p-7 min-w-[250px] hover:border-blue-400/20 transition"
+                >
+
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[.25em] text-blue-300 font-black">
+                                Recursos
+                            </p>
+
+                            <h2 class="text-xl font-black mt-1">
+                                Loja
+                            </h2>
+
+                            <p class="text-sm text-white/40 mt-2">
+                                Cuide das suas vidas e use suas moedas para continuar jogando.
+                            </p>
+                        </div>
+
+                        <svg class="w-7 h-7 text-blue-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l2.4 12.2a2 2 0 002 1.6h7.7a2 2 0 001.9-1.4L21 8H7"/>
+                            <circle cx="10" cy="20" r="1"/>
+                            <circle cx="18" cy="20" r="1"/>
+                        </svg>
+                    </div>
+
+                    <span class="inline-flex items-center gap-2 mt-6 text-sm font-black text-blue-300">
+                        Abrir loja
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/>
+                        </svg>
+                    </span>
+
+                </a>
+
+            </section>
+
+
+            {% if fases_revisao %}
+
+                <section class="catalogo-card rounded-3xl p-5 sm:p-6 mb-8 border border-amber-400/10">
+
+                    <div class="flex flex-wrap justify-between items-end gap-4 mb-4">
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[.23em] text-amber-300 font-black">
+                                Recuperação pedagógica
+                            </p>
+
+                            <h2 class="text-xl sm:text-2xl font-black mt-1">
+                                Pontos para revisar
+                            </h2>
+
+                            <p class="text-sm text-white/40 mt-1">
+                                Você pode voltar a estas fases para reforçar conteúdos em que teve dificuldade.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
+
+                        {% for item in fases_revisao %}
+
+                            <a
+                                href="{% url 'fase_detalhe' item.fase_id %}"
+                                class="rounded-2xl border border-white/8 bg-white/[.025] hover:bg-white/[.045] hover:border-amber-300/20 p-4 transition"
+                            >
+
+                                <div class="flex items-start justify-between gap-3">
+
+                                    <div class="min-w-0">
+                                        <p class="text-[9px] uppercase tracking-widest text-white/30 font-black">
+                                            {{ item.fase.modulo.disciplina.materia.nome|default:"Revisão" }}
+                                        </p>
+
+                                        <p class="text-sm font-black text-white/80 truncate mt-1">
+                                            {{ item.fase.titulo }}
+                                        </p>
+
+                                        <p class="text-[11px] text-white/35 mt-1 truncate">
+                                            {{ item.fase.modulo.disciplina.nome }}
+                                        </p>
+                                    </div>
+
+                                    <span class="text-xs font-black text-red-300">
+                                        {{ item.melhor_aproveitamento }}%
+                                    </span>
+
+                                </div>
+
+                                <div class="h-2 rounded-full bg-black/30 mt-3 overflow-hidden">
+                                    <div
+                                        class="h-full bg-amber-400/80 rounded-full"
+                                        style="width: {{ item.melhor_aproveitamento }}%;"
+                                    ></div>
+                                </div>
+
+                            </a>
+
+                        {% endfor %}
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+
+            <div class="flex flex-wrap justify-between items-end gap-4 mb-6">
+
+                <div>
+                    <p class="text-[10px] uppercase tracking-[.25em] text-indigo-300 font-black">
+                        Catálogo
+                    </p>
+
+                    <h2 class="text-3xl sm:text-4xl font-black mt-1">
+                        Escolha uma matéria
+                    </h2>
+
+                    <p class="text-sm text-white/40 mt-2">
+                        {% if total_materias %}
+                            {{ total_materias }} matérias disponíveis · cada uma com seus próprios jogos.
+                        {% else %}
+                            O catálogo ainda está sendo preparado.
+                        {% endif %}
+                    </p>
+                </div>
+
+            </div>
+
+
+            {% if materias %}
+
+                <section class="grid md:grid-cols-2 gap-5">
+
+                    {% for materia in materias %}
+
+                        <article class="materia-shell materia-{{ materia.ordem }} catalogo-card rounded-3xl p-5 sm:p-6 transition">
+
+                            <div class="relative z-10">
+
+                                <div class="flex items-start justify-between gap-4">
+
+                                    <div class="flex items-center gap-3">
+
+                                        <div class="materia-index w-13 h-13 w-14 h-14 rounded-2xl border flex items-center justify-center">
+                                            {% if materia.slug == 'matematica' %}
+                                                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                    <rect x="4" y="3" width="16" height="18" rx="3"/>
+                                                    <path stroke-linecap="round" d="M7 7h10M8 12h2m4 0h2M8 16h2m4 0h2"/>
+                                                </svg>
+                                            {% elif materia.slug == 'fisica' %}
+                                                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                    <circle cx="12" cy="12" r="2.5"/>
+                                                    <ellipse cx="12" cy="12" rx="9" ry="4.5"/>
+                                                    <ellipse cx="12" cy="12" rx="9" ry="4.5" transform="rotate(60 12 12)"/>
+                                                    <ellipse cx="12" cy="12" rx="9" ry="4.5" transform="rotate(120 12 12)"/>
+                                                </svg>
+                                            {% elif materia.slug == 'geografia' %}
+                                                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                    <circle cx="12" cy="12" r="8.5"/>
+                                                    <path stroke-linecap="round" d="M3.5 12h17M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5s-1.1 6.2-3.3 8.5c-2.2-2.3-3.3-5.1-3.3-8.5s1.1-6.2 3.3-8.5z"/>
+                                                </svg>
+                                            {% else %}
+                                                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 4c-8 .2-13.2 3.7-13.2 9.5 0 4 2.6 6.5 6.1 6.5 5.6 0 7-5.8 7.1-16z"/>
+                                                    <path stroke-linecap="round" d="M6.8 16.2c3.6-3.5 7.2-5.7 11.1-7.1"/>
+                                                </svg>
+                                            {% endif %}
+                                        </div>
+
+                                        <div>
+                                            <p class="text-[9px] uppercase tracking-[.2em] text-white/30 font-black">
+                                                Matéria {{ materia.ordem }}
+                                            </p>
+
+                                            <h3 class="text-2xl sm:text-3xl font-black mt-0.5">
+                                                {{ materia.nome }}
+                                            </h3>
+                                        </div>
+
+                                    </div>
+
+
+                                    <span class="hidden sm:inline-flex px-2.5 py-1 rounded-lg bg-white/5 border border-white/8 text-[10px] text-white/40 font-black">
+                                        {{ materia.total_jogos }} jogos
+                                    </span>
+
+                                </div>
+
+
+                                <p class="text-sm text-white/45 mt-4 max-w-xl">
+                                    {{ materia.descricao }}
+                                </p>
+
+
+                                <div class="grid grid-cols-3 gap-2 mt-5">
+
+                                    <div class="rounded-xl bg-black/15 border border-white/6 px-3 py-2">
+                                        <p class="text-[9px] uppercase tracking-widest text-white/25 font-black">
+                                            Jogos
+                                        </p>
+                                        <p class="text-lg font-black mt-1">
+                                            {{ materia.jogos_iniciados }}/{{ materia.total_jogos }}
+                                        </p>
+                                    </div>
+
+                                    <div class="rounded-xl bg-black/15 border border-white/6 px-3 py-2">
+                                        <p class="text-[9px] uppercase tracking-widest text-white/25 font-black">
+                                            Fases
+                                        </p>
+                                        <p class="text-lg font-black mt-1">
+                                            {{ materia.fases_concluidas }}/{{ materia.total_fases }}
+                                        </p>
+                                    </div>
+
+                                    <div class="rounded-xl bg-black/15 border border-white/6 px-3 py-2">
+                                        <p class="text-[9px] uppercase tracking-widest text-white/25 font-black">
+                                            Progresso
+                                        </p>
+                                        <p class="text-lg font-black mt-1" style="color: var(--materia-color);">
+                                            {{ materia.percentual_progresso }}%
+                                        </p>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="progress-track h-2.5 rounded-full overflow-hidden mt-4">
+                                    <div
+                                        class="h-full rounded-full transition-all"
+                                        style="width: {{ materia.percentual_progresso }}%; background: var(--materia-color);"
+                                    ></div>
+                                </div>
+
+
+                                <div class="mt-5 flex flex-wrap gap-2">
+
+                                    {% for jogo in materia.jogos_lista %}
+
+                                        <a
+                                            href="{% url 'trilha' jogo.id %}"
+                                            class="game-mini flex-1 min-w-[190px] rounded-2xl p-3"
+                                        >
+
+                                            <div class="flex items-start gap-3">
+
+                                                <div
+                                                    class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                                                    style="background: var(--materia-soft); color: var(--materia-color);"
+                                                >
+                                                    {% if jogo.icone == 'calculator' %}
+                                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                            <rect x="4" y="3" width="16" height="18" rx="3"/>
+                                                            <path stroke-linecap="round" d="M7 7h10M8 12h2m4 0h2M8 16h2m4 0h2"/>
+                                                        </svg>
+                                                    {% elif jogo.icone == 'atom' %}
+                                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                            <circle cx="12" cy="12" r="2"/>
+                                                            <ellipse cx="12" cy="12" rx="8" ry="3.7"/>
+                                                            <ellipse cx="12" cy="12" rx="8" ry="3.7" transform="rotate(60 12 12)"/>
+                                                            <ellipse cx="12" cy="12" rx="8" ry="3.7" transform="rotate(120 12 12)"/>
+                                                        </svg>
+                                                    {% elif jogo.icone == 'globe' %}
+                                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                            <circle cx="12" cy="12" r="8.5"/>
+                                                            <path stroke-linecap="round" d="M3.5 12h17M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5s-1.1 6.2-3.3 8.5"/>
+                                                        </svg>
+                                                    {% elif jogo.icone == 'leaf' %}
+                                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 4c-8 .2-13.2 3.7-13.2 9.5 0 4 2.6 6.5 6.1 6.5 5.6 0 7-5.8 7.1-16z"/>
+                                                            <path stroke-linecap="round" d="M6.8 16.2c3.6-3.5 7.2-5.7 11.1-7.1"/>
+                                                        </svg>
+                                                    {% else %}
+                                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                            <path stroke-linecap="round" d="M5 12h14M12 5v14"/>
+                                                        </svg>
+                                                    {% endif %}
+                                                </div>
+
+
+                                                <div class="min-w-0 flex-1">
+
+                                                    <div class="flex items-start justify-between gap-2">
+                                                        <p class="text-sm font-black text-white/85 truncate">
+                                                            {{ jogo.nome }}
+                                                        </p>
+
+                                                        {% if jogo.concluida %}
+                                                            <svg class="w-4 h-4 text-emerald-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.3">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                                            </svg>
+                                                        {% endif %}
+                                                    </div>
+
+                                                    <p class="text-[10px] text-white/35 mt-1">
+                                                        {{ jogo.fases_concluidas }}/{{ jogo.total_fases }} fases
+                                                        · {{ jogo.percentual_progresso }}%
+                                                    </p>
+
+                                                    <div class="h-1.5 rounded-full bg-black/30 mt-2 overflow-hidden">
+                                                        <div
+                                                            class="h-full rounded-full"
+                                                            style="width: {{ jogo.percentual_progresso }}%; background: var(--materia-color);"
+                                                        ></div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </a>
+
+                                    {% endfor %}
+
+                                </div>
+
+
+                                <div class="flex items-center justify-between gap-3 mt-5 pt-4 border-t border-white/7">
+
+                                    <span class="text-xs text-white/30">
+                                        {{ materia.jogos_concluidos }} concluído(s)
+                                    </span>
+
+                                    <a
+                                        href="{% url 'materia_detalhe' materia.slug %}"
+                                        class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-black text-white border border-white/10 hover:bg-white/5 transition"
+                                    >
+                                        Ver todos
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/>
+                                        </svg>
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </section>
+
+            {% else %}
+
+                <section class="catalogo-card rounded-3xl p-12 text-center">
+
+                    <svg class="w-16 h-16 mx-auto text-indigo-300/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6.5A2.5 2.5 0 016.5 4H20v14H6.5A2.5 2.5 0 014 15.5v-9z"/>
+                        <path stroke-linecap="round" d="M8 8h8M8 11h8M8 14h5"/>
+                    </svg>
+
+                    <h3 class="text-2xl font-black mt-4">
+                        O catálogo ainda está vazio
+                    </h3>
+
+                    <p class="text-sm text-white/40 mt-2 max-w-lg mx-auto">
+                        Assim que os jogos forem publicados, eles aparecerão organizados por matéria aqui.
+                    </p>
+
+                </section>
+
+            {% endif %}
+
+        </main>
+
+    </div>
 
 </body>
-
 </html>

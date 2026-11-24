@@ -1,9 +1,20 @@
 from django.urls import path
 
 from . import views
+from . import physics_views
 
 
 urlpatterns = [
+    path('fisica/fase/<int:fase_id>/', physics_views.physics_player, name='physics_player'),
+    path('fisica/fase/<int:fase_id>/verificar-resposta/', physics_views.physics_check_answer, name='physics_check_answer'),
+    path('fisica/fase/<int:fase_id>/finalizar/', physics_views.physics_finish_phase, name='physics_finish_phase'),
+
+    path(
+        'contas/cadastro/',
+        views.cadastro_usuario,
+        name='cadastro_usuario',
+    ),
+
 
     # ========================================================
     # ROTEAMENTO
@@ -32,6 +43,12 @@ urlpatterns = [
     ),
 
     path(
+        'jogar/materia/<slug:materia_slug>/',
+        views.materia_detalhe,
+        name='materia_detalhe',
+    ),
+
+    path(
         'estudio/',
         views.dashboard_professor,
         name='dashboard_professor',
@@ -57,6 +74,12 @@ urlpatterns = [
         'estudio/trilha/<int:trilha_id>/excluir/',
         views.deletar_trilha,
         name='deletar_trilha',
+    ),
+
+    path(
+        'estudio/trilha/<int:trilha_id>/publicar/',
+        views.alternar_publicacao,
+        name='alternar_publicacao',
     ),
 
     # ========================================================
@@ -97,6 +120,42 @@ urlpatterns = [
         name='ajax_criar_questao',
     ),
 
+    path(
+        'estudio/ajax/modulo/<int:modulo_id>/editar/',
+        views.ajax_editar_modulo,
+        name='ajax_editar_modulo',
+    ),
+
+    path(
+        'estudio/ajax/modulo/<int:modulo_id>/excluir/',
+        views.ajax_excluir_modulo,
+        name='ajax_excluir_modulo',
+    ),
+
+    path(
+        'estudio/ajax/fase/<int:fase_id>/editar/',
+        views.ajax_editar_fase,
+        name='ajax_editar_fase',
+    ),
+
+    path(
+        'estudio/ajax/fase/<int:fase_id>/excluir/',
+        views.ajax_excluir_fase,
+        name='ajax_excluir_fase',
+    ),
+
+    path(
+        'estudio/ajax/questao/<int:questao_id>/editar/',
+        views.ajax_editar_questao,
+        name='ajax_editar_questao',
+    ),
+
+    path(
+        'estudio/ajax/questao/<int:questao_id>/excluir/',
+        views.ajax_excluir_questao,
+        name='ajax_excluir_questao',
+    ),
+
     # ========================================================
     # JOGO
     # ========================================================
@@ -128,6 +187,12 @@ urlpatterns = [
     # ========================================================
     # HISTÓRICO
     # ========================================================
+
+    path(
+        'fase/<int:fase_id>/revisao/',
+        views.revisao_fase,
+        name='revisao_fase',
+    ),
 
     path(
         'fase/<int:fase_id>/historico/',

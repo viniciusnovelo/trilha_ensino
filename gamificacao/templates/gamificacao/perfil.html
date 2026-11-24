@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Meu Perfil</title><script src="https://cdn.tailwindcss.com"></script><style>
+.tema-padrao{background:linear-gradient(135deg,#0f172a,#1e293b);}
+.tema-floresta{background:linear-gradient(135deg,#052e16,#14532d,#064e3b);}
+.tema-deserto{background:linear-gradient(135deg,#451a03,#78350f,#92400e);}
+.tema-masmorra{background:linear-gradient(135deg,#020617,#1e1b4b,#171717);}
+</style></head>
+<body class="{{ tema_aplicado }} text-white min-h-screen font-sans">
+    {% include 'gamificacao/partials/paisagem_animada.html' %}
+<div class="min-h-screen bg-slate-950/50">
+<header class="border-b border-white/10 bg-slate-950/75"><div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center"><div><p class="text-xs uppercase text-white/40 font-black">Jogador</p><h1 class="text-3xl font-black">Meu Perfil</h1></div><div class="flex gap-2">{% include 'gamificacao/partials/controle_aparencia.html' %}
+{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<a href="{% url 'loja' %}" class="bg-slate-800 px-4 py-2 rounded-xl font-bold">Loja</a><a href="{% url 'dashboard_aluno' %}" class="bg-green-500 px-4 py-2 rounded-xl font-black">Painel</a></div></div></header>
+<main class="max-w-5xl mx-auto px-6 py-8 space-y-6">
+<section class="grid md:grid-cols-4 gap-4">
+<div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5"><p class="text-xs uppercase text-white/40 font-black">Nível</p><p class="text-3xl font-black text-yellow-300 mt-2">{{ perfil.nivel }}</p></div>
+<div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5"><p class="text-xs uppercase text-white/40 font-black">XP</p><p class="text-3xl font-black text-yellow-300 mt-2">{{ perfil.xp_total }}</p></div>
+<div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5"><p class="text-xs uppercase text-white/40 font-black">Moedas</p><p class="text-3xl font-black text-blue-300 mt-2">🪙 {{ perfil.moedas }}</p></div>
+<div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5"><p class="text-xs uppercase text-white/40 font-black">Vidas</p><p class="text-3xl font-black text-red-300 mt-2">❤️ {{ perfil.vidas }}</p></div>
+</section>
+<section class="bg-slate-900/75 border border-white/10 rounded-3xl p-7"><div class="flex justify-between text-sm"><span class="text-white/50">Próximo nível</span><span class="font-black">{{ perfil.xp_no_nivel }} / {{ perfil.XP_POR_NIVEL }}</span></div><div class="h-4 bg-black/30 rounded-full mt-3 overflow-hidden"><div class="h-full bg-gradient-to-r from-yellow-400 to-orange-500" style="width:{{ perfil.progresso_nivel }}%"></div></div><p class="text-white/45 text-sm mt-3">Faltam {{ perfil.xp_faltante }} XP.</p></section>
+<section class="bg-slate-900/75 border border-white/10 rounded-3xl p-7"><p class="text-xs uppercase text-white/40 font-black">Personalização</p><div class="grid sm:grid-cols-2 gap-5 mt-3"><div><p class="text-xs text-white/40 font-bold">Paisagem</p><h2 class="text-2xl font-black mt-1">{{ perfil.get_tema_fundo_display }}</h2><p class="text-white/45 text-sm mt-2">Altere pelo botão 🎨 e explore as paisagens animadas.</p></div><div><p class="text-xs text-white/40 font-bold">Aparência do site</p><h2 class="text-2xl font-black mt-1">{{ perfil.get_aparencia_interface_display }}</h2><p class="text-white/45 text-sm mt-2">Use o botão 🌓 para escolher entre sistema, claro e escuro.</p></div></div></section>
+</main></div></body></html>

@@ -1,12 +1,44 @@
+import os
 from pathlib import Path
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-chave-aleatoria-para-desenvolvimento-12345'
 
-DEBUG = True
+# ============================================================
+# AMBIENTE
+# ============================================================
 
-ALLOWED_HOSTS = []
+SECRET_KEY = os.getenv(
+    'DJANGO_SECRET_KEY',
+    'dev-only-chave-nao-usar-em-producao',
+)
+
+DEBUG = os.getenv(
+    'DJANGO_DEBUG',
+    '1',
+).lower() in (
+    '1',
+    'true',
+    'yes',
+    'on',
+)
+
+hosts_configurados = os.getenv(
+    'DJANGO_ALLOWED_HOSTS',
+    '127.0.0.1,localhost',
+)
+
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in hosts_configurados.split(',')
+    if host.strip()
+]
+
+
+# ============================================================
+# APLICAÇÕES
+# ============================================================
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -15,10 +47,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'curriculo',
     'gamificacao',
 ]
+
+
+# ============================================================
+# MIDDLEWARE
+# ============================================================
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -30,7 +67,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'config.urls'
+
 
 TEMPLATES = [
     {
@@ -48,7 +87,13 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'config.wsgi.application'
+
+
+# ============================================================
+# BANCO DE DADOS
+# ============================================================
 
 DATABASES = {
     'default': {
@@ -57,24 +102,77 @@ DATABASES = {
     }
 }
 
+
+# ============================================================
+# VALIDAÇÃO DE SENHA
+# ============================================================
+
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        ),
+    },
+    {
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator'
+        ),
+    },
+    {
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator'
+        ),
+    },
+    {
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'NumericPasswordValidator'
+        ),
+    },
 ]
+
+
+# ============================================================
+# INTERNACIONALIZAÇÃO
+# ============================================================
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
+
+# ============================================================
+# ARQUIVOS ESTÁTICOS E MEDIA
+# ============================================================
+
 STATIC_URL = '/static/'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Configuração de Login
+
+# ============================================================
+# AUTENTICAÇÃO
+# ============================================================
+
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'redirecionamento_inicial'
 LOGOUT_REDIRECT_URL = 'login'
+
+
+# ============================================================
+# SEGURANÇA CONDICIONAL
+# ============================================================
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
