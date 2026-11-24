@@ -50,6 +50,7 @@ def validate_source(data: dict) -> dict:
             if p['key'] in keys or p['step'] <= 0 or p['min'] > p['max'] or not p['min'] <= p['value'] <= p['max']:
                 raise ValueError(f"intervalo inválido: {e['id']} / {p['key']}")
             keys.add(p['key']); values[p['key']] = p['value']
+        validate_scene_parameters(scene, values)
         answer = e.get('challenge',{}).get('answer',{})
         kind = answer.get('type')
         if kind not in types:
@@ -67,7 +68,6 @@ def validate_source(data: dict) -> dict:
                 raise ValueError(f"fórmula ou tolerância inválida: {e['id']}")
             if not isinstance(answer.get('digits'),int) or not answer.get('unit') or not answer.get('display_unit'):
                 raise ValueError(f"unidade/precisão inválida: {e['id']}")
-            validate_scene_parameters(scene, values)
             calculate(formula, values, data.get('constants'))
             formulas.add(formula)
     if counts != PHASE_COUNTS:
