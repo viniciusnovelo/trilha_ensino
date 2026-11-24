@@ -242,8 +242,7 @@
            Alternância suave: o caminho serpenteia sem mudar a
            ordem das fases nem as posições salvas pelo professor.
         */
-        .module-group > .fase-item:nth-of-type(4n + 2),
-        .module-group > .fase-item:nth-of-type(4n + 2) ~ .fase-item:nth-of-type(4n + 2) {
+        .module-group > .fase-item:nth-of-type(4n + 2) {
             --wave-y: -34px;
         }
 
@@ -1500,7 +1499,7 @@
                 const y2 = ((seguinte.top + seguinte.height / 2 - caixa.top) * escalaY);
                 const caminho = `M0 ${y1.toFixed(2)} C 25 ${y1.toFixed(2)} 75 ${y2.toFixed(2)} 100 ${y2.toFixed(2)}`;
 
-                svg.querySelectorAll(`.\${classeBase}, .\${classeInterna}`).forEach((path) => {
+                svg.querySelectorAll(`.${classeBase}, .${classeInterna}`).forEach((path) => {
                     path.setAttribute('d', caminho);
                 });
             };
