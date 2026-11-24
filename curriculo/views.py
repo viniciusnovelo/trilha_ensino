@@ -290,13 +290,7 @@ def modulo_esta_desbloqueado(
     perfil,
     modulo,
 ):
-    """
-    Confere o estado persistido do módulo.
-
-    O primeiro módulo é sempre liberado. Os demais dependem
-    do ProgressoModulo persistido após a conclusão do módulo
-    anterior. A liberação é automática, sem chave manual.
-    """
+    """Todos os módulos são acessíveis; a sequência é interna a cada módulo."""
 
     # Todos os módulos podem ser iniciados independentemente.
     # A ordem das fases continua sendo validada em fase_esta_liberada().
@@ -356,92 +350,32 @@ def desbloquear_proximo_modulo(
     modulo,
     agora=None,
 ):
-    """
-    Após a conclusão total de um módulo, libera automaticamente
-    o próximo módulo da jornada.
-
-    A antiga mecânica de chave/cadeado central foi removida da
-    interface, então a liberação agora acontece nesta etapa.
-    """
-
+    """Registra a conclusão do módulo sem desbloquear outros módulos."""
     agora = agora or timezone.now()
 
-    if not modulo_esta_completo_para_aluno(
-        perfil,
-        modulo,
-    ):
+    if not modulo_esta_completo_para_aluno(perfil, modulo):
         return None
 
-    progresso_modulo, _ = (
-        ProgressoModulo.objects.get_or_create(
-            perfil=perfil,
-            modulo=modulo,
-        )
+    progresso_modulo, _ = ProgressoModulo.objects.get_or_create(
+        perfil=perfil,
+        modulo=modulo,
     )
-
     atualizacoes = []
 
     if not progresso_modulo.concluido:
         progresso_modulo.concluido = True
-        progresso_modulo.data_conclusao = (
-            progresso_modulo.data_conclusao
-            or agora
-        )
-        atualizacoes.extend([
-            'concluido',
-            'data_conclusao',
-        ])
+        progresso_modulo.data_conclusao = progresso_modulo.data_conclusao or agora
+        atualizacoes.extend(["concluido", "data_conclusao"])
 
     if not progresso_modulo.desbloqueado:
         progresso_modulo.desbloqueado = True
-        progresso_modulo.data_desbloqueio = (
-            progresso_modulo.data_desbloqueio
-            or agora
-        )
-        atualizacoes.extend([
-            'desbloqueado',
-            'data_desbloqueio',
-        ])
+        progresso_modulo.data_desbloqueio = progresso_modulo.data_desbloqueio or agora
+        atualizacoes.extend(["desbloqueado", "data_desbloqueio"])
 
     if atualizacoes:
-        progresso_modulo.save(
-            update_fields=(
-                list(
-                    dict.fromkeys(
-                        atualizacoes
-                    )
-                )
-            )
-        )
+        progresso_modulo.save(update_fields=atualizacoes)
 
-    proximo_modulo = proximo_modulo_da_trilha(
-        modulo
-    )
-
-    if proximo_modulo is not None:
-        proximo_progresso, criado = (
-            ProgressoModulo.objects.get_or_create(
-                perfil=perfil,
-                modulo=proximo_modulo,
-            )
-        )
-
-        if (
-            not proximo_progresso.desbloqueado
-        ):
-            proximo_progresso.desbloqueado = True
-            proximo_progresso.data_desbloqueio = (
-                proximo_progresso.data_desbloqueio
-                or agora
-            )
-            proximo_progresso.save(
-                update_fields=[
-                    'desbloqueado',
-                    'data_desbloqueio',
-                ]
-            )
-
-    return proximo_modulo
+    return None
 
 
 def fase_esta_liberada(
@@ -451,10 +385,8 @@ def fase_esta_liberada(
     """
     Verifica no servidor se a fase pode ser executada pelo aluno.
 
-    A fase precisa pertencer a um módulo desbloqueado e todas
-    as fases anteriores do mesmo módulo precisam estar concluídas.
-    Professores continuam com acesso de visualização a qualquer
-    fase da própria trilha.
+    Cada módulo começa liberado. As fases anteriores do próprio módulo
+    precisam estar concluídas. Professores mantêm acesso à própria trilha.
     """
 
     trilha = fase.modulo.disciplina
