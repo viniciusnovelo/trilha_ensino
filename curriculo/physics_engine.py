@@ -145,7 +145,7 @@ def calculate(formula: str, parameters: Mapping[str, float], constants=None) -> 
             raise ValueError('objeto no foco: imagem no infinito')
         result = focal * obj / (obj - focal)
     elif formula == 'ohm_current': result = _p(parameters, 'V') / _p(parameters, 'R')
-    elif formula == 'wire_resistance': result = _p(parameters, 'rho') * _p(parameters, 'L') / (_p(parameters, 'A') * 1e-6)
+    elif formula == 'wire_resistance': result = _p(parameters, 'rho') * _p(parameters, 'L') / _p(parameters, 'A')
     elif formula == 'series_resistance': result = _p(parameters, 'R1') + _p(parameters, 'R2') + _p(parameters, 'R3')
     elif formula == 'parallel_resistance': result = 1 / (1 / _p(parameters, 'R1') + 1 / _p(parameters, 'R2'))
     elif formula == 'single_loop_vdrop_r2':
