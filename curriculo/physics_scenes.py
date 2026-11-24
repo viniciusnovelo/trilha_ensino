@@ -66,6 +66,38 @@ SCENE_METADATA.update({
     'human_eye': {'label': 'human eye', 'kind': 'module2'},
 })
 
+SCENE_METADATA.update({
+    'circuit_concepts': {'label': 'Conceitos de circuitos', 'kind': 'module3'},
+    'electric_field': {'label': 'Campo elétrico', 'kind': 'module3'},
+    'electric_field_calc': {'label': 'Cálculo do campo elétrico', 'kind': 'module3'},
+    'electric_force': {'label': 'Força elétrica', 'kind': 'module3'},
+    'electric_power': {'label': 'Potência elétrica', 'kind': 'module3'},
+    'faraday_concept': {'label': 'Indução de Faraday', 'kind': 'module3'},
+    'faraday_law': {'label': 'Lei de Faraday', 'kind': 'module3'},
+    'general_relativity': {'label': 'Relatividade geral', 'kind': 'module3'},
+    'induction_motor': {'label': 'Motor de indução', 'kind': 'module3'},
+    'ionizing_radiation': {'label': 'Radiação ionizante', 'kind': 'module3'},
+    'lenz_law': {'label': 'Lei de Lenz', 'kind': 'module3'},
+    'magnetic_field': {'label': 'Campo magnético', 'kind': 'module3'},
+    'magnetic_flux': {'label': 'Fluxo magnético', 'kind': 'module3'},
+    'magnetic_force': {'label': 'Força magnética', 'kind': 'module3'},
+    'magnetic_loop': {'label': 'Campo no centro de espira', 'kind': 'module3'},
+    'magnetic_wire': {'label': 'Campo de fio retilíneo', 'kind': 'module3'},
+    'ohm_law': {'label': 'Lei de Ohm', 'kind': 'module3'},
+    'ohm_second_law': {'label': 'Segunda lei de Ohm', 'kind': 'module3'},
+    'parallel_circuit': {'label': 'Circuito paralelo', 'kind': 'module3'},
+    'quantum_levels': {'label': 'Níveis de energia quânticos', 'kind': 'module3'},
+    'radiation_penetration': {'label': 'Penetração da radiação', 'kind': 'module3'},
+    'series_circuit': {'label': 'Circuito em série', 'kind': 'module3'},
+    'single_loop_current': {'label': 'Corrente em malha simples', 'kind': 'module3'},
+    'single_loop_drop': {'label': 'Queda de tensão', 'kind': 'module3'},
+    'special_relativity': {'label': 'Relatividade restrita', 'kind': 'module3'},
+    'three_mesh_circuit': {'label': 'Circuito de três malhas', 'kind': 'module3'},
+    'two_mesh_circuit': {'label': 'Circuito de duas malhas', 'kind': 'module3'},
+    'two_mesh_power': {'label': 'Potência em circuito', 'kind': 'module3'},
+    'wave_particle': {'label': 'Dualidade onda-partícula', 'kind': 'module3'},
+})
+
 assert set(SCENE_METADATA) == SCENES
 
 
