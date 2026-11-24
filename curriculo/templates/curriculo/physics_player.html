@@ -78,7 +78,7 @@ body[data-appearance="claro"] .readout{color:#20364d;background:#dce8f3}
       </div>
     </div>
     <div class="phase-progress">
-      <div class="phase-meta"><span class="phase-name">{{ fase.titulo }}</span><span id="counter"></span></div>
+      <div class="phase-meta"><span class="phase-name">{{ fase.modulo.titulo }}</span><span id="counter"></span></div>
       <div class="phase-track"><div class="phase-fill" id="phase-progress-fill"></div></div>
     </div>
   </div>
@@ -400,7 +400,7 @@ default:txt('Experimento visual',cx,150,18,'#52647d',800,'center');txt('Os contr
  function frame(now){if(!state.lastFrame)state.lastFrame=now;const dt=Math.min(.05,(now-state.lastFrame)/1000);state.lastFrame=now;if(state.playing){state.time+=dt;drawCurrent();}state.raf=requestAnimationFrame(frame);}
  function render(){
   const q=questions[index];selected=null;answered=false;currentParams={};state.params=currentParams;state.time=0;state.playing=true;
-  $('counter').textContent=`Questão ${index+1} de ${questions.length}`;const progressFill=$('phase-progress-fill');if(progressFill)progressFill.style.width=`${((index+1)/questions.length)*100}%`;$('topic').textContent=q.topic;$('exercise-title').textContent=q.title;$('context').textContent=q.context;$('prompt').textContent=q.prompt;$('simulation-description').textContent=q.simulation.description||'';
+  $('counter').textContent=`Fase ${data.phase.order} de ${data.phase.total_phases}`;const progressFill=$('phase-progress-fill');if(progressFill)progressFill.style.width=`${(data.phase.order/data.phase.total_phases)*100}%`;$('topic').textContent=q.topic;$('exercise-title').textContent=q.title;$('context').textContent=q.context;$('prompt').textContent=q.prompt;$('simulation-description').textContent=q.simulation.description||'';
   $('feedback').className='feedback hidden';$('feedback').textContent='';$('submit').disabled=false;$('next').classList.add('hidden');$('finish').classList.add('hidden');$('hint').classList.remove('hidden');
   $('choice-list').innerHTML='';$('parameters').innerHTML='';$('readouts').innerHTML='';
   q.simulation.parameters.forEach(p=>{currentParams[p.key]=p.value;const wrap=document.createElement('div');wrap.className='param';wrap.innerHTML=`<label><span>${p.label}</span><strong data-value>${p.value} ${p.unit}</strong></label><input data-param-key="${p.key}" type="range" min="${parameterBounds(q,p).min}" max="${parameterBounds(q,p).max}" step="${p.step}" value="${p.value}">`;const input=wrap.querySelector('input');input.addEventListener('input',()=>{let next=Number(input.value);if(q.source_id==='fis1-ene-08'&&p.key==='hi'&&currentParams.hf>=next){currentParams.hf=Math.max(0,next-.5);const other=$(`[data-param-key="hf"]`);if(other)other.value=currentParams.hf;const label=other?.parentElement.querySelector('[data-value]');if(label)label.textContent=`${currentParams.hf} m`;}if(q.source_id==='fis1-ene-08'&&p.key==='hf'&&next>=currentParams.hi){next=Math.max(0,currentParams.hi-.5);input.value=next;}currentParams[p.key]=next;state.params[p.key]=next;syncDependentControls(q);state.params.hf=currentParams.hf;wrap.querySelector('[data-value]').textContent=`${next} ${p.unit}`;state.time=0;updateReadouts();drawCurrent()});$('parameters').appendChild(wrap)});
