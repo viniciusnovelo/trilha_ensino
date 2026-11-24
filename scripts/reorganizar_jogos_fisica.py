@@ -83,9 +83,12 @@ def build_plan(sources, Disciplina, Modulo, Fase, Questao, Opcao, Materia):
     materia = Materia.objects.filter(slug="fisica").first()
     if materia is None:
         raise ValueError("A matéria Física (slug=fisica) não existe.")
-    legacy = Disciplina.objects.filter(slug="fisica").first()
+    legacy = (
+        Disciplina.objects.filter(slug="fisica").first()
+        or Disciplina.objects.filter(slug="fisica-legado").first()
+    )
     if legacy is None:
-        raise ValueError("A trilha legada Física (slug=fisica) não existe.")
+        raise ValueError("A trilha Física original (slug=fisica ou fisica-legado) não existe.")
 
     plan = []
     all_codes = set()
