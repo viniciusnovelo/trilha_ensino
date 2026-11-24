@@ -1,4 +1,4 @@
-"""Whitelist de fórmulas do Módulo 1 de Física. Nenhuma expressão é avaliada dinamicamente."""
+"""Whitelist de fórmulas dos Módulos 1 e 2 de Física. Nenhuma expressão é avaliada dinamicamente."""
 from __future__ import annotations
 import math
 from typing import Mapping
