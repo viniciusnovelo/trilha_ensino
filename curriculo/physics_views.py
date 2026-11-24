@@ -107,14 +107,14 @@ def physics_check_answer(request, fase_id):
             expected_value = None
         else:
             submitted = float(payload['valor'])
-                        if dynamic.get('id') == 'fis1-ene-08' and parameters.get('hf', 0) >= parameters.get('hi', 0):
+            if dynamic.get('id') == 'fis1-ene-08' and parameters.get('hf', 0) >= parameters.get('hi', 0):
                 return JsonResponse({'error': 'A altura final deve ser menor que a altura inicial.'}, status=400)
-                        constants = dynamic.get('source_constants', {})
+            constants = dynamic.get('source_constants', {})
             expected_value = calculate(answer['formula'], parameters, constants)
             correct = is_correct(submitted, expected_value, answer['tolerance'])
             submitted_snapshot = {'value': submitted, 'unit': answer.get('unit', '')}
             correct_snapshot = {'value': expected_value, 'unit': answer.get('unit', '')}
-            feedback = ('Resposta correta.' if correct else dynamic['challenge'].get('solution', 'Revise a relação física e tente novamente.'))
+            feedback = ('Resposta correta.' if correct else answer.get('solution', answer.get('explanation', 'Revise a relação física e tente novamente.')))
             chosen_option = None
         with transaction.atomic():
             RespostaTentativa.objects.update_or_create(
@@ -132,7 +132,7 @@ def physics_check_answer(request, fase_id):
                 },
             )
         return JsonResponse({'correct': correct, 'feedback': feedback,
-                              'hint': '' if correct else dynamic['challenge'].get('hint', ''),
+                              'hint': '' if correct else (dynamic['challenge'].get('hint') or answer.get('hint', '')),
                               'expected_display': None if question.tipo_resposta == 'choice' else round(expected_value, answer.get('digits', 2)),
                               'unit': answer.get('display_unit', answer.get('unit', ''))})
     except (KeyError, TypeError, ValueError) as exc:
