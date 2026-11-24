@@ -3,6 +3,9 @@
 from __future__ import annotations
 import argparse, json, os
 from pathlib import Path
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','config.settings')
+import django
+django.setup()
 from django.db import transaction
 from curriculo.models import Materia, Disciplina, Modulo, Fase, Questao, Opcao
 from curriculo.physics_module2_source import validate_source, validate_zip_archive
@@ -55,9 +58,6 @@ def main():
     parser.add_argument('--zip',default=str(Path(__file__).resolve().parents[1]/'modulo2_exercicios.zip'))
     parser.add_argument('--dry-run',action='store_true')
     args=parser.parse_args()
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE','config.settings')
-    import django
-    django.setup()
     data=json.loads(Path(args.json).read_text(encoding='utf-8'))
     summary=validate_source(data)
     if Path(args.zip).is_file():
