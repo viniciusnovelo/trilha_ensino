@@ -14,16 +14,18 @@ from scripts.reorganizar_jogos_fisica import apply_plan
 
 class PhysicsReorganizationPreservationTests(TestCase):
     def test_apply_plan_preserves_existing_rewards_and_progress(self):
-        materia = Materia.objects.create(nome="Física", slug="fisica")
+        # A matéria Física é criada por uma migração de dados do projeto.
+        materia = Materia.objects.get(slug="fisica")
         legacy = Disciplina.objects.create(
-            nome="Física antiga",
-            slug="fisica-legado",
+            nome="Física antiga de teste",
+            slug="fisica-legado-preservacao-teste",
             materia=materia,
             ativo=False,
         )
+        game_slug = "fisica-1-preservacao-teste"
         game = Disciplina.objects.create(
-            nome="Física 1",
-            slug="fisica-1",
+            nome="Física 1 de teste",
+            slug=game_slug,
             materia=materia,
         )
         module = Modulo.objects.create(
@@ -69,9 +71,9 @@ class PhysicsReorganizationPreservationTests(TestCase):
 
         plan = [{
             "number": 1,
-            "slug": "fisica-1",
-            "name": "Física 1",
-            "description": "Jogo Física 1",
+            "slug": game_slug,
+            "name": "Física 1 de teste",
+            "description": "Jogo Física 1 de teste",
             "exercise_count": 1,
             "topic_count": 1,
             "topics": [{
