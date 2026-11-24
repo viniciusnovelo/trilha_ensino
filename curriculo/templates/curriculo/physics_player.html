@@ -115,7 +115,7 @@ body[data-appearance="claro"] .readout{color:#20364d;background:#dce8f3}
  const getP=key=>Number(state.params[key]??0);
   // Canvas drawing helpers
  let canvas=null,ctx=null,W=900,H=310,dpr=1;
- function resizeCanvas(){canvas=$('simCanvas');if(!canvas)return;const rect=canvas.getBoundingClientRect();dpr=Math.max(1,window.devicePixelRatio||1);W=rect.width||900;H=310;canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);drawCurrent();}
+ function resizeCanvas(){canvas=$('simCanvas');if(!canvas)return;const rect=canvas.getBoundingClientRect();dpr=Math.max(1,window.devicePixelRatio||1);W=rect.width||900;H=(typeof MODULE3_SCENES!=='undefined'&&MODULE3_SCENES.has(current().simulation.scene))?340:310;canvas.style.height=H+'px';canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);drawCurrent();}
  function clear(){ctx.clearRect(0,0,W,H);ctx.fillStyle='#f7faff';ctx.fillRect(0,0,W,H);}
  function text(s,x,y,size=13,color='#52647d',weight=600,align='left'){ctx.fillStyle=color;ctx.font=`${weight} ${size}px system-ui,sans-serif`;ctx.textAlign=align;ctx.fillText(s,x,y);ctx.textAlign='left';}
  function line(x1,y1,x2,y2,color='#8ca0bb',width=2,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.setLineDash([]);}
@@ -124,7 +124,169 @@ body[data-appearance="claro"] .readout{color:#20364d;background:#dce8f3}
  function rounded(x,y,w,h,r,fill='#fff',stroke='#dce5f0'){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.4;ctx.stroke();}}
  function ground(y){line(45,y,W-45,y,'#9dafc5',2);for(let x=50;x<W-40;x+=18)line(x,y+4,x-8,y+10,'#d1dbe8',1);}
  function car(x,y,scale=1,color='#3978e8'){rounded(x,y-20*scale,58*scale,20*scale,6*scale,color,'#2b5fba');circle(x+13*scale,y+2*scale,7*scale,'#42516a');circle(x+45*scale,y+2*scale,7*scale,'#42516a');}
- function drawScene(e){if(MODULE2_SCENES.has(e.simulation.scene)){drawModule2Scene(e);return;}
+ const MODULE3_SCENES=new Set(["circuit_concepts","electric_field","electric_field_calc","electric_force","electric_power","faraday_concept","faraday_law","general_relativity","induction_motor","ionizing_radiation","lenz_law","magnetic_field","magnetic_flux","magnetic_force","magnetic_loop","magnetic_wire","ohm_law","ohm_second_law","parallel_circuit","quantum_levels","radiation_penetration","series_circuit","single_loop_current","single_loop_drop","special_relativity","three_mesh_circuit","two_mesh_circuit","two_mesh_power","wave_particle"]);
+function m3Clear(){ctx.clearRect(0,0,W,H);const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#f9fcff');g.addColorStop(1,'#eef4fb');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.strokeStyle='#e7eef7';ctx.lineWidth=1;for(let x=35;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=25;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}}
+function m3Line(x1,y1,x2,y2,color='#60758f',w=2,dash=[]){ctx.save();ctx.strokeStyle=color;ctx.lineWidth=w;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.restore()}
+function m3Circle(x,y,r,fill='#3978e8',stroke=null,w=1){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=w;ctx.stroke()}}
+function m3Txt(s,x,y,size=12,color='#52647d',weight=650,align='left'){ctx.save();ctx.font=`${weight} ${size}px Inter,system-ui,sans-serif`;ctx.fillStyle=color;ctx.textAlign=align;ctx.fillText(String(s),x,y);ctx.restore()}
+function m3Rect(x,y,w,h,fill='#fff',stroke='#9db0c8',r=8){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.5;ctx.stroke()}}
+function m3Arrow(x1,y1,x2,y2,color='#3978e8',w=3,label=''){m3Line(x1,y1,x2,y2,color,w);const a=Math.atan2(y2-y1,x2-x1),L=10;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-L*Math.cos(a-.45),y2-L*Math.sin(a-.45));ctx.lineTo(x2-L*Math.cos(a+.45),y2-L*Math.sin(a+.45));ctx.closePath();ctx.fillStyle=color;ctx.fill();if(label)m3Txt(label,(x1+x2)/2,(y1+y2)/2-9,10,color,800,'center')}
+function m3ResistorH(x1,x2,y,label,val){
+  const bodyW=x2-x1,bodyH=30,left=x1+bodyW*.16,right=x2-bodyW*.16;
+  m3Line(x1,y,left,y,'#60758f',3);m3Rect(left,y-bodyH/2,right-left,bodyH,'#fffaf1','#d28b39',6);m3Line(right,y,x2,y,'#60758f',3);
+  m3Txt(label,(x1+x2)/2,y-24,10,'#52647d',850,'center');m3Txt(val,(x1+x2)/2,y+4,bodyW<52?8:9,'#975b18',850,'center')
+}
+function m3ResistorV(x,y1,y2,label,val){
+  const bodyTop=y1+(y2-y1)*.18,bodyBottom=y2-(y2-y1)*.18;m3Line(x,y1,x,bodyTop,'#60758f',3);m3Rect(x-21,bodyTop,42,bodyBottom-bodyTop,'#fffaf1','#d28b39',6);m3Line(x,bodyBottom,x,y2,'#60758f',3);
+  m3Txt(label,x,bodyTop-7,9,'#52647d',850,'center');m3Txt(val,x,(bodyTop+bodyBottom)/2+3,9,'#975b18',850,'center')
+}
+function m3Battery(x,y1,y2,V){
+  const cy=(y1+y2)/2;m3Line(x,y1,x,cy-18,'#60758f',3);m3Line(x,cy+18,x,y2,'#60758f',3);
+  m3Line(x-19,cy-11,x+19,cy-11,'#159b78',5);m3Line(x-12,cy+11,x+12,cy+11,'#159b78',3);
+  m3Circle(x,cy-11,3,'#159b78');m3Circle(x,cy+11,3,'#159b78');m3Txt('+',x+27,cy-7,13,'#159b78',900);m3Txt('−',x+27,cy+17,13,'#64748b',900);m3Txt(`${fmt(V,1)} V`,x,cy+39,10,'#159b78',850,'center')
+}
+function m3DrawPolyline(points,color='#60758f',width=3){ctx.save();ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();points.forEach((pt,i)=>i?ctx.lineTo(pt[0],pt[1]):ctx.moveTo(pt[0],pt[1]));ctx.stroke();ctx.restore()}
+function m3PointOnPath(points,u){
+  let total=0,segs=[];for(let i=0;i<points.length-1;i++){const a=points[i],b=points[i+1],len=Math.hypot(b[0]-a[0],b[1]-a[1]);segs.push({a,b,len});total+=len}
+  let d=((u%1)+1)%1*total;for(const q of segs){if(d<=q.len){const k=q.len?d/q.len:0;return [q.a[0]+(q.b[0]-q.a[0])*k,q.a[1]+(q.b[1]-q.a[1])*k]}d-=q.len}return points[points.length-1]
+}
+function m3DrawCurrentFlow(points,current=1,count=8,color='#3978e8',reverse=false){
+  const flow=reverse?[...points].reverse():points;m3DrawPolyline(flow,'#3978e8',0.8);
+  const speed=clamp(1.15+Math.abs(current)*.22,.8,5.5),phase=state.time*speed;
+  for(let i=0;i<count;i++){const u=(phase/count+i/count)%1,[x,y]=m3PointOnPath(flow,u);m3Circle(x,y,7,'#3978e8'+'18');m3Circle(x,y,2.8,color,'#fff',.8)}
+}
+function m3DrawNode(x,y){m3Circle(x,y,5,'#fff','#526b89',2)}
+function m3DrawSeries(e,values,source){
+  const top=112,bottom=260,left=W*.12,right=W*.88,cy=(top+bottom)/2;
+  const available=right-left-85,gap=available/(values.length+1),bodyW=clamp(gap*.78,34,86),centers=values.map((v,i)=>left+58+gap*(i+1));
+  m3Line(left,top,left,cy-18,'#60758f',3);m3Line(left,cy+18,left,bottom,'#60758f',3);m3Battery(left,top,bottom,source);
+  let cursor=left;centers.forEach((c,i)=>{const x1=c-bodyW/2,x2=c+bodyW/2;m3Line(cursor,top,x1,top,'#60758f',3);m3ResistorH(x1,x2,top,`R${i+1}`,`${fmt(values[i],1)} Ω`);cursor=x2});m3Line(cursor,top,right,top,'#60758f',3);m3Line(right,top,right,bottom,'#60758f',3);m3Line(right,bottom,left,bottom,'#60758f',3);
+  const I=source/values.reduce((a,b)=>a+b,0);m3DrawCurrentFlow([[left,top],[right,top],[right,bottom],[left,bottom]],I,9);
+  m3Arrow(left+14,top-27,Math.min(left+88,right-15),top-27,'#3978e8',2,'I convencional');
+  centers.forEach((c,i)=>{m3DrawNode(c-bodyW/2,top);m3DrawNode(c+bodyW/2,top);m3Txt(`ΔV${i+1} = ${fmt(I*values[i],2)} V`,c,top+52,9,'#159b78',800,'center')});
+  m3DrawNode(left,top);m3DrawNode(right,top);m3DrawNode(right,bottom);m3DrawNode(left,bottom);
+  m3Txt(`CIRCUITO EM SÉRIE  ·  I = ${fmt(I,2)} A`,W/2,35,13,'#34465f',850,'center');m3Txt('A mesma corrente percorre todos os componentes',W/2,55,10,'#73839a',650,'center');
+}
+function m3DrawParallel(e,values,source){
+  const top=88,bottom=258,left=W*.13,right=W*.88,cy=(top+bottom)/2;
+  const xs=values.map((v,i)=>left+105+(right-left-150)*(i/Math.max(1,values.length-1)));
+  m3Line(left,top,left,cy-18,'#60758f',3);m3Line(left,cy+18,left,bottom,'#60758f',3);m3Battery(left,top,bottom,source);m3Line(left,top,right,top,'#60758f',3);m3Line(left,bottom,right,bottom,'#60758f',3);
+  xs.forEach((x,i)=>{m3Line(x,top,x,top+24,'#60758f',3);m3ResistorV(x,top+24,bottom-24,`R${i+1}`,`${fmt(values[i],1)} Ω`);m3Line(x,bottom-24,x,bottom,'#60758f',3);m3DrawNode(x,top);m3DrawNode(x,bottom);const Ib=source/values[i];m3DrawCurrentFlow([[x,top],[x,bottom]],Ib,5,'#159b78');m3Arrow(x+29,cy-35,x+29,cy+5,'#159b78',2,`I${i+1}`);m3Txt(`${fmt(Ib,2)} A`,x,top-13,9,'#159b78',850,'center')});
+  const It=values.reduce((s,v)=>s+source/v,0);m3DrawCurrentFlow([[left,top],[right,top]],It,7);m3DrawCurrentFlow([[right,bottom],[left,bottom]],It,7,'#3978e8');
+  m3Txt(`CIRCUITO EM PARALELO  ·  I total = ${fmt(It,2)} A`,W/2,32,13,'#34465f',850,'center');m3Txt(`Cada ramo recebe ${fmt(source,1)} V`,W/2,51,10,'#73839a',650,'center')
+}
+function m3DrawMixed(e,p,branches=2){
+  const top=86,bottom=263,left=W*.10,right=W*.90,node=W*.39,cy=(top+bottom)/2;
+  const rCenter=W*.255,rW=clamp(W*.13,42,88);
+  m3Line(left,top,left,cy-18,'#60758f',3);m3Line(left,cy+18,left,bottom,'#60758f',3);m3Battery(left,top,bottom,p.V);
+  m3Line(left,top,rCenter-rW/2,top,'#60758f',3);m3ResistorH(rCenter-rW/2,rCenter+rW/2,top,'R₁',`${fmt(p.R1,1)} Ω`);m3Line(rCenter+rW/2,top,node,top,'#60758f',3);
+  m3Line(node,top,node,bottom,'#60758f',3);m3Line(node,top,right,top,'#60758f',3);m3Line(node,bottom,right,bottom,'#60758f',3);
+  const xs=branches===3?[W*.53,W*.69,W*.85]:[W*.57,W*.82],keys=branches===3?['R2','R3','R4']:['R2','R3'];
+  xs.forEach((x,i)=>{m3Line(x,top,x,top+23,'#60758f',3);m3ResistorV(x,top+23,bottom-23,`R${i+2}`,`${fmt(p[keys[i]],1)} Ω`);m3Line(x,bottom-23,x,bottom,'#60758f',3);m3DrawNode(x,top);m3DrawNode(x,bottom)});
+  const parallel=1/xs.reduce((sum,x,i)=>sum+1/p[keys[i]],0),It=p.V/(p.R1+parallel),Vp=It*parallel;
+  m3DrawCurrentFlow([[left,top],[rCenter-rW/2,top],[rCenter+rW/2,top],[node,top]],It,7);
+  m3DrawCurrentFlow([[left,bottom],[right,bottom]],It,7,'#3978e8',true);
+  xs.forEach((x,i)=>{const ib=Vp/p[keys[i]];m3DrawCurrentFlow([[x,top],[x,bottom]],ib,5,'#159b78');m3Arrow(x+28,cy-34,x+28,cy+8,'#159b78',2);m3Txt(`I${i+2} ${fmt(ib,2)} A`,x,top-13,9,'#159b78',850,'center')});
+  m3Txt(`${branches} RAMOS EM PARALELO + R₁ EM SÉRIE`,W/2,30,12,'#34465f',850,'center');m3Txt(`I total = ${fmt(It,2)} A  ·  tensão nos ramos = ${fmt(Vp,2)} V`,W/2,49,10,'#73839a',700,'center')
+}
+function m3DrawBulb(x,y,power){
+  ctx.save();const glow=ctx.createRadialGradient(x,y,9,x,y,58);glow.addColorStop(0,'#ffeaa5aa');glow.addColorStop(1,'#ffeaa500');m3Circle(x,y,58,glow);m3Circle(x,y,31,'#fff5cf','#d6a23d',3);ctx.beginPath();ctx.arc(x,y-3,15,Math.PI*.12,Math.PI*.88);ctx.strokeStyle='#d28b39';ctx.lineWidth=2.5;ctx.stroke();m3Line(x-8,y+13,x+8,y+13,'#a66b12',2);m3Line(x-7,y+19,x+7,y+19,'#a66b12',2);m3Line(x-5,y+25,x+5,y+25,'#a66b12',2);for(let a=0;a<8;a++){const q=a*Math.PI/4;m3Line(x+40*Math.cos(q),y+40*Math.sin(q),x+49*Math.cos(q),y+49*Math.sin(q),'#e6b84f',2)}ctx.restore();m3Txt(`${fmt(power,1)} W`,x,y+76,12,'#a66b12',850,'center')
+}
+function m3DrawCoil(cx,cy,scale=1){
+  ctx.save();ctx.shadowColor='#3978e855';ctx.shadowBlur=8;ctx.strokeStyle='#c57a35';ctx.lineWidth=5;for(let i=0;i<11;i++){const x=cx-66*scale+i*13.2*scale;ctx.beginPath();ctx.ellipse(x,cy,9*scale,48*scale,0,0,Math.PI*2);ctx.stroke()}ctx.shadowBlur=0;m3Line(cx-72*scale,cy-48*scale,cx+72*scale,cy-48*scale,'#e8b16d',1);m3Line(cx-72*scale,cy+48*scale,cx+72*scale,cy+48*scale,'#9a5b2a',1);ctx.restore()
+}
+function m3DrawMagnet(x,y,vertical=false){
+  ctx.save();ctx.shadowColor='#24364a22';ctx.shadowBlur=8;if(vertical){m3Rect(x-18,y-38,36,76,'#e8edf5','#9caec3',5);m3Rect(x-18,y-38,36,38,'#e66b72',null,4);m3Rect(x-18,y,36,38,'#4d82d8',null,4);m3Txt('N',x,y-13,13,'#fff',900,'center');m3Txt('S',x,y+26,13,'#fff',900,'center')}else{m3Rect(x-55,y-17,55,34,'#e66b72',null,5);m3Rect(x,y-17,55,34,'#4d82d8',null,5);m3Txt('N',x-28,y+5,14,'#fff',900,'center');m3Txt('S',x+28,y+5,14,'#fff',900,'center')}ctx.restore()
+}
+function m3DrawCompass(x,y,angle){m3Circle(x,y,22,'#fff','#a5b6ca',2);m3Arrow(x,y,x+17*Math.cos(angle),y+17*Math.sin(angle),'#d95d67',3)}
+function m3DrawBarField(x,y,magnetW=110,ampBase=42,t=0){
+  const xN=x-magnetW/2,xS=x+magnetW/2;
+  for(let i=0;i<5;i++){const amp=ampBase+i*24;for(const sign of [-1,1]){ctx.save();ctx.beginPath();ctx.moveTo(xN,y);ctx.bezierCurveTo(xN-amp*.55,y+sign*amp,xS+amp*.55,y+sign*amp,xS,y);ctx.strokeStyle=i===0?'#5b91d8':'#91b2dc';ctx.lineWidth=i===0?2.2:1.25;ctx.globalAlpha=1-i*.11;ctx.stroke();ctx.restore();const u=(t*.13+i*.17)%1;const k=1-u;const px=k*k*k*xN+3*k*k*u*(xN-amp*.55)+3*k*u*u*(xS+amp*.55)+u*u*u*xS;const py=k*k*k*y+3*k*k*u*(y+sign*amp)+3*k*u*u*(y+sign*amp)+u*u*u*y;m3Circle(px,py,2.6,'#3978e8');}}
+  m3Txt('Linhas externas: N → S',x,y-ampBase-112,10,'#52749b',750,'center')
+}
+function m3DrawGalvanometer(x,y,deflection){
+  m3Circle(x,y,31,'#fff','#8fa3bd',2);ctx.save();ctx.beginPath();ctx.arc(x,y,23,Math.PI*1.12,Math.PI*1.88);ctx.strokeStyle='#c1cede';ctx.lineWidth=3;ctx.stroke();for(let i=-2;i<=2;i++){const a=-Math.PI/2+i*.45;m3Line(x+19*Math.cos(a),y+19*Math.sin(a),x+24*Math.cos(a),y+24*Math.sin(a),'#8498b3',1.5)}m3Arrow(x,y,x+20*Math.sin(deflection),y-20*Math.cos(deflection),'#d95d67',2.5);m3Txt('G',x,y+43,10,'#52647d',850,'center');ctx.restore()
+}
+function m3DrawBulb(x,y,power){m3Circle(x,y,35,'#fff2c9','#d6a23d',3);m3Circle(x,y,13,'#f4c04e');m3Line(x-20,y-20,x+20,y+20,'#d19a2e',2);m3Line(x-20,y+20,x+20,y-20,'#d19a2e',2);m3Txt(`${fmt(power,1)} W`,x,y+58,12,'#a66b12',850,'center')}
+function m3DrawCoil(cx,cy,scale=1){
+  ctx.save();ctx.shadowColor='#c57a3555';ctx.shadowBlur=7;ctx.strokeStyle='#b96d32';ctx.lineWidth=5;
+  for(let i=0;i<11;i++){const x=cx-66*scale+i*13.2*scale;ctx.beginPath();ctx.ellipse(x,cy,9*scale,48*scale,0,0,Math.PI*2);ctx.stroke()}
+  ctx.shadowBlur=0;ctx.strokeStyle='#edb77d';ctx.lineWidth=1.3;for(let i=0;i<11;i++){const x=cx-66*scale+i*13.2*scale;ctx.beginPath();ctx.ellipse(x-2*scale,cy,5*scale,44*scale,0,0,Math.PI*2);ctx.stroke()}ctx.restore()
+}
+function m3DrawMagnet(x,y,vertical=false){ctx.save();if(vertical){m3Rect(x-18,y-38,36,76,'#e8edf5','#9caec3',5);m3Rect(x-18,y-38,36,38,'#e66b72',null,4);m3Rect(x-18,y,36,38,'#4d82d8',null,4);m3Txt('N',x,y-13,13,'#fff',900,'center');m3Txt('S',x,y+26,13,'#fff',900,'center')}else{m3Rect(x-55,y-17,55,34,'#e66b72',null,5);m3Rect(x,y-17,55,34,'#4d82d8',null,5);m3Txt('N',x-28,y+5,14,'#fff',900,'center');m3Txt('S',x+28,y+5,14,'#fff',900,'center')}ctx.restore()}
+function m3DrawCompass(x,y,angle){m3Circle(x,y,22,'#fff','#a5b6ca',2);m3Arrow(x,y,x+17*Math.cos(angle),y+17*Math.sin(angle),'#d95d67',3);}
+function drawModule3Scene(e){if(!ctx)return;const p=state.params,t=state.time,sc=e.simulation.scene,cx=W/2;m3Clear();
+switch(sc){
+case'circuit_concepts':case'ohm_law':case'single_loop_drop':case'single_loop_current':{
+  const vals=sc==='circuit_concepts'||sc==='ohm_law'?[p.R]:sc==='single_loop_drop'?[p.R1,p.R2]:[p.R1,p.R2,p.R3];m3DrawSeries(e,vals,p.V);
+  if(sc==='circuit_concepts'||sc==='ohm_law'){const I=p.V/p.R;m3Txt(`Tensão: ${fmt(p.V,1)} V`,W*.76,164,11,'#159b78',800);m3Txt(`Resistência: ${fmt(p.R,1)} Ω`,W*.76,187,11,'#a96b1c',800);m3Txt(`Corrente: ${fmt(I,2)} A`,W*.76,210,11,'#3978e8',800);m3Txt('V = R · I',W*.76,242,13,'#34465f',900,'center')}
+  else if(sc==='single_loop_drop'){const I=p.V/(p.R1+p.R2);m3Txt(`I = ${fmt(I,2)} A`,W*.76,183,12,'#3978e8',850);m3Txt(`ΔV₂ = ${fmt(I*p.R2,2)} V`,W*.76,208,11,'#159b78',850)}
+  else m3Txt(`R equivalente = ${fmt(p.R1+p.R2+p.R3,1)} Ω  ·  I = ${fmt(p.V/(p.R1+p.R2+p.R3),2)} A`,cx,315,11,'#52647d',800,'center');break}
+case'ohm_second_law':{const x1=W*.18,x2=W*.72,y=165;m3Line(x1,y,x2,y,'#a9bbcf',20);m3Line(x1,y-15,x2,y-15,'#dce6f1',3);m3Circle(x1,y,16,'#e5edf7','#8095b0',2);m3Circle(x2,y,16,'#e5edf7','#8095b0',2);for(let i=0;i<9;i++){const x=x1+30+((state.time*38+i*48)%(x2-x1-60));m3Circle(x,y,3,'#3978e8')}m3Arrow(x1+12,96,x2-12,96,'#3978e8',3,`L = ${fmt(p.L,1)} m`);m3Txt(`Seção transversal A = ${fmt(p.A,2)} mm²`,cx,220,12,'#a66b1c',800,'center');m3Txt(`Resistividade ρ = ${fmt(p.rho,4)} Ω·mm²/m`,cx,247,11,'#52647d',750,'center');m3Txt(`R = ρL/A = ${fmt(p.rho*p.L/p.A,3)} Ω`,cx,285,14,'#159b78',850,'center');m3Txt('Condutor metálico: comprimento e área influenciam R',cx,35,12,'#34465f',800,'center');break}
+case'series_circuit':{m3DrawSeries(e,[p.R1,p.R2,p.R3],p.V);m3Txt(`Resistência equivalente: ${fmt(p.R1+p.R2+p.R3,2)} Ω`,cx,315,11,'#159b78',850,'center');break}
+case'parallel_circuit':{m3DrawParallel(e,[p.R1,p.R2],p.V);m3Txt(`R equivalente = ${fmt(1/(1/p.R1+1/p.R2),2)} Ω`,cx,315,11,'#159b78',850,'center');break}
+case'two_mesh_circuit':case'two_mesh_power':{m3DrawMixed(e,p,2);const rp=1/(1/p.R2+1/p.R3),vp=p.V*rp/(p.R1+rp);m3Txt(`Rₚ = ${fmt(rp,2)} Ω  ·  V dos ramos = ${fmt(vp,2)} V`,cx,315,11,'#52647d',800,'center');break}
+case'three_mesh_circuit':{m3DrawMixed(e,p,3);const rp=1/(1/p.R2+1/p.R3+1/p.R4),vp=p.V*rp/(p.R1+rp);m3Txt(`Rₚ = ${fmt(rp,2)} Ω  ·  V nos ramos = ${fmt(vp,2)} V`,cx,315,11,'#52647d',800,'center');break}
+case'electric_power':{m3DrawSeries(e,[p.R],p.V);const power=p.V*p.V/p.R;m3DrawBulb(W*.74,174,power);m3Txt('Energia elétrica → luz + calor',W*.74,270,10,'#52647d',750,'center');break}
+case'magnetic_field':case'magnetic_wire':{
+  const x=cx,y=171;const r=clamp(48+p.I*3,48,82);for(let i=0;i<5;i++){const rr=45+i*25;ctx.save();ctx.beginPath();ctx.arc(x,y,rr,0,Math.PI*2);ctx.strokeStyle=i===0?'#3978e8':'#8fb0d7';ctx.lineWidth=i===0?2.2:1.2;ctx.setLineDash([7,5]);ctx.stroke();ctx.restore();for(let j=0;j<2;j++){const a=-(state.time*.65+i*.25+j*Math.PI);m3Circle(x+rr*Math.cos(a),y+rr*Math.sin(a),2.6,'#3978e8')}}
+  m3Circle(x,y,25,'#50647e','#34465f',2);m3Circle(x,y,15,'#fff','#d8e2ee',1);m3Circle(x,y,5,'#d95d67');m3Txt('I',x+34,y-25,10,'#34465f',850);m3Txt('⊙',x,y+6,17,'#d95d67',900,'center');
+  for(let a=0;a<Math.PI*2;a+=Math.PI/4){const rr=104,dir=-1,px=x+rr*Math.cos(a+dir*.06),py=y+rr*Math.sin(a+dir*.06);m3Arrow(x+rr*Math.cos(a),y+rr*Math.sin(a),px,py,'#3978e8',2)}
+  const compassX=x+185,compassY=145;m3DrawCompass(compassX,compassY,state.time*.18-Math.PI/2);m3Line(x+28,y,compassX-24,compassY,'#a5b6c8',1,[4,4]);
+  m3Txt('Campo magnético circular ao redor do fio',cx,30,13,'#34465f',850,'center');m3Txt('Vista da seção do condutor · ⊙ corrente saindo do plano',cx,310,10,'#52647d',750,'center');
+  if(sc==='magnetic_wire')m3Txt(`I = ${fmt(p.I,1)} A  ·  r = ${fmt(p.r,3)} m  ·  B = ${fmt(.2*p.I/p.r,2)} μT`,cx,286,11,'#159b78',850,'center');break}
+case'faraday_concept':case'faraday_law':case'lenz_law':{
+  const coilx=W*.57,cy=168,range=W*.20,speed=clamp(p.v||((p.dPhi&&p.dt)?p.dPhi/p.dt:0.8),.25,2.5),pos=coilx-range+((Math.sin(state.time*speed*1.2)+1)/2)*range*2;
+  m3DrawBarField(pos,cy,82,28,state.time);m3DrawCoil(coilx,cy,1.0);m3DrawMagnet(pos,cy);
+  const moving= Math.cos(state.time*speed*1.2),deflection=clamp(moving*speed*.55,-.9,.9);m3DrawGalvanometer(W*.86,cy,deflection);
+  m3Arrow(pos+66,cy+56,pos+66+Math.sign(moving||1)*36,cy+56,'#d98a2c',2,moving>0?'movimento →':'movimento ←');
+  m3Txt('Ímã',pos,cy+75,10,'#52647d',800,'center');m3Txt('Bobina',coilx,75,11,'#a96b1c',850,'center');
+  if(sc==='lenz_law'){const nearFace= moving>0?'S':'N';m3Txt(`Face próxima da bobina: polo induzido ${nearFace}`,coilx,285,10,'#d95d67',850,'center');m3Txt('O campo induzido se opõe à variação do fluxo',cx,310,10,'#52647d',750,'center')}
+  else if(sc==='faraday_law'){const emf=p.N*p.dPhi/p.dt;m3Txt(`N = ${p.N}  ·  |ΔΦ| = ${fmt(p.dPhi,4)} Wb  ·  Δt = ${fmt(p.dt,2)} s`,cx,285,10,'#52647d',750,'center');m3Txt(`|ε| = ${fmt(emf,2)} V`,cx,310,13,'#159b78',850,'center')}
+  else m3Txt('Movimento relativo altera o fluxo e pode induzir corrente',cx,310,10,'#52647d',750,'center');break}
+case'magnetic_loop':{
+  const x=cx,y=166;ctx.save();ctx.beginPath();ctx.ellipse(x,y,174,78,0,0,Math.PI*2);ctx.strokeStyle='#b96f31';ctx.lineWidth=7;ctx.stroke();ctx.beginPath();ctx.ellipse(x,y,174,78,0,Math.PI,Math.PI*2);ctx.strokeStyle='#e4a66a';ctx.lineWidth=3;ctx.stroke();ctx.restore();
+  for(let i=0;i<8;i++){const a=state.time*.6+i*Math.PI/4,px=x+174*Math.cos(a),py=y+78*Math.sin(a),tx=-Math.sin(a),ty=Math.cos(a);m3Arrow(px,py,px+tx*17,py+ty*9,'#d28b39',2)}
+  for(let k=-2;k<=2;k++){m3Arrow(x+k*26,y-16,x+k*26,y-78,'#159b78',2);m3Circle(x+k*26,y-78,3,'#159b78')}
+  m3Txt('Espira circular percorrida por corrente',cx,30,13,'#34465f',850,'center');m3Txt(`R = ${fmt(p.R,2)} m  ·  I = ${fmt(p.I,1)} A`,cx,278,11,'#52647d',800,'center');m3Txt(`B no centro = ${fmt(.62831853*p.I/p.R,2)} μT`,cx,307,13,'#159b78',850,'center');break}
+case'magnetic_force':{
+  for(let x=65;x<W-45;x+=64)for(let y=65;y<H-45;y+=58){m3Circle(x,y,10,'#f5f8fc','#b5c4d6',1);m3Txt('×',x,y+4,12,'#6985a5',900,'center')}
+  const theta=rad(p.theta),phase=state.time*.8,orbit=clamp(25+p.q*p.v*p.B*.004,28,68),px=cx+Math.cos(phase)*orbit,py=170+Math.sin(phase)*orbit;
+  ctx.beginPath();for(let i=0;i<=100;i++){const a=phase-i*.045;const xx=cx+Math.cos(a)*orbit,yy=170+Math.sin(a)*orbit;if(i===0)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy)}ctx.strokeStyle='#8ab0df';ctx.lineWidth=2;ctx.stroke();
+  m3Circle(px,py,14,'#e7a43b','#b87925',2);m3Txt('+',px,py+5,14,'#fff',900,'center');const vx=90*Math.cos(theta),vy=-90*Math.sin(theta);m3Arrow(px,py,px+vx,py+vy,'#3978e8',3,'v');const fLen=clamp(p.q*p.v*p.B*.035,22,100);m3Arrow(px,py,px+fLen*Math.cos(theta+Math.PI/2),py-fLen*Math.sin(theta+Math.PI/2),'#d95d67',3,'F');
+  m3Txt('Campo magnético entrando no plano (×)',cx,28,12,'#34465f',850,'center');m3Txt(`θ = ${fmt(p.theta,0)}°  ·  F = ${fmt(p.q*p.v*p.B*Math.sin(theta),4)} μN`,cx,310,11,'#52647d',800,'center');break}
+case'magnetic_flux':{
+  const angle=rad(p.theta),x=cx,y=173,scale=clamp(Math.sqrt(p.A/.2),.6,1.5);for(let i=-3;i<=3;i++)m3Arrow(x-245,y+i*31,x+235,y+i*31,'#159b78',2);
+  ctx.save();ctx.translate(x,y);ctx.rotate(-angle*.55);ctx.beginPath();ctx.moveTo(-118*scale,-58*scale);ctx.lineTo(105*scale,-58*scale);ctx.lineTo(145*scale,58*scale);ctx.lineTo(-78*scale,58*scale);ctx.closePath();ctx.fillStyle='rgba(221,236,250,.72)';ctx.fill();ctx.strokeStyle='#3978e8';ctx.lineWidth=3;ctx.stroke();ctx.restore();
+  m3Arrow(x,y,x+100*Math.cos(angle),y-100*Math.sin(angle),'#d98a2c',3,'normal n');m3Arrow(x-230,y-105,x-110,y-105,'#159b78',2,'B');
+  m3Txt('Ângulo entre B e a normal à superfície',cx,30,12,'#34465f',850,'center');m3Txt(`θ = ${fmt(p.theta,0)}°  ·  Φ = BA cos θ`,cx,292,11,'#52647d',800,'center');m3Txt(`Φ = ${fmt(p.B*p.A*Math.cos(angle),4)} Wb`,cx,315,13,'#159b78',850,'center');break}
+case'electric_field':case'electric_field_calc':{
+  if(sc==='electric_field'){
+    const x=cx,y=170,charge=clamp(p.qsource||2,1,5),rays=12;for(let i=0;i<rays;i++){const a=i*Math.PI*2/rays,rr=105;const sx=x+25*Math.cos(a),sy=y+25*Math.sin(a),ex=x+rr*Math.cos(a),ey=y+rr*Math.sin(a);m3Arrow(sx,sy,ex,ey,'#3978e8',2)}
+    m3Circle(x,y,27,'#e66b72','#b84d59',2);m3Txt('+',x,y+7,22,'#fff',900,'center');const testA=state.time*.5,tx=x+142*Math.cos(testA),ty=y+142*Math.sin(testA);m3Circle(tx,ty,11,'#fff','#d28b39',2);m3Txt('+',tx,ty+5,13,'#d28b39',900,'center');m3Arrow(tx,ty,tx+34*Math.cos(testA),ty+34*Math.sin(testA),'#d95d67',2,'F');m3Txt('Linhas de campo saem da carga positiva',cx,310,11,'#52647d',800,'center')
+  }else{
+    const left=110,right=W-110,top=80,bottom=260;m3Rect(left-12,top,20,bottom-top,'#e66b72',null,4);m3Rect(right-8,top,20,bottom-top,'#4d82d8',null,4);for(let y=top+18;y<bottom;y+=32)m3Arrow(left+25,y,right-25,y,'#3978e8',2);m3Circle(cx,170,13,'#e7a43b','#b87925',1);m3Txt('+',cx,175,14,'#fff',900,'center');m3Txt(`E = F/q = ${fmt(p.F/(p.q*1e-6),0)} N/C`,cx,310,13,'#159b78',850,'center')}
+  break}
+case'electric_force':{
+  for(let y=70;y<285;y+=34)m3Arrow(95,y,W-95,y,'#83a9d8',2);const direction=p.q>0?1:-1,x=230+((state.time*38)%Math.max(180,W-460)),y=178;m3Circle(x,y,16,p.q>0?'#e66b72':'#4d82d8','#fff',2);m3Txt(p.q>0?'+':'−',x,y+6,17,'#fff',900,'center');const forceLen=clamp(25+Math.log10(Math.abs(p.q)*p.E+1)*15,35,100);m3Arrow(x,y,x+direction*forceLen,y,'#d95d67',4,'F');m3Txt('Força acompanha E para carga positiva e tem sentido oposto para negativa',cx,310,9,'#52647d',750,'center');m3Txt(`E = ${fmt(p.E,0)} N/C · |q| = ${fmt(p.q,2)} μC`,cx,287,11,'#34465f',800,'center');break}
+case'induction_motor':{
+  const x=cx,y=169,omega=1.2*(p.f/60)*(4/p.p),a=state.time*omega;
+  ctx.save();ctx.beginPath();ctx.arc(x,y,108,0,Math.PI*2);ctx.fillStyle='#edf2f8';ctx.fill();ctx.strokeStyle='#8ea3b9';ctx.lineWidth=15;ctx.stroke();ctx.restore();
+  for(let i=0;i<8;i++){const q=i*Math.PI/4;const sx=x+Math.cos(q)*108,sy=y+Math.sin(q)*108;ctx.save();ctx.translate(sx,sy);ctx.rotate(q+Math.PI/2);m3Rect(-17,-22,34,44,i%2?'#e8a36b':'#7fa6d8','#6b819c',6);for(let j=-1;j<=1;j++)m3Line(-11, j*9,11,j*9,'#fff',2);ctx.restore();}
+  const fieldA=a;m3Arrow(x,y,x+88*Math.cos(fieldA),y+88*Math.sin(fieldA),'#159b78',4,'B girante');
+  ctx.save();ctx.translate(x,y);ctx.rotate(a*.92);ctx.beginPath();ctx.ellipse(0,0,59,34,0,0,Math.PI*2);ctx.fillStyle='#dce8f6';ctx.fill();ctx.strokeStyle='#3978e8';ctx.lineWidth=7;ctx.stroke();m3Line(-44,0,44,0,'#c57a35',4);m3Line(-30,-15,30,15,'#c57a35',3);m3Circle(0,0,8,'#e4a43a','#a96b1c',2);ctx.restore();
+  for(let i=0;i<4;i++){const q=a+i*Math.PI/2;m3Arrow(x+118*Math.cos(q),y+118*Math.sin(q),x+132*Math.cos(q),y+132*Math.sin(q),'#159b78',3)}
+  m3Txt('ESTATOR: campo magnético girante',cx,24,11,'#34465f',850,'center');m3Txt(`f = ${fmt(p.f,0)} Hz  ·  polos = ${p.p}`,cx,47,10,'#159b78',850,'center');m3Txt('ROTOR: correntes induzidas geram torque',cx,315,10,'#52647d',800,'center');break}
+case'general_relativity':{const x=cx,y=155,R=120;for(let i=-4;i<=4;i++){ctx.beginPath();for(let j=0;j<=100;j++){const xx=x+i*32+(j/100-.5)*210,yy=45+j/100*230;const r=Math.hypot(xx-x,yy-y),warp=58*p.M*Math.exp(-r*r/(2*95*95));const py=yy+warp; if(j===0)ctx.moveTo(xx,py);else ctx.lineTo(xx,py)}ctx.strokeStyle='#9bb1cb';ctx.lineWidth=1;ctx.stroke()}for(let j=-3;j<=3;j++){ctx.beginPath();for(let i=0;i<=100;i++){const xx=70+i/100*(W-140),yy=y+j*28,rr=Math.hypot(xx-x,yy-y),py=yy+54*p.M*Math.exp(-rr*rr/(2*105*105));if(i===0)ctx.moveTo(xx,py);else ctx.lineTo(xx,py)}ctx.strokeStyle='#9bb1cb';ctx.stroke()}m3Circle(x,y,29,'#e6a43b','#ba7b25',2);m3Txt('M',x,y+5,15,'#fff',900,'center');ctx.beginPath();ctx.ellipse(x,y-20,clamp(p.r*30,45,180),clamp(p.r*11,16,66),0,0,Math.PI*2);ctx.strokeStyle='#3978e8';ctx.lineWidth=2;ctx.stroke();const a=t*.8,orbX=clamp(p.r*30,45,180),orbY=clamp(p.r*11,16,66);m3Circle(x+orbX*Math.cos(a),y-20+orbY*Math.sin(a),8,'#159b78');m3Txt(`M = ${fmt(p.M,1)} (relativa) · r orbital = ${fmt(p.r,1)} (relativo)`,cx,315,11,'#52647d',800,'center');break}
+case'special_relativity':{const beta=p.beta,cx0=W*.28,cy=170,h=100;m3Rect(cx0-34,cy-h,68,2*h,'#fff','#8ea3bd',7);m3Line(cx0-26,cy-h+8,cx0+26,cy-h+8,'#d98a2c',5);m3Line(cx0-26,cy+h-8,cx0+26,cy+h-8,'#d98a2c',5);m3Arrow(cx0,cy-h+18,cx0,cy+h-18,'#3978e8',3,'luz');const x2=W*.68;m3Rect(x2-48,cy-h,96,2*h,'#fff','#8ea3bd',7);m3Line(x2-39,cy-h+8,x2+39,cy-h+8,'#d98a2c',5);m3Line(x2-39,cy+h-8,x2+39,cy+h-8,'#d98a2c',5);m3Arrow(x2-38,cy-h+18,x2+38,cy+h-18,'#3978e8',3,'trajeto visto');m3Txt('Relógio em repouso',cx0,35,12,'#52647d',800,'center');m3Txt(`Relógio em movimento · β = ${fmt(beta,2)}`,x2,35,12,'#52647d',800,'center');const gamma=1/Math.sqrt(1-beta*beta);m3Txt(`Fator γ = ${fmt(gamma,3)} · dilatação temporal cresce com β`,cx,315,12,'#159b78',850,'center');break}
+case'quantum_levels':{const left=W*.22,right=W*.78,base=270;for(let i=1;i<=5;i++){const y=base-i*43;m3Line(left,y,right,y,'#9db0c8',3);m3Txt(`E${i}`,left-28,y+4,11,'#52647d',800,'right')}const level=clamp(Math.round(p.n),1,3),y1=base-level*43,y2=base-(level+1)*43,matched=Math.abs(p.Ephoton-1)<.11;m3Circle(cx,y1-7,8,'#e7a43b');m3Arrow(cx+22,y1-8,cx+22,y2+8,matched?'#159b78':'#d95d67',3,'ΔE');m3Txt(`Fóton: energia relativa ${fmt(p.Ephoton,1)} · ΔE entre níveis vizinhos = 1`,cx,35,11,'#52647d',800,'center');m3Txt(matched?'Energia compatível: transição permitida':'Energia incompatível: não corresponde à diferença de níveis',cx,315,11,matched?'#159b78':'#b65d64',800,'center');break}
+case'wave_particle':{const x1=W*.18,x2=W*.46,screen=W*.78;m3Line(x1,80,x1,260,'#8ea3bd',8);m3Line(x2,80,x2,145,'#8ea3bd',8);m3Line(x2,195,x2,260,'#8ea3bd',8);m3Rect(screen-5,65,10,210,'#d9e5f3','#8ea3bd',4);for(let i=0;i<20;i++){const yy=95+i*9;m3Line(x1+8,yy,screen-10,yy+Math.sin(i*.8)*20,'#8bb4e5',1,[3,4])}const fringeSpacing=12+p.slit*55;for(let band=-2;band<=2;band++){const by=170+band*fringeSpacing;m3Circle(screen+20,by,5,'#3978e8');m3Circle(screen+30,by,5,'#3978e8')}for(let i=0;i<Math.min(120,p.events);i++){const band=(i%5)-2,yy=170+band*fringeSpacing+Math.sin(i*2.17)*fringeSpacing*.22,xx=screen+12+((i*13)%35);m3Circle(xx,yy,2.1,'#3978e8')}m3Txt('Fonte de partículas',x1,45,10,'#52647d',750,'center');m3Txt('Dupla fenda',x2,45,10,'#52647d',750,'center');m3Txt(`${p.events} detecções ilustradas`,screen+48,45,10,'#52647d',750,'center');m3Txt('Pontos individuais · distribuição acumulada',cx,315,12,'#52647d',800,'center');break}
+case'radiation_penetration':{const x0=115,y=165;const bars=[{x:300,w:22,c:'#d8ad70',l:'papel'},{x:490,w:34,c:'#9baec5',l:'alumínio'},{x:690,w:46,c:'#66778e',l:'chumbo / concreto'}];const colors=['#e6a43a','#3978e8','#d95d67'];const names=['α','β','γ'];names.forEach((n,i)=>{const yy=90+i*75,end=x0+clamp(p.intensity,40,100)/100*665;m3Arrow(x0,yy,end,yy,colors[i],4,n);bars.forEach((b,j)=>{m3Rect(b.x,yy-18,b.w,36,b.c,null,4);if(i===0&&j===0||i===1&&j===1||i===2&&j===2){m3Line(b.x-6,yy-23,b.x+b.w+6,yy+23,'#d95d67',3);m3Line(b.x-6,yy+23,b.x+b.w+6,yy-23,'#d95d67',3)}})});bars.forEach(b=>m3Txt(b.l,b.x+b.w/2,265,10,'#52647d',750,'center'));m3Txt('Comparação qualitativa de penetração',cx,35,13,'#52647d',800,'center');m3Txt('A blindagem real depende da energia e do material.',cx,315,11,'#52647d',750,'center');break}
+case'ionizing_radiation':{const labels=['Rádio','Micro-ondas','Infravermelho','Visível','Ultravioleta','Raios X','Gama'];const colors=['#7899c7','#5dadd0','#62bea5','#e6bf59','#e49a42','#dc775d','#b46ab8'];const x0=75,y=165,w=(W-150)/7;labels.forEach((l,i)=>{m3Rect(x0+i*w,y-35,w-3,70,colors[i],null,5);m3Txt(l,x0+i*w+(w-3)/2,y+58,9,'#52647d',750,'center')});m3Line(x0+4*w,y-63,x0+7*w,y-63,'#d95d67',3);m3Txt('Região em que fótons podem ser ionizantes (dependente da energia)',x0+5.5*w,y-76,9,'#d95d67',800,'center');const markerX=x0+clamp(p.frequency-1,0,9)/9*(W-150);m3Line(markerX,y-52,markerX,y-40,'#17243b',2);m3Circle(markerX,y-42,5,'#17243b');m3Txt(`Frequência relativa: ${p.frequency} · energia do fóton acompanha f (E = h·f)`,cx,315,12,'#52647d',800,'center');break}
+default:m3Txt('Experimento interativo',cx,160,18,'#52647d',800,'center');m3Txt('Ajuste os parâmetros para explorar o fenômeno.',cx,190,12,'#8795a9',600,'center')
+}}
+
+function drawScene(e){if(MODULE3_SCENES.has(e.simulation.scene)){drawModule3Scene(e);return;}if(MODULE2_SCENES.has(e.simulation.scene)){drawModule2Scene(e);return;}
   const p=state.params,t=state.time,sc=e.simulation.scene;clear();
   const cx=W/2;
   switch(sc){
