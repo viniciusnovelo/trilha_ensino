@@ -1,4 +1,4 @@
-"""Whitelist de fórmulas dos Módulos 1 e 2 de Física. Nenhuma expressão é avaliada dinamicamente."""
+"""Whitelist de fórmulas dos Módulos 1, 2 e 3 de Física. Nenhuma expressão é avaliada dinamicamente."""
 from __future__ import annotations
 import math
 from typing import Mapping
@@ -29,6 +29,11 @@ FORMULAS.update({
     'concave_mirror_image',
     'converging_lens_image',
     'diverging_lens_image',
+    'ohm_current', 'wire_resistance', 'series_resistance', 'parallel_resistance',
+    'single_loop_vdrop_r2', 'single_loop_current', 'two_mesh_branch_voltage',
+    'two_mesh_branch_current_r3', 'three_mesh_branch_current_r3', 'electric_power',
+    'two_mesh_power_r3', 'magnetic_wire_uT', 'magnetic_loop_uT', 'magnetic_force_mN',
+    'magnetic_flux_mWb', 'faraday_emf', 'electric_field_NC', 'electric_force_mN',
 })
 SCENES = {
     'mru_track', 'incline_mru', 'mruv_track', 'free_fall', 'incline_mruv',
@@ -73,6 +78,13 @@ SCENES.update({
     'converging_lens',
     'diverging_lens',
     'human_eye',
+    'circuit_concepts', 'electric_field', 'electric_field_calc', 'electric_force',
+    'electric_power', 'faraday_concept', 'faraday_law', 'general_relativity',
+    'induction_motor', 'ionizing_radiation', 'lenz_law', 'magnetic_field',
+    'magnetic_flux', 'magnetic_force', 'magnetic_loop', 'magnetic_wire', 'ohm_law',
+    'ohm_second_law', 'parallel_circuit', 'quantum_levels', 'radiation_penetration',
+    'series_circuit', 'single_loop_current', 'single_loop_drop', 'special_relativity',
+    'three_mesh_circuit', 'two_mesh_circuit', 'two_mesh_power', 'wave_particle',
 })
 CONSTANTS = {'G': 6.67e-11, 'earth_mass': 5.97e24, 'earth_radius': 6_370_000.0, 'pi': math.pi}
 
@@ -132,6 +144,36 @@ def calculate(formula: str, parameters: Mapping[str, float], constants=None) -> 
         if abs(obj - focal) < 1e-12:
             raise ValueError('objeto no foco: imagem no infinito')
         result = focal * obj / (obj - focal)
+    elif formula == 'ohm_current': result = _p(parameters, 'V') / _p(parameters, 'R')
+    elif formula == 'wire_resistance': result = _p(parameters, 'rho') * _p(parameters, 'L') / (_p(parameters, 'A') * 1e-6)
+    elif formula == 'series_resistance': result = _p(parameters, 'R1') + _p(parameters, 'R2') + _p(parameters, 'R3')
+    elif formula == 'parallel_resistance': result = 1 / (1 / _p(parameters, 'R1') + 1 / _p(parameters, 'R2'))
+    elif formula == 'single_loop_vdrop_r2':
+        current = _p(parameters, 'V') / (_p(parameters, 'R1') + _p(parameters, 'R2'))
+        result = current * _p(parameters, 'R2')
+    elif formula == 'single_loop_current': result = _p(parameters, 'V') / (_p(parameters, 'R1') + _p(parameters, 'R2') + _p(parameters, 'R3'))
+    elif formula == 'two_mesh_branch_voltage':
+        equivalent = _p(parameters, 'R1') + (_p(parameters, 'R2') * _p(parameters, 'R3')) / (_p(parameters, 'R2') + _p(parameters, 'R3'))
+        result = _p(parameters, 'V') * ((_p(parameters, 'R2') * _p(parameters, 'R3')) / (_p(parameters, 'R2') + _p(parameters, 'R3'))) / equivalent
+    elif formula == 'two_mesh_branch_current_r3':
+        branch_voltage = calculate('two_mesh_branch_voltage', parameters, constants)
+        result = branch_voltage / _p(parameters, 'R3')
+    elif formula == 'three_mesh_branch_current_r3':
+        parallel = 1 / (1 / _p(parameters, 'R2') + 1 / (_p(parameters, 'R3') + _p(parameters, 'R4')))
+        total_current = _p(parameters, 'V') / (_p(parameters, 'R1') + parallel)
+        branch_voltage = total_current * parallel
+        result = branch_voltage / (_p(parameters, 'R3') + _p(parameters, 'R4'))
+    elif formula == 'electric_power': result = _p(parameters, 'V') ** 2 / _p(parameters, 'R')
+    elif formula == 'two_mesh_power_r3':
+        current = calculate('two_mesh_branch_current_r3', parameters, constants)
+        result = current ** 2 * _p(parameters, 'R3')
+    elif formula == 'magnetic_wire_uT': result = (float(c['vacuum_permeability']) * _p(parameters, 'I') / (2 * pi * _p(parameters, 'r'))) * 1e6
+    elif formula == 'magnetic_loop_uT': result = (float(c['vacuum_permeability']) * _p(parameters, 'I') / (2 * _p(parameters, 'R'))) * 1e6
+    elif formula == 'magnetic_force_mN': result = abs(_p(parameters, 'q')) * 1e-6 * _p(parameters, 'v') * _p(parameters, 'B') * abs(math.sin(math.radians(_p(parameters, 'theta')))) * 1000
+    elif formula == 'magnetic_flux_mWb': result = _p(parameters, 'B') * _p(parameters, 'A') * math.cos(math.radians(_p(parameters, 'theta'))) * 1000
+    elif formula == 'faraday_emf': result = _p(parameters, 'N') * abs(_p(parameters, 'dPhi')) / _p(parameters, 'dt')
+    elif formula == 'electric_field_NC': result = _p(parameters, 'F') / (_p(parameters, 'q') * 1e-6)
+    elif formula == 'electric_force_mN': result = abs(_p(parameters, 'q')) * 1e-6 * _p(parameters, 'E') * 1000
     else:  # pragma: no cover - proteção redundante
         raise ValueError(f"fórmula não suportada: {formula}")
     if not math.isfinite(result):
