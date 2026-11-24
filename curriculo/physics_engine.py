@@ -159,10 +159,10 @@ def calculate(formula: str, parameters: Mapping[str, float], constants=None) -> 
         branch_voltage = calculate('two_mesh_branch_voltage', parameters, constants)
         result = branch_voltage / _p(parameters, 'R3')
     elif formula == 'three_mesh_branch_current_r3':
-        parallel = 1 / (1 / _p(parameters, 'R2') + 1 / (_p(parameters, 'R3') + _p(parameters, 'R4')))
+        parallel = 1 / (1 / _p(parameters, 'R2') + 1 / _p(parameters, 'R3') + 1 / _p(parameters, 'R4'))
         total_current = _p(parameters, 'V') / (_p(parameters, 'R1') + parallel)
         branch_voltage = total_current * parallel
-        result = branch_voltage / (_p(parameters, 'R3') + _p(parameters, 'R4'))
+        result = branch_voltage / _p(parameters, 'R3')
     elif formula == 'electric_power': result = _p(parameters, 'V') ** 2 / _p(parameters, 'R')
     elif formula == 'two_mesh_power_r3':
         current = calculate('two_mesh_branch_current_r3', parameters, constants)
