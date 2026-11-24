@@ -2456,21 +2456,14 @@ def trilha_view(
             modulo.fases_concluidas = 0
             modulo.percentual_progresso = 0
 
-            modulo.desbloqueado = (
-                indice == 0
-            )
+            # A prévia reproduz a mesma regra: todos os módulos
+            # podem ser iniciados, mas as fases seguem a ordem interna.
+            modulo.desbloqueado = True
+            modulo.status = 'atual'
 
-            modulo.status = (
-                'atual'
-                if indice == 0
-                else 'bloqueado'
-            )
+            for fase_indice, fase in enumerate(fases_modulo):
 
-            for fase_indice, fase in enumerate(
-                fases_modulo
-            ):
-
-                if indice == 0 and fase_indice == 0:
+                if fase_indice == 0:
                     fase.status = 'atual'
                 else:
                     fase.status = 'bloqueada'
