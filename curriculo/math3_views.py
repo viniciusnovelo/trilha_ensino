@@ -106,7 +106,7 @@ def math3_check_answer(request, fase_id):
                 "resposta_correta_snapshot":correct_snapshot,"parametros_snapshot":params,"feedback_snapshot":feedback
             })
         return JsonResponse({"correct":correct,"feedback":feedback,"hint":"" if correct else answer.get("hint",""),
-            "expected_display": expected if isinstance(expected, (dict, str)) else (None if expected is None else round(expected,int(answer.get("digits",2))),
+            "expected_display": expected if isinstance(expected, (dict, str)) else (None if expected is None else round(expected,int(answer.get("digits",2)))),
             "unit":answer.get("display_unit",answer.get("unit",""))})
     except (KeyError,TypeError,ValueError,ZeroDivisionError) as exc:
         return JsonResponse({"error":f"Resposta inválida: {exc}"},status=400)
