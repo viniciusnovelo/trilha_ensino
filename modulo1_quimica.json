@@ -1,0 +1,1000 @@
+{
+  "module": {
+    "subject": "Química",
+    "module_number": 1,
+    "title": "1º Módulo de Química",
+    "description": "Matéria e suas Transformações; Modelos Atômicos e Tabela Periódica; Ligações Químicas; Introdução às Reações Químicas e Conservação; Termoquímica Inicial e Matrizes Energéticas.",
+    "version": "1.0.0",
+    "language": "pt-BR"
+  },
+  "phases": [
+    {
+      "number": 1,
+      "title": "Matéria e suas Transformações",
+      "subtitle": "Estados físicos, transformações e separação de misturas",
+      "description": "Observe como a matéria se apresenta, como pode se transformar e quais processos permitem separar os componentes de uma mistura.",
+      "slug": "materia-e-transformacoes",
+      "prefix": "qui1-mat",
+      "exercise_ids": [
+        "qui1-mat-01",
+        "qui1-mat-02",
+        "qui1-mat-03",
+        "qui1-mat-04",
+        "qui1-mat-05",
+        "qui1-mat-06"
+      ],
+      "exercise_count": 6
+    },
+    {
+      "number": 2,
+      "title": "Modelos Atômicos e Tabela Periódica",
+      "subtitle": "Estrutura do átomo e organização dos elementos",
+      "description": "Explore a evolução dos modelos atômicos, a composição do átomo, a distribuição eletrônica e a organização periódica dos elementos.",
+      "slug": "modelos-atomicos-tabela-periodica",
+      "prefix": "qui1-atom",
+      "exercise_ids": [
+        "qui1-atom-01",
+        "qui1-atom-02",
+        "qui1-atom-03",
+        "qui1-atom-04",
+        "qui1-atom-05",
+        "qui1-atom-06"
+      ],
+      "exercise_count": 6
+    },
+    {
+      "number": 3,
+      "title": "Ligações Químicas",
+      "subtitle": "Ligações iônicas, covalentes e metálicas",
+      "description": "Investigue como os átomos se unem e como o tipo de ligação explica propriedades de substâncias e materiais do cotidiano.",
+      "slug": "ligacoes-quimicas",
+      "prefix": "qui1-lig",
+      "exercise_ids": [
+        "qui1-lig-01",
+        "qui1-lig-02",
+        "qui1-lig-03",
+        "qui1-lig-04",
+        "qui1-lig-05",
+        "qui1-lig-06",
+        "qui1-lig-07"
+      ],
+      "exercise_count": 7
+    },
+    {
+      "number": 4,
+      "title": "Introdução às Reações Químicas e Conservação",
+      "subtitle": "Reagentes, produtos e leis ponderais",
+      "description": "Interprete equações químicas e verifique a conservação dos átomos e das massas nas transformações químicas.",
+      "slug": "reacoes-quimicas-conservacao",
+      "prefix": "qui1-rea",
+      "exercise_ids": [
+        "qui1-rea-01",
+        "qui1-rea-02",
+        "qui1-rea-03",
+        "qui1-rea-04",
+        "qui1-rea-05",
+        "qui1-rea-06",
+        "qui1-rea-07"
+      ],
+      "exercise_count": 7
+    },
+    {
+      "number": 5,
+      "title": "Termoquímica Inicial e Matrizes Energéticas",
+      "subtitle": "Trocas de calor e fontes de energia",
+      "description": "Analise processos endotérmicos e exotérmicos e compare fontes renováveis e não renováveis e seus impactos.",
+      "slug": "termoquimica-matrizes-energeticas",
+      "prefix": "qui1-ter",
+      "exercise_ids": [
+        "qui1-ter-01",
+        "qui1-ter-02",
+        "qui1-ter-03",
+        "qui1-ter-04",
+        "qui1-ter-05",
+        "qui1-ter-06",
+        "qui1-ter-07"
+      ],
+      "exercise_count": 7
+    }
+  ],
+  "exercises": [
+    {
+      "id": "qui1-mat-01",
+      "phase": 1,
+      "exercise_number": 1,
+      "title": "Estados físicos da matéria e suas características",
+      "learning_objective": "Diferenciar sólidos, líquidos e gases considerando forma e volume.",
+      "context": "A mesma substância pode apresentar diferentes estados físicos. No modelo de partículas, a organização e a liberdade de movimento ajudam a explicar forma e volume.",
+      "simulation": {
+        "scene": "matter_states",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual alternativa descreve corretamente os três estados físicos mais comuns?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Todo sólido possui forma e volume definidos; o líquido mantém o volume e assume a forma do recipiente; o gás não possui forma nem volume definidos.",
+            "O líquido possui forma e volume definidos, enquanto o sólido assume a forma do recipiente.",
+            "O gás mantém volume definido, mas não possui forma definida.",
+            "Sólidos, líquidos e gases possuem partículas imóveis e igualmente espaçadas."
+          ],
+          "correct": 0,
+          "hint": "Compare o quanto as partículas permanecem próximas e a liberdade de movimento em cada estado.",
+          "explanation": "No sólido, as partículas ficam próximas e organizadas, mantendo forma e volume. No líquido, continuam próximas, mas deslizam umas sobre as outras. No gás, ficam mais afastadas e ocupam o recipiente."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-mat-02",
+      "phase": 1,
+      "exercise_number": 2,
+      "title": "Mudanças de estados físicos da matéria",
+      "learning_objective": "Relacionar a temperatura da água às mudanças de estado físico no modelo didático.",
+      "context": "Ao aquecer ou resfriar a água, sua organização microscópica muda. A simulação usa os valores de referência de 0 °C e 100 °C para água sob pressão atmosférica usual.",
+      "simulation": {
+        "scene": "phase_change",
+        "parameters": [
+          {
+            "key": "temperature",
+            "label": "Temperatura da água",
+            "value": 25,
+            "min": -20,
+            "max": 120,
+            "step": 5,
+            "unit": "°C"
+          }
+        ],
+        "description": "Ajuste a temperatura para observar a organização das partículas e a indicação do estado físico. Os valores de mudança dependem da pressão; a cena adota aproximadamente 1 atm."
+      },
+      "challenge": {
+        "prompt": "Considerando a temperatura atual indicada na simulação, em qual estado físico a água se encontra?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "water_phase",
+          "choices": [
+            {
+              "value": "solid",
+              "label": "Sólido"
+            },
+            {
+              "value": "liquid",
+              "label": "Líquido"
+            },
+            {
+              "value": "gas",
+              "label": "Gasoso"
+            },
+            {
+              "value": "transition",
+              "label": "Em mudança de estado"
+            }
+          ],
+          "hint": "Observe a posição do marcador em relação a 0 °C e 100 °C. Nos valores exatos de mudança, duas fases podem coexistir.",
+          "explanation": "Abaixo de 0 °C, o modelo representa água sólida; entre 0 °C e 100 °C, líquida; acima de 100 °C, gasosa. Em 0 °C ou 100 °C, pode ocorrer coexistência de fases durante a mudança."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-mat-03",
+      "phase": 1,
+      "exercise_number": 3,
+      "title": "Identificação de transformações físicas e químicas",
+      "learning_objective": "Distinguir transformações que alteram apenas o estado ou a forma da matéria daquelas que formam novas substâncias.",
+      "context": "Ao observar um fenômeno, procure verificar se a composição química permanece a mesma ou se aparecem substâncias com propriedades diferentes.",
+      "simulation": {
+        "scene": "physical_chemical",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual situação representa uma transformação química?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "O gelo derretendo em um copo.",
+            "Um pedaço de papel sendo cortado em partes menores.",
+            "Um prego de ferro formando ferrugem.",
+            "Água evaporando ao sol."
+          ],
+          "correct": 2,
+          "hint": "Pergunte-se se surge uma nova substância com composição e propriedades diferentes.",
+          "explanation": "A ferrugem é formada por reações do ferro com substâncias do ambiente, originando compostos de ferro. Derretimento, corte e evaporação são transformações físicas."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-mat-04",
+      "phase": 1,
+      "exercise_number": 4,
+      "title": "Diferenças entre fenômenos físicos e químicos em situações cotidianas",
+      "learning_objective": "Aplicar os critérios de transformação física e química a situações do cotidiano.",
+      "context": "Cozinhar alimentos, triturar materiais e dissolver substâncias são situações comuns em que é necessário analisar se houve formação de novas substâncias.",
+      "simulation": {
+        "scene": "everyday_phenomena",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual alternativa apresenta um fenômeno predominantemente físico?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Queima de madeira em uma fogueira.",
+            "Leite azedando com a formação de novas substâncias.",
+            "Um comprimido efervescente reagindo na água.",
+            "Água líquida congelando e formando gelo."
+          ],
+          "correct": 3,
+          "hint": "A mudança de estado físico não altera a identidade química da água.",
+          "explanation": "Ao congelar, a água passa do estado líquido para o sólido, mas continua sendo H₂O. As demais situações envolvem reações químicas."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-mat-05",
+      "phase": 1,
+      "exercise_number": 5,
+      "title": "Classificação de misturas homogêneas e heterogêneas",
+      "learning_objective": "Identificar o número de fases observáveis em misturas homogêneas e heterogêneas.",
+      "context": "Uma mistura homogênea apresenta uma única fase visível. Uma mistura heterogênea apresenta duas ou mais fases, como água e óleo em repouso.",
+      "simulation": {
+        "scene": "mixture_classifier",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual alternativa apresenta uma mistura homogênea nas condições indicadas?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Água e óleo em repouso.",
+            "Água com sal completamente dissolvido.",
+            "Água e areia após agitação.",
+            "Granito com minerais visíveis."
+          ],
+          "correct": 1,
+          "hint": "Uma mistura homogênea apresenta aspecto uniforme e apenas uma fase visível.",
+          "explanation": "Quando o sal está completamente dissolvido, a solução aquosa apresenta uma única fase. Água e óleo, água e areia e granito apresentam mais de uma fase."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-mat-06",
+      "phase": 1,
+      "exercise_number": 6,
+      "title": "Métodos e processos de separação de misturas",
+      "learning_objective": "Selecionar métodos de separação de acordo com as propriedades dos componentes de uma mistura.",
+      "context": "A escolha do método depende de propriedades como tamanho de partículas, densidade, solubilidade e ponto de ebulição. Filtração, decantação e destilação são técnicas comuns.",
+      "simulation": {
+        "scene": "separation_lab",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual método é mais adequado para separar areia misturada à água?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Destilação fracionada.",
+            "Filtração.",
+            "Imantação.",
+            "Cromatografia."
+          ],
+          "correct": 1,
+          "hint": "A areia é um sólido insolúvel; pense em um material poroso que retenha as partículas sólidas.",
+          "explanation": "Na filtração, o filtro retém a areia enquanto a água atravessa seus poros. A decantação também pode separar fases após sedimentação, mas a filtração é o método solicitado."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-atom-01",
+      "phase": 2,
+      "exercise_number": 1,
+      "title": "Evolução dos modelos atômicos",
+      "learning_objective": "Reconhecer as contribuições gerais dos modelos de Dalton, Thomson, Rutherford e Bohr.",
+      "context": "Os modelos atômicos foram sendo modificados conforme novas evidências experimentais surgiram. Cada proposta acrescentou características ao modo de representar o átomo.",
+      "simulation": {
+        "scene": "atomic_models",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual sequência apresenta a ordem histórica simplificada dos modelos estudados?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Dalton → Thomson → Rutherford → Bohr.",
+            "Thomson → Dalton → Bohr → Rutherford.",
+            "Rutherford → Dalton → Thomson → Bohr.",
+            "Bohr → Rutherford → Dalton → Thomson."
+          ],
+          "correct": 0,
+          "hint": "Dalton propôs o átomo como esfera maciça; depois vieram o modelo de Thomson, o núcleo de Rutherford e os níveis de energia de Bohr.",
+          "explanation": "A sequência didática é Dalton, Thomson, Rutherford e Bohr. Os modelos representam etapas históricas, e não desenhos definitivos do átomo."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-atom-02",
+      "phase": 2,
+      "exercise_number": 2,
+      "title": "Estrutura do átomo: prótons, nêutrons e elétrons",
+      "learning_objective": "Relacionar número atômico, número de massa e quantidade de partículas subatômicas.",
+      "context": "Em um átomo neutro, o número de elétrons é igual ao de prótons. O número de massa corresponde à soma de prótons e nêutrons.",
+      "simulation": {
+        "scene": "atom_structure",
+        "parameters": [
+          {
+            "key": "Z",
+            "label": "Número atômico (Z)",
+            "value": 6,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "A",
+            "label": "Número de massa (A)",
+            "value": 12,
+            "min": 12,
+            "max": 24,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Com os valores atuais de Z e A, quantos nêutrons há no núcleo?",
+        "answer": {
+          "type": "numeric",
+          "formula": "neutron_count",
+          "unit": "nêutrons",
+          "display_unit": "nêutrons",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Use A = Z + N. Isole N para encontrar a quantidade de nêutrons.",
+          "solution": "N = A − Z. Substitua os valores exibidos: N = A − Z."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-atom-03",
+      "phase": 2,
+      "exercise_number": 3,
+      "title": "Distribuição dos elétrons nas camadas eletrônicas",
+      "learning_objective": "Representar a distribuição dos elétrons em camadas para elementos de número atômico até 20.",
+      "context": "Em um átomo neutro, a quantidade total de elétrons é igual ao número atômico. Para os primeiros 20 elementos, a distribuição didática por camadas segue 2, 8, 8 e 2 elétrons.",
+      "simulation": {
+        "scene": "electron_shells",
+        "parameters": [
+          {
+            "key": "Z",
+            "label": "Número atômico (Z)",
+            "value": 17,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": "elétrons"
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Quantos elétrons ficam na camada mais externa para o elemento selecionado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "valence_electrons",
+          "unit": "elétrons",
+          "display_unit": "elétrons",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Distribua os elétrons em camadas a partir da mais interna: até 2 na primeira, até 8 na segunda e até 8 na terceira, considerando os primeiros 20 elementos.",
+          "solution": "A distribuição eletrônica é feita a partir da camada mais interna. Para os primeiros 20 elementos, determine quantos elétrons restam na última camada ocupada."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-atom-04",
+      "phase": 2,
+      "exercise_number": 4,
+      "title": "Número atômico, número de massa e identificação de elementos",
+      "learning_objective": "Identificar um elemento químico a partir de seu número atômico.",
+      "context": "O número atômico Z identifica o elemento químico, pois corresponde à quantidade de prótons no núcleo. A simulação permite selecionar valores de Z entre os primeiros 20 elementos.",
+      "simulation": {
+        "scene": "atomic_identity",
+        "parameters": [
+          {
+            "key": "Z",
+            "label": "Número atômico (Z)",
+            "value": 11,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual elemento corresponde ao número atômico selecionado na representação?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "element_from_z",
+          "choices": [
+            {
+              "value": "H",
+              "label": "H — Hidrogênio"
+            },
+            {
+              "value": "He",
+              "label": "He — Hélio"
+            },
+            {
+              "value": "Li",
+              "label": "Li — Lítio"
+            },
+            {
+              "value": "Be",
+              "label": "Be — Berílio"
+            },
+            {
+              "value": "B",
+              "label": "B — Boro"
+            },
+            {
+              "value": "C",
+              "label": "C — Carbono"
+            },
+            {
+              "value": "N",
+              "label": "N — Nitrogênio"
+            },
+            {
+              "value": "O",
+              "label": "O — Oxigênio"
+            },
+            {
+              "value": "F",
+              "label": "F — Flúor"
+            },
+            {
+              "value": "Ne",
+              "label": "Ne — Neônio"
+            },
+            {
+              "value": "Na",
+              "label": "Na — Sódio"
+            },
+            {
+              "value": "Mg",
+              "label": "Mg — Magnésio"
+            },
+            {
+              "value": "Al",
+              "label": "Al — Alumínio"
+            },
+            {
+              "value": "Si",
+              "label": "Si — Silício"
+            },
+            {
+              "value": "P",
+              "label": "P — Fósforo"
+            },
+            {
+              "value": "S",
+              "label": "S — Enxofre"
+            },
+            {
+              "value": "Cl",
+              "label": "Cl — Cloro"
+            },
+            {
+              "value": "Ar",
+              "label": "Ar — Argônio"
+            },
+            {
+              "value": "K",
+              "label": "K — Potássio"
+            },
+            {
+              "value": "Ca",
+              "label": "Ca — Cálcio"
+            }
+          ],
+          "hint": "Consulte a relação entre número atômico e elemento: cada valor de Z identifica um único elemento.",
+          "explanation": "O número atômico corresponde ao número de prótons. A Tabela Periódica organiza os elementos em ordem crescente de Z."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-atom-05",
+      "phase": 2,
+      "exercise_number": 5,
+      "title": "Organização e classificação dos elementos na Tabela Periódica",
+      "learning_objective": "Relacionar a posição de um elemento ao período da Tabela Periódica.",
+      "context": "Os elementos são organizados em ordem crescente de número atômico. As linhas horizontais são chamadas períodos; os elementos de um mesmo período ocupam o mesmo número de camadas eletrônicas ocupadas no modelo simplificado.",
+      "simulation": {
+        "scene": "periodic_table",
+        "parameters": [
+          {
+            "key": "Z",
+            "label": "Número atômico selecionado",
+            "value": 17,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Em qual período da Tabela Periódica está o elemento selecionado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "period_from_z",
+          "choices": [
+            {
+              "value": "1",
+              "label": "1º período"
+            },
+            {
+              "value": "2",
+              "label": "2º período"
+            },
+            {
+              "value": "3",
+              "label": "3º período"
+            },
+            {
+              "value": "4",
+              "label": "4º período"
+            }
+          ],
+          "hint": "Localize o elemento destacado e identifique a linha horizontal em que ele está.",
+          "explanation": "Para os 20 primeiros elementos: Z=1–2 fica no 1º período; Z=3–10 no 2º; Z=11–18 no 3º; Z=19–20 no 4º."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-atom-06",
+      "phase": 2,
+      "exercise_number": 6,
+      "title": "Identificação das propriedades e características dos elementos químicos",
+      "learning_objective": "Relacionar propriedades gerais a metais, ametais e gases nobres.",
+      "context": "A Tabela Periódica permite identificar famílias e tendências. Metais, ametais e gases nobres apresentam características diferentes, embora existam exceções e variações entre elementos.",
+      "simulation": {
+        "scene": "element_properties",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual característica é geralmente associada aos gases nobres?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Alta tendência a formar sais por transferência de elétrons.",
+            "Grande reatividade com a maioria das substâncias em condições ambientes.",
+            "Baixa reatividade química em condições usuais, devido à camada de valência completa.",
+            "Todos são sólidos metálicos à temperatura ambiente."
+          ],
+          "correct": 2,
+          "hint": "Observe a camada eletrônica mais externa do Neônio na representação.",
+          "explanation": "Os gases nobres possuem camada de valência completa, o que contribui para sua baixa reatividade química em condições usuais."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-lig-01",
+      "phase": 3,
+      "exercise_number": 1,
+      "title": "Conceitos e características das ligações químicas",
+      "learning_objective": "Diferenciar os princípios gerais das ligações iônica, covalente e metálica.",
+      "context": "Os átomos podem se unir por diferentes interações. Em modelos introdutórios, a ligação iônica envolve transferência de elétrons, a covalente envolve compartilhamento e a metálica envolve elétrons deslocalizados.",
+      "simulation": {
+        "scene": "bond_concepts",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual alternativa relaciona corretamente os três tipos de ligação?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Iônica: compartilhamento; covalente: transferência; metálica: elétrons presos em pares isolados.",
+            "Iônica: atração entre íons; covalente: compartilhamento de pares eletrônicos; metálica: cátions em rede com elétrons deslocalizados.",
+            "Iônica: apenas entre ametais; covalente: apenas entre metais; metálica: entre moléculas de água.",
+            "Os três tipos de ligação ocorrem exclusivamente por transferência integral de elétrons."
+          ],
+          "correct": 1,
+          "hint": "Associe transferência, compartilhamento e elétrons deslocalizados aos três modelos de ligação.",
+          "explanation": "A ligação iônica envolve atração eletrostática entre íons; a covalente envolve compartilhamento de pares de elétrons; a metálica é modelada por cátions em rede e elétrons deslocalizados."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-lig-02",
+      "phase": 3,
+      "exercise_number": 2,
+      "title": "Formação de ligações iônicas",
+      "learning_objective": "Explicar a formação de íons por transferência de elétrons e a atração entre cargas opostas.",
+      "context": "Na formação do cloreto de sódio, o sódio perde um elétron e forma Na⁺, enquanto o cloro recebe esse elétron e forma Cl⁻. A atração entre os íons contribui para a formação do sólido iônico.",
+      "simulation": {
+        "scene": "ionic_bond",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Na formação de NaCl, o que ocorre no modelo de ligação iônica?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "O sódio recebe um elétron e forma Na⁻; o cloro perde um elétron e forma Cl⁺.",
+            "Sódio e cloro compartilham igualmente um par de elétrons.",
+            "O sódio perde um elétron e forma Na⁺; o cloro recebe um elétron e forma Cl⁻.",
+            "Os núcleos de sódio e cloro se fundem para formar um novo núcleo."
+          ],
+          "correct": 2,
+          "hint": "Acompanhe a seta do elétron: ela sai do sódio e chega ao cloro.",
+          "explanation": "O sódio perde um elétron, tornando-se cátion Na⁺. O cloro ganha esse elétron, tornando-se ânion Cl⁻. A atração eletrostática entre cargas opostas caracteriza o modelo iônico."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-lig-03",
+      "phase": 3,
+      "exercise_number": 3,
+      "title": "Formação de ligações covalentes",
+      "learning_objective": "Relacionar a ordem de ligação ao número de pares de elétrons compartilhados no modelo.",
+      "context": "Em ligações covalentes, os átomos compartilham pares eletrônicos. Uma ligação simples corresponde a um par compartilhado, uma dupla a dois e uma tripla a três pares.",
+      "simulation": {
+        "scene": "covalent_bond",
+        "parameters": [
+          {
+            "key": "sharedPairs",
+            "label": "Pares compartilhados",
+            "value": 2,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "pares"
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Quantos pares de elétrons estão sendo compartilhados na representação?",
+        "answer": {
+          "type": "numeric",
+          "formula": "covalent_order",
+          "unit": "pares",
+          "display_unit": "pares",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Conte os pares de pontos entre os dois átomos. Cada par compartilhado representa um par de elétrons.",
+          "solution": "A ordem da ligação no modelo corresponde ao número de pares eletrônicos compartilhados: 1 para simples, 2 para dupla e 3 para tripla."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-lig-04",
+      "phase": 3,
+      "exercise_number": 4,
+      "title": "Formação de ligações metálicas",
+      "learning_objective": "Reconhecer o modelo de rede de cátions metálicos imersa em elétrons deslocalizados.",
+      "context": "Em um metal, os elétrons de valência podem se movimentar pela estrutura, contribuindo para propriedades como condução elétrica e térmica e maleabilidade.",
+      "simulation": {
+        "scene": "metallic_bond",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "No modelo de ligação metálica, como os elétrons de valência são representados?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Presos permanentemente entre dois átomos específicos.",
+            "Transferidos para formar uma rede de ânions e cátions isolados.",
+            "Deslocalizados, podendo se movimentar pela estrutura metálica.",
+            "Eliminados completamente dos átomos."
+          ],
+          "correct": 2,
+          "hint": "Observe os pequenos pontos que circulam entre os cátions da rede metálica.",
+          "explanation": "O modelo metálico considera cátions organizados em uma rede e elétrons de valência deslocalizados, que podem se mover pelo material."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-lig-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Identificação e diferenciação dos tipos de ligações químicas",
+      "learning_objective": "Classificar uma substância considerando o tipo predominante de ligação química.",
+      "context": "A composição e o tipo de elementos ajudam a prever o modelo de ligação mais adequado. Compostos como NaCl são usualmente representados por uma rede iônica; moléculas como O₂ possuem ligação covalente.",
+      "simulation": {
+        "scene": "bond_classifier",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual é o tipo de ligação predominante no cloreto de sódio (NaCl)?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Covalente.",
+            "Iônica.",
+            "Metálica.",
+            "Ponte de hidrogênio como ligação intramolecular principal."
+          ],
+          "correct": 1,
+          "hint": "O sódio é metal e o cloro é ametal; observe a transferência de elétron representada.",
+          "explanation": "O NaCl é um composto iônico: a transferência de elétron forma Na⁺ e Cl⁻, que se organizam em uma rede cristalina."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-lig-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Propriedades das substâncias de acordo com suas ligações químicas",
+      "learning_objective": "Relacionar propriedades macroscópicas de substâncias iônicas, moleculares e metálicas ao tipo de ligação.",
+      "context": "O tipo de ligação e a estrutura do material influenciam propriedades como ponto de fusão, condutividade elétrica e comportamento mecânico.",
+      "simulation": {
+        "scene": "bond_properties",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual afirmação é compatível com o comportamento típico de um composto iônico?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Conduz corrente elétrica no estado sólido porque os íons se deslocam livremente.",
+            "Pode conduzir corrente quando fundido ou em solução aquosa, pois os íons ficam móveis.",
+            "É sempre gasoso à temperatura ambiente.",
+            "É formado por elétrons completamente livres e cátions metálicos."
+          ],
+          "correct": 1,
+          "hint": "No sólido iônico, os íons ocupam posições fixas; quando fundido ou dissolvido, podem se movimentar.",
+          "explanation": "Em um sólido iônico, os íons estão presos na rede cristalina. No estado fundido ou em solução aquosa, os íons podem se deslocar e transportar carga elétrica."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-lig-07",
+      "phase": 3,
+      "exercise_number": 7,
+      "title": "Relação entre ligações químicas e propriedades dos materiais no cotidiano",
+      "learning_objective": "Explicar propriedades de materiais cotidianos a partir de seus modelos de ligação.",
+      "context": "Fios de cobre conduzem eletricidade, cristais de sal são quebradiços e o diamante é muito duro. O modelo de ligação ajuda a explicar essas propriedades.",
+      "simulation": {
+        "scene": "material_bonds",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Por que o cobre é amplamente utilizado em fios elétricos?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Porque suas ligações metálicas permitem a movimentação de elétrons deslocalizados.",
+            "Porque é um composto iônico cujos íons ficam fixos no sólido.",
+            "Porque é formado por moléculas isoladas que não interagem.",
+            "Porque não possui elétrons de valência."
+          ],
+          "correct": 0,
+          "hint": "Relacione a condução elétrica dos metais ao movimento dos elétrons de valência deslocalizados.",
+          "explanation": "A ligação metálica apresenta elétrons deslocalizados que podem se movimentar pela estrutura, permitindo a condução elétrica. O cobre também apresenta boa ductilidade, útil na fabricação de fios."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-rea-01",
+      "phase": 4,
+      "exercise_number": 1,
+      "title": "Conceitos fundamentais das reações químicas",
+      "learning_objective": "Reconhecer que uma reação química reorganiza átomos e forma novas substâncias.",
+      "context": "Em uma reação química, ligações são rompidas e formadas. Os átomos presentes nos reagentes são reorganizados para formar os produtos, respeitando a conservação dos elementos.",
+      "simulation": {
+        "scene": "reaction_concept",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "O que caracteriza uma reação química?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Apenas uma mudança de estado físico, sem alteração na composição.",
+            "A formação de novas substâncias por reorganização dos átomos.",
+            "A criação ou destruição de átomos durante qualquer reação comum.",
+            "A mudança de tamanho de um material sem alteração de composição."
+          ],
+          "correct": 1,
+          "hint": "Compare a composição das substâncias antes e depois da transformação.",
+          "explanation": "Uma reação química transforma reagentes em produtos por reorganização dos átomos. Em reações químicas comuns, os átomos não são criados nem destruídos."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-rea-02",
+      "phase": 4,
+      "exercise_number": 2,
+      "title": "Identificação de reagentes e produtos em reações químicas",
+      "learning_objective": "Identificar reagentes e produtos a partir de uma equação química.",
+      "context": "Na equação 2H₂ + O₂ → 2H₂O, as substâncias à esquerda da seta são consumidas e as que aparecem à direita são formadas.",
+      "simulation": {
+        "scene": "reaction_roles",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Na equação 2H₂ + O₂ → 2H₂O, qual é o produto da reação?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "H₂.",
+            "O₂.",
+            "H₂O.",
+            "H₂ e O₂."
+          ],
+          "correct": 2,
+          "hint": "Em uma equação química, leia a seta da esquerda para a direita: reagentes → produtos.",
+          "explanation": "H₂ e O₂ são reagentes, pois aparecem antes da seta. H₂O é o produto, pois aparece depois da seta."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-rea-03",
+      "phase": 4,
+      "exercise_number": 3,
+      "title": "Representação de transformações por meio de equações químicas",
+      "learning_objective": "Balancear uma equação química simples para conservar a quantidade de átomos.",
+      "context": "Uma equação química balanceada apresenta a mesma quantidade de átomos de cada elemento nos dois lados. Considere H₂ + O₂ → H₂O.",
+      "simulation": {
+        "scene": "equation_builder",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Ao balancear H₂ + O₂ → H₂O, qual coeficiente deve ser colocado antes de O₂?",
+        "answer": {
+          "type": "numeric",
+          "formula": "oxygen_coefficient",
+          "unit": "coeficiente",
+          "display_unit": "coeficiente",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Conte os átomos de oxigênio nos reagentes e nos produtos. Primeiro ajuste a quantidade de moléculas de água para obter número par de átomos de oxigênio.",
+          "solution": "A equação balanceada é 2H₂ + O₂ → 2H₂O. Portanto, o coeficiente de O₂ é 1."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-rea-04",
+      "phase": 4,
+      "exercise_number": 4,
+      "title": "Interpretação de equações químicas",
+      "learning_objective": "Interpretar os coeficientes de uma equação balanceada como proporções entre partículas.",
+      "context": "Na equação 2H₂ + O₂ → 2H₂O, a proporção é de duas moléculas de hidrogênio para uma de oxigênio e duas de água. Considere hidrogênio suficiente.",
+      "simulation": {
+        "scene": "equation_interpret",
+        "parameters": [
+          {
+            "key": "o2",
+            "label": "Moléculas de O₂ disponíveis",
+            "value": 3,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": "moléculas"
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Com a quantidade de O₂ indicada e H₂ em excesso, quantas moléculas de H₂O podem ser formadas?",
+        "answer": {
+          "type": "numeric",
+          "formula": "water_from_oxygen",
+          "unit": "moléculas",
+          "display_unit": "moléculas",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Use a proporção da equação: 1 molécula de O₂ produz 2 moléculas de H₂O, se houver H₂ suficiente.",
+          "solution": "Pela proporção 1 O₂ : 2 H₂O, multiplique a quantidade de O₂ por 2."
+        }
+      },
