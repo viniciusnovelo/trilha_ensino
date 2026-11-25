@@ -5,9 +5,13 @@ from . import physics_views
 from . import math1_views
 from . import math2_views
 from . import math3_views
+from . import chem1_views
 
 
 urlpatterns = [
+    path('quimica1/fase/<int:fase_id>/', chem1_views.chem1_player, name='chem1_player'),
+    path('quimica1/fase/<int:fase_id>/verificar-resposta/', chem1_views.chem1_check_answer, name='chem1_check_answer'),
+    path('quimica1/fase/<int:fase_id>/finalizar/', chem1_views.chem1_finish_phase, name='chem1_finish_phase'),
     path('matematica3/fase/<int:fase_id>/', math3_views.math3_player, name='math3_player'),
     path('matematica3/fase/<int:fase_id>/responder/', math3_views.math3_check_answer, name='math3_check_answer'),
     path('matematica3/fase/<int:fase_id>/finalizar/', math3_views.math3_finish_phase, name='math3_finish_phase'),
