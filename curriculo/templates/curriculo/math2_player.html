@@ -79,7 +79,7 @@ body[data-appearance="claro"] .transport button{color:#17283b;background:#e2ebf4
 {% include 'gamificacao/partials/paisagem_animada.html' %}
 <header class="game-header"><div class="game-header-inner"><div class="game-header-top">
 <a class="back-link" href="{% url 'trilha' fase.modulo.disciplina_id %}"><span>←</span><span>Painel</span></a><div class="brand"><p class="brand-kicker">TRILHA</p><h1 class="brand-title">Matemática 2</h1></div>
-<div class="hud">{% if papel_efetivo == 'aluno' %}{% include 'gamificacao/partials/controle_aparencia.html' %}{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span><span class="hud-pill coins">◎ {{ perfil.moedas }}</span><span class="hud-pill lives">♡ {{ perfil.vidas }}</span>{% else %}<span class="hud-pill teacher">Professor</span>{% endif %}<span class="hud-pill xp" id="xpPill">0 XP</span></div>
+<div class="hud">{% if papel_efetivo == 'aluno' %}{% include 'gamificacao/partials/controle_aparencia.html' %}{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span><span class="hud-pill coins" id="coinsPill">◎ {{ perfil.moedas }}</span><span class="hud-pill lives">♡ {{ perfil.vidas }}</span>{% else %}<span class="hud-pill teacher">Professor</span>{% endif %}<span class="hud-pill xp" id="xpPill">0 XP</span></div>
 </div><div class="phase-progress"><div class="phase-meta"><span class="phase-name" id="phaseName">MATEMÁTICA 1</span><span id="progressText">0 / 35</span></div><div class="phase-track"><div class="phase-fill" id="progressFill"></div></div></div></div></header>
 <main class="shell"><div class="layout"><section id="content"><div class="content-card empty">Carregando laboratório de Matemática…</div></section></div><div class="footer-note">Progresso, tentativas e XP registrados na plataforma · Simulações didáticas esquemáticas.</div></main></div><div class="toast" id="toast"></div>
 {{ math2_payload|json_script:"math2-data" }}
@@ -159,7 +159,7 @@ async function checkAnswer(e){
   if(result.correct){
    const finish=await fetch(endpoint+'finalizar/',{method:'POST',headers:{'X-CSRFToken':decodeURIComponent(csrf)}});
    const completed=await finish.json();if(!finish.ok){toast(completed.error||'Não foi possível finalizar a fase.');return}
-   state.completed.add(e.id);updateProgress();$('xpPill').textContent=completed.xp_ganho+' XP';$('nextBtn').style.display='inline-block';$('checkBtn').disabled=true;$('checkBtn').textContent='Concluído ✓';msg+=' Fase concluída! +'+completed.xp_ganho+' XP.';
+   state.completed.add(e.id);updateProgress();$('xpPill').textContent=completed.xp_ganho+' XP';$('nextBtn').style.display='inline-block';$('checkBtn').disabled=true;$('checkBtn').textContent='Concluído ✓';msg+=' Fase concluída! +'+completed.xp_ganho+' XP e +'+completed.moedas_ganhas+' moedas.';$('coinsPill').textContent='◎ '+(Number($('coinsPill').textContent.replace(/[^0-9]/g,''))+Number(completed.moedas_ganhas));
   }else{$('checkBtn').disabled=false}
   f.innerHTML='<b>'+(result.correct?'Resposta correta! ✦':'Ainda não é isso.')+'</b><br>'+safe(msg);
  }catch(error){toast('Falha de comunicação com o servidor. Tente novamente.')}
