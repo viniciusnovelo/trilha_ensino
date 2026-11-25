@@ -60,11 +60,11 @@ def validate_math3_source(data):
 @transaction.atomic
 def import_math3_game(data):
     phases, grouped = validate_math3_source(data)
-    materia, _ = Materia.objects.update_or_create(
+    materia, _ = Materia.objects.get_or_create(
         slug="matematica",
         defaults={"nome": "Matemática", "descricao": "Jogos de Matemática", "icone": "calculator", "ordem": 2, "ativo": True},
     )
-    game, _ = Disciplina.objects.update_or_create(
+    game, _ = Disciplina.objects.get_or_create(
         slug="matematica-3",
         defaults={"nome": "Matemática 3", "descricao": data["module"].get("description", ""), "materia": materia, "icone": "calculator", "ordem": 3, "ativo": False},
     )
@@ -83,7 +83,7 @@ def import_math3_game(data):
             dynamic = {**exercise, "source_math_module": 3, "source_exercise_id": exercise["id"]}
             question, _ = Questao.objects.update_or_create(
                 codigo_fonte=exercise["id"],
-                defaults={"fase": phase, "enunciado": exercise["challenge"]["prompt"], "explicacao_erro": answer.get("explanation", answer.get("solution", "")), "tipo_resposta": answer["type"], "dados_dinamicos": dynamic},
+                defaults={"fase": phase, "enunciado": exercise["challenge"]["prompt"], "explicacao_erro": answer.get("explanation", answer.get("solution", "")), "tipo_resposta": ("choice" if answer["type"] in {"choice", "dynamic_choice"} else "numeric"), "dados_dinamicos": dynamic},
             )
             if answer["type"] == "choice":
                 for index, option in enumerate(answer["choices"], 1):
