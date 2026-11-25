@@ -1,0 +1,2098 @@
+{
+  "module": {
+    "subject": "Matemática",
+    "module_number": 2,
+    "title": "2º Módulo de Matemática",
+    "description": "Geometria Espacial; Trigonometria Avançada; Matrizes, Determinantes e Sistemas Lineares; Análise Combinatória e Probabilidade; Funções Transcendentes.",
+    "version": "1.0.0",
+    "language": "pt-BR"
+  },
+  "phases": [
+    {
+      "number": 1,
+      "title": "Geometria Espacial",
+      "subtitle": "Poliedros, prismas, cilindros, cones e esferas",
+      "description": "Investigue elementos, relações de Euler, áreas e volumes de sólidos geométricos.",
+      "slug": "geometria-espacial",
+      "prefix": "mat2-geo",
+      "exercise_ids": [
+        "mat2-geo-01",
+        "mat2-geo-02",
+        "mat2-geo-03",
+        "mat2-geo-04",
+        "mat2-geo-05",
+        "mat2-geo-06",
+        "mat2-geo-07",
+        "mat2-geo-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 2,
+      "title": "Trigonometria Avançada",
+      "subtitle": "Ciclo trigonométrico, funções e leis dos senos e cossenos",
+      "description": "Explore ângulos, quadrantes, gráficos trigonométricos e resolução de triângulos.",
+      "slug": "trigonometria-avancada",
+      "prefix": "mat2-trig",
+      "exercise_ids": [
+        "mat2-trig-01",
+        "mat2-trig-02",
+        "mat2-trig-03",
+        "mat2-trig-04",
+        "mat2-trig-05",
+        "mat2-trig-06",
+        "mat2-trig-07",
+        "mat2-trig-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 3,
+      "title": "Matrizes, Determinantes e Sistemas Lineares",
+      "subtitle": "Operações matriciais, determinantes e resolução de sistemas",
+      "description": "Manipule matrizes, calcule determinantes e resolva sistemas por diferentes métodos.",
+      "slug": "matrizes-determinantes-sistemas-lineares",
+      "prefix": "mat2-mat",
+      "exercise_ids": [
+        "mat2-mat-01",
+        "mat2-mat-02",
+        "mat2-mat-03",
+        "mat2-mat-04",
+        "mat2-mat-05",
+        "mat2-mat-06",
+        "mat2-mat-07",
+        "mat2-mat-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 4,
+      "title": "Análise Combinatória e Probabilidade",
+      "subtitle": "Contagem, permutações, arranjos, combinações e eventos",
+      "description": "Conte possibilidades, organize agrupamentos e calcule probabilidades simples e compostas.",
+      "slug": "analise-combinatoria-probabilidade",
+      "prefix": "mat2-comb",
+      "exercise_ids": [
+        "mat2-comb-01",
+        "mat2-comb-02",
+        "mat2-comb-03",
+        "mat2-comb-04",
+        "mat2-comb-05",
+        "mat2-comb-06",
+        "mat2-comb-07",
+        "mat2-comb-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 5,
+      "title": "Funções Transcendentes",
+      "subtitle": "Exponenciais, logaritmos, crescimento e decaimento",
+      "description": "Observe modelos exponenciais e logarítmicos em situações de população, juros e meia-vida.",
+      "slug": "funcoes-transcendentes",
+      "prefix": "mat2-func",
+      "exercise_ids": [
+        "mat2-func-01",
+        "mat2-func-02",
+        "mat2-func-03",
+        "mat2-func-04",
+        "mat2-func-05",
+        "mat2-func-06",
+        "mat2-func-07"
+      ],
+      "exercise_count": 7
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mat2-geo-01",
+      "phase": 1,
+      "exercise_number": 1,
+      "title": "Poliedros: identificação de vértices, faces e arestas",
+      "learning_objective": "Identificar vértices, faces e arestas de poliedros e distinguir esses elementos em representações espaciais.",
+      "context": "Uma embalagem em forma de cubo é um poliedro: suas superfícies planas são faces, os encontros entre faces são arestas e os pontos de encontro das arestas são vértices.",
+      "simulation": {
+        "scene": "polyhedron",
+        "parameters": [],
+        "description": "Explore a representação, observe as relações matemáticas e use a experiência para justificar sua resposta."
+      },
+      "challenge": {
+        "prompt": "Escolha a alternativa correta.",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Vértices são os segmentos; arestas são as superfícies planas; faces são os pontos.",
+            "Faces são polígonos, arestas são segmentos de encontro entre faces e vértices são os pontos de encontro das arestas.",
+            "Todo poliedro possui superfície curva.",
+            "Arestas e vértices representam a mesma coisa."
+          ],
+          "correct": 1,
+          "hint": "Observe os cantos do sólido, os segmentos que ligam esses cantos e as regiões planas que os envolvem.",
+          "explanation": "Em um poliedro, faces são regiões planas poligonais, arestas são os segmentos de encontro entre faces e vértices são os pontos onde as arestas se encontram.",
+          "solution": "Em um poliedro, faces são regiões planas poligonais, arestas são os segmentos de encontro entre faces e vértices são os pontos onde as arestas se encontram."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-geo-02",
+      "phase": 1,
+      "exercise_number": 2,
+      "title": "Relação de Euler e suas aplicações",
+      "learning_objective": "Aplicar V − A + F = 2 em poliedros convexos.",
+      "context": "Para conferir o modelo de um poliedro convexo, conhecemos a quantidade de vértices e faces e precisamos determinar o número de arestas.",
+      "simulation": {
+        "scene": "euler_relation",
+        "parameters": [
+          {
+            "key": "vertices",
+            "label": "Número de vértices (V)",
+            "value": 8,
+            "min": 4,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "faces",
+            "label": "Número de faces (F)",
+            "value": 6,
+            "min": 4,
+            "max": 14,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Um poliedro convexo possui V vértices e F faces. Quantas arestas A ele possui, considerando V − A + F = 2?",
+        "answer": {
+          "type": "numeric",
+          "formula": "euler_edges",
+          "unit": "arestas",
+          "display_unit": "arestas",
+          "digits": 0,
+          "hint": "Isole A na relação de Euler: V − A + F = 2.",
+          "solution": "Reorganizando V − A + F = 2, obtemos A = V + F − 2. Substituindo os valores atuais, A = 8 + 6 − 2 = 12."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-geo-03",
+      "phase": 1,
+      "exercise_number": 3,
+      "title": "Prismas: identificação de elementos e classificação",
+      "learning_objective": "Relacionar o número de lados da base de um prisma ao número de vértices do sólido.",
+      "context": "Prismas são classificados pelo polígono de suas bases. Um prisma de base pentagonal possui duas bases congruentes e paralelas.",
+      "simulation": {
+        "scene": "prism_identification",
+        "parameters": [
+          {
+            "key": "sides",
+            "label": "Lados de cada base",
+            "value": 5,
+            "min": 3,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Um prisma possui bases com n lados. Quantos vértices o prisma apresenta ao todo?",
+        "answer": {
+          "type": "numeric",
+          "formula": "prism_vertices",
+          "unit": "vértices",
+          "display_unit": "vértices",
+          "digits": 0,
+          "hint": "Um prisma possui duas bases iguais. Cada base contribui com n vértices.",
+          "solution": "O total de vértices é V = 2n. Para uma base pentagonal, V = 2 × 5 = 10."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-geo-04",
+      "phase": 1,
+      "exercise_number": 4,
+      "title": "Cálculo de volumes de prismas",
+      "learning_objective": "Calcular o volume de um prisma a partir da área da base e da altura.",
+      "context": "Uma caixa prismática será preenchida. A quantidade de espaço interno depende da área da base multiplicada pela altura.",
+      "simulation": {
+        "scene": "prism_volume",
+        "parameters": [
+          {
+            "key": "base_area",
+            "label": "Área da base",
+            "value": 24,
+            "min": 5,
+            "max": 60,
+            "step": 1,
+            "unit": "cm²"
+          },
+          {
+            "key": "height",
+            "label": "Altura do prisma",
+            "value": 8,
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "unit": "cm"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o volume do prisma com os valores atuais?",
+        "answer": {
+          "type": "numeric",
+          "formula": "prism_volume",
+          "unit": "cm³",
+          "display_unit": "cm³",
+          "digits": 1,
+          "hint": "Use V = A₍base₎ × h.",
+          "solution": "O volume de um prisma é V = A₍base₎ · h. Assim, V = 24 × 8 = 192 cm³."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-geo-05",
+      "phase": 1,
+      "exercise_number": 5,
+      "title": "Área lateral e área total de prismas",
+      "learning_objective": "Determinar áreas lateral e total de prismas retos.",
+      "context": "Uma embalagem precisa de material para cobrir as faces laterais e as duas bases. Para um prisma reto, a área lateral é o perímetro da base vezes a altura.",
+      "simulation": {
+        "scene": "prism_area",
+        "parameters": [
+          {
+            "key": "base_perimeter",
+            "label": "Perímetro da base",
+            "value": 18,
+            "min": 6,
+            "max": 40,
+            "step": 1,
+            "unit": "cm"
+          },
+          {
+            "key": "base_area",
+            "label": "Área de uma base",
+            "value": 20,
+            "min": 4,
+            "max": 80,
+            "step": 1,
+            "unit": "cm²"
+          },
+          {
+            "key": "height",
+            "label": "Altura",
+            "value": 7,
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "unit": "cm"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a área total do prisma reto?",
+        "answer": {
+          "type": "numeric",
+          "formula": "prism_total_area",
+          "unit": "cm²",
+          "display_unit": "cm²",
+          "digits": 1,
+          "hint": "Calcule primeiro Aₗ = P₍base₎ × h. Depois some as duas bases: Aₜ = Aₗ + 2A₍base₎.",
+          "solution": "Aₗ = 18 × 7 = 126 cm². Aₜ = 126 + 2 × 20 = 166 cm²."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-geo-06",
+      "phase": 1,
+      "exercise_number": 6,
+      "title": "Cilindros: cálculo de áreas e volumes",
+      "learning_objective": "Calcular volume e interpretar área lateral e área total de cilindros.",
+      "context": "Um reservatório cilíndrico tem raio e altura definidos. O volume mede sua capacidade, enquanto as áreas descrevem o material necessário para sua superfície.",
+      "simulation": {
+        "scene": "cylinder_geometry",
+        "parameters": [
+          {
+            "key": "radius",
+            "label": "Raio da base",
+            "value": 3,
+            "min": 1,
+            "max": 8,
+            "step": 0.5,
+            "unit": "cm"
+          },
+          {
+            "key": "height",
+            "label": "Altura",
+            "value": 8,
+            "min": 2,
+            "max": 16,
+            "step": 1,
+            "unit": "cm"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o volume do cilindro? Use π ≈ 3,1416.",
+        "answer": {
+          "type": "numeric",
+          "formula": "cylinder_volume",
+          "unit": "cm³",
+          "display_unit": "cm³",
+          "digits": 2,
+          "hint": "A área da base é πr². Multiplique essa área pela altura: V = πr²h.",
+          "solution": "V = π · 3² · 8 = 72π ≈ 226,19 cm³. A área lateral é 2πrh e a área total é 2πr(r + h)."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-geo-07",
+      "phase": 1,
+      "exercise_number": 7,
+      "title": "Cones: cálculo de áreas e volumes",
+      "learning_objective": "Calcular volume de cone e relacionar raio, altura e geratriz.",
+      "context": "Um cone circular reto possui uma base circular e um vértice. Sua capacidade corresponde a um terço do volume de um cilindro de mesma base e altura.",
+      "simulation": {
+        "scene": "cone_geometry",
+        "parameters": [
+          {
+            "key": "radius",
+            "label": "Raio da base",
+            "value": 3,
+            "min": 1,
+            "max": 8,
+            "step": 0.5,
+            "unit": "cm"
+          },
+          {
+            "key": "height",
+            "label": "Altura",
+            "value": 4,
+            "min": 2,
+            "max": 15,
+            "step": 1,
+            "unit": "cm"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o volume do cone? Use π ≈ 3,1416.",
+        "answer": {
+          "type": "numeric",
+          "formula": "cone_volume",
+          "unit": "cm³",
+          "display_unit": "cm³",
+          "digits": 2,
+          "hint": "O volume do cone é um terço de πr²h.",
+          "solution": "V = (πr²h)/3 = (π · 3² · 4)/3 = 12π ≈ 37,70 cm³. A geratriz pode ser obtida por g = √(r² + h²)."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-geo-08",
+      "phase": 1,
+      "exercise_number": 8,
+      "title": "Esferas: cálculo de áreas e volumes",
+      "learning_objective": "Calcular área da superfície e volume de uma esfera.",
+      "context": "Uma esfera pode representar uma bola maciça ou uma superfície esférica. O raio determina tanto a área externa quanto o volume interno.",
+      "simulation": {
+        "scene": "sphere_geometry",
+        "parameters": [
+          {
+            "key": "radius",
+            "label": "Raio da esfera",
+            "value": 3.5,
+            "min": 1,
+            "max": 8,
+            "step": 0.5,
+            "unit": "cm"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a área da superfície da esfera? Use π ≈ 3,1416.",
+        "answer": {
+          "type": "numeric",
+          "formula": "sphere_area",
+          "unit": "cm²",
+          "display_unit": "cm²",
+          "digits": 2,
+          "hint": "A área da superfície esférica é A = 4πr².",
+          "solution": "A = 4π · 3,5² = 49π ≈ 153,94 cm². O volume correspondente é V = 4πr³/3."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-trig-01",
+      "phase": 2,
+      "exercise_number": 1,
+      "title": "Ciclo trigonométrico: identificação de ângulos e quadrantes",
+      "learning_objective": "Localizar ângulos no ciclo trigonométrico e identificar o quadrante correspondente.",
+      "context": "No ciclo trigonométrico, os ângulos são medidos a partir do eixo x positivo. O ângulo de 135° está entre 90° e 180°.",
+      "simulation": {
+        "scene": "unit_circle",
+        "parameters": [],
+        "description": "Explore a representação, observe as relações matemáticas e use a experiência para justificar sua resposta."
+      },
+      "challenge": {
+        "prompt": "Escolha a alternativa correta.",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "1º quadrante",
+            "2º quadrante",
+            "3º quadrante",
+            "4º quadrante"
+          ],
+          "correct": 1,
+          "hint": "Ângulos entre 90° e 180° ficam no segundo quadrante.",
+          "explanation": "135° está entre 90° e 180°, portanto seu lado terminal está no 2º quadrante.",
+          "solution": "135° está entre 90° e 180°, portanto seu lado terminal está no 2º quadrante."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-trig-02",
+      "phase": 2,
+      "exercise_number": 2,
+      "title": "Determinação dos valores de seno e cosseno no ciclo trigonométrico",
+      "learning_objective": "Ler as coordenadas de um ponto no ciclo e relacioná-las ao seno e ao cosseno.",
+      "context": "No ciclo unitário, a coordenada horizontal representa o cosseno e a vertical representa o seno do ângulo.",
+      "simulation": {
+        "scene": "trig_sine_cosine",
+        "parameters": [
+          {
+            "key": "angle",
+            "label": "Ângulo θ",
+            "value": 60,
+            "min": 0,
+            "max": 360,
+            "step": 15,
+            "unit": "°"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o valor do seno do ângulo atual? Considere três casas decimais.",
+        "answer": {
+          "type": "numeric",
+          "formula": "sine_angle",
+          "unit": "",
+          "display_unit": "",
+          "digits": 3,
+          "hint": "No ciclo unitário, sen(θ) corresponde à coordenada y do ponto.",
+          "solution": "sen(θ) é a coordenada vertical do ponto no ciclo. Para 60°, sen(60°) = √3/2 ≈ 0,866."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-trig-03",
+      "phase": 2,
+      "exercise_number": 3,
+      "title": "Sinais das funções seno, cosseno e tangente nos quadrantes",
+      "learning_objective": "Identificar os sinais de seno, cosseno e tangente em cada quadrante.",
+      "context": "Um ângulo no terceiro quadrante apresenta coordenadas x e y negativas no ciclo trigonométrico. A tangente é a razão entre seno e cosseno.",
+      "simulation": {
+        "scene": "quadrant_signs",
+        "parameters": [],
+        "description": "Explore a representação, observe as relações matemáticas e use a experiência para justificar sua resposta."
+      },
+      "challenge": {
+        "prompt": "Escolha a alternativa correta.",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "sen +, cos +, tg +",
+            "sen +, cos −, tg −",
+            "sen −, cos −, tg +",
+            "sen −, cos +, tg −"
+          ],
+          "correct": 2,
+          "hint": "No terceiro quadrante, seno e cosseno são negativos. A divisão de dois valores negativos é positiva.",
+          "explanation": "No terceiro quadrante, sen(θ) < 0 e cos(θ) < 0. Como tg(θ) = sen(θ)/cos(θ), a tangente é positiva.",
+          "solution": "No terceiro quadrante, sen(θ) < 0 e cos(θ) < 0. Como tg(θ) = sen(θ)/cos(θ), a tangente é positiva."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-trig-04",
+      "phase": 2,
+      "exercise_number": 4,
+      "title": "Função seno: propriedades e representação gráfica",
+      "learning_objective": "Interpretar amplitude, período e comportamento da função seno.",
+      "context": "A função y = A·sen(Bx) oscila entre −A e A. O parâmetro B altera o período, que passa a ser 2π/|B|.",
+      "simulation": {
+        "scene": "sine_graph",
+        "parameters": [
+          {
+            "key": "amplitude",
+            "label": "Amplitude A",
+            "value": 2,
+            "min": 0.5,
+            "max": 4,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "frequency",
+            "label": "Fator B",
+            "value": 3,
+            "min": 0.5,
+            "max": 4,
+            "step": 0.5,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o período da função y = A·sen(Bx), em radianos?",
+        "answer": {
+          "type": "numeric",
+          "formula": "sine_period",
+          "unit": "rad",
+          "display_unit": "rad",
+          "digits": 2,
+          "hint": "O período de seno é 2π dividido pelo módulo de B.",
+          "solution": "T = 2π/|B|. Com B = 3, T = 2π/3 ≈ 2,09 rad."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-trig-05",
+      "phase": 2,
+      "exercise_number": 5,
+      "title": "Função cosseno: propriedades e representação gráfica",
+      "learning_objective": "Analisar amplitude, deslocamento vertical e valor máximo da função cosseno.",
+      "context": "A função y = A·cos(Bx) + D tem amplitude |A| e linha média y = D. Seu valor máximo é D + |A|.",
+      "simulation": {
+        "scene": "cosine_graph",
+        "parameters": [
+          {
+            "key": "amplitude",
+            "label": "Amplitude A",
+            "value": 3,
+            "min": 0.5,
+            "max": 5,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "frequency",
+            "label": "Fator B",
+            "value": 2,
+            "min": 0.5,
+            "max": 4,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "shift",
+            "label": "Deslocamento vertical D",
+            "value": 1,
+            "min": -3,
+            "max": 3,
+            "step": 0.5,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o valor máximo da função y = A·cos(Bx) + D?",
+        "answer": {
+          "type": "numeric",
+          "formula": "cosine_max",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "hint": "O cosseno varia de −1 até 1. O máximo ocorre quando cos(Bx) = 1.",
+          "solution": "O máximo é A + D para A positivo. Com A = 3 e D = 1, yₘₐₓ = 4."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-trig-06",
+      "phase": 2,
+      "exercise_number": 6,
+      "title": "Função tangente: propriedades e comportamento no ciclo trigonométrico",
+      "learning_objective": "Reconhecer o período e as assíntotas da função tangente.",
+      "context": "A tangente apresenta ramos separados por assíntotas verticais. Para y = tan(Bx), o período é π/|B|.",
+      "simulation": {
+        "scene": "tangent_graph",
+        "parameters": [
+          {
+            "key": "frequency",
+            "label": "Fator B",
+            "value": 2,
+            "min": 0.5,
+            "max": 4,
+            "step": 0.5,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o período da função y = tan(Bx), em radianos?",
+        "answer": {
+          "type": "numeric",
+          "formula": "tangent_period",
+          "unit": "rad",
+          "display_unit": "rad",
+          "digits": 2,
+          "hint": "A tangente se repete a cada π dividido pelo módulo de B.",
+          "solution": "T = π/|B|. Para B = 2, T = π/2 ≈ 1,57 rad."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-trig-07",
+      "phase": 2,
+      "exercise_number": 7,
+      "title": "Lei dos Senos e aplicações na resolução de triângulos",
+      "learning_objective": "Aplicar a Lei dos Senos para determinar um lado de um triângulo.",
+      "context": "Em um triângulo, cada lado é proporcional ao seno do ângulo oposto. São conhecidos um lado e dois ângulos.",
+      "simulation": {
+        "scene": "sine_rule",
+        "parameters": [
+          {
+            "key": "side_a",
+            "label": "Lado a",
+            "value": 10,
+            "min": 4,
+            "max": 20,
+            "step": 1,
+            "unit": "cm"
+          },
+          {
+            "key": "angle_a",
+            "label": "Ângulo A",
+            "value": 30,
+            "min": 20,
+            "max": 80,
+            "step": 5,
+            "unit": "°"
+          },
+          {
+            "key": "angle_b",
+            "label": "Ângulo B",
+            "value": 45,
+            "min": 20,
+            "max": 90,
+            "step": 5,
+            "unit": "°"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Determine o lado b pela Lei dos Senos.",
+        "answer": {
+          "type": "numeric",
+          "formula": "sine_rule_side",
+          "unit": "cm",
+          "display_unit": "cm",
+          "digits": 2,
+          "hint": "Use b/sen(B) = a/sen(A), então b = a·sen(B)/sen(A).",
+          "solution": "b = 10 · sen(45°)/sen(30°) ≈ 14,14 cm."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-trig-08",
+      "phase": 2,
+      "exercise_number": 8,
+      "title": "Lei dos Cossenos e aplicações na resolução de triângulos",
+      "learning_objective": "Aplicar a Lei dos Cossenos para determinar um lado de um triângulo.",
+      "context": "Quando são conhecidos dois lados e o ângulo compreendido entre eles, a Lei dos Cossenos permite calcular o terceiro lado.",
+      "simulation": {
+        "scene": "cosine_rule",
+        "parameters": [
+          {
+            "key": "side_a",
+            "label": "Lado a",
+            "value": 7,
+            "min": 3,
+            "max": 15,
+            "step": 1,
+            "unit": "cm"
+          },
+          {
+            "key": "side_b",
+            "label": "Lado b",
+            "value": 9,
+            "min": 3,
+            "max": 15,
+            "step": 1,
+            "unit": "cm"
+          },
+          {
+            "key": "angle_c",
+            "label": "Ângulo C",
+            "value": 60,
+            "min": 20,
+            "max": 150,
+            "step": 5,
+            "unit": "°"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Determine o lado c pela Lei dos Cossenos.",
+        "answer": {
+          "type": "numeric",
+          "formula": "cosine_rule_side",
+          "unit": "cm",
+          "display_unit": "cm",
+          "digits": 2,
+          "hint": "Use c² = a² + b² − 2ab·cos(C).",
+          "solution": "c = √(7² + 9² − 2·7·9·cos60°) = √67 ≈ 8,19 cm."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-mat-01",
+      "phase": 3,
+      "exercise_number": 1,
+      "title": "Matrizes: conceitos, identificação de elementos e ordem",
+      "learning_objective": "Identificar elementos de uma matriz e sua ordem (linhas × colunas).",
+      "context": "Uma matriz organiza valores em linhas e colunas. A ordem informa primeiro a quantidade de linhas e depois a quantidade de colunas.",
+      "simulation": {
+        "scene": "matrix_order",
+        "parameters": [],
+        "description": "Explore a representação, observe as relações matemáticas e use a experiência para justificar sua resposta."
+      },
+      "challenge": {
+        "prompt": "Escolha a alternativa correta.",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "2 × 3: duas linhas e três colunas.",
+            "3 × 2: três linhas e duas colunas.",
+            "2 × 2: duas linhas e duas colunas.",
+            "3 × 3: três linhas e três colunas."
+          ],
+          "correct": 0,
+          "hint": "Conte as linhas na horizontal e as colunas na vertical; a ordem é linhas × colunas.",
+          "explanation": "A matriz ilustrada possui duas linhas e três colunas. Logo, sua ordem é 2 × 3.",
+          "solution": "A matriz ilustrada possui duas linhas e três colunas. Logo, sua ordem é 2 × 3."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-mat-02",
+      "phase": 3,
+      "exercise_number": 2,
+      "title": "Operações de adição e subtração de matrizes",
+      "learning_objective": "Somar matrizes elemento a elemento.",
+      "context": "Duas matrizes da mesma ordem podem ser somadas pela adição dos elementos que ocupam posições correspondentes.",
+      "simulation": {
+        "scene": "matrix_add",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "A₁₁",
+            "value": 2,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "A₁₂",
+            "value": 1,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "A₂₁",
+            "value": 3,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "d",
+            "label": "A₂₂",
+            "value": 4,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Considere A = [[a,b],[c,d]] e B = [[d,c],[b,a]]. Qual é o elemento (1,1) de A + B?",
+        "answer": {
+          "type": "numeric",
+          "formula": "matrix_add_11",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "hint": "O elemento (1,1) da soma é a₁₁ + b₁₁. Aqui, é a + d.",
+          "solution": "A + B é calculada posição a posição. O elemento (1,1) é a + d = 2 + 4 = 6."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-mat-03",
+      "phase": 3,
+      "exercise_number": 3,
+      "title": "Multiplicação de matrizes",
+      "learning_objective": "Calcular um elemento do produto de duas matrizes compatíveis.",
+      "context": "Na multiplicação de matrizes, cada elemento do produto resulta do produto escalar de uma linha da primeira matriz por uma coluna da segunda.",
+      "simulation": {
+        "scene": "matrix_multiply",
+        "parameters": [
+          {
+            "key": "k",
+            "label": "Parâmetro k",
+            "value": 3,
+            "min": -4,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Considere A = [[1,2],[3,1]] e B = [[k,1],[2,k]]. Qual é o elemento C₁₁ de C = A·B?",
+        "answer": {
+          "type": "numeric",
+          "formula": "matrix_product_11",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "hint": "Multiplique a primeira linha de A pela primeira coluna de B: 1·k + 2·2.",
+          "solution": "C₁₁ = 1·k + 2·2 = k + 4. Para k = 3, C₁₁ = 7."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-mat-04",
+      "phase": 3,
+      "exercise_number": 4,
+      "title": "Cálculo de determinantes de matrizes de ordem 2",
+      "learning_objective": "Calcular determinantes de matrizes 2 × 2.",
+      "context": "O determinante de uma matriz [[a,b],[c,d]] é obtido pela diferença entre o produto da diagonal principal e o produto da diagonal secundária.",
+      "simulation": {
+        "scene": "determinant_2",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Elemento a",
+            "value": 2,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Elemento b",
+            "value": 1,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Elemento c",
+            "value": 3,            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "d",
+            "label": "Elemento d",
+            "value": 4,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Calcule o determinante da matriz [[a,b],[c,d]].",
+        "answer": {
+          "type": "numeric",
+          "formula": "determinant_2",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "hint": "Para uma matriz 2 × 2, det = ad − bc.",
+          "solution": "det = 2·4 − 1·3 = 8 − 3 = 5."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-mat-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Cálculo de determinantes de matrizes de ordem 3",
+      "learning_objective": "Calcular determinantes de matrizes 3 × 3 pela regra de Sarrus.",
+      "context": "Para matrizes 3 × 3, a regra de Sarrus organiza a soma dos produtos das diagonais descendentes e subtrai a soma dos produtos das diagonais ascendentes.",
+      "simulation": {
+        "scene": "determinant_3",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "a₁₁",
+            "value": 1,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "a₁₂",
+            "value": 2,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "a₁₃",
+            "value": 0,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "d",
+            "label": "a₂₁",
+            "value": 0,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "e",
+            "label": "a₂₂",
+            "value": 1,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "f",
+            "label": "a₂₃",
+            "value": 3,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "g",
+            "label": "a₃₁",
+            "value": 2,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "h",
+            "label": "a₃₂",
+            "value": 0,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "i",
+            "label": "a₃₃",
+            "value": 1,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Calcule o determinante da matriz 3 × 3 apresentada.",
+        "answer": {
+          "type": "numeric",
+          "formula": "determinant_3",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "hint": "Use a regra de Sarrus ou a expansão por cofatores.",
+          "solution": "det = a(ei − fh) − b(di − fg) + c(dh − eg). Com os valores atuais, det = 13."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-mat-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Sistemas lineares de duas incógnitas",
+      "learning_objective": "Resolver um sistema linear 2 × 2 e interpretar sua solução como ponto de interseção.",
+      "context": "Duas condições lineares definem duas retas. A solução do sistema é o par (x,y) que satisfaz as duas equações simultaneamente.",
+      "simulation": {
+        "scene": "linear_system",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente a",
+            "value": 2,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente b",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Termo c",
+            "value": 11,
+            "min": 3,
+            "max": 30,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "d",
+            "label": "Coeficiente d",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "e",
+            "label": "Coeficiente e",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "f",
+            "label": "Termo f",
+            "value": 7,
+            "min": 3,
+            "max": 30,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Para ax + by = c e dx + ey = f, determine o valor de x.",
+        "answer": {
+          "type": "numeric",
+          "formula": "system_x",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "hint": "Resolva o sistema por substituição ou eliminação. Encontre o ponto de interseção das duas retas.",
+          "solution": "Com os valores atuais: 2x + y = 11 e x + y = 7. Subtraindo a segunda da primeira, x = 4."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-mat-07",
+      "phase": 3,
+      "exercise_number": 7,
+      "title": "Resolução de sistemas lineares pelo método do escalonamento",
+      "learning_objective": "Aplicar eliminação para transformar um sistema em forma escalonada.",
+      "context": "No escalonamento, operações equivalentes entre equações eliminam incógnitas progressivamente, facilitando a determinação das variáveis.",
+      "simulation": {
+        "scene": "elimination_method",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente a",
+            "value": 3,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente b",
+            "value": 2,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Termo c",
+            "value": 16,
+            "min": 3,
+            "max": 30,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "d",
+            "label": "Coeficiente d",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "e",
+            "label": "Coeficiente e",
+            "value": -1,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "f",
+            "label": "Termo f",
+            "value": 2,
+            "min": -10,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "No sistema ax + by = c e dx + ey = f, determine y.",
+        "answer": {
+          "type": "numeric",
+          "formula": "system_y",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "hint": "Elimine x combinando as equações e depois substitua o resultado em uma delas.",
+          "solution": "Com os valores atuais: 3x + 2y = 16 e x − y = 2. Multiplicando a segunda por −3 e somando à primeira, 5y = 10, então y = 2."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-mat-08",
+      "phase": 3,
+      "exercise_number": 8,
+      "title": "Resolução de sistemas lineares pela Regra de Cramer",
+      "learning_objective": "Resolver sistemas 2 × 2 usando determinantes e a Regra de Cramer.",
+      "context": "A Regra de Cramer determina as incógnitas pela razão entre determinantes, desde que o determinante principal seja diferente de zero.",
+      "simulation": {
+        "scene": "cramer_method",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente a",
+            "value": 2,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente b",
+            "value": 3,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Termo c",
+            "value": 12,
+            "min": 3,
+            "max": 30,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "d",
+            "label": "Coeficiente d",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "e",
+            "label": "Coeficiente e",
+            "value": -1,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "f",
+            "label": "Termo f",
+            "value": 1,
+            "min": -10,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "No sistema ax + by = c e dx + ey = f, determine x pela Regra de Cramer.",
+        "answer": {
+          "type": "numeric",
+          "formula": "cramer_x",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "hint": "Calcule Δ = ae − bd e Δx = ce − bf. Então x = Δx/Δ.",
+          "solution": "Δ = 2(−1) − 3(1) = −5. Δx = 12(−1) − 3(1) = −15. Logo x = Δx/Δ = 3."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-comb-01",
+      "phase": 4,
+      "exercise_number": 1,
+      "title": "Princípio Fundamental da Contagem",
+      "learning_objective": "Compreender que escolhas independentes em etapas sucessivas se combinam por multiplicação.",
+      "context": "Uma combinação de roupa pode ser montada escolhendo uma peça de cada categoria. O total de possibilidades resulta da multiplicação das opções de cada etapa.",
+      "simulation": {
+        "scene": "counting_principle",
+        "parameters": [],
+        "description": "Explore a representação, observe as relações matemáticas e use a experiência para justificar sua resposta."
+      },
+      "challenge": {
+        "prompt": "Escolha a alternativa correta.",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Somar as quantidades de opções de cada etapa.",
+            "Multiplicar as quantidades de opções das etapas independentes.",
+            "Subtrair a menor quantidade da maior.",
+            "Dividir o total de opções pelo número de etapas."
+          ],
+          "correct": 1,
+          "hint": "Cada escolha de uma etapa pode ser combinada com todas as escolhas das outras etapas.",
+          "explanation": "Pelo Princípio Fundamental da Contagem, o total de possibilidades é o produto do número de opções de cada etapa.",
+          "solution": "Pelo Princípio Fundamental da Contagem, o total de possibilidades é o produto do número de opções de cada etapa."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-comb-02",
+      "phase": 4,
+      "exercise_number": 2,
+      "title": "Aplicações do Princípio Fundamental da Contagem",
+      "learning_objective": "Calcular o número de combinações possíveis em escolhas sucessivas.",
+      "context": "Uma loja oferece diferentes modelos de camisetas, calças e bonés. Uma combinação contém uma opção de cada categoria.",
+      "simulation": {
+        "scene": "counting_tree",
+        "parameters": [
+          {
+            "key": "shirts",
+            "label": "Modelos de camiseta",
+            "value": 4,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "pants",
+            "label": "Modelos de calça",
+            "value": 3,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "hats",
+            "label": "Modelos de boné",
+            "value": 2,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Quantos conjuntos diferentes podem ser formados escolhendo uma peça de cada categoria?",
+        "answer": {
+          "type": "numeric",
+          "formula": "counting_product",
+          "unit": "combinações",
+          "display_unit": "combinações",
+          "digits": 0,
+          "hint": "Multiplique o número de opções de cada etapa.",
+          "solution": "N = 4 × 3 × 2 = 24 combinações."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-comb-03",
+      "phase": 4,
+      "exercise_number": 3,
+      "title": "Fatorial e suas propriedades",
+      "learning_objective": "Calcular fatoriais e reconhecer o produto dos inteiros positivos até n.",
+      "context": "O fatorial aparece em problemas de contagem. Por definição, n! = n·(n−1)·...·2·1 e 0! = 1.",
+      "simulation": {
+        "scene": "factorial_visual",
+        "parameters": [
+          {
+            "key": "n",
+            "label": "Número n",
+            "value": 5,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Calcule n!.",
+        "answer": {
+          "type": "numeric",
+          "formula": "factorial",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "hint": "Multiplique os inteiros positivos de n até 1.",
+          "solution": "5! = 5 × 4 × 3 × 2 × 1 = 120."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-comb-04",
+      "phase": 4,
+      "exercise_number": 4,
+      "title": "Permutações simples",
+      "learning_objective": "Calcular o número de ordenações possíveis de elementos distintos.",
+      "context": "Seis livros distintos serão organizados em uma única prateleira. A ordem de todos os elementos importa.",
+      "simulation": {
+        "scene": "permutation_visual",
+        "parameters": [
+          {
+            "key": "n",
+            "label": "Quantidade de livros",
+            "value": 6,
+            "min": 2,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "De quantas maneiras os n livros distintos podem ser organizados?",
+        "answer": {
+          "type": "numeric",
+          "formula": "permutation",
+          "unit": "ordenações",
+          "display_unit": "ordenações",
+          "digits": 0,
+          "hint": "Para permutação simples de n elementos, use P(n) = n!.",
+          "solution": "P(6) = 6! = 720 ordenações."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-comb-05",
+      "phase": 4,
+      "exercise_number": 5,
+      "title": "Arranjos simples",
+      "learning_objective": "Calcular arranjos em que a ordem de seleção importa.",
+      "context": "Em uma competição com sete participantes, serão distribuídas medalhas de ouro, prata e bronze. A ordem importa porque as posições são diferentes.",
+      "simulation": {
+        "scene": "arrangement_visual",
+        "parameters": [
+          {
+            "key": "n",
+            "label": "Participantes (n)",
+            "value": 7,
+            "min": 6,
+            "max": 10,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "k",
+            "label": "Posições (k)",
+            "value": 3,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Quantos arranjos simples de n elementos tomados k a k podem ser formados?",
+        "answer": {
+          "type": "numeric",
+          "formula": "arrangement",
+          "unit": "arranjos",
+          "display_unit": "arranjos",
+          "digits": 0,
+          "hint": "Use A(n,k) = n!/(n−k)!.",
+          "solution": "A(7,3) = 7!/(7−3)! = 7 × 6 × 5 = 210."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-comb-06",
+      "phase": 4,
+      "exercise_number": 6,
+      "title": "Combinações simples",
+      "learning_objective": "Calcular combinações em que a ordem dos elementos escolhidos não importa.",
+      "context": "Uma equipe de três estudantes será escolhida entre oito. A ordem de escolha não altera o grupo formado.",
+      "simulation": {
+        "scene": "combination_visual",
+        "parameters": [
+          {
+            "key": "n",
+            "label": "Estudantes disponíveis (n)",
+            "value": 8,
+            "min": 6,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "k",
+            "label": "Vagas no grupo (k)",
+            "value": 3,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Quantos grupos de k estudantes podem ser escolhidos entre n, sem considerar a ordem?",
+        "answer": {
+          "type": "numeric",
+          "formula": "combination",
+          "unit": "grupos",
+          "display_unit": "grupos",
+          "digits": 0,
+          "hint": "Use C(n,k) = n!/[k!(n−k)!].",
+          "solution": "C(8,3) = 8!/(3!·5!) = 56 grupos."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-comb-07",
+      "phase": 4,
+      "exercise_number": 7,
+      "title": "Espaço amostral e cálculo de probabilidades em eventos simples",
+      "learning_objective": "Calcular a probabilidade de um evento simples pela razão entre casos favoráveis e possíveis.",
+      "context": "Em um experimento aleatório com resultados equiprováveis, a probabilidade é a razão entre os casos favoráveis e o total de resultados possíveis.",
+      "simulation": {
+        "scene": "probability_simple",
+        "parameters": [
+          {
+            "key": "favorable",
+            "label": "Casos favoráveis",
+            "value": 3,
+            "min": 0,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "total",
+            "label": "Resultados possíveis",
+            "value": 8,
+            "min": 8,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a probabilidade percentual do evento?",
+        "answer": {
+          "type": "numeric",
+          "formula": "simple_probability",
+          "unit": "%",
+          "display_unit": "%",
+          "digits": 1,
+          "hint": "P(A) = casos favoráveis ÷ total de casos possíveis. Multiplique por 100 para obter porcentagem.",
+          "solution": "P(A) = 3/8 = 0,375 = 37,5%."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-comb-08",
+      "phase": 4,
+      "exercise_number": 8,
+      "title": "Cálculo de probabilidades em eventos compostos",
+      "learning_objective": "Calcular a probabilidade da união de dois eventos independentes.",
+      "context": "Dois eventos A e B são independentes. Para calcular a probabilidade de ocorrer A ou B, considera-se a união P(A∪B) = P(A)+P(B)−P(A∩B).",
+      "simulation": {
+        "scene": "probability_compound",
+        "parameters": [
+          {
+            "key": "pA",
+            "label": "Probabilidade de A",
+            "value": 40,
+            "min": 0,
+            "max": 90,
+            "step": 5,
+            "unit": "%"
+          },
+          {
+            "key": "pB",
+            "label": "Probabilidade de B",
+            "value": 30,
+            "min": 0,
+            "max": 90,
+            "step": 5,
+            "unit": "%"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Se A e B são independentes, qual é P(A ou B), em porcentagem?",
+        "answer": {
+          "type": "numeric",
+          "formula": "independent_union",
+          "unit": "%",
+          "display_unit": "%",
+          "digits": 1,
+          "hint": "Para eventos independentes, P(A∩B) = P(A)·P(B). Depois aplique a fórmula da união.",
+          "solution": "P(A∪B) = 0,40 + 0,30 − (0,40 × 0,30) = 0,58 = 58%."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-func-01",
+      "phase": 5,
+      "exercise_number": 1,
+      "title": "Funções exponenciais: conceitos e propriedades",
+      "learning_objective": "Reconhecer a estrutura e propriedades de uma função exponencial.",
+      "context": "Uma função exponencial básica tem a variável no expoente e base positiva diferente de 1. O comportamento pode ser crescente ou decrescente.",
+      "simulation": {
+        "scene": "exponential_concept",
+        "parameters": [],
+        "description": "Explore a representação, observe as relações matemáticas e use a experiência para justificar sua resposta."
+      },
+      "challenge": {
+        "prompt": "Escolha a alternativa correta.",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "f(x) = x², com variável apenas na base.",
+            "f(x) = a·bˣ, com b > 0 e b ≠ 1.",
+            "f(x) = a·x + b, uma função afim.",
+            "f(x) = logₐ(x), uma função logarítmica."
+          ],
+          "correct": 1,
+          "hint": "Na função exponencial, a variável aparece no expoente.",
+          "explanation": "A forma f(x) = a·bˣ representa uma função exponencial, com base b positiva e diferente de 1.",
+          "solution": "A forma f(x) = a·bˣ representa uma função exponencial, com base b positiva e diferente de 1."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-func-02",
+      "phase": 5,
+      "exercise_number": 2,
+      "title": "Representação gráfica e comportamento das funções exponenciais",
+      "learning_objective": "Relacionar parâmetros e valores de uma função exponencial ao seu gráfico.",
+      "context": "A função exponencial f(x) = a·bˣ pode crescer quando b > 1 ou decrescer quando 0 < b < 1, considerando a positivo.",
+      "simulation": {
+        "scene": "exponential_graph",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Valor inicial a",
+            "value": 2,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "base",
+            "label": "Base b",
+            "value": 3,
+            "min": 0.5,
+            "max": 4,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "x",
+            "label": "Expoente x",
+            "value": 2,
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Calcule f(x) = a·bˣ com os parâmetros atuais.",
+        "answer": {
+          "type": "numeric",
+          "formula": "exponential_value",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "hint": "Substitua os valores em f(x) = a·bˣ. Calcule a potência antes de multiplicar por a.",
+          "solution": "f(2) = 2 × 3² = 18."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-func-03",
+      "phase": 5,
+      "exercise_number": 3,
+      "title": "Aplicações de crescimento exponencial em populações",
+      "learning_objective": "Modelar crescimento populacional por uma taxa percentual constante.",
+      "context": "Uma população inicial cresce a uma taxa anual constante. Em um modelo discreto, a população é multiplicada pelo fator (1 + r) a cada período.",
+      "simulation": {
+        "scene": "population_growth",
+        "parameters": [
+          {
+            "key": "initial",
+            "label": "População inicial",
+            "value": 10000,
+            "min": 1000,
+            "max": 50000,
+            "step": 500,
+            "unit": ""
+          },
+          {
+            "key": "rate",
+            "label": "Taxa anual",
+            "value": 5,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": "%"
+          },
+          {
+            "key": "periods",
+            "label": "Tempo",
+            "value": 3,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "unit": "anos"
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual será a população estimada após o período indicado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "population_growth",
+          "unit": "habitantes",
+          "display_unit": "habitantes",
+          "digits": 0,
+          "hint": "Use P(t) = P₀(1 + r)ᵗ, com r escrito na forma decimal.",
+          "solution": "P(3) = 10.000 × 1,05³ ≈ 11.576 habitantes."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-func-04",
+      "phase": 5,
+      "exercise_number": 4,
+      "title": "Aplicações de juros compostos por meio de funções exponenciais",
+      "learning_objective": "Aplicar o modelo exponencial de juros compostos.",
+      "context": "Em juros compostos, o saldo de cada período torna-se a base de cálculo dos juros seguintes. O montante segue uma função exponencial do tempo.",
+      "simulation": {
+        "scene": "compound_growth",
+        "parameters": [
+          {
+            "key": "capital",
+            "label": "Capital inicial",
+            "value": 1500,
+            "min": 500,
+            "max": 10000,
+            "step": 100,
+            "unit": "R$"
+          },
+          {
+            "key": "rate",
+            "label": "Taxa por período",
+            "value": 2.5,
+            "min": 0.5,
+            "max": 10,
+            "step": 0.5,
+            "unit": "%"
+          },
+          {
+            "key": "periods",
+            "label": "Número de períodos",
+            "value": 6,
+            "min": 1,
+            "max": 18,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Calcule o montante após os períodos indicados.",
+        "answer": {
+          "type": "numeric",
+          "formula": "compound_amount_2",
+          "unit": "R$",
+          "display_unit": "R$",
+          "digits": 2,
+          "hint": "Use M = C(1 + i)ᵗ, com i em forma decimal.",
+          "solution": "M = 1.500 × (1 + 0,025)⁶ ≈ R$ 1.739,54."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-func-05",
+      "phase": 5,
+      "exercise_number": 5,
+      "title": "Decaimento exponencial e cálculo de meia-vida",
+      "learning_objective": "Modelar a redução exponencial de uma quantidade por sucessivas meias-vidas.",
+      "context": "Uma substância radioativa tem sua quantidade reduzida à metade a cada intervalo de meia-vida. O modelo descreve decaimento exponencial.",
+      "simulation": {
+        "scene": "half_life",
+        "parameters": [
+          {
+            "key": "initial",
+            "label": "Quantidade inicial",
+            "value": 800,
+            "min": 100,
+            "max": 2000,
+            "step": 50,
+            "unit": "g"
+          },
+          {
+            "key": "half",
+            "label": "Meia-vida",
+            "value": 5,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": "anos"
+          },
+          {
+            "key": "time",
+            "label": "Tempo decorrido",
+            "value": 15,
+            "min": 1,
+            "max": 40,
+            "step": 1,
+            "unit": "anos"
+          }
+        ],        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual quantidade restará após o tempo indicado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "half_life_amount",
+          "unit": "g",
+          "display_unit": "g",
+          "digits": 2,
+          "hint": "Use N(t) = N₀·(1/2)^(t/T), em que T é a meia-vida.",
+          "solution": "N(15) = 800 × (1/2)^(15/5) = 800/8 = 100 g."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-func-06",
+      "phase": 5,
+      "exercise_number": 6,
+      "title": "Funções logarítmicas: conceitos e propriedades",
+      "learning_objective": "Reconhecer a função logarítmica como inversa da função exponencial.",
+      "context": "O logaritmo responde a pergunta: a que expoente uma base deve ser elevada para produzir determinado número?",
+      "simulation": {
+        "scene": "logarithm_concept",
+        "parameters": [],
+        "description": "Explore a representação, observe as relações matemáticas e use a experiência para justificar sua resposta."
+      },
+      "challenge": {
+        "prompt": "Escolha a alternativa correta.",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "log_b(x) = y significa bˣ = y.",
+            "log_b(x) = y significa xʸ = b.",
+            "log_b(x) = y significa bʸ = x, com b > 0, b ≠ 1 e x > 0.",
+            "O logaritmo só existe para argumentos negativos."
+          ],
+          "correct": 2,
+          "hint": "Pense no logaritmo como a operação inversa da potenciação.",
+          "explanation": "log_b(x) = y equivale a bʸ = x, com base positiva diferente de 1 e argumento positivo.",
+          "solution": "log_b(x) = y equivale a bʸ = x, com base positiva diferente de 1 e argumento positivo."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat2-func-07",
+      "phase": 5,
+      "exercise_number": 7,
+      "title": "Equações logarítmicas e aplicações práticas",
+      "learning_objective": "Converter uma equação logarítmica para sua forma exponencial.",
+      "context": "Resolver log_b(x) = y equivale a encontrar o número x que resulta de elevar b ao expoente y.",
+      "simulation": {
+        "scene": "logarithmic_equation",
+        "parameters": [
+          {
+            "key": "base",
+            "label": "Base b",
+            "value": 2,
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "exponent",
+            "label": "Resultado do logaritmo y",
+            "value": 5,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Altere os controles para investigar o modelo. Os valores e a representação são atualizados em tempo real."
+      },
+      "challenge": {
+        "prompt": "Se log_b(x) = y, determine x para os valores atuais de b e y.",
+        "answer": {
+          "type": "numeric",
+          "formula": "logarithm_inverse",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "hint": "Converta log_b(x) = y para bʸ = x.",
+          "solution": "x = 2⁵ = 32."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    }
+  ]
+}
