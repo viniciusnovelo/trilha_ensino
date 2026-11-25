@@ -73,8 +73,11 @@ def math3_check_answer(request, fase_id):
             expected=None; feedback=answer.get("explanation","")
         elif kind == "dynamic_choice":
             selected = str(payload.get("choice_value", ""))
+            valid_values = {str(item.get("value")) for item in answer.get("choices", []) if isinstance(item, dict)}
+            if selected not in valid_values:
+                return JsonResponse({"error":"Alternativa dinâmica inválida."},status=400)
             expected = calculate(answer["formula"], params)
-            correct = selected == expected
+            correct = selected == str(expected)
             chosen = None
             submitted = {"value": selected}
             correct_snapshot = {"value": expected}
@@ -102,7 +105,7 @@ def math3_check_answer(request, fase_id):
             RespostaTentativa.objects.update_or_create(tentativa=attempt,questao=question,defaults={
                 "opcao_escolhida":chosen,"texto_questao_snapshot":question.enunciado,
                 "texto_opcao_snapshot":chosen.texto if chosen else "","correta":correct,
-                "tipo_resposta_snapshot":question.tipo_resposta,"resposta_snapshot":submitted,
+                "tipo_resposta_snapshot":answer["type"],"resposta_snapshot":submitted,
                 "resposta_correta_snapshot":correct_snapshot,"parametros_snapshot":params,"feedback_snapshot":feedback
             })
         return JsonResponse({"correct":correct,"feedback":feedback,"hint":"" if correct else answer.get("hint",""),
