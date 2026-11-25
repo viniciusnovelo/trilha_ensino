@@ -52,7 +52,7 @@ def calculate(formula, p):
         if v("ladder") <= v("base"): raise ValueError("O comprimento da escada deve ser maior que a distância horizontal.")
         result = math.sqrt(v("ladder") ** 2 - v("base") ** 2)
     elif formula == "graph_difference": result = v("end") - v("start")
-    elif formula == "frequency_count": result = {1: 2, 2: 3, 3: 4, 4: 2, 5: 1}.get(int(v("value")), 0)
+    elif formula == "frequency_count": result = {1: 1, 2: 2, 3: 3, 4: 2, 5: 4}.get(int(v("value")), 0)
     elif formula == "arithmetic_mean": result = sum(v(k) for k in ("v1","v2","v3","v4","v5")) / 5
     else: raise ValueError("Fórmula não implementada.")
     if not math.isfinite(result): raise ValueError("O cálculo produziu resultado inválido.")
