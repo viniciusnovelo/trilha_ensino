@@ -86,7 +86,7 @@ body[data-appearance="claro"] .readout{color:#20364d;background:#dce8f3}
           {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
           {% if modo_teste_ativo %}<span class="hud-pill test">🧪 TESTE</span>{% endif %}
           <span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span>
-          <span class="hud-pill coins">◎ {{ perfil.moedas }}</span>
+          <span class="hud-pill coins" id="coinsPill">◎ {{ perfil.moedas }}</span>
           <span class="hud-pill lives">♡ {{ perfil.vidas }}</span>
         {% else %}
           <span class="hud-pill teacher">Professor</span>
@@ -434,7 +434,7 @@ default:txt('Experimento visual',cx,150,18,'#52647d',800,'center');txt('Os contr
  $('resetBtn').onclick=()=>{state.time=0;current().simulation.parameters.forEach(p=>{currentParams[p.key]=p.value;const input=document.querySelector('[data-param-key="'+p.key+'"]');if(input)input.value=p.value;const label=input?.parentElement.querySelector('[data-value]');if(label)label.textContent=p.value+' '+p.unit});state.params={...currentParams};updateReadouts();state.playing=false;$('playBtn').textContent='▶ Continuar';drawCurrent()};
  window.addEventListener('resize',resizeCanvas);
  $('submit').onclick=sendAnswer;$('next').onclick=()=>{index++;render()};$('hint').onclick=()=>{const q=questions[index];$('feedback').className='feedback';$('feedback').textContent='Dica: '+q.hint};
- $('finish').onclick=async()=>{const r=await fetch(`/fisica/fase/${data.phase.id}/finalizar/`,{method:'POST',headers:{'X-CSRFToken':getCookie('csrftoken')}});const result=await r.json();if(!r.ok){alert(result.error||'Erro ao finalizar');return}$('feedback').className='feedback '+(result.aprovado?'good':'bad');$('feedback').textContent=`Fase finalizada: ${result.acertos}/${result.total} acertos (${result.aproveitamento}%). ${result.aprovado?'Aprovado! XP: '+result.xp_ganho:'Você precisa de pelo menos 60% para concluir.'}`;$('finish').disabled=true};
+ $('finish').onclick=async()=>{const r=await fetch(`/fisica/fase/${data.phase.id}/finalizar/`,{method:'POST',headers:{'X-CSRFToken':getCookie('csrftoken')}});const result=await r.json();if(!r.ok){alert(result.error||'Erro ao finalizar');return}$('feedback').className='feedback '+(result.aprovado?'good':'bad');$('feedback').textContent=`Fase finalizada: ${result.acertos}/${result.total} acertos (${result.aproveitamento}%). ${result.aprovado?'Aprovado! XP: '+result.xp_ganho:'Você precisa de pelo menos 60% para concluir.'} Moedas recebidas: +${result.moedas_ganhas}.`;$('coinsPill').textContent='◎ '+(Number($('coinsPill').textContent.replace(/[^0-9]/g,''))+Number(result.moedas_ganhas));$('finish').disabled=true};
  render();
  state.raf=requestAnimationFrame(frame);
 })();
