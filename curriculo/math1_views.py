@@ -33,11 +33,14 @@ def math1_player(request, fase_id):
     for private_key in ("correct","formula","tolerance"):
         safe_answer.pop(private_key, None)
     context = contexto_papel(request)
-    context.update({"fase":fase,"math1_payload":{
+    options = [{"id":o.pk,"text":o.texto} for o in question.opcoes.all()]
+    lab_payload = {
+        "phases":[{"number":data["phase"],"title":fase.modulo.titulo,"exercise_ids":[question.codigo_fonte],"exercise_count":1}],
+        "exercises":[safe_data],
         "phase":{"id":fase.pk,"title":fase.titulo,"module_title":fase.modulo.titulo,"order":order,"total_phases":len(phases),"next_phase_id":next_phase.pk if next_phase else None,"discipline_id":fase.modulo.disciplina_id},
-        "question":{"id":question.pk,"source_id":question.codigo_fonte,"data":safe_data,
-            "type":question.tipo_resposta,"options":[{"id":o.pk,"text":o.texto} for o in question.opcoes.all()]},
-    }})
+        "question":{"id":question.pk,"source_id":question.codigo_fonte,"options":options},
+    }
+    context.update({"fase":fase,"math1_payload":lab_payload})
     return render(request,"curriculo/math1_player.html",context)
 
 @login_required
