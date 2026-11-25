@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import Fase, Questao, Opcao
+from .rewards import conceder_moedas_por_questao
 from .views import fase_esta_liberada, contexto_papel, papel_efetivo
 from .physics_engine import calculate, is_correct
 from gamificacao.models import PerfilUsuario, TentativaFase, RespostaTentativa, ProgressoFase
@@ -160,31 +161,42 @@ def physics_check_answer(request, fase_id):
 
 @login_required
 @require_POST
+@transaction.atomic
 def physics_finish_phase(request, fase_id):
-    fase = get_object_or_404(Fase, pk=fase_id)
-    attempt_id = request.session.get('physics_attempt_id')
-    if not attempt_id or request.session.get('physics_phase_id') != fase.id:
-        return JsonResponse({'error': 'Tentativa não encontrada.'}, status=409)
-    attempt = get_object_or_404(TentativaFase, pk=attempt_id, perfil__usuario=request.user, fase=fase)
+    fase = get_object_or_404(Fase.objects.select_related("modulo"), pk=fase_id)
+    attempt_id = request.session.get("physics_attempt_id")
+    if not attempt_id or request.session.get("physics_phase_id") != fase.id:
+        return JsonResponse({"error": "Tentativa não encontrada."}, status=409)
+    attempt = get_object_or_404(
+        TentativaFase.objects.select_for_update(),
+        pk=attempt_id, perfil__usuario=request.user, fase=fase,
+    )
     if attempt.finalizada_em:
-        return JsonResponse({'status': 'ok', 'aprovado': attempt.aprovado, 'aproveitamento': float(attempt.aproveitamento)})
-    answers = list(attempt.respostas.all())
+        return JsonResponse({
+            "status": "ok", "aprovado": attempt.aprovado,
+            "aproveitamento": float(attempt.aproveitamento),
+            "moedas_ganhas": attempt.moedas_ganhas,
+        })
+    answers = list(attempt.respostas.select_related("questao").all())
     total = attempt.total_questoes
     correct = sum(1 for item in answers if item.correta)
-    percent = (Decimal(correct) * Decimal('100') / Decimal(total)) if total else Decimal('0')
-    approved = percent >= Decimal('60') and len(answers) == total
+    percent = (Decimal(correct) * Decimal("100") / Decimal(total)) if total else Decimal("0")
+    approved = percent >= Decimal("60") and len(answers) == total
     xp = 0
     if approved:
         for item in answers:
             if item.correta and item.questao_id:
-                xp += int(item.questao.dados_dinamicos.get('completion', {}).get('xp', 0))
+                xp += int(item.questao.dados_dinamicos.get("completion", {}).get("xp", 0))
     attempt.acertos = correct
     attempt.erros = max(0, len(answers) - correct)
     attempt.aproveitamento = percent
     attempt.aprovado = approved
     attempt.xp_ganho = xp
     attempt.finalizada_em = timezone.now()
-    attempt.save(update_fields=['acertos', 'erros', 'aproveitamento', 'aprovado', 'xp_ganho', 'finalizada_em'])
+    attempt.save(update_fields=[
+        "acertos", "erros", "aproveitamento", "aprovado", "xp_ganho", "finalizada_em",
+    ])
+    moedas = conceder_moedas_por_questao(attempt, answers)
     progress, _ = ProgressoFase.objects.get_or_create(perfil=attempt.perfil, fase=fase)
     progress.tentativas += 1
     progress.erros += attempt.erros
@@ -193,12 +205,15 @@ def physics_finish_phase(request, fase_id):
     if approved:
         perfil = attempt.perfil
         perfil.xp_total += xp
-        perfil.save(update_fields=['xp_total'])
+        perfil.save(update_fields=["xp_total"])
         progress.concluida = True
         progress.data_conclusao = timezone.now()
     progress.save()
-    request.session.pop('physics_attempt_id', None)
-    request.session.pop('physics_phase_id', None)
-    return JsonResponse({'status': 'ok', 'aprovado': approved, 'acertos': correct,
-                         'erros': attempt.erros, 'total': total,
-                         'aproveitamento': float(percent), 'xp_ganho': xp})
+    request.session.pop("physics_attempt_id", None)
+    request.session.pop("physics_phase_id", None)
+    return JsonResponse({
+        "status": "ok", "aprovado": approved, "acertos": correct,
+        "erros": attempt.erros, "total": total,
+        "aproveitamento": float(percent), "xp_ganho": xp,
+        "moedas_ganhas": moedas,
+    })
