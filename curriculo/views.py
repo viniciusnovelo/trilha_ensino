@@ -2595,7 +2595,10 @@ def fase_detalhe(
         id=fase_id,
     )
 
-    # Questões importadas de Física usam o player dinâmico.
+    # Jogos de Física e Matemática usam players dinâmicos próprios.
+    if fase.modulo.disciplina.slug == 'matematica-1':
+        from .math1_views import math1_player
+        return math1_player(request, fase_id)
     if fase.questoes.filter(codigo_fonte__isnull=False).exists():
         from .physics_views import physics_player
         return physics_player(request, fase_id)
