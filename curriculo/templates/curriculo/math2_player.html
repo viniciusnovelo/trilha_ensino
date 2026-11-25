@@ -107,19 +107,49 @@ function toggleHint(){const e=current(),box=$('hintBox');box.classList.toggle('s
 function toggleSolution(){const e=current(),box=$('solutionBox'),a=e.challenge.answer;box.classList.toggle('show');if(!box.classList.contains('show')){box.innerHTML='';return}const detail=a.type==='choice'?(a.explanation||''):'';box.innerHTML=`<b>Resolução:</b> ${safe(a.solution||a.explanation||'Relacione os dados ao conceito estudado.')} ${safe(detail)}`}
 function nextExercise(){if(state.data.phase.next_phase_id){window.location.href='/fase/'+state.data.phase.next_phase_id+'/'}else{window.location.href='/trilha/'+state.data.phase.discipline_id+'/'}}
 function val(k,def=0){return Number(state.params[k]??def)}function rad(d){return d*Math.PI/180}
+function fact(n){n=Math.round(Number(n));if(n<0||n>170)return NaN;let r=1;for(let i=2;i<=n;i++)r*=i;return r}function choose(n,k){n=Math.round(Number(n));k=Math.round(Number(k));if(k<0||k>n||n>170)return NaN;k=Math.min(k,n-k);let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return r}
 function computeAnswer(e){const p=state.params,a=e.challenge.answer;switch(a.formula){
 case'real_operations':return val('A')-val('B')*val('C')+Math.sqrt(val('N'));
 case'ratio_proportion':return val('A')*val('C')/val('B');case'rule_three_direct':return val('P1')*val('Q2')/val('Q1');case'rate_percent':return val('part')/val('total')*100;
 case'percent_part':return val('base')*val('rate')/100;case'discounted_price':return val('price')*(1-val('rate')/100);case'simple_interest':return val('capital')*val('rate')/100*val('periods');case'compound_amount':return val('capital')*Math.pow(1+val('rate')/100,val('periods'));case'pa_term':return val('first')+(val('n')-1)*val('difference');case'algorithm_output':return val('x')>10?2*val('x'):val('x')+5;
 case'linear_value':return val('a')*val('x')+val('b');case'linear_root':return -val('b')/val('a');case'quadratic_small_root':{const a=val('a',1),b=val('b',-6),c=val('c',8),d=b*b-4*a*c;return d<0?NaN:(-b-Math.sqrt(d))/(2*a)}case'vertex_x':return -val('b')/(2*val('a'));case'quadratic_max':{const x=-val('b')/(2*val('a'));return val('a')*x*x+val('b')*x+val('c')}case'pg_term':return val('first')*Math.pow(val('ratio'),val('n')-1);
 case'polygon_vertices':return val('sides');case'rectangle_area':return val('width')*val('height');case'rectangle_perimeter':return 2*(val('width')+val('height'));case'similar_side':return val('target')*val('corresponding')/val('small');case'hypotenuse':return Math.hypot(val('a'),val('b'));case'opposite_side':return val('hyp')*Math.sin(rad(val('angle')));case'opposite_tangent':return val('adjacent')*Math.tan(rad(val('angle')));case'circle_area':return Math.PI*val('radius')**2;case'ladder_height':return Math.sqrt(Math.max(0,val('ladder')**2-val('base')**2));
-case'graph_difference':return val('end')-val('start');case'frequency_count':return [1,2,2,3,3,3,4,4,5,5,5,5].filter(v=>v===val('value')).length;case'arithmetic_mean':return (val('v1')+val('v2')+val('v3')+val('v4')+val('v5'))/5;default:return NaN}}
+case'graph_difference':return val('end')-val('start');case'frequency_count':return [1,2,2,3,3,3,4,4,5,5,5,5].filter(v=>v===val('value')).length;case'arithmetic_mean':return (val('v1')+val('v2')+val('v3')+val('v4')+val('v5'))/5;case'euler_edges':return val('vertices')+val('faces')-2;
+case'prism_vertices':return 2*val('sides');
+case'prism_volume':return val('base_area')*val('height');
+case'prism_total_area':return val('base_perimeter')*val('height')+2*val('base_area');
+case'cylinder_volume':return Math.PI*val('radius')**2*val('height');
+case'cone_volume':return Math.PI*val('radius')**2*val('height')/3;
+case'sphere_area':return 4*Math.PI*val('radius')**2;
+case'sine_angle':return Math.sin(rad(val('angle')));
+case'sine_period':return 2*Math.PI/Math.abs(val('frequency'));
+case'cosine_max':return Math.abs(val('amplitude'))+val('shift');
+case'tangent_period':return Math.PI/Math.abs(val('frequency'));
+case'sine_rule_side':return val('side_a')*Math.sin(rad(val('angle_b')))/Math.sin(rad(val('angle_a')));
+case'cosine_rule_side':return Math.sqrt(val('side_a')**2+val('side_b')**2-2*val('side_a')*val('side_b')*Math.cos(rad(val('angle_c'))));
+case'matrix_add_11':return val('a')+val('d');case'matrix_product_11':return val('k')+4;
+case'determinant_2':return val('a')*val('d')-val('b')*val('c');
+case'determinant_3':{const a=val('a'),b=val('b'),c=val('c'),d=val('d'),e=val('e'),f=val('f'),g=val('g'),h=val('h'),i=val('i');return a*(e*i-f*h)-b*(d*i-f*g)+c*(d*h-e*g)}
+case'system_x':case'cramer_x':{const det=val('a')*val('e')-val('b')*val('d');return (val('c')*val('e')-val('b')*val('f'))/det}
+case'system_y':return (val('a')*val('f')-val('c')*val('d'))/(val('a')*val('e')-val('b')*val('d'));
+case'counting_product':return val('shirts')*val('pants')*val('hats');
+case'factorial':case'permutation':return fact(val('n'));
+case'arrangement':return fact(val('n'))/fact(val('n')-val('k'));
+case'combination':return choose(val('n'),val('k'));
+case'simple_probability':return val('favorable')/val('total')*100;
+case'independent_union':{const a=val('pA')/100,b=val('pB')/100;return (a+b-a*b)*100}
+case'exponential_value':return val('a')*Math.pow(val('base'),val('x'));
+case'population_growth':return val('initial')*Math.pow(1+val('rate')/100,val('periods'));
+case'compound_amount_2':return val('capital')*Math.pow(1+val('rate')/100,val('periods'));
+case'half_life_amount':return val('initial')*Math.pow(.5,val('time')/val('half'));
+case'logarithm_inverse':return Math.pow(val('base'),val('exponent'));
+default:return NaN}}
 async function checkAnswer(e){
  const a=e.challenge.answer,body={questao_id:state.data.question.id,parameters:state.params};
  if(a.type==='choice'){if(state.selectedChoice===null){toast('Selecione uma alternativa antes de verificar.');return}body.opcao_id=state.data.question.options[state.selectedChoice].id}
  else{const input=$('answerInput');if(!input.value.trim()){toast('Digite um valor para verificar.');input.focus();return}body.valor=Number(input.value.trim().replace(',','.'))}
  const csrf=(document.cookie.split('; ').find(x=>x.startsWith('csrftoken='))||'').split('=').slice(1).join('=');
- const endpoint='/matematica1/fase/'+state.data.phase.id+'/';
+ const endpoint='/matematica2/fase/'+state.data.phase.id+'/';
  try{
   const response=await fetch(endpoint+'verificar-resposta/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':decodeURIComponent(csrf)},body:JSON.stringify(body)});
   const result=await response.json();if(!response.ok){toast(result.error||'Não foi possível validar a resposta.');return}
