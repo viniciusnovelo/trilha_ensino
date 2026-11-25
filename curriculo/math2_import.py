@@ -13,13 +13,29 @@ def validate_math2_source(data):
         ids.add(ex["id"]); grouped[ex["phase"]].append(ex)
     for no,t in phases.items():
         if len(grouped[no])!=t["exercise_count"] or set(t["exercise_ids"])!={e["id"] for e in grouped[no]}: raise ValueError(f"Manifesto inconsistente no tópico {no}.")
+    expected_ids={eid for topic in phases.values() for eid in topic["exercise_ids"]}
+    if ids != expected_ids:
+        raise ValueError("Os IDs dos exercícios não correspondem ao manifesto dos tópicos.")
     for ex in exercises:
         a=ex["challenge"]["answer"]
-        if a["type"]=="numeric" and a.get("formula") not in FORMULAS: raise ValueError(f"Fórmula sem implementação em {ex['id']}: {a.get('formula')}")
-        if a["type"]=="choice":
+        specs=ex.get("simulation",{}).get("parameters",[])
+        keys={p["key"] for p in specs}
+        if len(keys)!=len(specs):
+            raise ValueError(f"Parâmetros duplicados em {ex['id']}.")
+        for spec in specs:
+            if spec["step"] <= 0 or spec["min"] > spec["max"] or not spec["min"] <= spec["value"] <= spec["max"]:
+                raise ValueError(f"Faixa de parâmetro inválida em {ex['id']}: {spec['key']}.")
+        if a["type"]=="numeric":
+            if a.get("formula") not in FORMULAS:
+                raise ValueError(f"Fórmula sem implementação em {ex['id']}: {a.get('formula')}")
+            if not specs:
+                raise ValueError(f"Exercício numérico sem parâmetros em {ex['id']}.")
+        elif a["type"]=="choice":
             opts=a.get("choices",a.get("options",[]))
-            if not opts or not 0<=int(a["correct"])<len(opts): raise ValueError(f"Gabarito inválido em {ex['id']}.")
-        elif a["type"]!="numeric": raise ValueError(f"Tipo de resposta desconhecido em {ex['id']}.")
+            if not opts or not 0<=int(a["correct"])<len(opts):
+                raise ValueError(f"Gabarito inválido em {ex['id']}.")
+        else:
+            raise ValueError(f"Tipo de resposta desconhecido em {ex['id']}: {a['type']}.")
     return phases,grouped
 @transaction.atomic
 def import_math2_game(data):
@@ -33,8 +49,12 @@ def import_math2_game(data):
             a=ex["challenge"]["answer"]; dynamic={**ex,"source_math_module":2,"source_exercise_id":ex["id"]}
             phase,_=Fase.objects.update_or_create(modulo=topic,ordem=order,defaults={"titulo":ex["title"][:150],"tipo":"quiz","xp_recompensa":int(ex.get("completion",{}).get("xp",30)),"moedas_recompensa":0,"deslocamento_y":0})
             q,_=Questao.objects.update_or_create(codigo_fonte=ex["id"],defaults={"fase":phase,"enunciado":ex["challenge"]["prompt"],"explicacao_erro":a.get("explanation",a.get("solution","")),"tipo_resposta":a["type"],"dados_dinamicos":dynamic})
-            q.opcoes.all().delete()
             if a["type"]=="choice":
-                opts=a.get("choices",a.get("options",[])); Opcao.objects.bulk_create([Opcao(questao=q,texto=s,e_correta=i==a["correct"],ordem=i+1) for i,s in enumerate(opts)])
+                opts=a.get("choices",a.get("options",[]))
+                for i,texto in enumerate(opts,1):
+                    Opcao.objects.update_or_create(
+                        questao=q, ordem=i,
+                        defaults={"texto":texto,"e_correta":i-1==a["correct"]},
+                    )
             total+=1
     return {"game":game.nome,"topics":len(phases),"phases":total,"questions":total,"disciplina_id":game.pk}
