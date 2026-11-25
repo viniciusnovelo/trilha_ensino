@@ -658,7 +658,21 @@
             <h1 class="brand-title" title="{{ trilha.nome }}">{{ trilha.nome }}</h1>
           </div>
           <div class="hud">
-            
+            {% if papel_exibicao == 'aluno' and not modo_preview_aluno %}
+              {% include 'gamificacao/partials/controle_aparencia.html' %}
+              {% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}
+              {% if modo_teste_ativo %}<span class="hud-pill test">🧪 TESTE</span>{% endif %}
+              <span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span>
+              <span class="hud-pill coins">◎ {{ perfil.moedas }}</span>
+              <span class="hud-pill lives">♡ {{ perfil.vidas }}</span>
+            {% elif modo_preview_aluno %}
+              <span class="hud-pill teacher">Prévia do aluno</span>
+              <span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span>
+              <span class="hud-pill coins">◎ {{ perfil.moedas }}</span>
+              <span class="hud-pill lives">♡ {{ perfil.vidas }}</span>
+            {% else %}
+              <span class="hud-pill teacher">Professor</span>
+            {% endif %}
           </div>
         </div>
         <div class="phase-progress">
