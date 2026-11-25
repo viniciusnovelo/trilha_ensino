@@ -4,9 +4,13 @@ from . import views
 from . import physics_views
 from . import math1_views
 from . import math2_views
+from . import math3_views
 
 
 urlpatterns = [
+    path('matematica3/fase/<int:fase_id>/', math3_views.math3_player, name='math3_player'),
+    path('matematica3/fase/<int:fase_id>/responder/', math3_views.math3_check_answer, name='math3_check_answer'),
+    path('matematica3/fase/<int:fase_id>/finalizar/', math3_views.math3_finish_phase, name='math3_finish_phase'),
     path('matematica2/fase/<int:fase_id>/', math2_views.math2_player, name='math2_player'),
     path('matematica2/fase/<int:fase_id>/responder/', math2_views.math2_check_answer, name='math2_check_answer'),
     path('matematica2/fase/<int:fase_id>/finalizar/', math2_views.math2_finish_phase, name='math2_finish_phase'),
