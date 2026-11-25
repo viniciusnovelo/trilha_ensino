@@ -36,10 +36,9 @@ class CoinRewardTests(TestCase):
             texto_questao_snapshot=question.enunciado,
             correta=correct,
         )
-        with self.captureOnCommitCallbacks(execute=True):
-            from django.db import transaction
-            with transaction.atomic():
-                coins = conceder_moedas_por_questao(attempt, [answer])
+        from django.db import transaction
+        with transaction.atomic():
+            coins = conceder_moedas_por_questao(attempt, [answer])
         return attempt, coins
 
     def test_coin_value_follows_question_position(self):
