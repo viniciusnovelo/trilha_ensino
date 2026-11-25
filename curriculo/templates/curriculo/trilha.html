@@ -120,15 +120,35 @@
             --module-glow: rgba(20,184,166,.28);
         }
 
+        /* Indicadores da trilha com o mesmo visual dos players */
         .hud-pill {
-            min-height: 40px;
-            white-space: nowrap;
-            box-shadow: 0 10px 24px rgba(0,0,0,.18);
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:5px;
+            min-height:36px;
+            padding:8px 11px;
+            border-radius:11px;
+            background:rgba(2,6,23,.55);
+            border:1px solid rgba(255,255,255,.12);
+            font-size:11px;
+            line-height:1;
+            font-weight:900;
+            white-space:nowrap;
+            box-shadow:0 10px 24px rgba(0,0,0,.18);
+            transition:transform .2s ease,background .2s ease;
         }
-
         .hud-pill:hover {
-            transform: translateY(-1px);
-            background: rgba(2,6,23,.68);
+            transform:translateY(-1px);
+            background:rgba(2,6,23,.68);
+        }
+        .hud-pill.xp {color:#fde047;border-color:rgba(250,204,21,.2)}
+        .hud-pill.coins {color:#93c5fd;border-color:rgba(96,165,250,.2)}
+        .hud-pill.lives {color:#fda4af;border-color:rgba(251,113,133,.2)}
+        .hud-pill.teacher {color:#c4b5fd;border-color:rgba(196,181,253,.2)}
+        .hud-pill.test {color:#fde68a;border-color:rgba(251,191,36,.25);background:rgba(245,158,11,.10)}
+        @media(max-width:760px){
+            .hud-pill{min-height:32px;padding:6px 8px;font-size:10px}
         }
 
         .module-title-chip {
