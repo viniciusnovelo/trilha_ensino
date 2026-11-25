@@ -2,9 +2,13 @@ from django.urls import path
 
 from . import views
 from . import physics_views
+from . import math1_views
 
 
 urlpatterns = [
+    path('matematica1/fase/<int:fase_id>/', math1_views.math1_player, name='math1_player'),
+    path('matematica1/fase/<int:fase_id>/verificar-resposta/', math1_views.math1_check_answer, name='math1_check_answer'),
+    path('matematica1/fase/<int:fase_id>/finalizar/', math1_views.math1_finish_phase, name='math1_finish_phase'),
     path('fisica/fase/<int:fase_id>/', physics_views.physics_player, name='physics_player'),
     path('fisica/fase/<int:fase_id>/verificar-resposta/', physics_views.physics_check_answer, name='physics_check_answer'),
     path('fisica/fase/<int:fase_id>/finalizar/', physics_views.physics_finish_phase, name='physics_finish_phase'),
