@@ -1,0 +1,1873 @@
+{
+  "module": {
+    "subject": "Matemática",
+    "module_number": 1,
+    "title": "1º Módulo de Matemática",
+    "description": "Números e Conjuntos; Matemática Financeira e Computacional; Álgebra e Funções; Geometria Básica e Trigonometria; Estatística e Probabilidade.",
+    "version": "1.0.0",
+    "language": "pt-BR"
+  },
+  "phases": [
+    {
+      "number": 1,
+      "title": "Números e Conjuntos",
+      "subtitle": "Números reais, irracionais, razões e proporcionalidade",
+      "description": "Explore os conjuntos numéricos, compare quantidades e resolva situações de proporcionalidade e indicadores socioeconômicos.",
+      "slug": "numeros-e-conjuntos",
+      "prefix": "mat1-num",
+      "exercise_ids": [
+        "mat1-num-01",
+        "mat1-num-02",
+        "mat1-num-03",
+        "mat1-num-04",
+        "mat1-num-05",
+        "mat1-num-06"
+      ],
+      "exercise_count": 6
+    },
+    {
+      "number": 2,
+      "title": "Matemática Financeira e Computacional",
+      "subtitle": "Porcentagem, juros, sequências e algoritmos",
+      "description": "Simule compras, investimentos e algoritmos, observando como taxas e padrões alteram os resultados.",
+      "slug": "matematica-financeira-computacional",
+      "prefix": "mat1-fin",
+      "exercise_ids": [
+        "mat1-fin-01",
+        "mat1-fin-02",
+        "mat1-fin-03",
+        "mat1-fin-04",
+        "mat1-fin-05",
+        "mat1-fin-06",
+        "mat1-fin-07"
+      ],
+      "exercise_count": 7
+    },
+    {
+      "number": 3,
+      "title": "Álgebra e Funções",
+      "subtitle": "Funções do 1º e 2º graus, PA e PG",
+      "description": "Manipule coeficientes, acompanhe gráficos e identifique raízes, vértices, máximos, mínimos e padrões numéricos.",
+      "slug": "algebra-e-funcoes",
+      "prefix": "mat1-alg",
+      "exercise_ids": [
+        "mat1-alg-01",
+        "mat1-alg-02",
+        "mat1-alg-03",
+        "mat1-alg-04",
+        "mat1-alg-05",
+        "mat1-alg-06",
+        "mat1-alg-07",
+        "mat1-alg-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 4,
+      "title": "Geometria Básica e Trigonometria",
+      "subtitle": "Polígonos, áreas, semelhança, Pitágoras e trigonometria",
+      "description": "Altere medidas e ângulos em figuras geométricas e observe como comprimentos, áreas e razões trigonométricas se relacionam.",
+      "slug": "geometria-basica-trigonometria",
+      "prefix": "mat1-geo",
+      "exercise_ids": [
+        "mat1-geo-01",
+        "mat1-geo-02",
+        "mat1-geo-03",
+        "mat1-geo-04",
+        "mat1-geo-05",
+        "mat1-geo-06",
+        "mat1-geo-07",
+        "mat1-geo-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 5,
+      "title": "Estatística e Probabilidade",
+      "subtitle": "Tabelas, gráficos, frequências e medidas de tendência central",
+      "description": "Investigue conjuntos de dados, construa distribuições de frequência e compare média, mediana e moda.",
+      "slug": "estatistica-probabilidade",
+      "prefix": "mat1-est",
+      "exercise_ids": [
+        "mat1-est-01",
+        "mat1-est-02",
+        "mat1-est-03",
+        "mat1-est-04",
+        "mat1-est-05",
+        "mat1-est-06"
+      ],
+      "exercise_count": 6
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mat1-num-01",
+      "phase": 1,
+      "exercise_number": 1,
+      "title": "Classificação dos conjuntos numéricos",
+      "learning_objective": "Reconhecer a inclusão entre os conjuntos naturais, inteiros, racionais, irracionais e reais.",
+      "context": "Uma biblioteca matemática organiza números em conjuntos. Alguns conjuntos estão contidos em outros, enquanto os irracionais pertencem aos reais, mas não aos racionais.",
+      "simulation": {
+        "scene": "number_sets",
+        "parameters": [],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual afirmação descreve corretamente a relação entre os conjuntos numéricos?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Todo número natural é inteiro, racional e real; os irracionais também são reais, mas não são racionais.",
+            "Todo número racional é irracional.",
+            "Os números inteiros não pertencem aos números racionais.",
+            "Os números reais são formados apenas pelos naturais e inteiros."
+          ],
+          "correct": 0,
+          "explanation": "Vale a inclusão N ⊂ Z ⊂ Q ⊂ R. Os irracionais pertencem a R, mas ficam fora de Q. Assim, os reais reúnem racionais e irracionais.",
+          "hint": "Observe os conjuntos encaixados e lembre-se de que uma fração de inteiros é um número racional."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-num-02",
+      "phase": 1,
+      "exercise_number": 2,
+      "title": "Identificação de números racionais e irracionais",
+      "learning_objective": "Distinguir números que podem ser escritos como fração de inteiros daqueles cuja representação decimal é infinita e não periódica.",
+      "context": "Uma estudante precisa separar números racionais e irracionais em uma reta numérica. Decimais finitos ou periódicos são racionais; raízes não exatas e π são exemplos de irracionais.",
+      "simulation": {
+        "scene": "number_classify",
+        "parameters": [],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual dos números apresentados é irracional?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "0,75",
+            "−4",
+            "√2",
+            "0,333… (dízima periódica)"
+          ],
+          "correct": 2,
+          "explanation": "√2 é irracional: sua expansão decimal é infinita e não periódica. 0,75 = 3/4, −4 = −4/1 e 0,333… = 1/3 são racionais.",
+          "hint": "Uma dízima periódica é racional. Procure o número que não pode ser escrito como uma fração de inteiros."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-num-03",
+      "phase": 1,
+      "exercise_number": 3,
+      "title": "Operações com números reais",
+      "learning_objective": "Aplicar a hierarquia das operações e operações com números reais.",
+      "context": "Em uma etapa de um cálculo, é preciso respeitar a ordem: primeiro multiplicações e divisões, depois adições e subtrações. A raiz quadrada exata também pode ser simplificada.",
+      "simulation": {
+        "scene": "real_operations",
+        "parameters": [
+          {
+            "key": "A",
+            "label": "Primeiro número (A)",
+            "value": 18,
+            "min": 5,
+            "max": 30,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "B",
+            "label": "Fator multiplicador (B)",
+            "value": 3,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "C",
+            "label": "Segundo fator (C)",
+            "value": 2.5,
+            "min": 0.5,
+            "max": 5,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "N",
+            "label": "Número dentro da raiz (N)",
+            "value": 49,
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Calcule A − B × C + √N com os valores atuais dos controles.",
+        "answer": {
+          "type": "numeric",
+          "formula": "real_operations",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Calcule primeiro B × C e √N. Depois faça a subtração e a adição, nessa ordem.",
+          "solution": "Pela hierarquia das operações: resultado = A − (B × C) + √N. Substitua os valores mostrados nos controles e resolva a expressão."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-num-04",
+      "phase": 1,
+      "exercise_number": 4,
+      "title": "Razões e proporções",
+      "learning_objective": "Interpretar uma razão entre grandezas e determinar uma quantidade proporcional.",
+      "context": "Uma mistura usa 3 medidas de concentrado para cada 5 medidas de água. Mantendo a mesma proporção, a quantidade de concentrado deve crescer na mesma razão que a água.",
+      "simulation": {
+        "scene": "ratio_visual",
+        "parameters": [
+          {
+            "key": "A",
+            "label": "Medidas de concentrado",
+            "value": 3,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "unit": "medidas"
+          },
+          {
+            "key": "B",
+            "label": "Medidas de água na receita",
+            "value": 5,
+            "min": 1,
+            "max": 15,
+            "step": 1,
+            "unit": "medidas"
+          },
+          {
+            "key": "C",
+            "label": "Nova quantidade de água",
+            "value": 20,
+            "min": 5,
+            "max": 40,
+            "step": 1,
+            "unit": "medidas"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Mantendo a proporção, quantas medidas de concentrado são necessárias para a nova quantidade de água?",
+        "answer": {
+          "type": "numeric",
+          "formula": "ratio_proportion",
+          "unit": "medidas",
+          "display_unit": "medidas",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Monte a proporção A/B = x/C e multiplique em cruz.",
+          "solution": "A razão concentrado/água permanece constante: x = (A × C) / B."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-num-05",
+      "phase": 1,
+      "exercise_number": 5,
+      "title": "Regra de três simples e grandezas proporcionais",
+      "learning_objective": "Resolver uma situação de proporcionalidade direta por regra de três simples.",
+      "context": "Em uma papelaria, o preço de cadernos iguais varia diretamente com a quantidade comprada. Se o preço por unidade permanece constante, dobrar a quantidade dobra o custo.",
+      "simulation": {
+        "scene": "proportion_visual",
+        "parameters": [
+          {
+            "key": "Q1",
+            "label": "Quantidade inicial",
+            "value": 4,
+            "min": 1,
+            "max": 12,
+            "step": 1,
+            "unit": "unid."
+          },
+          {
+            "key": "P1",
+            "label": "Preço inicial",
+            "value": 28,
+            "min": 5,
+            "max": 100,
+            "step": 1,
+            "unit": "R$"
+          },
+          {
+            "key": "Q2",
+            "label": "Nova quantidade",
+            "value": 7,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": "unid."
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual será o preço da nova quantidade de cadernos, mantendo o mesmo preço unitário?",
+        "answer": {
+          "type": "numeric",
+          "formula": "rule_three_direct",
+          "unit": "R$",
+          "display_unit": "R$",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Encontre o preço por unidade e multiplique pela nova quantidade.",
+          "solution": "Como as grandezas são diretamente proporcionais, preço = P1 × Q2 / Q1."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-num-06",
+      "phase": 1,
+      "exercise_number": 6,
+      "title": "Cálculo e interpretação de taxas socioeconômicas",
+      "learning_objective": "Calcular uma taxa percentual e interpretar seu significado em relação ao total.",
+      "context": "Uma pesquisa municipal registra quantas pessoas têm acesso à internet em uma amostra. A taxa percentual compara a parte observada com o total pesquisado.",
+      "simulation": {
+        "scene": "socioeconomic_rate",
+        "parameters": [
+          {
+            "key": "part",
+            "label": "Pessoas com acesso",
+            "value": 840,
+            "min": 100,
+            "max": 1000,
+            "step": 20,
+            "unit": "pessoas"
+          },
+          {
+            "key": "total",
+            "label": "Total pesquisado",
+            "value": 1200,
+            "min": 1000,
+            "max": 2000,
+            "step": 20,
+            "unit": "pessoas"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o percentual de pessoas com acesso à internet no grupo pesquisado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "rate_percent",
+          "unit": "%",
+          "display_unit": "%",
+          "digits": 1,
+          "tolerance": 0.1,
+          "hint": "Divida a quantidade com acesso pelo total e multiplique por 100.",
+          "solution": "Taxa percentual = (parte ÷ total) × 100. O resultado representa a fração do grupo expressa em porcentagem."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-fin-01",
+      "phase": 2,
+      "exercise_number": 1,
+      "title": "Porcentagem e aplicações cotidianas",
+      "learning_objective": "Calcular uma parte percentual de uma quantidade em situações de consumo e orçamento.",
+      "context": "Uma família reserva uma porcentagem do orçamento mensal para alimentação. A porcentagem representa uma parte de cada cem unidades do valor total.",
+      "simulation": {
+        "scene": "percentage_part",
+        "parameters": [
+          {
+            "key": "base",
+            "label": "Valor total",
+            "value": 240,
+            "min": 50,
+            "max": 600,
+            "step": 10,
+            "unit": "R$"
+          },
+          {
+            "key": "rate",
+            "label": "Percentual",
+            "value": 25,
+            "min": 5,
+            "max": 80,
+            "step": 1,
+            "unit": "%"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual valor corresponde ao percentual selecionado do total?",
+        "answer": {
+          "type": "numeric",
+          "formula": "percent_part",
+          "unit": "R$",
+          "display_unit": "R$",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Transforme a porcentagem em fração decimal e multiplique pelo valor total.",
+          "solution": "Parte = valor total × (percentual ÷ 100)."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-fin-02",
+      "phase": 2,
+      "exercise_number": 2,
+      "title": "Acréscimos e descontos percentuais",
+      "learning_objective": "Determinar o preço final após um desconto percentual.",
+      "context": "Uma loja anuncia um desconto sobre o preço original. O valor descontado é subtraído do preço inicial; o preço final corresponde ao percentual restante.",
+      "simulation": {
+        "scene": "price_change",
+        "parameters": [
+          {
+            "key": "price",
+            "label": "Preço original",
+            "value": 200,
+            "min": 50,
+            "max": 600,
+            "step": 10,
+            "unit": "R$"
+          },
+          {
+            "key": "rate",
+            "label": "Desconto",
+            "value": 15,
+            "min": 5,
+            "max": 60,
+            "step": 1,
+            "unit": "%"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o preço final do produto após o desconto?",
+        "answer": {
+          "type": "numeric",
+          "formula": "discounted_price",
+          "unit": "R$",
+          "display_unit": "R$",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Calcule o valor do desconto e subtraia do preço original. Outra forma é multiplicar por (1 − taxa/100).",
+          "solution": "Preço final = preço original × (1 − desconto/100)."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-fin-03",
+      "phase": 2,
+      "exercise_number": 3,
+      "title": "Juros simples",
+      "learning_objective": "Calcular os juros produzidos por um capital em regime de juros simples.",
+      "context": "Em juros simples, a taxa incide sempre sobre o capital inicial. Por isso, o acréscimo por período é constante.",
+      "simulation": {
+        "scene": "simple_interest",
+        "parameters": [
+          {
+            "key": "capital",
+            "label": "Capital inicial",
+            "value": 1200,
+            "min": 200,
+            "max": 5000,
+            "step": 100,
+            "unit": "R$"
+          },
+          {
+            "key": "rate",
+            "label": "Taxa por período",
+            "value": 2,
+            "min": 0.5,
+            "max": 10,
+            "step": 0.5,
+            "unit": "%"
+          },
+          {
+            "key": "periods",
+            "label": "Número de períodos",
+            "value": 5,
+            "min": 1,
+            "max": 24,
+            "step": 1,
+            "unit": "períodos"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Quanto será pago ou recebido somente em juros simples ao final do período?",
+        "answer": {
+          "type": "numeric",
+          "formula": "simple_interest",
+          "unit": "R$",
+          "display_unit": "R$",
+          "digits": 2,
+          "tolerance": 0.05,
+          "hint": "Use J = C × i × t, com a taxa escrita na forma decimal.",
+          "solution": "Juros simples: J = C × (i/100) × t. O montante seria M = C + J; aqui é solicitado apenas J."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-fin-04",
+      "phase": 2,
+      "exercise_number": 4,
+      "title": "Juros compostos",
+      "learning_objective": "Calcular o montante de uma aplicação submetida a juros compostos.",
+      "context": "Nos juros compostos, cada período aplica a taxa sobre o saldo acumulado. O crescimento é multiplicativo, diferentemente do acréscimo constante dos juros simples.",
+      "simulation": {
+        "scene": "compound_interest",
+        "parameters": [
+          {
+            "key": "capital",
+            "label": "Capital inicial",
+            "value": 1000,
+            "min": 200,
+            "max": 5000,
+            "step": 100,
+            "unit": "R$"
+          },
+          {
+            "key": "rate",
+            "label": "Taxa por período",
+            "value": 10,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": "%"
+          },
+          {
+            "key": "periods",
+            "label": "Número de períodos",
+            "value": 2,
+            "min": 1,
+            "max": 12,
+            "step": 1,
+            "unit": "períodos"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual será o montante ao final do período, em regime de juros compostos?",
+        "answer": {
+          "type": "numeric",
+          "formula": "compound_amount",
+          "unit": "R$",
+          "display_unit": "R$",
+          "digits": 2,
+          "tolerance": 0.08,
+          "hint": "Use M = C × (1 + i)^t, com i na forma decimal.",
+          "solution": "Montante composto: M = C × (1 + i/100)^t. Os juros são M − C."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-fin-05",
+      "phase": 2,
+      "exercise_number": 5,
+      "title": "Identificação de padrões em sequências numéricas",
+      "learning_objective": "Identificar uma progressão aritmética e determinar um termo a partir do padrão.",
+      "context": "Uma sequência de pontos cresce sempre pela mesma quantidade de um termo para o próximo. Esse padrão caracteriza uma progressão aritmética (PA).",
+      "simulation": {
+        "scene": "sequence_pa",
+        "parameters": [
+          {
+            "key": "first",
+            "label": "Primeiro termo",
+            "value": 5,
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "difference",
+            "label": "Razão da PA",
+            "value": 3,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "n",
+            "label": "Posição do termo",
+            "value": 8,
+            "min": 2,
+            "max": 15,
+            "step": 1,
+            "unit": "º"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o termo na posição indicada da sequência aritmética?",
+        "answer": {
+          "type": "numeric",
+          "formula": "pa_term",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Use a_n = a_1 + (n − 1)r.",
+          "solution": "Em uma PA, a diferença entre termos consecutivos é constante. O termo geral é a_n = a_1 + (n − 1)r."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-fin-06",
+      "phase": 2,
+      "exercise_number": 6,
+      "title": "Interpretação de algoritmos e fluxogramas",
+      "learning_objective": "Interpretar a sequência de comandos e uma estrutura condicional em um algoritmo.",
+      "context": "Um algoritmo recebe um número x. Se x for maior que 10, multiplica x por 2; caso contrário, soma 5. O fluxograma representa visualmente esse caminho de decisão.",
+      "simulation": {
+        "scene": "algorithm_flow",
+        "parameters": [
+          {
+            "key": "x",
+            "label": "Valor de entrada x",
+            "value": 8,
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual valor será exibido pelo algoritmo para a entrada atual?",
+        "answer": {
+          "type": "numeric",
+          "formula": "algorithm_output",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Verifique primeiro a condição x > 10. Depois siga apenas o ramo correspondente.",
+          "solution": "Se x > 10, saída = 2x. Caso contrário, saída = x + 5."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-fin-07",
+      "phase": 2,
+      "exercise_number": 7,
+      "title": "Construção de algoritmo para cálculo de juros",
+      "learning_objective": "Reconhecer a ordem correta das etapas de um algoritmo para calcular juros simples.",
+      "context": "Um sistema deverá receber capital, taxa e tempo, calcular os juros simples e apresentar o montante. A construção do algoritmo exige entradas, processamento e saída organizados.",
+      "simulation": {
+        "scene": "algorithm_builder",
+        "parameters": [
+          {
+            "key": "capital",
+            "label": "Capital (R$)",
+            "value": 1000,
+            "min": 200,
+            "max": 5000,
+            "step": 100,
+            "unit": "R$"
+          },
+          {
+            "key": "rate",
+            "label": "Taxa (%)",
+            "value": 2,
+            "min": 0.5,
+            "max": 10,
+            "step": 0.5,
+            "unit": "%"
+          },
+          {
+            "key": "periods",
+            "label": "Períodos",
+            "value": 6,
+            "min": 1,
+            "max": 24,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual sequência de etapas implementa corretamente o cálculo do montante em juros simples?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Ler C, i e t → calcular J = C × (i/100) × t → calcular M = C + J → exibir M.",
+            "Ler C, i e t → calcular M = C × (1 + i)^t → exibir J.",
+            "Somar C + i + t → multiplicar o resultado por 100 → exibir M.",
+            "Calcular J = C ÷ i × t → subtrair J de C → exibir M."
+          ],
+          "correct": 0,
+          "explanation": "O algoritmo deve receber os dados, converter a taxa percentual, calcular os juros simples e somá-los ao capital para obter o montante.",
+          "hint": "Separe o procedimento em entrada, processamento e saída. Juros simples são calculados sobre o capital inicial."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-alg-01",
+      "phase": 3,
+      "exercise_number": 1,
+      "title": "Funções polinomiais do 1º grau: conceitos e representação gráfica",
+      "learning_objective": "Relacionar a lei de uma função afim com sua representação como reta no plano cartesiano.",
+      "context": "Uma função de primeiro grau pode modelar uma tarifa fixa somada a um custo que cresce proporcionalmente à quantidade utilizada. Seu gráfico é uma reta.",
+      "simulation": {
+        "scene": "linear_function",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente angular (a)",
+            "value": 2,
+            "min": -4,
+            "max": 5,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente linear (b)",
+            "value": 1,
+            "min": -8,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x",
+            "label": "Valor de x",
+            "value": 3,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o valor de f(x) no ponto indicado, considerando f(x) = ax + b?",
+        "answer": {
+          "type": "numeric",
+          "formula": "linear_value",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Substitua o x atual em f(x) = ax + b.",
+          "solution": "A função afim é f(x) = ax + b. O coeficiente a determina a inclinação da reta e b é o ponto em que ela cruza o eixo y."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-alg-02",
+      "phase": 3,
+      "exercise_number": 2,
+      "title": "Raízes e interpretação gráfica de funções do 1º grau",
+      "learning_objective": "Determinar a raiz de uma função afim e relacioná-la ao cruzamento da reta com o eixo x.",
+      "context": "A raiz de uma função é o valor de x para o qual f(x) = 0. No gráfico de uma função afim não constante, ela corresponde ao ponto em que a reta cruza o eixo horizontal.",
+      "simulation": {
+        "scene": "linear_root",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente angular (a)",
+            "value": 2,
+            "min": 0.5,
+            "max": 5,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente linear (b)",
+            "value": -8,
+            "min": -20,
+            "max": -1,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a raiz da função f(x) = ax + b?",
+        "answer": {
+          "type": "numeric",
+          "formula": "linear_root",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Faça ax + b = 0 e isole x.",
+          "solution": "Na raiz, f(x)=0. Portanto, ax+b=0 ⇒ x=−b/a."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-alg-03",
+      "phase": 3,
+      "exercise_number": 3,
+      "title": "Funções polinomiais do 2º grau: conceitos e representação gráfica",
+      "learning_objective": "Reconhecer as características da parábola a partir dos coeficientes da função quadrática.",
+      "context": "O sinal do coeficiente a determina a concavidade da parábola: se a é positivo, ela se abre para cima; se negativo, abre para baixo. A parábola possui vértice, que representa mínimo ou máximo.",
+      "simulation": {
+        "scene": "quadratic_concept",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente a",
+            "value": 1,
+            "min": 0.5,
+            "max": 3,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente b",
+            "value": -4,
+            "min": -8,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Coeficiente c",
+            "value": 3,
+            "min": -8,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Com base no sinal de a, qual é a concavidade da parábola e o tipo de extremo do vértice?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Concavidade para cima e vértice de mínimo.",
+            "Concavidade para baixo e vértice de mínimo.",
+            "Concavidade para cima e vértice de máximo.",
+            "A função quadrática não possui vértice."
+          ],
+          "correct": 0,
+          "explanation": "Como a é positivo, a parábola tem concavidade para cima e o vértice representa o menor valor da função.",
+          "hint": "Observe o sinal do coeficiente que multiplica x²."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-alg-04",
+      "phase": 3,
+      "exercise_number": 4,
+      "title": "Cálculo das raízes de funções do 2º grau",
+      "learning_objective": "Aplicar a fórmula de Bhaskara para calcular as raízes reais de uma função quadrática.",
+      "context": "As raízes de ax² + bx + c = 0 são os pontos onde a parábola intercepta o eixo x. O discriminante Δ = b² − 4ac indica a quantidade de raízes reais.",
+      "simulation": {
+        "scene": "quadratic_roots",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente a",
+            "value": 1,
+            "min": 1,
+            "max": 1,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente b",
+            "value": -6,
+            "min": -6,
+            "max": -6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Coeficiente c",
+            "value": 8,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a menor raiz real da função quadrática indicada pelos controles?",
+        "answer": {
+          "type": "numeric",
+          "formula": "quadratic_small_root",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.04,
+          "hint": "Calcule Δ = b² − 4ac e use x = (−b ± √Δ)/(2a).",
+          "solution": "A fórmula de Bhaskara fornece x₁ = (−b − √Δ)/(2a) e x₂ = (−b + √Δ)/(2a), com Δ = b² − 4ac."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-alg-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Determinação do vértice de uma parábola",
+      "learning_objective": "Calcular a abscissa do vértice de uma função quadrática.",
+      "context": "O vértice é o ponto de máximo ou mínimo da parábola. Sua coordenada horizontal pode ser encontrada por x_v = −b/(2a).",
+      "simulation": {
+        "scene": "quadratic_vertex",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente a",
+            "value": 1,
+            "min": 0.5,
+            "max": 3,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente b",
+            "value": -4,
+            "min": -10,
+            "max": 10,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Coeficiente c",
+            "value": 3,
+            "min": -8,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a coordenada x do vértice da parábola?",
+        "answer": {
+          "type": "numeric",
+          "formula": "vertex_x",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Use x_v = −b/(2a). O coeficiente c não interfere na coordenada x do vértice.",
+          "solution": "Para f(x)=ax²+bx+c, a abscissa do vértice é x_v=−b/(2a). Para encontrar y_v, substitua x_v na função."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-alg-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Identificação de pontos de máximo e mínimo de funções quadráticas",
+      "learning_objective": "Interpretar o valor extremo de uma função quadrática e identificar se ele é máximo ou mínimo.",
+      "context": "Uma parábola com concavidade para baixo possui um ponto de máximo. Esse valor corresponde à coordenada y do vértice.",
+      "simulation": {
+        "scene": "quadratic_extrema",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Coeficiente a",
+            "value": -1,
+            "min": -3,
+            "max": -0.5,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente b",
+            "value": 4,
+            "min": 0,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Coeficiente c",
+            "value": 1,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o valor máximo da função quadrática representada?",
+        "answer": {
+          "type": "numeric",
+          "formula": "quadratic_max",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.04,
+          "hint": "Calcule x_v = −b/(2a) e depois y_v = a·x_v² + b·x_v + c.",
+          "solution": "Como a<0, a parábola é voltada para baixo. O valor máximo é y_v, calculado substituindo x_v=−b/(2a) na função."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-alg-07",
+      "phase": 3,
+      "exercise_number": 7,
+      "title": "Progressão aritmética (PA): razão e termo geral",
+      "learning_objective": "Determinar um termo de uma progressão aritmética a partir do primeiro termo e da razão.",
+      "context": "Em uma PA, a diferença entre termos consecutivos é constante. O termo geral permite encontrar qualquer posição sem listar todos os termos anteriores.",
+      "simulation": {
+        "scene": "pa_visual",
+        "parameters": [
+          {
+            "key": "first",
+            "label": "Primeiro termo",
+            "value": 4,
+            "min": 0,
+            "max": 15,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "difference",
+            "label": "Razão",
+            "value": 3,
+            "min": -3,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "n",
+            "label": "Posição n",
+            "value": 10,
+            "min": 2,
+            "max": 15,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o valor do termo indicado da PA?",
+        "answer": {
+          "type": "numeric",
+          "formula": "pa_term",
+          "unit": "",
+          "display_unit": "",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Use a_n = a_1 + (n − 1)r.",
+          "solution": "O termo geral da PA é a_n = a_1 + (n−1)r. Substitua o primeiro termo, a razão e a posição n."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-alg-08",
+      "phase": 3,
+      "exercise_number": 8,
+      "title": "Progressão geométrica (PG): razão e termo geral",
+      "learning_objective": "Determinar um termo de uma progressão geométrica a partir do primeiro termo e da razão.",
+      "context": "Em uma PG, cada termo é obtido multiplicando o anterior por uma razão constante. O termo geral envolve uma potência da razão.",
+      "simulation": {
+        "scene": "pg_visual",
+        "parameters": [
+          {
+            "key": "first",
+            "label": "Primeiro termo",
+            "value": 2,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "ratio",
+            "label": "Razão da PG",
+            "value": 3,
+            "min": 1.2,
+            "max": 3,
+            "step": 0.2,
+            "unit": ""
+          },
+          {
+            "key": "n",
+            "label": "Posição n",
+            "value": 5,
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o valor do termo indicado da PG?",
+        "answer": {
+          "type": "numeric",
+          "formula": "pg_term",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.08,
+          "hint": "Use a_n = a_1 × q^(n−1).",
+          "solution": "O termo geral da PG é a_n = a_1 · q^(n−1), em que q é a razão multiplicativa."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-geo-01",
+      "phase": 4,
+      "exercise_number": 1,
+      "title": "Classificação de polígonos e identificação de seus elementos",
+      "learning_objective": "Reconhecer polígonos pelo número de lados e identificar lados, vértices e ângulos.",
+      "context": "Polígonos são figuras planas fechadas formadas por segmentos de reta. O nome de cada polígono depende do número de lados.",
+      "simulation": {
+        "scene": "polygon_classify",
+        "parameters": [
+          {
+            "key": "sides",
+            "label": "Número de lados",
+            "value": 6,
+            "min": 3,
+            "max": 8,
+            "step": 1,
+            "unit": "lados"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Quantos vértices possui o polígono simples destacado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "polygon_vertices",
+          "unit": "vértices",
+          "display_unit": "vértices",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Em um polígono simples, cada encontro entre dois lados consecutivos forma um vértice.",
+          "solution": "O número de vértices de um polígono simples é igual ao número de lados."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-geo-02",
+      "phase": 4,
+      "exercise_number": 2,
+      "title": "Cálculo de perímetros e áreas de polígonos",
+      "learning_objective": "Calcular área e perímetro de um retângulo a partir de suas dimensões.",
+      "context": "O projeto de um jardim retangular exige calcular a área para estimar a quantidade de grama e o perímetro para definir o comprimento da cerca.",
+      "simulation": {
+        "scene": "rectangle_geometry",
+        "parameters": [
+          {
+            "key": "width",
+            "label": "Largura",
+            "value": 8,
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "unit": "m"
+          },
+          {
+            "key": "height",
+            "label": "Comprimento",
+            "value": 5,
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "unit": "m"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o perímetro do retângulo indicado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "rectangle_perimeter",
+          "unit": "m",
+          "display_unit": "m",
+          "digits": 2,
+          "tolerance": 0.04,
+          "hint": "A área de um retângulo é base × altura.",
+          "solution": "P = 2 × (largura + comprimento). A área da mesma figura seria A = largura × comprimento."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-geo-03",
+      "phase": 4,
+      "exercise_number": 3,
+      "title": "Semelhança de triângulos e proporcionalidade",
+      "learning_objective": "Aplicar a razão de semelhança para determinar medidas correspondentes em triângulos semelhantes.",
+      "context": "Dois triângulos semelhantes têm ângulos correspondentes iguais e lados correspondentes proporcionais. Um desenho em escala preserva essa proporção.",
+      "simulation": {
+        "scene": "triangle_similarity",
+        "parameters": [
+          {
+            "key": "small",
+            "label": "Lado do triângulo menor",
+            "value": 3,
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "unit": "cm"
+          },
+          {
+            "key": "corresponding",
+            "label": "Lado correspondente maior",
+            "value": 6,
+            "min": 2,
+            "max": 16,
+            "step": 1,
+            "unit": "cm"
+          },
+          {
+            "key": "target",
+            "label": "Outro lado do menor",
+            "value": 4,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "unit": "cm"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a medida do lado correspondente no triângulo maior?",
+        "answer": {
+          "type": "numeric",
+          "formula": "similar_side",
+          "unit": "cm",
+          "display_unit": "cm",
+          "digits": 2,
+          "tolerance": 0.04,
+          "hint": "Determine o fator de escala dividindo o lado maior pelo correspondente menor. Depois multiplique o lado desejado.",
+          "solution": "Fator de escala k = lado maior correspondente ÷ lado menor. O lado procurado = target × k."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-geo-04",
+      "phase": 4,
+      "exercise_number": 4,
+      "title": "Aplicações do Teorema de Pitágoras",
+      "learning_objective": "Calcular a hipotenusa de um triângulo retângulo usando os catetos.",
+      "context": "Uma rampa forma um triângulo retângulo com o chão e a altura alcançada. O Teorema de Pitágoras relaciona os dois catetos à hipotenusa.",
+      "simulation": {
+        "scene": "pythagoras",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Cateto a",
+            "value": 6,
+            "min": 1,
+            "max": 15,
+            "step": 1,
+            "unit": "m"
+          },
+          {
+            "key": "b",
+            "label": "Cateto b",
+            "value": 8,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": "m"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o comprimento da hipotenusa do triângulo?",
+        "answer": {
+          "type": "numeric",
+          "formula": "hypotenuse",
+          "unit": "m",
+          "display_unit": "m",
+          "digits": 2,
+          "tolerance": 0.04,
+          "hint": "Use h² = a² + b² e extraia a raiz quadrada.",
+          "solution": "Pelo Teorema de Pitágoras, h = √(a²+b²). A hipotenusa é o maior lado e fica oposta ao ângulo reto."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-geo-05",
+      "phase": 4,
+      "exercise_number": 5,
+      "title": "Relações trigonométricas no triângulo retângulo: seno, cosseno e tangente",
+      "learning_objective": "Relacionar seno, cosseno e tangente às razões entre os lados de um triângulo retângulo.",
+      "context": "As três razões trigonométricas fundamentais usam um ângulo agudo de referência: seno = oposto/hipotenusa, cosseno = adjacente/hipotenusa e tangente = oposto/adjacente.",
+      "simulation": {
+        "scene": "trig_ratios",
+        "parameters": [
+          {
+            "key": "angle",
+            "label": "Ângulo θ",
+            "value": 30,
+            "min": 10,
+            "max": 75,
+            "step": 5,
+            "unit": "°"
+          },
+          {
+            "key": "hyp",
+            "label": "Hipotenusa",
+            "value": 10,
+            "min": 4,
+            "max": 20,
+            "step": 1,
+            "unit": "cm"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é o comprimento do cateto oposto ao ângulo indicado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "opposite_side",
+          "unit": "cm",
+          "display_unit": "cm",
+          "digits": 2,
+          "tolerance": 0.04,
+          "hint": "Use sen(θ) = cateto oposto / hipotenusa.",
+          "solution": "Cateto oposto = hipotenusa × sen(θ). Certifique-se de que a calculadora está em graus."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-geo-06",
+      "phase": 4,
+      "exercise_number": 6,
+      "title": "Cálculo de ângulos e lados utilizando relações trigonométricas",
+      "learning_objective": "Determinar um cateto usando a tangente de um ângulo e o cateto adjacente.",
+      "context": "Em um triângulo retângulo, a tangente relaciona o cateto oposto ao cateto adjacente. Essa razão é útil para estimar alturas e distâncias inacessíveis.",
+      "simulation": {
+        "scene": "trig_solve",
+        "parameters": [
+          {
+            "key": "angle",
+            "label": "Ângulo θ",
+            "value": 35,
+            "min": 10,
+            "max": 70,
+            "step": 5,
+            "unit": "°"
+          },
+          {
+            "key": "adjacent",
+            "label": "Cateto adjacente",
+            "value": 12,
+            "min": 3,
+            "max": 30,
+            "step": 1,
+            "unit": "m"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a medida do cateto oposto ao ângulo indicado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "opposite_tangent",
+          "unit": "m",
+          "display_unit": "m",
+          "digits": 2,
+          "tolerance": 0.05,
+          "hint": "Use tg(θ) = cateto oposto / cateto adjacente.",
+          "solution": "Cateto oposto = cateto adjacente × tg(θ). Use o ângulo em graus."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-geo-07",
+      "phase": 4,
+      "exercise_number": 7,
+      "title": "Cálculo de áreas e perímetros de figuras geométricas",
+      "learning_objective": "Calcular a área de um círculo a partir de seu raio.",
+      "context": "Uma praça circular será coberta com um piso. Para estimar a quantidade de material, é necessário calcular a área delimitada pela circunferência.",
+      "simulation": {
+        "scene": "circle_geometry",
+        "parameters": [
+          {
+            "key": "radius",
+            "label": "Raio",
+            "value": 4,
+            "min": 1,
+            "max": 10,
+            "step": 0.5,
+            "unit": "m"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a área do círculo? Utilize π ≈ 3,1416.",
+        "answer": {
+          "type": "numeric",
+          "formula": "circle_area",
+          "unit": "m²",
+          "display_unit": "m²",
+          "digits": 2,
+          "tolerance": 0.08,
+          "hint": "A área do círculo é A = πr². Eleve o raio ao quadrado antes de multiplicar por π.",
+          "solution": "A = π × r². O comprimento da circunferência seria C = 2πr."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-geo-08",
+      "phase": 4,
+      "exercise_number": 8,
+      "title": "Aplicações práticas de geometria e trigonometria",
+      "learning_objective": "Resolver uma situação prática usando o Teorema de Pitágoras.",
+      "context": "Uma escada de 10 m encostada em uma parede forma um triângulo retângulo. Ao ajustar a distância horizontal, é possível estimar a altura alcançada.",
+      "simulation": {
+        "scene": "ladder_application",
+        "parameters": [
+          {
+            "key": "ladder",
+            "label": "Comprimento da escada",
+            "value": 10,
+            "min": 6,
+            "max": 15,
+            "step": 1,
+            "unit": "m"
+          },
+          {
+            "key": "base",
+            "label": "Distância da parede",
+            "value": 6,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "unit": "m"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a altura alcançada pela escada na parede?",
+        "answer": {
+          "type": "numeric",
+          "formula": "ladder_height",
+          "unit": "m",
+          "display_unit": "m",
+          "digits": 2,
+          "tolerance": 0.05,
+          "hint": "A escada é a hipotenusa. Use altura² = escada² − distância².",
+          "solution": "Pelo Teorema de Pitágoras, h = √(L² − d²). O comprimento da escada deve ser maior que a distância horizontal."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-est-01",
+      "phase": 5,
+      "exercise_number": 1,
+      "title": "Interpretação de tabelas estatísticas",
+      "learning_objective": "Ler uma tabela e identificar a categoria com maior frequência ou quantidade.",
+      "context": "Uma escola organizou as preferências esportivas dos estudantes em uma tabela. Interpretar a tabela significa comparar os valores e identificar padrões.",
+      "simulation": {
+        "scene": "statistics_table",
+        "parameters": [],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "De acordo com a tabela exibida, qual modalidade apresenta a maior quantidade de estudantes?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Futebol",
+            "Vôlei",
+            "Basquete",
+            "Natação"
+          ],
+          "correct": 0,
+          "explanation": "A categoria com maior frequência é aquela que apresenta o maior valor na coluna de quantidade.",
+          "hint": "Compare os números da coluna de frequência; não confunda o nome da categoria com sua quantidade."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-est-02",
+      "phase": 5,
+      "exercise_number": 2,
+      "title": "Interpretação de gráficos estatísticos",
+      "learning_objective": "Interpretar valores em um gráfico de colunas e calcular a variação entre dois períodos.",
+      "context": "Um gráfico de vendas mensais permite comparar os resultados de diferentes meses. A variação absoluta é a diferença entre o valor final e o inicial.",
+      "simulation": {
+        "scene": "statistics_graph",
+        "parameters": [
+          {
+            "key": "start",
+            "label": "Valor no período inicial",
+            "value": 12,
+            "min": 5,
+            "max": 15,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "end",
+            "label": "Valor no período final",
+            "value": 24,
+            "min": 16,
+            "max": 40,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual foi o aumento absoluto entre o período inicial e o período final?",
+        "answer": {
+          "type": "numeric",
+          "formula": "graph_difference",
+          "unit": "unidades",
+          "display_unit": "unidades",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Subtraia o valor inicial do valor final.",
+          "solution": "Variação absoluta = valor final − valor inicial. Para obter a variação percentual, seria necessário dividir essa diferença pelo valor inicial e multiplicar por 100."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-est-03",
+      "phase": 5,
+      "exercise_number": 3,
+      "title": "Construção e análise de tabelas de frequência",
+      "learning_objective": "Construir uma distribuição simples de frequências e identificar a frequência de um valor.",
+      "context": "Em uma pesquisa, as respostas são agrupadas por valor. A frequência absoluta indica quantas vezes cada valor aparece no conjunto de dados.",
+      "simulation": {
+        "scene": "frequency_table",
+        "parameters": [
+          {
+            "key": "value",
+            "label": "Valor investigado",
+            "value": 3,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "unit": "pontos"
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a frequência absoluta do valor selecionado no conjunto apresentado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "frequency_count",
+          "unit": "ocorrências",
+          "display_unit": "ocorrências",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Conte quantas vezes o valor destacado aparece na lista de observações.",
+          "solution": "A frequência absoluta é a contagem das ocorrências de cada valor no conjunto de dados."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-est-04",
+      "phase": 5,
+      "exercise_number": 4,
+      "title": "Cálculo da média aritmética",
+      "learning_objective": "Calcular a média aritmética simples de um conjunto de valores.",
+      "context": "A média aritmética é obtida somando todos os valores e dividindo o resultado pela quantidade de observações.",
+      "simulation": {
+        "scene": "mean_visual",
+        "parameters": [
+          {
+            "key": "v1",
+            "label": "Valor 1",
+            "value": 6,
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "v2",
+            "label": "Valor 2",
+            "value": 7,
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "v3",
+            "label": "Valor 3",
+            "value": 8,
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "v4",
+            "label": "Valor 4",
+            "value": 9,
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "v5",
+            "label": "Valor 5",
+            "value": 10,
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual é a média aritmética dos cinco valores?",
+        "answer": {
+          "type": "numeric",
+          "formula": "arithmetic_mean",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Some os cinco valores e divida a soma por 5.",
+          "solution": "Média = (v1 + v2 + v3 + v4 + v5) ÷ 5."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-est-05",
+      "phase": 5,
+      "exercise_number": 5,
+      "title": "Determinação da mediana e da moda",
+      "learning_objective": "Identificar mediana e moda em um conjunto ordenado de dados.",
+      "context": "A mediana é o valor central de um conjunto ordenado; a moda é o valor ou os valores que mais se repetem. Um conjunto pode apresentar mais de uma moda.",
+      "simulation": {
+        "scene": "median_mode",
+        "parameters": [],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Qual alternativa apresenta corretamente a mediana e a(s) moda(s) do conjunto exibido?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Mediana = 5; modas = 3 e 9.",
+            "Mediana = 3; moda = 5.",
+            "Mediana = 7; moda = 2.",
+            "Mediana = 5; não existe moda."
+          ],
+          "correct": 0,
+          "explanation": "O conjunto ordenado possui sete elementos, então a mediana é o quarto valor: 5. Os valores 3 e 9 aparecem duas vezes cada, mais do que os demais; portanto, há duas modas.",
+          "hint": "Ordene os dados. Com quantidade ímpar, a mediana é o elemento central. Para a moda, conte as repetições."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    },
+    {
+      "id": "mat1-est-06",
+      "phase": 5,
+      "exercise_number": 6,
+      "title": "Comparação e interpretação de medidas de tendência central",
+      "learning_objective": "Comparar média, mediana e moda e avaliar o efeito de valores extremos.",
+      "context": "Uma equipe analisa tempos de espera. Um valor muito alto pode deslocar a média, enquanto a mediana costuma ser menos afetada por observações extremas.",
+      "simulation": {
+        "scene": "central_comparison",
+        "parameters": [],
+        "description": "Modifique os controles e acompanhe a representação visual. A cena é um modelo didático e não está necessariamente em escala."
+      },
+      "challenge": {
+        "prompt": "Para representar o valor típico deste conjunto, qual medida é menos influenciada pelo valor extremo 20?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Média aritmética.",
+            "Mediana.",
+            "A soma dos valores.",
+            "A amplitude."
+          ],
+          "correct": 1,
+          "explanation": "A mediana depende da posição dos dados ordenados e é menos sensível a valores extremos do que a média. No conjunto apresentado, a mediana representa melhor o centro típico.",
+          "hint": "Pense em qual medida depende da posição central dos dados, e não da soma de todos os valores."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "exploracao-matematica"
+      }
+    }
+  ]
+}
