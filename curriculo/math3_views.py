@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import Fase, Questao, Opcao, Disciplina
+from .rewards import conceder_moedas_por_questao
 from .views import fase_esta_liberada, contexto_papel, papel_efetivo
 from .math3_engine import calculate, is_correct
 from gamificacao.models import PerfilUsuario, TentativaFase, RespostaTentativa, ProgressoFase
@@ -116,25 +117,56 @@ def math3_check_answer(request, fase_id):
 
 @login_required
 @require_POST
+@transaction.atomic
 def math3_finish_phase(request, fase_id):
     fase=get_object_or_404(Fase,pk=fase_id,modulo__disciplina__slug="matematica-3")
     aid=request.session.get("math3_attempt_id")
-    if not aid or request.session.get("math3_phase_id")!=fase.pk: return JsonResponse({"error":"Tentativa não encontrada."},status=409)
-    attempt=get_object_or_404(TentativaFase,pk=aid,perfil__usuario=request.user,fase=fase)
-    if attempt.finalizada_em: return JsonResponse({"status":"ok","aprovado":attempt.aprovado})
-    answers=list(attempt.respostas.all()); correct=sum(x.correta for x in answers); percent=Decimal(correct*100)
-    approved=len(answers)==1 and correct==1; xp=0
-    if approved and answers[0].questao_id: xp=int(answers[0].questao.dados_dinamicos.get("completion",{}).get("xp",30))
-    attempt.acertos=correct; attempt.erros=max(0,len(answers)-correct); attempt.aproveitamento=percent
-    attempt.aprovado=approved; attempt.xp_ganho=xp; attempt.finalizada_em=timezone.now()
-    attempt.save(update_fields=["acertos","erros","aproveitamento","aprovado","xp_ganho","finalizada_em"])
+    if not aid or request.session.get("math3_phase_id")!=fase.pk:
+        return JsonResponse({"error":"Tentativa não encontrada."},status=409)
+    attempt=get_object_or_404(
+        TentativaFase.objects.select_for_update(),
+        pk=aid,perfil__usuario=request.user,fase=fase,
+    )
+    if attempt.finalizada_em:
+        return JsonResponse({
+            "status":"ok","aprovado":attempt.aprovado,
+            "moedas_ganhas":attempt.moedas_ganhas,
+        })
+    answers=list(attempt.respostas.select_related("questao").all())
+    correct=sum(x.correta for x in answers)
+    percent=Decimal(correct*100)
+    approved=len(answers)==1 and correct==1
+    xp=0
+    if approved and answers[0].questao_id:
+        xp=int(answers[0].questao.dados_dinamicos.get("completion",{}).get("xp",30))
+    attempt.acertos=correct
+    attempt.erros=max(0,len(answers)-correct)
+    attempt.aproveitamento=percent
+    attempt.aprovado=approved
+    attempt.xp_ganho=xp
+    attempt.finalizada_em=timezone.now()
+    attempt.save(update_fields=[
+        "acertos","erros","aproveitamento","aprovado","xp_ganho","finalizada_em",
+    ])
+    moedas=0
+    if approved:
+        moedas=conceder_moedas_por_questao(attempt,answers)
+        perfil=attempt.perfil
+        perfil.xp_total+=xp
+        perfil.save(update_fields=["xp_total"])
     progress,_=ProgressoFase.objects.get_or_create(perfil=attempt.perfil,fase=fase)
-    progress.tentativas+=1; progress.erros+=attempt.erros; progress.data_ultima_tentativa=timezone.now()
+    progress.tentativas+=1
+    progress.erros+=attempt.erros
+    progress.data_ultima_tentativa=timezone.now()
     progress.melhor_aproveitamento=max(progress.melhor_aproveitamento,percent)
     if approved:
-        attempt.perfil.xp_total+=xp; attempt.perfil.save(update_fields=["xp_total"])
-        progress.concluida=True; progress.data_conclusao=timezone.now()
+        progress.concluida=True
+        progress.data_conclusao=timezone.now()
     progress.save()
-    request.session.pop("math3_attempt_id",None); request.session.pop("math3_phase_id",None)
-    return JsonResponse({"status":"ok","aprovado":approved,"acertos":correct,"erros":attempt.erros,"total":1,
-        "aproveitamento":float(percent),"xp_ganho":xp})
+    request.session.pop("math3_attempt_id",None)
+    request.session.pop("math3_phase_id",None)
+    return JsonResponse({
+        "status":"ok","aprovado":approved,"acertos":correct,
+        "erros":attempt.erros,"total":1,"aproveitamento":float(percent),
+        "xp_ganho":xp,"moedas_ganhas":moedas,
+    })
