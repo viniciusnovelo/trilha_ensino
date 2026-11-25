@@ -697,8 +697,7 @@
         }
       },
       "completion": {
-        "xp": 35,
-        "skill": "raciocinio-quimico"
+        "xp": 35,        "skill": "raciocinio-quimico"
       }
     },
     {
@@ -998,3 +997,403 @@
           "solution": "Pela proporção 1 O₂ : 2 H₂O, multiplique a quantidade de O₂ por 2."
         }
       },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-rea-05",
+      "phase": 4,
+      "exercise_number": 5,
+      "title": "Lei de Lavoisier: conservação das massas",
+      "learning_objective": "Aplicar a conservação da massa em um sistema fechado.",
+      "context": "Em um sistema fechado, a massa total dos reagentes é igual à massa total dos produtos. A simulação representa uma reação em recipiente fechado, sem perda de matéria para o ambiente.",
+      "simulation": {
+        "scene": "lavoisier",
+        "parameters": [
+          {
+            "key": "massA",
+            "label": "Massa do reagente A",
+            "value": 12.5,
+            "min": 1,
+            "max": 30,
+            "step": 0.5,
+            "unit": "g"
+          },
+          {
+            "key": "massB",
+            "label": "Massa do reagente B",
+            "value": 7.5,
+            "min": 1,
+            "max": 30,
+            "step": 0.5,
+            "unit": "g"
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual deve ser a massa total dos produtos, considerando os valores atuais e a conservação da massa?",
+        "answer": {
+          "type": "numeric",
+          "formula": "lavoisier_mass",
+          "unit": "g",
+          "display_unit": "g",
+          "digits": 1,
+          "tolerance": 0.05,
+          "hint": "Some as massas dos reagentes. Em um sistema fechado, a massa total se conserva.",
+          "solution": "Pela Lei de Lavoisier: massa dos reagentes = massa dos produtos. Some as duas massas indicadas."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-rea-06",
+      "phase": 4,
+      "exercise_number": 6,
+      "title": "Lei de Proust: proporções constantes",
+      "learning_objective": "Aplicar uma proporção fixa entre as massas dos elementos em um composto.",
+      "context": "Na água pura, a proporção em massa entre hidrogênio e oxigênio é 1:8. Assim, de cada 9 partes de massa de água, 8 correspondem ao oxigênio.",
+      "simulation": {
+        "scene": "proust",
+        "parameters": [
+          {
+            "key": "totalMass",
+            "label": "Massa total de água",
+            "value": 45,
+            "min": 9,
+            "max": 90,
+            "step": 9,
+            "unit": "g"
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a massa de oxigênio presente na quantidade de água indicada?",
+        "answer": {
+          "type": "numeric",
+          "formula": "water_oxygen_mass",
+          "unit": "g",
+          "display_unit": "g",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Na água, a fração em massa de oxigênio é 8/9 do total.",
+          "solution": "A proporção em massa H:O é 1:8. Portanto, a massa de oxigênio corresponde a 8/9 da massa total da água."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-rea-07",
+      "phase": 4,
+      "exercise_number": 7,
+      "title": "Aplicações das Leis Ponderais em situações práticas",
+      "learning_objective": "Reconhecer como as leis de Lavoisier e Proust orientam a análise de quantidades em reações e compostos.",
+      "context": "O sulfeto de ferro (FeS) pode ser representado, neste modelo escolar, por uma proporção em massa de ferro e enxofre de 7:4. A composição de uma amostra pura mantém essa proporção.",
+      "simulation": {
+        "scene": "ponderal_application",
+        "parameters": [
+          {
+            "key": "totalMass",
+            "label": "Massa da amostra de FeS",
+            "value": 55,
+            "min": 22,
+            "max": 110,
+            "step": 11,
+            "unit": "g"
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a massa de enxofre na amostra de FeS indicada, considerando a proporção em massa 7:4 (Fe:S)?",
+        "answer": {
+          "type": "numeric",
+          "formula": "fes_sulfur_mass",
+          "unit": "g",
+          "display_unit": "g",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "A proporção 7:4 possui 11 partes no total; 4 dessas partes correspondem ao enxofre.",
+          "solution": "A massa de enxofre é 4/11 da massa total de FeS. Multiplique a massa da amostra por 4/11."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-ter-01",
+      "phase": 5,
+      "exercise_number": 1,
+      "title": "Conceitos de calor e energia nas transformações químicas",
+      "learning_objective": "Diferenciar temperatura, calor e variação de energia em transformações químicas.",
+      "context": "Nas transformações químicas, pode ocorrer transferência de energia entre o sistema e o ambiente. Calor é energia em trânsito devido a uma diferença de temperatura.",
+      "simulation": {
+        "scene": "thermochemistry_concept",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual afirmação descreve corretamente o calor?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "É uma substância armazenada dentro dos corpos.",
+            "É a energia transferida entre sistemas devido a uma diferença de temperatura.",
+            "É sinônimo de temperatura.",
+            "É uma grandeza que mede diretamente a quantidade de matéria."
+          ],
+          "correct": 1,
+          "hint": "Pense no calor como energia em transferência, e não como algo que o corpo contém.",
+          "explanation": "Calor é energia transferida entre sistemas em razão de uma diferença de temperatura. Temperatura está relacionada ao estado térmico do sistema."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-ter-02",
+      "phase": 5,
+      "exercise_number": 2,
+      "title": "Identificação de processos endotérmicos e exotérmicos",
+      "learning_objective": "Distinguir processos que absorvem energia daqueles que liberam energia para o ambiente.",
+      "context": "Em um processo exotérmico, o sistema libera energia para o ambiente. Em um processo endotérmico, o sistema absorve energia. A diferença pode ser representada por diagramas de energia.",
+      "simulation": {
+        "scene": "endo_exo",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Em um processo exotérmico, o que ocorre com a energia do sistema em relação ao ambiente?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "O sistema absorve energia e sua entalpia aumenta.",
+            "O sistema libera energia para o ambiente; em geral, ΔH é negativo.",
+            "Não há troca de energia em nenhuma condição.",
+            "Apenas a massa do sistema aumenta."
+          ],
+          "correct": 1,
+          "hint": "Observe no diagrama qual nível de energia é menor: o dos produtos ou o dos reagentes.",
+          "explanation": "Em um processo exotérmico, os produtos ficam em nível de entalpia menor que os reagentes e a diferença de energia é liberada para o ambiente; ΔH é negativo."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-ter-03",
+      "phase": 5,
+      "exercise_number": 3,
+      "title": "Análise das trocas de calor durante transformações químicas",
+      "learning_objective": "Calcular a quantidade de calor trocada usando massa, calor específico e variação de temperatura.",
+      "context": "Em uma análise calorimétrica simplificada, a quantidade de calor sensível pode ser calculada por Q = m · c · ΔT. A cena permite alterar a massa, o calor específico e a variação de temperatura.",
+      "simulation": {
+        "scene": "heat_exchange",
+        "parameters": [
+          {
+            "key": "mass",
+            "label": "Massa da amostra",
+            "value": 0.5,
+            "min": 0.1,
+            "max": 2,
+            "step": 0.1,
+            "unit": "kg"
+          },
+          {
+            "key": "c",
+            "label": "Calor específico",
+            "value": 4.2,
+            "min": 1,
+            "max": 6,
+            "step": 0.1,
+            "unit": "kJ/(kg·°C)"
+          },
+          {
+            "key": "deltaT",
+            "label": "Variação de temperatura",
+            "value": 10,
+            "min": 1,
+            "max": 30,
+            "step": 1,
+            "unit": "°C"
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a quantidade de calor calculada para os parâmetros atuais?",
+        "answer": {
+          "type": "numeric",
+          "formula": "heat_quantity",
+          "unit": "kJ",
+          "display_unit": "kJ",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Use Q = m · c · ΔT. As unidades fornecidas resultam em Q em quilojoules (kJ).",
+          "solution": "Multiplique a massa pelo calor específico e pela variação de temperatura: Q = m · c · ΔT. O sinal depende de o sistema aquecer ou resfriar; a questão solicita o módulo da quantidade de calor."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-ter-04",
+      "phase": 5,
+      "exercise_number": 4,
+      "title": "Matrizes energéticas: fontes renováveis e não renováveis",
+      "learning_objective": "Diferenciar fontes renováveis e não renováveis considerando disponibilidade em escala humana.",
+      "context": "Uma matriz energética reúne diferentes fontes utilizadas para atender à demanda de energia. Fontes renováveis se recompõem naturalmente em escalas de tempo compatíveis com o uso humano; combustíveis fósseis são finitos em escala humana.",
+      "simulation": {
+        "scene": "energy_matrix_concept",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual alternativa apresenta uma distinção adequada entre fontes renováveis e não renováveis?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Fontes renováveis são necessariamente isentas de impactos ambientais.",
+            "Fontes não renováveis se recompõem sempre na mesma velocidade em que são consumidas.",
+            "Fontes renováveis podem se recompor naturalmente em escalas de tempo humanas; combustíveis fósseis são recursos finitos nessa escala.",
+            "Carvão e petróleo são fontes renováveis porque são encontrados na natureza."
+          ],
+          "correct": 2,
+          "hint": "Considere o tempo necessário para repor a fonte em comparação ao tempo de consumo humano.",
+          "explanation": "Solar, eólica, hidrelétrica e biomassa são classificadas como renováveis em diferentes condições. Carvão e petróleo são combustíveis fósseis e não se recompõem em escala de tempo humana."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-ter-05",
+      "phase": 5,
+      "exercise_number": 5,
+      "title": "Identificação e classificação das principais fontes de energia",
+      "learning_objective": "Classificar fontes de energia selecionadas como renováveis ou não renováveis.",
+      "context": "A classificação depende da capacidade de reposição da fonte. A simulação permite selecionar uma fonte e observar sua origem e classificação geral.",
+      "simulation": {
+        "scene": "energy_sources",
+        "parameters": [
+          {
+            "key": "sourceIndex",
+            "label": "Fonte selecionada",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles alteram a representação química em tempo real."
+      },
+      "challenge": {
+        "prompt": "A fonte destacada na representação é renovável ou não renovável?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "energy_source_type",
+          "choices": [
+            {
+              "value": "renewable",
+              "label": "Renovável"
+            },
+            {
+              "value": "nonrenewable",
+              "label": "Não renovável"
+            }
+          ],
+          "hint": "Identifique a fonte selecionada e pense se ela se recompõe naturalmente em escala de tempo humana.",
+          "explanation": "Solar, eólica, hidrelétrica e biomassa são geralmente classificadas como renováveis; carvão e petróleo são não renováveis."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-ter-06",
+      "phase": 5,
+      "exercise_number": 6,
+      "title": "Comparação entre fontes de energia renováveis e não renováveis",
+      "learning_objective": "Comparar vantagens e limitações de diferentes fontes energéticas sem supor ausência de impactos.",
+      "context": "Fontes renováveis podem reduzir emissões durante a operação, mas também apresentam impactos locais e dependência de condições naturais. Fontes fósseis são armazenáveis e despacháveis, mas emitem gases de efeito estufa na combustão.",
+      "simulation": {
+        "scene": "energy_comparison",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual comparação entre fontes renováveis e combustíveis fósseis é mais adequada?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Toda fonte renovável não causa qualquer impacto ambiental.",
+            "Fontes fósseis são inesgotáveis e não emitem gases durante a combustão.",
+            "Fontes renováveis podem ter impactos locais e variabilidade; combustíveis fósseis são finitos e emitem gases de efeito estufa na combustão.",
+            "A classificação renovável ou não renovável depende apenas do preço da energia."
+          ],
+          "correct": 2,
+          "hint": "Evite afirmações absolutas. Compare reposição, disponibilidade e impactos associados ao uso.",
+          "explanation": "Fontes renováveis apresentam impactos que dependem da tecnologia e do local. Combustíveis fósseis são finitos em escala humana e liberam gases de efeito estufa quando queimados."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui1-ter-07",
+      "phase": 5,
+      "exercise_number": 7,
+      "title": "Aplicações das matrizes energéticas e impactos associados à utilização de diferentes fontes de energia",
+      "learning_objective": "Avaliar decisões de matriz energética considerando demanda, disponibilidade, impactos e diversificação.",
+      "context": "O planejamento energético precisa considerar segurança de abastecimento, custos, disponibilidade regional, emissões, uso do solo e impactos sobre comunidades e ecossistemas.",
+      "simulation": {
+        "scene": "energy_impacts",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual estratégia representa uma análise mais responsável para planejar uma matriz energética?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Escolher uma única fonte para todas as regiões, independentemente das condições locais.",
+            "Considerar apenas o custo imediato de instalação e ignorar impactos e disponibilidade.",
+            "Combinar fontes adequadas às condições regionais, eficiência, armazenamento e avaliação dos impactos ambientais e sociais.",
+            "Priorizar sempre a fonte com maior emissão porque tende a ser contínua."
+          ],
+          "correct": 2,
+          "hint": "Uma matriz energética envolve planejamento e equilíbrio entre diferentes critérios, e não apenas a escolha de uma fonte.",
+          "explanation": "O planejamento deve diversificar fontes quando adequado, considerar eficiência e armazenamento e avaliar impactos ambientais e sociais em cada região."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    }
+  ]
+}
