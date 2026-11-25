@@ -2599,6 +2599,9 @@ def fase_detalhe(
     if fase.modulo.disciplina.slug == 'matematica-1':
         from .math1_views import math1_player
         return math1_player(request, fase_id)
+    if fase.modulo.disciplina.slug == 'matematica-2':
+        from .math2_views import math2_player
+        return math2_player(request, fase_id)
     if fase.questoes.filter(codigo_fonte__isnull=False).exists():
         from .physics_views import physics_player
         return physics_player(request, fase_id)
