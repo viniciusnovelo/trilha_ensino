@@ -24,7 +24,14 @@ def math1_player(request, fase_id):
     request.session["math1_attempt_id"], request.session["math1_phase_id"] = attempt.pk, fase.pk
     phases = list(fase.modulo.fases.order_by("ordem","id"))
     order = next((i for i,x in enumerate(phases,1) if x.pk==fase.pk),1)
+    all_phases = list(Fase.objects.filter(modulo__disciplina=fase.modulo.disciplina).select_related("modulo").order_by("modulo__ordem","ordem","id"))
+    global_index = next((i for i,x in enumerate(all_phases) if x.pk==fase.pk),-1)
+    next_phase = all_phases[global_index+1] if 0 <= global_index < len(all_phases)-1 else None
     data = question.dados_dinamicos
+    safe_data = json.loads(json.dumps(data))
+    safe_answer = safe_data["challenge"]["answer"]
+    for private_key in ("correct","formula","tolerance"):
+        safe_answer.pop(private_key, None)
     context = contexto_papel(request)
     context.update({"fase":fase,"math1_payload":{
         "phase":{"id":fase.pk,"title":fase.titulo,"module_title":fase.modulo.titulo,"order":order,"total_phases":len(phases),"next_phase_id":next_phase.pk if next_phase else None,"discipline_id":fase.modulo.disciplina_id},
