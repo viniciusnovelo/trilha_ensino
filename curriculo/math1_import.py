@@ -2,6 +2,7 @@
 from collections import defaultdict
 from django.db import transaction
 from .models import Materia, Disciplina, Modulo, Fase, Questao, Opcao
+from .math1_engine import FORMULAS
 
 @transaction.atomic
 def import_math1_game(data):
@@ -50,7 +51,7 @@ def import_math1_game(data):
                 if not choices or not 0 <= int(answer["correct"]) < len(choices):
                     raise ValueError(f"Gabarito inválido em {ex['id']}.")
                 Opcao.objects.bulk_create([Opcao(questao=question,texto=label,e_correta=(i==answer["correct"]),ordem=i+1) for i,label in enumerate(choices)])
-            elif answer["formula"] not in __import__("curriculo.math1_engine",fromlist=["FORMULAS"]).FORMULAS:
+            elif answer["formula"] not in FORMULAS:
                 raise ValueError(f"Fórmula sem implementação em {ex['id']}: {answer['formula']}")
             total += 1
     return {"game":game.nome,"topics":len(phases),"phases":total,"questions":total,"disciplina_id":game.pk}
