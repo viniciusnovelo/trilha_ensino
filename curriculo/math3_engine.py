@@ -55,7 +55,10 @@ def calculate(formula, params):
         result = min(v("r1"), v("r2"), v("r3"))
     elif formula == "inequality_integer_count":
         lo, hi = sorted((v("r1"), v("r2")))
-        result = max(0, math.ceil(hi) - math.floor(lo) - 1)
+        # A fonte define o intervalo fechado [r1, r2], limitado ao domínio [-5, 5].
+        lower = max(-5, math.ceil(lo))
+        upper = min(5, math.floor(hi))
+        result = max(0, upper - lower + 1)
     elif formula == "girard_sum_product":
         result = {"sum": v("r1") + v("r2"), "product": v("r1") * v("r2")}
     elif formula == "complex_product":
