@@ -16,20 +16,25 @@ from gamificacao.models import PerfilUsuario, TentativaFase, RespostaTentativa, 
 
 
 def _question_payload(question):
-    data = question.dados_dinamicos
-    challenge = data['challenge']
-    simulation = data['simulation']
+    """Monta o payload sem exigir metadados opcionais em conteúdos legados."""
+    data = question.dados_dinamicos or {}
+    challenge = data.get('challenge') or {}
+    simulation = data.get('simulation') or {}
+    answer = challenge.get('answer') or {}
     return {
         'id': question.id,
         'source_id': question.codigo_fonte,
-        'title': data['title'],
-        'topic': data['topic'],
-        'context': data['context'],
-        'prompt': challenge['prompt'],
+        'title': data.get('title') or question.enunciado,
+        'topic': data.get('topic') or data.get('learning_objective') or 'Exploração de Física',
+        'context': data.get('context') or simulation.get('description') or '',
+        'prompt': challenge.get('prompt') or question.enunciado,
         'type': question.tipo_resposta,
-        'hint': challenge.get('hint') or challenge.get('answer', {}).get('hint', ''),
+        'hint': challenge.get('hint') or answer.get('hint', ''),
         'simulation': simulation,
-        'options': [{'id': option.id, 'text': option.texto} for option in question.opcoes.all()] if question.tipo_resposta == 'choice' else [],
+        'options': [
+            {'id': option.id, 'text': option.texto}
+            for option in question.opcoes.all()
+        ] if question.tipo_resposta == 'choice' else [],
     }
 
 
