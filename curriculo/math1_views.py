@@ -27,7 +27,7 @@ def math1_player(request, fase_id):
     data = question.dados_dinamicos
     context = contexto_papel(request)
     context.update({"fase":fase,"math1_payload":{
-        "phase":{"id":fase.pk,"title":fase.titulo,"module_title":fase.modulo.titulo,"order":order,"total_phases":len(phases),"next_phase_id":next_phase.pk if next_phase else None},
+        "phase":{"id":fase.pk,"title":fase.titulo,"module_title":fase.modulo.titulo,"order":order,"total_phases":len(phases),"next_phase_id":next_phase.pk if next_phase else None,"discipline_id":fase.modulo.disciplina_id},
         "question":{"id":question.pk,"source_id":question.codigo_fonte,"data":safe_data,
             "type":question.tipo_resposta,"options":[{"id":o.pk,"text":o.texto} for o in question.opcoes.all()]},
     }})
