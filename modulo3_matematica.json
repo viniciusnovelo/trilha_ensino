@@ -1,0 +1,1410 @@
+{
+  "module": {
+    "subject": "Matemática",
+    "module_number": 3,
+    "title": "3º Módulo de Matemática",
+    "description": "Geometria Analítica; Álgebra Avançada e Polinômios; Estatística e Probabilidade Aplicada.",
+    "version": "1.0.0",
+    "language": "pt-BR"
+  },
+  "phases": [
+    {
+      "number": 1,
+      "title": "Geometria Analítica",
+      "subtitle": "Plano cartesiano, retas e circunferências",
+      "description": "Localize pontos, investigue distâncias e pontos médios, represente retas e explore circunferências.",
+      "slug": "geometria-analitica",
+      "prefix": "mat3-geo",
+      "exercise_ids": [
+        "mat3-geo-01",
+        "mat3-geo-02",
+        "mat3-geo-03",
+        "mat3-geo-04",
+        "mat3-geo-05",
+        "mat3-geo-06",
+        "mat3-geo-07",
+        "mat3-geo-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 2,
+      "title": "Álgebra Avançada e Polinômios",
+      "subtitle": "Equações, inequações, relações de Girard e números complexos",
+      "description": "Analise polinômios, determine raízes, estude sinais e opere com números complexos.",
+      "slug": "algebra-avancada-polinomios",
+      "prefix": "mat3-alg",
+      "exercise_ids": [
+        "mat3-alg-01",
+        "mat3-alg-02",
+        "mat3-alg-03",
+        "mat3-alg-04",
+        "mat3-alg-05",
+        "mat3-alg-06",
+        "mat3-alg-07",
+        "mat3-alg-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 3,
+      "title": "Estatística e Probabilidade Aplicada",
+      "subtitle": "Dados, dispersão e probabilidade condicional",
+      "description": "Organize conjuntos de dados, compare dispersões e calcule probabilidades condicionais.",
+      "slug": "estatistica-probabilidade-aplicada",
+      "prefix": "mat3-est",
+      "exercise_ids": [
+        "mat3-est-01",
+        "mat3-est-02",
+        "mat3-est-03",
+        "mat3-est-04",
+        "mat3-est-05",
+        "mat3-est-06",
+        "mat3-est-07",
+        "mat3-est-08"
+      ],
+      "exercise_count": 8
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mat3-geo-01",
+      "phase": 1,
+      "exercise_number": 1,
+      "title": "Plano cartesiano: identificação e localização de pontos",
+      "learning_objective": "Identificar os eixos, a origem, a abscissa e a ordenada de pontos no plano cartesiano.",
+      "context": "Um mapa quadriculado utiliza pares ordenados para localizar posições. No ponto A(−3, 2), o primeiro valor indica o deslocamento horizontal e o segundo, o deslocamento vertical.",
+      "simulation": {
+        "scene": "cartesian_plane",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Sobre o ponto A(−3, 2), qual afirmação está correta?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A abscissa é 2 e a ordenada é −3.",
+            "A abscissa é −3 e a ordenada é 2.",
+            "O ponto está no terceiro quadrante.",
+            "O ponto pertence ao eixo y."
+          ],
+          "correct": 1,
+          "hint": "No par ordenado (x, y), o primeiro número indica a abscissa e o segundo indica a ordenada.",
+          "explanation": "Em A(−3, 2), x = −3 e y = 2. Como x é negativo e y é positivo, o ponto está no segundo quadrante.",
+          "solution": "O par ordenado é escrito na forma (x, y). Assim, a abscissa é −3 e a ordenada é 2. O ponto fica no segundo quadrante."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-geo-02",
+      "phase": 1,
+      "exercise_number": 2,
+      "title": "Cálculo da distância entre dois pontos no plano cartesiano",
+      "learning_objective": "Calcular a distância entre dois pontos usando a relação derivada do Teorema de Pitágoras.",
+      "context": "Em um aplicativo de mapas, dois locais são representados por coordenadas cartesianas. A distância em linha reta pode ser obtida a partir das diferenças horizontal e vertical.",
+      "simulation": {
+        "scene": "distance_points",
+        "parameters": [
+          {
+            "key": "x1",
+            "label": "Abscissa de A (x₁)",
+            "value": 1,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "y1",
+            "label": "Ordenada de A (y₁)",
+            "value": 2,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x2",
+            "label": "Abscissa de B (x₂)",
+            "value": 4,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "y2",
+            "label": "Ordenada de B (y₂)",
+            "value": 6,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a distância entre os pontos A e B indicados na representação?",
+        "answer": {
+          "type": "numeric",
+          "formula": "distance_points",
+          "unit": "unidades",
+          "display_unit": "u",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Use d = √[(x₂ − x₁)² + (y₂ − y₁)²].",
+          "solution": "A distância é a hipotenusa do triângulo formado pelas diferenças Δx e Δy: d = √[(x₂ − x₁)² + (y₂ − y₁)²]."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-geo-03",
+      "phase": 1,
+      "exercise_number": 3,
+      "title": "Determinação do ponto médio de um segmento",
+      "learning_objective": "Determinar as coordenadas do ponto médio de um segmento no plano cartesiano.",
+      "context": "Um segmento liga dois pontos de um projeto. O ponto médio fica exatamente à mesma distância das duas extremidades e tem coordenadas iguais às médias das coordenadas correspondentes.",
+      "simulation": {
+        "scene": "midpoint_segment",
+        "parameters": [
+          {
+            "key": "x1",
+            "label": "Abscissa de A (x₁)",
+            "value": -2,
+            "min": -6,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "y1",
+            "label": "Ordenada de A (y₁)",
+            "value": 1,
+            "min": -6,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x2",
+            "label": "Abscissa de B (x₂)",
+            "value": 4,
+            "min": -6,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "y2",
+            "label": "Ordenada de B (y₂)",
+            "value": 5,
+            "min": -6,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Informe as coordenadas do ponto médio M no formato xM; yM.",
+        "answer": {
+          "type": "pair_numeric",
+          "formula": "midpoint",
+          "components": [
+            {
+              "key": "x",
+              "label": "xM",
+              "unit": ""
+            },
+            {
+              "key": "y",
+              "label": "yM",
+              "unit": ""
+            }
+          ],
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Calcule separadamente as médias: xM = (x₁ + x₂)/2 e yM = (y₁ + y₂)/2.",
+          "solution": "O ponto médio é M = ((x₁ + x₂)/2, (y₁ + y₂)/2). Calcule a média das abscissas e, depois, a média das ordenadas."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-geo-04",
+      "phase": 1,
+      "exercise_number": 4,
+      "title": "Equação geral e reduzida da reta",
+      "learning_objective": "Relacionar dois pontos de uma reta ao coeficiente angular e à equação reduzida y = mx + b.",
+      "context": "Uma trajetória retilínea em um gráfico pode ser descrita por uma equação. Conhecendo dois pontos, é possível calcular a inclinação da reta e construir sua equação.",
+      "simulation": {
+        "scene": "line_from_points",
+        "parameters": [
+          {
+            "key": "x1",
+            "label": "Abscissa de P (x₁)",
+            "value": 0,
+            "min": -4,
+            "max": 4,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "y1",
+            "label": "Ordenada de P (y₁)",
+            "value": 1,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x2",
+            "label": "Abscissa de Q (x₂)",
+            "value": 2,
+            "min": -3,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "y2",
+            "label": "Ordenada de Q (y₂)",
+            "value": 5,
+            "min": -5,
+            "max": 8,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o coeficiente angular m da reta que passa por P e Q?",
+        "answer": {
+          "type": "numeric",
+          "formula": "line_slope_points",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Use m = (y₂ − y₁)/(x₂ − x₁). A diferença entre as abscissas não pode ser zero.",
+          "solution": "O coeficiente angular representa a razão entre a variação vertical e a variação horizontal: m = Δy/Δx = (y₂ − y₁)/(x₂ − x₁)."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-geo-05",
+      "phase": 1,
+      "exercise_number": 5,
+      "title": "Identificação do coeficiente angular e linear de uma reta",
+      "learning_objective": "Interpretar graficamente os coeficientes angular e linear de uma reta na forma reduzida.",
+      "context": "Em um gráfico de custo por quantidade, o coeficiente angular indica a variação do custo a cada unidade e o coeficiente linear indica o valor inicial.",
+      "simulation": {
+        "scene": "line_coefficients",
+        "parameters": [
+          {
+            "key": "m",
+            "label": "Inclinação da reta (m)",
+            "value": 2,
+            "min": -3,
+            "max": 4,
+            "step": 0.5,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Intercepto no eixo y (b)",
+            "value": -3,
+            "min": -5,
+            "max": 5,
+            "step": 0.5,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Observe a reta y = mx + b e informe os coeficientes no formato m; b.",
+        "answer": {
+          "type": "pair_numeric",
+          "formula": "line_coefficients",
+          "components": [
+            {
+              "key": "m",
+              "label": "m",
+              "unit": ""
+            },
+            {
+              "key": "b",
+              "label": "b",
+              "unit": ""
+            }
+          ],
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Na forma reduzida y = mx + b, m multiplica x e b é o valor de y quando x = 0.",
+          "solution": "Na equação reduzida y = mx + b, m é o coeficiente angular (inclinação) e b é o coeficiente linear (interseção com o eixo y)."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-geo-06",
+      "phase": 1,
+      "exercise_number": 6,
+      "title": "Estudo da posição relativa entre retas",
+      "learning_objective": "Distinguir retas paralelas distintas, concorrentes e coincidentes a partir de seus coeficientes.",
+      "context": "Em um mapa urbano, duas vias retas podem nunca se encontrar, cruzar-se em um ponto ou ocupar exatamente a mesma direção e posição.",
+      "simulation": {
+        "scene": "relative_lines",
+        "parameters": [
+          {
+            "key": "m1",
+            "label": "Inclinação da reta r₁",
+            "value": 2,
+            "min": -3,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b1",
+            "label": "Intercepto da reta r₁",
+            "value": 1,
+            "min": -4,
+            "max": 4,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "m2",
+            "label": "Inclinação da reta r₂",
+            "value": 2,
+            "min": -3,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b2",
+            "label": "Intercepto da reta r₂",
+            "value": -3,
+            "min": -4,
+            "max": 4,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a posição relativa entre as duas retas representadas?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "line_relation",
+          "choices": [
+            {
+              "value": "parallel",
+              "label": "Paralelas distintas"
+            },
+            {
+              "value": "secant",
+              "label": "Concorrentes (intersectam-se em um ponto)"
+            },
+            {
+              "value": "coincident",
+              "label": "Coincidentes"
+            }
+          ],
+          "hint": "Compare os coeficientes angulares. Se forem iguais, compare também os coeficientes lineares.",
+          "explanation": "Retas com o mesmo coeficiente angular e interceptos diferentes são paralelas. Com inclinações diferentes, são concorrentes. Se m e b forem iguais, são coincidentes.",
+          "solution": "Compare m₁ e m₂. Se m₁ ≠ m₂, as retas são concorrentes. Se m₁ = m₂ e b₁ ≠ b₂, são paralelas distintas. Se ambos forem iguais, são coincidentes."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-geo-07",
+      "phase": 1,
+      "exercise_number": 7,
+      "title": "Equação da circunferência: determinação do centro e raio",
+      "learning_objective": "Interpretar a equação reduzida da circunferência e relacionar seu raio ao termo constante.",
+      "context": "O contorno de uma praça circular pode ser descrito pela equação (x − h)² + (y − k)² = r², em que (h, k) é o centro e r é o raio.",
+      "simulation": {
+        "scene": "circle_equation",
+        "parameters": [
+          {
+            "key": "h",
+            "label": "Coordenada x do centro (h)",
+            "value": 2,
+            "min": -4,
+            "max": 4,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "k",
+            "label": "Coordenada y do centro (k)",
+            "value": -1,
+            "min": -4,
+            "max": 4,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "r",
+            "label": "Raio (r)",
+            "value": 4,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Na equação reduzida mostrada, qual é o valor do termo r²?",
+        "answer": {
+          "type": "numeric",
+          "formula": "circle_r_squared",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "O lado direito da equação da circunferência é o quadrado do raio.",
+          "solution": "A equação reduzida é (x − h)² + (y − k)² = r². Portanto, o termo constante do lado direito é o raio elevado ao quadrado."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-geo-08",
+      "phase": 1,
+      "exercise_number": 8,
+      "title": "Representação gráfica e problemas envolvendo equações da circunferência",
+      "learning_objective": "Verificar a posição de um ponto em relação a uma circunferência a partir da distância ao centro.",
+      "context": "Um sensor instalado em torno de uma fonte circular precisa determinar se um ponto está sobre o limite, no interior ou no exterior da região.",
+      "simulation": {
+        "scene": "circle_point",
+        "parameters": [
+          {
+            "key": "h",
+            "label": "Centro: coordenada x (h)",
+            "value": 1,
+            "min": -3,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "k",
+            "label": "Centro: coordenada y (k)",
+            "value": 1,
+            "min": -3,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "r",
+            "label": "Raio (r)",
+            "value": 3,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "px",
+            "label": "Ponto P: coordenada x",
+            "value": 4,
+            "min": -5,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "py",
+            "label": "Ponto P: coordenada y",
+            "value": 1,
+            "min": -5,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a posição do ponto P em relação à circunferência?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "circle_point_relation",
+          "choices": [
+            {
+              "value": "on",
+              "label": "Sobre a circunferência"
+            },
+            {
+              "value": "inside",
+              "label": "No interior da circunferência"
+            },
+            {
+              "value": "outside",
+              "label": "No exterior da circunferência"
+            }
+          ],
+          "hint": "Compare a distância do ponto ao centro com o raio: d = √[(px − h)² + (py − k)²].",
+          "explanation": "Se d = r, o ponto está sobre a circunferência; se d < r, está no interior; se d > r, está no exterior.",
+          "solution": "Calcule a distância entre P e o centro. Compare esse valor com o raio da circunferência."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-alg-01",
+      "phase": 2,
+      "exercise_number": 1,
+      "title": "Polinômios: conceitos, classificação e operações",
+      "learning_objective": "Reconhecer termos, coeficientes, variável e grau de um polinômio.",
+      "context": "Em um modelo algébrico, cada termo representa uma parcela formada por um coeficiente e uma potência da variável. O grau do polinômio é o maior expoente com coeficiente não nulo.",
+      "simulation": {
+        "scene": "polynomial_concepts",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "No polinômio P(x) = 3x⁴ − 2x² + 5x − 7, qual é o seu grau?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Grau 2.",
+            "Grau 3.",
+            "Grau 4.",
+            "Grau 7."
+          ],
+          "correct": 2,
+          "hint": "Observe o maior expoente da variável cujo coeficiente é diferente de zero.",
+          "explanation": "O maior expoente de x no polinômio é 4; portanto, seu grau é 4.",
+          "solution": "O grau de um polinômio é o maior expoente da variável com coeficiente não nulo. Em P(x) = 3x⁴ − 2x² + 5x − 7, o grau é 4."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-alg-02",
+      "phase": 2,
+      "exercise_number": 2,
+      "title": "Resolução de equações polinomiais",
+      "learning_objective": "Determinar as raízes reais de uma equação quadrática apresentada em forma fatorada.",
+      "context": "Uma equação polinomial pode ser resolvida identificando os valores de x que tornam o polinômio igual a zero. Na forma fatorada, as raízes aparecem nos fatores.",
+      "simulation": {
+        "scene": "quadratic_roots",
+        "parameters": [
+          {
+            "key": "r1",
+            "label": "Primeira raiz (r₁)",
+            "value": -2,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "r2",
+            "label": "Segunda raiz (r₂)",
+            "value": 4,
+            "min": -5,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "A equação representada é (x − r₁)(x − r₂) = 0. Qual é a maior raiz real?",
+        "answer": {
+          "type": "numeric",
+          "formula": "larger_root",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Pelo princípio do produto nulo, cada fator pode ser igual a zero.",
+          "solution": "Pelo princípio do produto nulo, x − r₁ = 0 ou x − r₂ = 0. Assim, as raízes são r₁ e r₂; escolha a maior."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-alg-03",
+      "phase": 2,
+      "exercise_number": 3,
+      "title": "Fatoração e determinação das raízes de polinômios",
+      "learning_objective": "Relacionar a forma fatorada de um polinômio cúbico às suas raízes reais.",
+      "context": "A fatoração permite identificar valores que anulam um polinômio. No modelo P(x) = (x − r₁)(x − r₂)(x − r₃), cada fator fornece uma raiz.",
+      "simulation": {
+        "scene": "cubic_factor",
+        "parameters": [
+          {
+            "key": "r1",
+            "label": "Raiz r₁",
+            "value": -3,
+            "min": -5,
+            "max": 0,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "r2",
+            "label": "Raiz r₂",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "r3",
+            "label": "Raiz r₃",
+            "value": 4,
+            "min": 4,
+            "max": 6,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a menor raiz real do polinômio fatorado apresentado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "smallest_root",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Iguale cada fator a zero e compare os três valores encontrados.",
+          "solution": "As raízes são obtidas por x − r₁ = 0, x − r₂ = 0 e x − r₃ = 0. Portanto, compare r₁, r₂ e r₃ e identifique a menor."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-alg-04",
+      "phase": 2,
+      "exercise_number": 4,
+      "title": "Resolução de inequações polinomiais",
+      "learning_objective": "Analisar o sinal de uma função quadrática e contar os inteiros que satisfazem uma inequação.",
+      "context": "Uma região de solução pode ser determinada pelo sinal do produto de dois fatores. Para uma parábola com concavidade para cima, o produto é não positivo entre as raízes, incluindo-as.",
+      "simulation": {
+        "scene": "polynomial_inequality",
+        "parameters": [
+          {
+            "key": "r1",
+            "label": "Raiz menor (r₁)",
+            "value": -2,
+            "min": -5,
+            "max": -1,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "r2",
+            "label": "Raiz maior (r₂)",
+            "value": 3,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Quantos números inteiros entre −5 e 5, inclusive, satisfazem (x − r₁)(x − r₂) ≤ 0?",
+        "answer": {
+          "type": "numeric",
+          "formula": "inequality_integer_count",
+          "unit": "inteiros",
+          "display_unit": "inteiros",
+          "digits": 0,
+          "tolerance": 0,
+          "hint": "Para raízes r₁ < r₂ e parábola voltada para cima, a solução é o intervalo fechado [r₁, r₂].",
+          "solution": "Como o coeficiente de x² é positivo, o produto é menor ou igual a zero entre as raízes, incluindo os extremos. Conte os inteiros desse intervalo que também pertencem a [−5, 5]."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-alg-05",
+      "phase": 2,
+      "exercise_number": 5,
+      "title": "Relações de Girard: soma e produto das raízes",
+      "learning_objective": "Aplicar as relações de Girard para relacionar soma e produto das raízes aos coeficientes.",
+      "context": "Para uma equação mônica do segundo grau x² + bx + c = 0, as relações de Girard fornecem a soma das raízes e seu produto sem que seja necessário calculá-las individualmente.",
+      "simulation": {
+        "scene": "girard_relations",
+        "parameters": [
+          {
+            "key": "r1",
+            "label": "Raiz x₁",
+            "value": 2,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "r2",
+            "label": "Raiz x₂",
+            "value": 5,
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Informe a soma e o produto das raízes no formato soma; produto.",
+        "answer": {
+          "type": "pair_numeric",
+          "formula": "girard_sum_product",
+          "components": [
+            {
+              "key": "sum",
+              "label": "Soma",
+              "unit": ""
+            },
+            {
+              "key": "product",
+              "label": "Produto",
+              "unit": ""
+            }
+          ],
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Para x² + bx + c = 0: x₁ + x₂ = −b e x₁ · x₂ = c.",
+          "solution": "Nas relações de Girard para x² + bx + c = 0, a soma das raízes é −b e o produto é c. No modelo, o polinômio é construído a partir das raízes indicadas."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-alg-06",
+      "phase": 2,
+      "exercise_number": 6,
+      "title": "Números complexos: conceitos e representação na forma algébrica",
+      "learning_objective": "Reconhecer a forma algébrica z = a + bi e interpretar suas partes real e imaginária.",
+      "context": "Quando uma equação não possui raízes reais, os números complexos ampliam o conjunto numérico. A unidade imaginária i satisfaz i² = −1.",
+      "simulation": {
+        "scene": "complex_concept",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Na forma z = a + bi, qual é a interpretação correta de a e b?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "a é a parte imaginária e b é a parte real.",
+            "a é a parte real e b é o coeficiente da parte imaginária.",
+            "a e b são sempre números positivos.",
+            "i² = 1."
+          ],
+          "correct": 1,
+          "hint": "Observe a posição dos termos na expressão z = a + bi.",
+          "explanation": "Em z = a + bi, a é a parte real, b é o coeficiente da parte imaginária e i é a unidade imaginária, com i² = −1.",
+          "solution": "A forma algébrica de um número complexo é z = a + bi. Sua parte real é a, e sua parte imaginária é bi; b é o coeficiente imaginário."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-alg-07",
+      "phase": 2,
+      "exercise_number": 7,
+      "title": "Operações com números complexos",
+      "learning_objective": "Multiplicar números complexos e identificar as partes real e imaginária do resultado.",
+      "context": "Em aplicações algébricas, números complexos são operados de maneira semelhante aos binômios, lembrando que i² = −1.",
+      "simulation": {
+        "scene": "complex_operations",
+        "parameters": [
+          {
+            "key": "a",
+            "label": "Parte real de z₁ (a)",
+            "value": 2,
+            "min": -3,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "b",
+            "label": "Coeficiente imaginário de z₁ (b)",
+            "value": 1,
+            "min": -3,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "c",
+            "label": "Parte real de z₂ (c)",
+            "value": 1,
+            "min": -3,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "d",
+            "label": "Coeficiente imaginário de z₂ (d)",
+            "value": -1,
+            "min": -3,
+            "max": 3,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Calcule z₁ · z₂ e informe a parte real e o coeficiente imaginário no formato real; imaginária.",
+        "answer": {
+          "type": "pair_numeric",
+          "formula": "complex_product",
+          "components": [
+            {
+              "key": "real",
+              "label": "Parte real",
+              "unit": ""
+            },
+            {
+              "key": "imag",
+              "label": "Coef. imaginário",
+              "unit": ""
+            }
+          ],
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Use (a + bi)(c + di) = (ac − bd) + (ad + bc)i.",
+          "solution": "Multiplique os termos e substitua i² por −1. A parte real será ac − bd e o coeficiente imaginário será ad + bc."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-alg-08",
+      "phase": 2,
+      "exercise_number": 8,
+      "title": "Resolução de equações polinomiais com raízes complexas",
+      "learning_objective": "Interpretar as raízes complexas conjugadas de uma equação quadrática sem raízes reais.",
+      "context": "A equação x² + k = 0, com k positivo, não possui solução real. No conjunto dos complexos, suas soluções são números imaginários conjugados.",
+      "simulation": {
+        "scene": "complex_roots",
+        "parameters": [
+          {
+            "key": "k",
+            "label": "Constante positiva (k)",
+            "value": 25,
+            "min": 4,
+            "max": 64,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Para x² + k = 0, qual é a parte imaginária positiva de uma das raízes?",
+        "answer": {
+          "type": "numeric",
+          "formula": "complex_positive_root",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Isole x² = −k e utilize √(−1) = i.",
+          "solution": "As raízes são x = ±i√k. A parte imaginária positiva tem coeficiente √k."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-est-01",
+      "phase": 3,
+      "exercise_number": 1,
+      "title": "Análise e interpretação de conjuntos de dados estatísticos",
+      "learning_objective": "Interpretar medidas simples e identificar padrões em um conjunto de dados.",
+      "context": "Uma turma registrou as notas de uma atividade. A análise da distribuição ajuda a identificar valores centrais, repetições e amplitude.",      "simulation": {
+        "scene": "data_analysis",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Considere os dados 4, 5, 6, 6, 7, 8, 8, 9 e 10. Qual afirmação está correta?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A mediana é 8.",
+            "A distribuição é bimodal, com modas 6 e 8.",
+            "A amplitude é 10.",
+            "A média é exatamente 10."
+          ],
+          "correct": 1,
+          "hint": "Moda é o valor que aparece com maior frequência. Observe quais valores se repetem duas vezes.",
+          "explanation": "Os valores 6 e 8 aparecem duas vezes cada um, mais do que os demais. Portanto, o conjunto é bimodal.",
+          "solution": "Ao contar as ocorrências, verificamos que 6 e 8 aparecem duas vezes, enquanto os outros valores aparecem uma vez. Assim, há duas modas: 6 e 8."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-est-02",
+      "phase": 3,
+      "exercise_number": 2,
+      "title": "Organização e interpretação de distribuições de frequência",
+      "learning_objective": "Organizar frequências absolutas e calcular a frequência relativa percentual de uma categoria.",
+      "context": "Uma pesquisa registra respostas em três categorias. A frequência relativa permite comparar a participação de cada categoria no total de respostas.",
+      "simulation": {
+        "scene": "frequency_distribution",
+        "parameters": [
+          {
+            "key": "fA",
+            "label": "Frequência da categoria A",
+            "value": 4,
+            "min": 1,
+            "max": 15,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "fB",
+            "label": "Frequência da categoria B",
+            "value": 6,
+            "min": 1,
+            "max": 15,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "fC",
+            "label": "Frequência da categoria C",
+            "value": 10,
+            "min": 1,
+            "max": 15,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a frequência relativa percentual da categoria B?",
+        "answer": {
+          "type": "numeric",
+          "formula": "relative_frequency_B",
+          "unit": "%",
+          "display_unit": "%",
+          "digits": 1,
+          "tolerance": 0.1,
+          "hint": "Divida a frequência de B pela soma das frequências e multiplique por 100.",
+          "solution": "A frequência relativa percentual de B é (fB ÷ (fA + fB + fC)) × 100."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-est-03",
+      "phase": 3,
+      "exercise_number": 3,
+      "title": "Cálculo e interpretação da média aritmética em conjuntos de dados",
+      "learning_objective": "Calcular a média aritmética simples de um conjunto de observações.",
+      "context": "A média resume um conjunto de valores por meio de um valor central obtido pela soma dos dados dividida pela quantidade de observações.",
+      "simulation": {
+        "scene": "mean_dataset",
+        "parameters": [
+          {
+            "key": "x1",
+            "label": "Valor 1",
+            "value": 4,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x2",
+            "label": "Valor 2",
+            "value": 6,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x3",
+            "label": "Valor 3",
+            "value": 7,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x4",
+            "label": "Valor 4",
+            "value": 9,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x5",
+            "label": "Valor 5",
+            "value": 10,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a média aritmética dos cinco valores apresentados?",
+        "answer": {
+          "type": "numeric",
+          "formula": "mean_five",
+          "unit": "",
+          "display_unit": "",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Some os cinco valores e divida o resultado por 5.",
+          "solution": "A média aritmética é a soma dos valores dividida pela quantidade de observações: x̄ = (x₁ + x₂ + x₃ + x₄ + x₅)/5."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-est-04",
+      "phase": 3,
+      "exercise_number": 4,
+      "title": "Cálculo da variância de um conjunto de dados",
+      "learning_objective": "Calcular a variância populacional como média dos quadrados dos desvios em relação à média.",
+      "context": "A variância quantifica a dispersão dos dados. Nesta atividade, considere o conjunto como população e divida a soma dos desvios quadráticos por N.",
+      "simulation": {
+        "scene": "variance_dataset",
+        "parameters": [
+          {
+            "key": "x1",
+            "label": "Valor 1",
+            "value": 2,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x2",
+            "label": "Valor 2",
+            "value": 4,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x3",
+            "label": "Valor 3",
+            "value": 6,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x4",
+            "label": "Valor 4",
+            "value": 8,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a variância populacional dos quatro valores apresentados?",
+        "answer": {
+          "type": "numeric",
+          "formula": "population_variance_4",
+          "unit": "unidades²",
+          "display_unit": "u²",
+          "digits": 2,
+          "tolerance": 0.02,
+          "hint": "Calcule a média, subtraia-a de cada dado, eleve cada desvio ao quadrado e tire a média desses quadrados.",
+          "solution": "A variância populacional é σ² = Σ(xᵢ − μ)²/N, em que μ é a média e N é o número total de dados."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-est-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Cálculo e interpretação do desvio padrão",
+      "learning_objective": "Determinar o desvio padrão populacional a partir da variância dos dados.",
+      "context": "O desvio padrão é expresso na mesma unidade dos dados e corresponde à raiz quadrada da variância populacional.",
+      "simulation": {
+        "scene": "stddev_dataset",
+        "parameters": [
+          {
+            "key": "x1",
+            "label": "Valor 1",
+            "value": 3,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x2",
+            "label": "Valor 2",
+            "value": 5,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x3",
+            "label": "Valor 3",
+            "value": 7,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "x4",
+            "label": "Valor 4",
+            "value": 9,
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é o desvio padrão populacional dos quatro valores apresentados?",
+        "answer": {
+          "type": "numeric",
+          "formula": "population_std_4",
+          "unit": "unidades",
+          "display_unit": "u",
+          "digits": 2,
+          "tolerance": 0.03,
+          "hint": "Primeiro encontre a variância populacional. Depois, extraia sua raiz quadrada.",
+          "solution": "O desvio padrão populacional é σ = √σ², isto é, a raiz quadrada da variância populacional."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-est-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Comparação da dispersão entre diferentes conjuntos de dados",
+      "learning_objective": "Comparar a dispersão de dois conjuntos de dados com médias iguais.",
+      "context": "Dois grupos podem apresentar a mesma média, mas diferentes níveis de dispersão. A distribuição dos pontos em torno da média permite comparar a variabilidade.",
+      "simulation": {
+        "scene": "dispersion_compare",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Os conjuntos A = {4, 5, 6, 7, 8} e B = {2, 4, 6, 8, 10} têm a mesma média. Qual apresenta maior dispersão?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "O conjunto A, pois seus valores estão mais próximos da média.",
+            "O conjunto B, pois seus valores estão mais afastados da média.",
+            "Os dois têm dispersão nula.",
+            "Não é possível comparar as dispersões."
+          ],
+          "correct": 1,
+          "hint": "Compare o afastamento dos valores em relação à média 6.",
+          "explanation": "O conjunto B possui valores mais afastados da média, portanto sua variância e seu desvio padrão são maiores.",
+          "solution": "Ambos têm média 6. No conjunto A, os desvios são −2, −1, 0, 1 e 2. No conjunto B, são −4, −2, 0, 2 e 4. Os desvios de B são maiores em módulo, indicando maior dispersão."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-est-07",
+      "phase": 3,
+      "exercise_number": 7,
+      "title": "Probabilidade condicional: conceitos e interpretação",
+      "learning_objective": "Compreender a probabilidade de um evento ocorrer sabendo que outro evento já ocorreu.",
+      "context": "Em uma pesquisa, a probabilidade de pertencer a um grupo pode mudar quando uma informação adicional é conhecida. A condição restringe o espaço amostral ao evento informado.",
+      "simulation": {
+        "scene": "conditional_concept",
+        "parameters": [],
+        "description": "Observe a representação e relacione seus elementos ao conceito estudado."
+      },
+      "challenge": {
+        "prompt": "Qual expressão representa a probabilidade condicional de A dado que B ocorreu, considerando P(B) > 0?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "P(A|B) = P(A) + P(B).",
+            "P(A|B) = P(A ∩ B) / P(B).",
+            "P(A|B) = P(A) / P(A ∩ B).",
+            "P(A|B) = P(A) · P(B), em qualquer situação."
+          ],
+          "correct": 1,
+          "hint": "A condição B restringe o espaço amostral. O denominador deve ser a probabilidade do evento que já ocorreu.",
+          "explanation": "A probabilidade condicional é P(A|B) = P(A ∩ B)/P(B), desde que P(B) seja maior que zero.",
+          "solution": "A probabilidade de A dado B é a razão entre a probabilidade da interseção A ∩ B e a probabilidade de B: P(A|B) = P(A ∩ B)/P(B)."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-matematico"
+      }
+    },
+    {
+      "id": "mat3-est-08",
+      "phase": 3,
+      "exercise_number": 8,
+      "title": "Cálculo de probabilidades condicionais em situações práticas",
+      "learning_objective": "Calcular uma probabilidade condicional a partir de frequências observadas.",
+      "context": "Em um grupo de estudantes que praticam uma atividade B, uma parte também participa da atividade A. A probabilidade condicional considera apenas os estudantes pertencentes ao grupo B.",
+      "simulation": {
+        "scene": "conditional_probability",
+        "parameters": [
+          {
+            "key": "joint",
+            "label": "Participam de A e B",
+            "value": 12,
+            "min": 5,
+            "max": 15,
+            "step": 1,
+            "unit": ""
+          },
+          {
+            "key": "given",
+            "label": "Participam de B",
+            "value": 20,
+            "min": 16,
+            "max": 30,
+            "step": 1,
+            "unit": ""
+          }
+        ],
+        "description": "Os controles modificam a representação matemática em tempo real."
+      },
+      "challenge": {
+        "prompt": "Qual é a probabilidade percentual de um estudante participar de A, sabendo que participa de B?",
+        "answer": {
+          "type": "numeric",
+          "formula": "conditional_percent",
+          "unit": "%",
+          "display_unit": "%",
+          "digits": 1,
+          "tolerance": 0.1,
+          "hint": "Use P(A|B) = n(A ∩ B)/n(B) e multiplique por 100.",
+          "solution": "A probabilidade condicional é a frequência conjunta dividida pela frequência do evento condicionante: P(A|B) = n(A ∩ B)/n(B). Multiplique por 100 para obter porcentagem."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-matematico"
+      }
+    }
+  ]
+}
