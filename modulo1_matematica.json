@@ -1305,7 +1305,7 @@
           "display_unit": "m",
           "digits": 2,
           "tolerance": 0.04,
-          "hint": "A área de um retângulo é base × altura.",
+          "hint": "Some duas vezes a largura com o comprimento: P = 2 × (largura + comprimento).",
           "solution": "P = 2 × (largura + comprimento). A área da mesma figura seria A = largura × comprimento."
         }
       },
@@ -1583,7 +1583,7 @@
             "label": "Distância da parede",
             "value": 6,
             "min": 1,
-            "max": 5,
+            "max": 9,
             "step": 1,
             "unit": "m"
           }
