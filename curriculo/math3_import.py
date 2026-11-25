@@ -88,9 +88,14 @@ def import_math3_game(data):
             if answer["type"] == "choice":
                 for index, option in enumerate(answer["choices"], 1):
                     Opcao.objects.update_or_create(questao=question, ordem=index, defaults={"texto": option, "e_correta": index - 1 == answer["correct"]})
+                question.opcoes.exclude(ordem__lte=len(answer["choices"])).delete()
             elif answer["type"] == "dynamic_choice":
                 for index, option in enumerate(answer["choices"], 1):
                     label = option["label"] if isinstance(option, dict) else str(option)
                     Opcao.objects.update_or_create(questao=question, ordem=index, defaults={"texto": label, "e_correta": False})
+                question.opcoes.exclude(ordem__lte=len(answer["choices"])).delete()
+            else:
+                # Remove somente alternativas desta questão quando ela deixa de ser de escolha.
+                question.opcoes.all().delete()
             total += 1
     return {"game": game.nome, "topics": len(phases), "questions": total, "disciplina_id": game.pk}
