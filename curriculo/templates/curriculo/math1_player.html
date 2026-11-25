@@ -35,9 +35,18 @@ body{background:radial-gradient(ellipse at 50% -15%,#70421f 0%,#3b2415 42%,#2117
 @media(max-width:900px){.math-layout{grid-template-columns:1fr}.game-header-top{grid-template-columns:auto 1fr}.brand{grid-column:2;grid-row:1;text-align:right}.hud{grid-column:1/-1;justify-self:stretch;justify-content:center}.brand-title{max-width:55vw}}
 @media(max-width:600px){.game-header{padding:9px 12px}.shell{padding:16px 10px 30px}.panel{padding:17px}.math-scene canvas{height:285px}.params{grid-template-columns:1fr}.math-prompt{font-size:18px}}
 
+body[data-theme="tema-floresta"]{--page:#0b1712;--page-glow:#1b3b2b;--panel:#14271d;--panel-border:#315640;--scene:#0b1b13;--surface:#1b3526;--muted:#a9c6b0;--accent:#69c58b}
+body[data-theme="tema-deserto"]{--page:#21170e;--page-glow:#57351d;--panel:#332316;--panel-border:#72502f;--scene:#21170e;--surface:#49301b;--muted:#dfc2a0;--accent:#f0b45d}
+body[data-theme="tema-masmorra"]{--page:#100d18;--page-glow:#302044;--panel:#1c1728;--panel-border:#49385e;--scene:#100d18;--surface:#292137;--muted:#c0b1d5;--accent:#b69af4}
+body[data-theme="tema-aurora"]{--page:#081722;--page-glow:#123b4b;--panel:#102936;--panel-border:#286071;--scene:#071a24;--surface:#173746;--muted:#a6cbd4;--accent:#63d6c4}
+body[data-theme="tema-oceano"]{--page:#061722;--page-glow:#0d354c;--panel:#0d2636;--panel-border:#23516a;--scene:#061722;--surface:#123348;--muted:#a4c6d8;--accent:#62b9e8}
+body[data-appearance="claro"]{color-scheme:light;--page:#edf3f8;--page-glow:#d8e8f6;--panel:#fff;--panel-border:#c5d4e3;--scene:#e8f0f7;--surface:#edf3f8;--text:#17283b;--muted:#53677d}
+body[data-appearance="claro"] .choice,body[data-appearance="claro"] .answer-input{color:#17283b;background:#f5f8fb;border-color:#bdccdc}
+body[data-appearance="claro"] .transport button{color:#17283b;background:#e2ebf4;border-color:#bdccdc}
+
 </style>
 </head>
-<body>
+<body class="{{ tema_aplicado|default:'tema-padrao' }}" data-theme="{{ tema_aplicado|default:'tema-padrao' }}" data-appearance="{{ aparencia_interface|default:'escuro' }}">
 <div class="app">
 {% include 'gamificacao/partials/paisagem_animada.html' %}
 <header class="game-header"><div class="game-header-inner"><div class="game-header-top">
