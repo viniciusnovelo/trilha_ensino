@@ -4,8 +4,7 @@ from django.db import transaction
 from .models import Materia, Disciplina, Modulo, Fase, Questao, Opcao
 from .math1_engine import FORMULAS
 
-@transaction.atomic
-def import_math1_game(data):
+def validate_math1_source(data):
     if data.get("module", {}).get("module_number") != 1 or data.get("module", {}).get("subject") != "Matemática":
         raise ValueError("A fonte não corresponde ao Matemática 1.")
     phases = {p["number"]: p for p in data["phases"]}
@@ -21,6 +20,16 @@ def import_math1_game(data):
     for phase_no, topic in phases.items():
         if len(grouped[phase_no]) != topic["exercise_count"] or set(topic["exercise_ids"]) != {e["id"] for e in grouped[phase_no]}:
             raise ValueError(f"Manifesto inconsistente no tópico {phase_no}.")
+    for ex in data["exercises"]:
+        answer = ex["challenge"]["answer"]
+        if answer["type"] == "numeric" and answer.get("formula") not in FORMULAS:
+            raise ValueError(f"Fórmula sem implementação em {ex['id']}: {answer.get('formula')}")
+    return phases, grouped
+
+
+@transaction.atomic
+def import_math1_game(data):
+    phases, grouped = validate_math1_source(data)
     materia, _ = Materia.objects.update_or_create(slug="matematica", defaults={
         "nome":"Matemática", "descricao":"Jogos de Matemática", "icone":"calculator", "ordem":2, "ativo":True
     })
@@ -51,7 +60,5 @@ def import_math1_game(data):
                 if not choices or not 0 <= int(answer["correct"]) < len(choices):
                     raise ValueError(f"Gabarito inválido em {ex['id']}.")
                 Opcao.objects.bulk_create([Opcao(questao=question,texto=label,e_correta=(i==answer["correct"]),ordem=i+1) for i,label in enumerate(choices)])
-            elif answer["formula"] not in FORMULAS:
-                raise ValueError(f"Fórmula sem implementação em {ex['id']}: {answer['formula']}")
             total += 1
     return {"game":game.nome,"topics":len(phases),"phases":total,"questions":total,"disciplina_id":game.pk}
