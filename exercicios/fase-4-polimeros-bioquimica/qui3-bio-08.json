@@ -1,0 +1,55 @@
+{
+  "id": "qui3-bio-08",
+  "phase": 4,
+  "exercise_number": 8,
+  "title": "Proteínas: estrutura, composição e funções biológicas",
+  "learning_objective": "Relacionar proteínas a cadeias de aminoácidos e reconhecer níveis de organização.",
+  "context": "Proteínas são polímeros de aminoácidos ligados por ligações peptídicas. A estrutura tridimensional está relacionada às funções.",
+  "simulation": {
+    "scene": "proteins",
+    "parameters": [
+      {
+        "key": "proteinLevel",
+        "label": "Nível estrutural",
+        "value": 1,
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "unit": "",
+        "note": "1 primária · 2 secundária · 3 terciária · 4 quaternária"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual nível de organização proteica está representado?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "primary",
+          "label": "Primária: sequência de aminoácidos."
+        },
+        {
+          "value": "secondary",
+          "label": "Secundária: hélice α ou folha β."
+        },
+        {
+          "value": "tertiary",
+          "label": "Terciária: dobramento 3D de uma cadeia."
+        },
+        {
+          "value": "quaternary",
+          "label": "Quaternária: associação de subunidades."
+        }
+      ],
+      "formula": "protein_structure",
+      "hint": "Observe se aparece sequência linear, padrão local, dobramento completo ou várias cadeias associadas.",
+      "explanation": "Primária: sequência; secundária: hélices e folhas; terciária: dobramento 3D de uma cadeia; quaternária: associação de subunidades."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "bioquimica"
+  }
+}
