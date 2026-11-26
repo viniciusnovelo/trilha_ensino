@@ -1,0 +1,55 @@
+{
+  "id": "qui3-bio-04",
+  "phase": 4,
+  "exercise_number": 4,
+  "title": "Tipos de plásticos, propriedades e aplicações",
+  "learning_objective": "Relacionar polímeros sintéticos comuns às suas propriedades e usos.",
+  "context": "PE, PET, PVC e PP possuem propriedades distintas e são usados em embalagens, garrafas, tubulações, fibras e outros produtos.",
+  "simulation": {
+    "scene": "plastic_types",
+    "parameters": [
+      {
+        "key": "plasticIndex",
+        "label": "Plástico",
+        "value": 1,
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "unit": "",
+        "note": "1 PE · 2 PET · 3 PVC · 4 PP"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual aplicação é frequentemente associada ao plástico selecionado?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "flexible_packaging",
+          "label": "Filmes, sacolas e embalagens flexíveis (PE)."
+        },
+        {
+          "value": "bottles_fibers",
+          "label": "Garrafas e fibras têxteis (PET)."
+        },
+        {
+          "value": "pipes_profiles",
+          "label": "Tubulações e perfis (PVC)."
+        },
+        {
+          "value": "containers_housewares",
+          "label": "Potes, tampas e utensílios (PP)."
+        }
+      ],
+      "formula": "plastic_application",
+      "hint": "Relacione o tipo de polímero à aplicação comum indicada.",
+      "explanation": "PE é usado em filmes e embalagens; PET em garrafas e fibras; PVC em tubos e perfis; PP em potes, tampas e utensílios. Aplicações dependem do grau e da formulação."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "bioquimica"
+  }
+}
