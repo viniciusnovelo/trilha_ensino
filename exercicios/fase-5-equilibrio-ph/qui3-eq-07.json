@@ -1,0 +1,39 @@
+{
+  "id": "qui3-eq-07",
+  "phase": 5,
+  "exercise_number": 7,
+  "title": "Cálculo e interpretação do pH e pOH",
+  "learning_objective": "Calcular pOH e pH a partir da concentração de íons hidróxido a 25 °C.",
+  "context": "A 25 °C, pH + pOH = 14. O pOH é −log[OH⁻]. Para [OH⁻] = 10⁻³ mol/L, pOH = 3 e pH = 11.",
+  "simulation": {
+    "scene": "ph_poh_calculation",
+    "parameters": [
+      {
+        "key": "ohExponent",
+        "label": "Expoente de [OH⁻] = 10⁻ⁿ",
+        "value": 3,
+        "min": 1,
+        "max": 13,
+        "step": 1,
+        "unit": "n",
+        "note": "A concentração é 10⁻ⁿ mol/L."
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual é o pH da solução selecionada?",
+    "answer": {
+      "type": "numeric",
+      "formula": "ph_from_oh_exponent",
+      "display_unit": "pH",
+      "tolerance": 0.01,
+      "hint": "Calcule pOH = −log[OH⁻]. Como [OH⁻] = 10⁻ⁿ, pOH = n. Use pH + pOH = 14 a 25 °C.",
+      "explanation": "Com [OH⁻] = 10⁻ⁿ, pOH = n. A 25 °C, pH = 14 − n. Para n=3, pH=11."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "equilibrio-acido-base"
+  }
+}
