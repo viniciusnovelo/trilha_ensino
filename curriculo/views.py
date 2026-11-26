@@ -2755,6 +2755,10 @@ def verificar_resposta(
         id=fase_id,
     )
 
+    if fase.modulo.disciplina.slug == 'quimica-2':
+        from .chem2_views import chem2_check_answer
+        return chem2_check_answer(request, fase_id)
+
     if not fase_esta_liberada(
         request,
         fase,
@@ -2925,6 +2929,10 @@ def finalizar_fase(
         ),
         id=fase_id,
     )
+
+    if fase.modulo.disciplina.slug == 'quimica-2':
+        from .chem2_views import chem2_finish_phase
+        return chem2_finish_phase(request, fase_id)
 
     if not fase_esta_liberada(
         request,
