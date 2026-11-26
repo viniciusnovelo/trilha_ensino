@@ -86,7 +86,7 @@ body[data-appearance="claro"] .transport button{color:#17283b;background:#e2ebf4
 <header class="game-header"><div class="game-header-inner"><div class="game-header-top">
 <a class="back-link" href="{% url 'trilha' fase.modulo.disciplina_id %}"><span>←</span><span>Painel</span></a>
 <div class="brand"><p class="brand-kicker">TRILHA</p><h1 class="brand-title">Química 1</h1></div>
-<div class="hud">{% if papel_efetivo == 'aluno' %}{% include 'gamificacao/partials/controle_aparencia.html' %}{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span><span class="hud-pill coins">◎ {{ perfil.moedas }}</span><span class="hud-pill lives">♡ {{ perfil.vidas }}</span>{% else %}<span class="hud-pill teacher">Professor</span>{% endif %}<span class="hud-pill xp" id="xpPill">{{ chem1_payload.xp_total }} XP</span></div>
+<div class="hud">{% if papel_efetivo == 'aluno' %}<span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span><span class="hud-pill coins">◎ {{ perfil.moedas }}</span><span class="hud-pill lives">♡ {{ perfil.vidas }}</span>{% else %}<span class="hud-pill teacher">Professor</span>{% endif %}<span class="hud-pill xp" id="xpPill">{{ chem1_payload.xp_total }} XP</span></div>
 </div><div class="phase-progress"><div class="phase-meta"><span class="phase-name">QUÍMICA 1</span><span id="progressText">0 / 33</span></div><div class="phase-track"><div class="phase-fill" id="progressFill"></div></div></div></div></header>
 <main class="shell">
 <nav id="navigation" class="chem-navigation" aria-label="Navegação dos exercícios"></nav>
