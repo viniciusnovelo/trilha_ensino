@@ -1,0 +1,32 @@
+{
+  "id": "qui3-eq-01",
+  "phase": 5,
+  "exercise_number": 1,
+  "title": "Conceitos de equilíbrio químico e reações reversíveis",
+  "learning_objective": "Compreender o equilíbrio como estado dinâmico em que as velocidades direta e inversa se igualam.",
+  "context": "Em sistema fechado e reversível, o equilíbrio ocorre quando as velocidades direta e inversa são iguais. As concentrações permanecem constantes, embora as reações continuem.",
+  "simulation": {
+    "scene": "equilibrium_overview",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual afirmação descreve corretamente o equilíbrio químico dinâmico?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "As velocidades direta e inversa são iguais e as concentrações permanecem constantes.",
+        "A reação para completamente.",
+        "As concentrações de reagentes e produtos precisam ser iguais.",
+        "Apenas os produtos continuam reagindo."
+      ],
+      "correct": 0,
+      "hint": "Equilíbrio não significa reação parada nem concentrações iguais; compare as velocidades.",
+      "explanation": "No equilíbrio dinâmico, as reações direta e inversa continuam ocorrendo à mesma velocidade. Por isso, as concentrações permanecem constantes, mas não precisam ser iguais."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "equilibrio-acido-base"
+  }
+}
