@@ -1,0 +1,47 @@
+{
+  "id": "qui2-est-03",
+  "phase": 1,
+  "exercise_number": 3,
+  "title": "Conversão entre massa, massa molar e quantidade de matéria",
+  "learning_objective": "Relacionar massa, massa molar e quantidade de matéria por meio de n = m/M.",
+  "context": "Uma amostra de água tem massa conhecida. Sabendo que a massa molar da água é 18 g/mol, é possível determinar quantos mols estão presentes.",
+  "simulation": {
+    "scene": "mass_to_moles",
+    "parameters": [
+      {
+        "key": "mass",
+        "label": "Massa da amostra",
+        "value": 36,
+        "min": 9,
+        "max": 90,
+        "step": 1,
+        "unit": "g"
+      },
+      {
+        "key": "molarMass",
+        "label": "Massa molar",
+        "value": 18,
+        "min": 10,
+        "max": 60,
+        "step": 1,
+        "unit": "g/mol"
+      }
+    ],
+    "description": "Ajuste a massa da amostra e a massa molar para observar a quantidade de matéria correspondente."
+  },
+  "challenge": {
+    "prompt": "Quantos mols existem na amostra selecionada?",
+    "answer": {
+      "type": "numeric",
+      "formula": "moles_from_mass",
+      "display_unit": "mol",
+      "tolerance": 0.005,
+      "hint": "Use n = m/M: divida a massa da amostra pela massa molar.",
+      "explanation": "A quantidade de matéria é n = m/M. Com 36 g e 18 g/mol: n = 36/18 = 2 mol."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "quimica-quantitativa"
+  }
+}
