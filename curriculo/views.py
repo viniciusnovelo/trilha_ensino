@@ -2708,12 +2708,17 @@ def fase_detalhe(
             }
         )
 
+    fases_modulo = list(fase.modulo.fases.order_by('ordem', 'id'))
+    module_phase_order = next((index for index, item in enumerate(fases_modulo, start=1) if item.pk == fase.pk), 1)
+
     contexto = contexto_papel(
         request
     )
 
     contexto.update({
         'fase': fase,
+        'module_phase_order': module_phase_order,
+        'module_phase_total': len(fases_modulo),
         'questoes_json': questoes,
         'trilha_id': (
             fase.modulo.disciplina_id
