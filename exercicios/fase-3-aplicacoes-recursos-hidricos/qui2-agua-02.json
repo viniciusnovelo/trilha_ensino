@@ -1,0 +1,32 @@
+{
+  "id": "qui2-agua-02",
+  "phase": 3,
+  "exercise_number": 2,
+  "title": "Demanda Bioquímica de Oxigênio (DBO): conceito e interpretação",
+  "learning_objective": "Compreender a DBO como indicador da quantidade de oxigênio consumida por microrganismos na decomposição de matéria orgânica biodegradável.",
+  "context": "Quando há matéria orgânica biodegradável na água, microrganismos podem consumi-la e utilizar oxigênio dissolvido durante a decomposição. A DBO estima essa demanda sob condições e período de ensaio definidos.",
+  "simulation": {
+    "scene": "dbo_concept",
+    "parameters": [],
+    "description": "Acompanhe a representação de microrganismos consumindo oxigênio durante a decomposição de matéria orgânica."
+  },
+  "challenge": {
+    "prompt": "O que uma DBO elevada geralmente indica?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Maior quantidade de matéria orgânica biodegradável e maior consumo potencial de oxigênio.",
+        "Ausência completa de matéria orgânica.",
+        "Aumento automático da concentração de oxigênio dissolvido.",
+        "Que a água está necessariamente livre de microrganismos."
+      ],
+      "correct": 0,
+      "hint": "A DBO se relaciona ao oxigênio consumido no processo de biodegradação da matéria orgânica.",
+      "explanation": "Uma DBO elevada pode indicar maior carga de matéria orgânica biodegradável e consumo de oxigênio por microrganismos, o que pode reduzir o oxigênio disponível no ambiente aquático."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-quimico"
+  }
+}
