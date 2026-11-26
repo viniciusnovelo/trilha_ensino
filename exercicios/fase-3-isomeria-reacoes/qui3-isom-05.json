@@ -1,0 +1,32 @@
+{
+  "id": "qui3-isom-05",
+  "phase": 3,
+  "exercise_number": 5,
+  "title": "Reações orgânicas de substituição",
+  "learning_objective": "Reconhecer reações nas quais um átomo ou grupo é substituído por outro.",
+  "context": "Na substituição, um grupo ligado ao esqueleto carbônico é trocado por outro. Exemplo: CH₄ + Cl₂ → CH₃Cl + HCl, sob luz.",
+  "simulation": {
+    "scene": "substitution_reaction",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Na reação CH₄ + Cl₂ → CH₃Cl + HCl, qual transformação ocorre?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Um hidrogênio do metano é substituído por cloro.",
+        "A ligação dupla é rompida e átomos são adicionados aos carbonos.",
+        "Duas moléculas pequenas são eliminadas para formar uma dupla.",
+        "O carbono é removido da molécula."
+      ],
+      "correct": 0,
+      "hint": "Compare CH₄ com CH₃Cl: qual átomo mudou?",
+      "explanation": "É uma substituição: um hidrogênio do metano foi substituído por cloro, formando clorometano e HCl."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-organico"
+  }
+}
