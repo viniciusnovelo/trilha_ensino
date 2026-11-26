@@ -1,0 +1,32 @@
+{
+  "id": "qui3-bio-05",
+  "phase": 4,
+  "exercise_number": 5,
+  "title": "Reciclagem de polímeros e impactos ambientais",
+  "learning_objective": "Reconhecer estratégias de reciclagem e impactos do descarte inadequado.",
+  "context": "A reciclagem mecânica envolve triagem, lavagem, moagem e reprocessamento. Redução do consumo e descarte correto ajudam a diminuir resíduos.",
+  "simulation": {
+    "scene": "polymer_recycling",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual sequência descreve de forma simplificada a reciclagem mecânica?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Triagem, lavagem, moagem e reprocessamento.",
+        "Combustão completa e descarte das cinzas em rios.",
+        "Mistura indiscriminada de resíduos e deposição no solo.",
+        "Dissolução em água sem separação e evaporação."
+      ],
+      "correct": 0,
+      "hint": "Pense nas etapas para preparar o material, fragmentá-lo e processá-lo novamente.",
+      "explanation": "A reciclagem mecânica inclui triagem do polímero, limpeza, moagem ou trituração e reprocessamento. A qualidade depende da separação e do estado do material."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "bioquimica"
+  }
+}
