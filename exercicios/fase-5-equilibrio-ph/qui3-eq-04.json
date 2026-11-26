@@ -1,0 +1,51 @@
+{
+  "id": "qui3-eq-04",
+  "phase": 5,
+  "exercise_number": 4,
+  "title": "Princípio de Le Chatelier e deslocamento do equilíbrio",
+  "learning_objective": "Prever o sentido de deslocamento após uma perturbação externa.",
+  "context": "Para N₂(g) + 3H₂(g) ⇌ 2NH₃(g), a reação direta é exotérmica. Aumentar pressão favorece o lado com menos mols gasosos; aumentar temperatura favorece o sentido endotérmico.",
+  "simulation": {
+    "scene": "le_chatelier",
+    "parameters": [
+      {
+        "key": "scenarioIndex",
+        "label": "Perturbação aplicada",
+        "value": 1,
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "unit": "",
+        "note": "1 adicionar N₂ · 2 retirar NH₃ · 3 aumentar pressão · 4 aumentar temperatura · 5 diminuir temperatura · 6 adicionar catalisador"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Para o cenário escolhido, qual é a resposta do equilíbrio?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "right",
+          "label": "Desloca-se para a direita, favorecendo NH₃."
+        },
+        {
+          "value": "left",
+          "label": "Desloca-se para a esquerda, favorecendo N₂ e H₂."
+        },
+        {
+          "value": "no_shift",
+          "label": "Não ocorre deslocamento da posição de equilíbrio."
+        }
+      ],
+      "formula": "le_chatelier_shift",
+      "hint": "O sistema tende a atenuar a perturbação. Considere reação direta exotérmica e 4 mols gasosos à esquerda contra 2 à direita.",
+      "explanation": "Adicionar N₂ ou retirar NH₃ favorece direita; aumentar pressão favorece direita; aumentar temperatura favorece esquerda; diminuir temperatura favorece direita. Catalisador não desloca o equilíbrio."
+    }
+  },
+  "completion": {
+    "xp": 40,
+    "skill": "equilibrio-acido-base"
+  }
+}
