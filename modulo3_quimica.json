@@ -1,0 +1,1889 @@
+{
+  "module": {
+    "subject": "Química",
+    "module_number": 3,
+    "title": "3º Módulo de Química",
+    "description": "Introdução à Química Orgânica; Funções Orgânicas; Isomeria e Reações Orgânicas; Polímeros e Bioquímica; Equilíbrio Químico e Escala de pH.",
+    "version": "1.0.0",
+    "language": "pt-BR"
+  },
+  "phases": [
+    {
+      "number": 1,
+      "title": "Introdução à Química Orgânica",
+      "subtitle": "Carbono, cadeias e hibridização",
+      "description": "Explore a versatilidade do carbono, as cadeias carbônicas e as representações estruturais.",
+      "slug": "introducao-quimica-organica",
+      "prefix": "qui3-org",
+      "exercise_ids": [
+        "qui3-org-01",
+        "qui3-org-02",
+        "qui3-org-03",
+        "qui3-org-04",
+        "qui3-org-05",
+        "qui3-org-06",
+        "qui3-org-07"
+      ],
+      "exercise_count": 7
+    },
+    {
+      "number": 2,
+      "title": "Funções Orgânicas",
+      "subtitle": "Grupos funcionais e nomenclatura",
+      "description": "Identifique as famílias orgânicas por seus grupos funcionais e aplicações.",
+      "slug": "funcoes-organicas",
+      "prefix": "qui3-func",
+      "exercise_ids": [
+        "qui3-func-01",
+        "qui3-func-02",
+        "qui3-func-03",
+        "qui3-func-04",
+        "qui3-func-05",
+        "qui3-func-06",
+        "qui3-func-07",
+        "qui3-func-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 3,
+      "title": "Isomeria e Reações Orgânicas",
+      "subtitle": "Estruturas e transformações",
+      "description": "Compare estruturas com mesma fórmula molecular e investigue reações orgânicas.",
+      "slug": "isomeria-reacoes",
+      "prefix": "qui3-isom",
+      "exercise_ids": [
+        "qui3-isom-01",
+        "qui3-isom-02",
+        "qui3-isom-03",
+        "qui3-isom-04",
+        "qui3-isom-05",
+        "qui3-isom-06",
+        "qui3-isom-07",
+        "qui3-isom-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 4,
+      "title": "Polímeros e Bioquímica",
+      "subtitle": "Macromoléculas e moléculas da vida",
+      "description": "Investigue polímeros, reciclagem e biomoléculas.",
+      "slug": "polimeros-bioquimica",
+      "prefix": "qui3-bio",
+      "exercise_ids": [
+        "qui3-bio-01",
+        "qui3-bio-02",
+        "qui3-bio-03",
+        "qui3-bio-04",
+        "qui3-bio-05",
+        "qui3-bio-06",
+        "qui3-bio-07",
+        "qui3-bio-08"
+      ],
+      "exercise_count": 8
+    },
+    {
+      "number": 5,
+      "title": "Equilíbrio Químico e Escala de pH",
+      "subtitle": "Reversibilidade, equilíbrio e ácido-base",
+      "description": "Explore equilíbrio dinâmico, Le Chatelier e conceitos de pH.",
+      "slug": "equilibrio-ph",
+      "prefix": "qui3-eq",
+      "exercise_ids": [
+        "qui3-eq-01",
+        "qui3-eq-02",
+        "qui3-eq-03",
+        "qui3-eq-04",
+        "qui3-eq-05",
+        "qui3-eq-06",
+        "qui3-eq-07"
+      ],
+      "exercise_count": 7
+    }
+  ],
+  "exercises": [
+    {
+      "id": "qui3-org-01",
+      "phase": 1,
+      "exercise_number": 1,
+      "title": "O carbono e suas propriedades químicas",
+      "learning_objective": "Reconhecer propriedades que explicam a diversidade dos compostos orgânicos.",
+      "context": "O carbono pode formar quatro ligações covalentes e ligar-se a outros átomos de carbono, originando cadeias, anéis e ramificações.",
+      "simulation": {
+        "scene": "carbon_properties",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual propriedade do carbono é fundamental para formar grande variedade de cadeias orgânicas?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Tetravalência e capacidade de formar ligações C–C.",
+            "Formar apenas ligações iônicas.",
+            "Possuir sempre carga +4.",
+            "Não formar ligações com hidrogênio."
+          ],
+          "correct": 0,
+          "hint": "Pense na capacidade de completar quatro ligações covalentes e encadear-se com outros carbonos.",
+          "explanation": "A tetravalência permite quatro ligações covalentes; a catenação permite cadeias longas, ramificadas e cíclicas."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "estrutura-carbonica"
+      }
+    },
+    {
+      "id": "qui3-org-02",
+      "phase": 1,
+      "exercise_number": 2,
+      "title": "Tetravalência do carbono e formação de ligações",
+      "learning_objective": "Relacionar a quantidade de ligações do carbono à sua tetravalência.",
+      "context": "Uma ligação dupla conta como duas unidades e uma tripla como três. A soma das ordens de ligação ao redor do carbono costuma ser quatro.",
+      "simulation": {
+        "scene": "carbon_valence",
+        "parameters": [
+          {
+            "key": "bondUnits",
+            "label": "Unidades de ligação",
+            "value": 4,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "unit": "unid.",
+            "note": "Soma das ordens de ligação conectadas ao carbono."
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "A configuração selecionada completa a tetravalência do carbono?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "incomplete",
+              "label": "Não: faltam unidades de ligação."
+            },
+            {
+              "value": "complete",
+              "label": "Sim: quatro unidades de ligação."
+            },
+            {
+              "value": "exceeded",
+              "label": "Não: há mais de quatro unidades."
+            }
+          ],
+          "formula": "carbon_valence",
+          "hint": "Some as ordens das ligações. A valência usual do carbono neutro é quatro.",
+          "explanation": "Com quatro unidades, a valência está completa; menos indica representação incompleta e mais não corresponde ao modelo usual do carbono neutro."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "estrutura-carbonica"
+      }
+    },
+    {
+      "id": "qui3-org-03",
+      "phase": 1,
+      "exercise_number": 3,
+      "title": "Classificação das cadeias carbônicas",
+      "learning_objective": "Classificar cadeias quanto à forma, ramificação, saturação e composição.",
+      "context": "As cadeias podem ser abertas ou fechadas, normais ou ramificadas, saturadas ou insaturadas e homogêneas ou heterogêneas.",
+      "simulation": {
+        "scene": "chain_classification",
+        "parameters": [
+          {
+            "key": "chainType",
+            "label": "Tipo de cadeia",
+            "value": 1,
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "unit": "",
+            "note": "1 aberta normal saturada · 2 aberta ramificada insaturada · 3 cíclica saturada · 4 heterogênea"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual descrição corresponde à cadeia apresentada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "open_normal_saturated",
+              "label": "Aberta, normal, saturada e homogênea."
+            },
+            {
+              "value": "open_branched_unsaturated",
+              "label": "Aberta, ramificada, insaturada e homogênea."
+            },
+            {
+              "value": "closed_saturated",
+              "label": "Fechada, saturada e homogênea."
+            },
+            {
+              "value": "open_heterogeneous",
+              "label": "Aberta, normal, saturada e heterogênea."
+            }
+          ],
+          "formula": "chain_classification",
+          "hint": "Observe ciclo, ramificações, ligações múltiplas e presença de heteroátomo entre carbonos.",
+          "explanation": "A classificação considera forma, ramificação, saturação e composição da cadeia."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "estrutura-carbonica"
+      }
+    },
+    {
+      "id": "qui3-org-04",
+      "phase": 1,
+      "exercise_number": 4,
+      "title": "Cadeias abertas, fechadas, normais e ramificadas",
+      "learning_objective": "Distinguir cadeias acíclicas e cíclicas e identificar ramificações.",
+      "context": "Cadeias abertas não formam ciclo; fechadas formam ciclos. Normais não têm ramificações; ramificadas têm pelo menos um ramo lateral.",
+      "simulation": {
+        "scene": "chain_topology",
+        "parameters": [
+          {
+            "key": "topology",
+            "label": "Estrutura selecionada",
+            "value": 1,
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "unit": "",
+            "note": "1 aberta normal · 2 aberta ramificada · 3 fechada normal · 4 fechada ramificada"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Como a cadeia representada deve ser classificada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "open_normal",
+              "label": "Aberta e normal."
+            },
+            {
+              "value": "open_branched",
+              "label": "Aberta e ramificada."
+            },
+            {
+              "value": "closed_normal",
+              "label": "Fechada e normal."
+            },
+            {
+              "value": "closed_branched",
+              "label": "Fechada e ramificada."
+            }
+          ],
+          "formula": "chain_topology",
+          "hint": "Verifique se as extremidades se conectam formando um anel e se há carbono fora do caminho principal.",
+          "explanation": "Cadeias abertas têm extremidades livres; fechadas formam ciclos. Um ramo lateral caracteriza cadeia ramificada."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "estrutura-carbonica"
+      }
+    },
+    {
+      "id": "qui3-org-05",
+      "phase": 1,
+      "exercise_number": 5,
+      "title": "Ligações simples, duplas e triplas entre carbonos",
+      "learning_objective": "Relacionar ordem de ligação e pares eletrônicos compartilhados.",
+      "context": "Uma ligação simples compartilha um par de elétrons, uma dupla dois pares e uma tripla três pares.",
+      "simulation": {
+        "scene": "carbon_bond_orders",
+        "parameters": [
+          {
+            "key": "bondOrder",
+            "label": "Ordem da ligação C–C",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1 simples · 2 dupla · 3 tripla"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual tipo de ligação conecta os carbonos mostrados?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "single",
+              "label": "Ligação simples."
+            },
+            {
+              "value": "double",
+              "label": "Ligação dupla."
+            },
+            {
+              "value": "triple",
+              "label": "Ligação tripla."
+            }
+          ],
+          "formula": "bond_order",
+          "hint": "Conte os traços entre os dois carbonos.",
+          "explanation": "C–C é simples, C=C é dupla e C≡C é tripla. Duplas e triplas tornam a cadeia insaturada."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "estrutura-carbonica"
+      }
+    },
+    {
+      "id": "qui3-org-06",
+      "phase": 1,
+      "exercise_number": 6,
+      "title": "Hibridização do carbono: sp³, sp² e sp",
+      "learning_objective": "Relacionar hibridização à geometria molecular.",
+      "context": "No modelo introdutório, sp³ está associada à geometria tetraédrica, sp² à trigonal plana e sp à linear.",
+      "simulation": {
+        "scene": "carbon_hybridization",
+        "parameters": [
+          {
+            "key": "hybridIndex",
+            "label": "Hibridização",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1 sp³ · 2 sp² · 3 sp"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual geometria idealizada corresponde à hibridização selecionada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "tetrahedral",
+              "label": "Tetraédrica, cerca de 109,5° (sp³)."
+            },
+            {
+              "value": "trigonal_planar",
+              "label": "Trigonal plana, cerca de 120° (sp²)."
+            },
+            {
+              "value": "linear",
+              "label": "Linear, 180° (sp)."
+            }
+          ],
+          "formula": "hybrid_geometry",
+          "hint": "Relacione sp³ a quatro regiões, sp² a três e sp a duas regiões de ligação.",
+          "explanation": "sp³: tetraédrica; sp²: trigonal plana; sp: linear. Os ângulos são valores ideais aproximados."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "estrutura-carbonica"
+      }
+    },
+    {
+      "id": "qui3-org-07",
+      "phase": 1,
+      "exercise_number": 7,
+      "title": "Representação e identificação de estruturas orgânicas",
+      "learning_objective": "Interpretar fórmulas molecular, condensada e em bastão.",
+      "context": "A fórmula molecular informa a quantidade de cada elemento; a condensada agrupa trechos da estrutura; a fórmula em bastão simplifica o esqueleto carbônico.",
+      "simulation": {
+        "scene": "organic_representations",
+        "parameters": [
+          {
+            "key": "representationIndex",
+            "label": "Representação",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1 molecular · 2 condensada · 3 bastão"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual informação é destacada pelo tipo de representação selecionado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "molecular",
+              "label": "Quantidade de átomos de cada elemento."
+            },
+            {
+              "value": "condensed",
+              "label": "Sequência condensada de grupos e ligações."
+            },
+            {
+              "value": "skeletal",
+              "label": "Esqueleto carbônico; carbonos e hidrogênios ligados a C ficam implícitos."
+            }
+          ],
+          "formula": "representation_meaning",
+          "hint": "Veja se aparecem a contagem de átomos, grupos condensados ou o esqueleto em linhas.",
+          "explanation": "A fórmula molecular informa composição; a condensada mostra grupos; a fórmula em bastão simplifica o esqueleto carbônico."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "estrutura-carbonica"
+      }
+    },
+    {
+      "id": "qui3-func-01",
+      "phase": 2,
+      "exercise_number": 1,
+      "title": "Conceitos e identificação das funções orgânicas",
+      "learning_objective": "Compreender que grupos funcionais definem famílias de compostos orgânicos.",
+      "context": "Funções orgânicas agrupam substâncias por grupos funcionais ou padrões estruturais que ajudam a reconhecer propriedades e nomenclatura.",
+      "simulation": {
+        "scene": "functional_groups_overview",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "O que caracteriza uma função orgânica?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "A presença de um grupo funcional ou padrão estrutural característico.",
+            "A massa total da substância.",
+            "A cor e o estado físico da amostra.",
+            "Apenas o número de ligações C–C."
+          ],
+          "correct": 0,
+          "hint": "Procure uma parte da estrutura que se repete e identifica uma família.",
+          "explanation": "Funções orgânicas são classificadas por grupos estruturais, como hidroxila, carbonila, carboxila, éster e amino."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "identificacao-funcional"
+      }
+    },
+    {
+      "id": "qui3-func-02",
+      "phase": 2,
+      "exercise_number": 2,
+      "title": "Identificação e nomenclatura de hidrocarbonetos",
+      "learning_objective": "Relacionar tamanho da cadeia e insaturação ao nome básico de hidrocarbonetos.",
+      "context": "Hidrocarbonetos contêm carbono e hidrogênio. Prefixos indicam o número de carbonos e sufixos distinguem ligações simples, duplas e triplas.",
+      "simulation": {
+        "scene": "hydrocarbon_naming",
+        "parameters": [
+          {
+            "key": "compoundIndex",
+            "label": "Hidrocarboneto",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": "",
+            "note": "1 etano · 2 eteno · 3 etino · 4 propano · 5 propeno · 6 butano"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual é o nome do hidrocarboneto mostrado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "etano",
+              "label": "Etano."
+            },
+            {
+              "value": "eteno",
+              "label": "Eteno."
+            },
+            {
+              "value": "etino",
+              "label": "Etino."
+            },
+            {
+              "value": "propano",
+              "label": "Propano."
+            },
+            {
+              "value": "propeno",
+              "label": "Propeno."
+            },
+            {
+              "value": "butano",
+              "label": "Butano."
+            }
+          ],
+          "formula": "hydrocarbon_name",
+          "hint": "Conte os carbonos e observe se a ligação é simples, dupla ou tripla.",
+          "explanation": "O prefixo indica quantidade de carbonos; -ano representa ligações simples, -eno dupla e -ino tripla."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "identificacao-funcional"
+      }
+    },
+    {
+      "id": "qui3-func-03",
+      "phase": 2,
+      "exercise_number": 3,
+      "title": "Identificação de álcoois e éteres",
+      "learning_objective": "Diferenciar álcoois e éteres pela posição do oxigênio.",
+      "context": "Álcoois apresentam hidroxila (–OH) ligada a carbono saturado. Éteres apresentam oxigênio entre dois grupos orgânicos (R–O–R’).",
+      "simulation": {
+        "scene": "alcohol_ether",
+        "parameters": [
+          {
+            "key": "moleculeIndex",
+            "label": "Molécula",
+            "value": 1,
+            "min": 1,
+            "max": 2,
+            "step": 1,
+            "unit": "",
+            "note": "1 etanol · 2 dimetil éter"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "A molécula selecionada pertence a qual função?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "alcohol",
+              "label": "Álcool."
+            },
+            {
+              "value": "ether",
+              "label": "Éter."
+            }
+          ],
+          "formula": "alcohol_or_ether",
+          "hint": "Veja se há hidroxila –OH ou oxigênio entre dois grupos carbônicos.",
+          "explanation": "Etanol possui hidroxila ligada à cadeia; dimetil éter apresenta ligação C–O–C."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "identificacao-funcional"
+      }
+    },
+    {
+      "id": "qui3-func-04",
+      "phase": 2,
+      "exercise_number": 4,
+      "title": "Identificação de aldeídos e cetonas",
+      "learning_objective": "Distinguir aldeídos e cetonas pela posição da carbonila.",
+      "context": "Aldeídos possuem carbonila terminal ligada a hidrogênio (–CHO); cetonas têm carbonila entre dois carbonos (R–CO–R’).",
+      "simulation": {
+        "scene": "aldehyde_ketone",
+        "parameters": [
+          {
+            "key": "moleculeIndex",
+            "label": "Molécula",
+            "value": 1,
+            "min": 1,
+            "max": 2,
+            "step": 1,
+            "unit": "",
+            "note": "1 etanal · 2 propanona"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "A molécula selecionada pertence a qual função?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "aldehyde",
+              "label": "Aldeído."
+            },
+            {
+              "value": "ketone",
+              "label": "Cetona."
+            }
+          ],
+          "formula": "aldehyde_or_ketone",
+          "hint": "Carbonila na extremidade caracteriza aldeído; no interior da cadeia, cetona.",
+          "explanation": "No etanal, a carbonila é terminal. Na propanona, o carbono carbonílico liga-se a dois carbonos."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "identificacao-funcional"
+      }
+    },
+    {
+      "id": "qui3-func-05",
+      "phase": 2,
+      "exercise_number": 5,
+      "title": "Identificação de ácidos carboxílicos e ésteres",
+      "learning_objective": "Reconhecer os grupos carboxila e éster.",
+      "context": "Ácidos carboxílicos apresentam –COOH. Ésteres apresentam o grupo –COO– entre dois fragmentos carbônicos.",
+      "simulation": {
+        "scene": "acid_ester",
+        "parameters": [
+          {
+            "key": "moleculeIndex",
+            "label": "Molécula",
+            "value": 1,
+            "min": 1,
+            "max": 2,
+            "step": 1,
+            "unit": "",
+            "note": "1 ácido etanoico · 2 etanoato de etila"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual função orgânica está representada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "carboxylic_acid",
+              "label": "Ácido carboxílico."
+            },
+            {
+              "value": "ester",
+              "label": "Éster."
+            }
+          ],
+          "formula": "acid_or_ester",
+          "hint": "Veja se C=O está junto a –OH ou ligado a outro oxigênio que segue para outra cadeia.",
+          "explanation": "Ácido etanoico contém –COOH; etanoato de etila contém o grupo –COO– característico de éster."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "identificacao-funcional"
+      }
+    },
+    {
+      "id": "qui3-func-06",
+      "phase": 2,
+      "exercise_number": 6,
+      "title": "Identificação de aminas e amidas",
+      "learning_objective": "Distinguir aminas e amidas pela ligação do nitrogênio.",
+      "context": "Aminas apresentam nitrogênio ligado a grupos carbônicos e/ou hidrogênio. Amidas têm nitrogênio diretamente ligado ao carbono de uma carbonila.",
+      "simulation": {
+        "scene": "amine_amide",
+        "parameters": [
+          {
+            "key": "moleculeIndex",
+            "label": "Molécula",
+            "value": 1,
+            "min": 1,
+            "max": 2,
+            "step": 1,
+            "unit": "",
+            "note": "1 metilamina · 2 etanamida"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "A estrutura selecionada corresponde a qual função?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "amine",
+              "label": "Amina."
+            },
+            {
+              "value": "amide",
+              "label": "Amida."
+            }
+          ],
+          "formula": "amine_or_amide",
+          "hint": "Verifique se o nitrogênio está diretamente ligado ao carbono de uma carbonila C=O.",
+          "explanation": "Metilamina não possui carbonila adjacente ao nitrogênio; etanamida possui nitrogênio ligado ao carbono carbonílico."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "identificacao-funcional"
+      }
+    },
+    {
+      "id": "qui3-func-07",
+      "phase": 2,
+      "exercise_number": 7,
+      "title": "Diferenciação das funções orgânicas por grupos funcionais",
+      "learning_objective": "Identificar funções orgânicas a partir de suas unidades estruturais.",
+      "context": "Reconhecer visualmente o grupo funcional facilita a classificação e a nomenclatura dos compostos orgânicos.",
+      "simulation": {
+        "scene": "functional_group_compare",
+        "parameters": [
+          {
+            "key": "groupIndex",
+            "label": "Grupo funcional",
+            "value": 1,
+            "min": 1,
+            "max": 9,
+            "step": 1,
+            "unit": "",
+            "note": "1 hidrocarboneto · 2 álcool · 3 éter · 4 aldeído · 5 cetona · 6 ácido · 7 éster · 8 amina · 9 amida"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual função corresponde ao grupo destacado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "hydrocarbon",
+              "label": "Hidrocarboneto."
+            },
+            {
+              "value": "alcohol",
+              "label": "Álcool."
+            },
+            {
+              "value": "ether",
+              "label": "Éter."
+            },
+            {
+              "value": "aldehyde",
+              "label": "Aldeído."
+            },
+            {
+              "value": "ketone",
+              "label": "Cetona."
+            },
+            {
+              "value": "acid",
+              "label": "Ácido carboxílico."
+            },
+            {
+              "value": "ester",
+              "label": "Éster."
+            },
+            {
+              "value": "amine",
+              "label": "Amina."
+            },
+            {
+              "value": "amide",
+              "label": "Amida."
+            }
+          ],
+          "formula": "functional_group",
+          "hint": "Compare a estrutura com –OH, C–O–C, –CHO, >C=O, –COOH, –COO– e –NH₂.",
+          "explanation": "Cada função possui um padrão: hidrocarbonetos têm apenas C e H; álcoois têm hidroxila; éteres C–O–C; aldeídos e cetonas carbonila em posições distintas; ácidos carboxila; ésteres –COO–; aminas grupo amino."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "identificacao-funcional"
+      }
+    },
+    {
+      "id": "qui3-func-08",
+      "phase": 2,
+      "exercise_number": 8,
+      "title": "Funções orgânicas em substâncias do cotidiano",
+      "learning_objective": "Relacionar funções orgânicas a substâncias encontradas no cotidiano.",
+      "context": "Etanol, acetona, ácido acético, acetato de etila e metilamina são exemplos de compostos que podem ser classificados por seus grupos funcionais.",
+      "simulation": {
+        "scene": "organic_daily_life",
+        "parameters": [
+          {
+            "key": "substanceIndex",
+            "label": "Substância",
+            "value": 1,
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "unit": "",
+            "note": "1 etanol · 2 acetona · 3 ácido acético · 4 acetato de etila · 5 metilamina"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual função orgânica está presente na substância selecionada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "alcohol",
+              "label": "Álcool."
+            },
+            {
+              "value": "ketone",
+              "label": "Cetona."
+            },
+            {
+              "value": "acid",
+              "label": "Ácido carboxílico."
+            },
+            {
+              "value": "ester",
+              "label": "Éster."
+            },
+            {
+              "value": "amine",
+              "label": "Amina."
+            }
+          ],
+          "formula": "daily_function",
+          "hint": "Associe etanol (–OH), acetona (C=O interno), ácido acético (–COOH), acetato de etila (–COO–) e metilamina (–NH₂).",
+          "explanation": "Etanol é álcool; acetona é cetona; ácido acético é ácido carboxílico; acetato de etila é éster; metilamina é amina."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "identificacao-funcional"
+      }
+    },
+    {
+      "id": "qui3-isom-01",
+      "phase": 3,
+      "exercise_number": 1,
+      "title": "Conceitos fundamentais de isomeria",
+      "learning_objective": "Compreender a isomeria como a ocorrência de compostos com mesma fórmula molecular e estruturas diferentes.",
+      "context": "Isômeros possuem a mesma fórmula molecular, mas diferem na conectividade dos átomos (isomeria plana) ou na disposição espacial (estereoisomeria).",
+      "simulation": {
+        "scene": "isomerism_overview",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "O que caracteriza dois compostos como isômeros?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Possuírem a mesma fórmula molecular e diferentes estruturas ou arranjos espaciais.",
+            "Terem sempre fórmulas moleculares diferentes.",
+            "Possuírem obrigatoriamente a mesma estrutura.",
+            "Terem massas molares diferentes apesar da mesma fórmula molecular."
+          ],
+          "correct": 0,
+          "hint": "Compare a quantidade de cada tipo de átomo e depois observe como estão conectados ou orientados.",
+          "explanation": "Isômeros compartilham a mesma fórmula molecular, mas diferem na estrutura plana ou na configuração espacial."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-organico"
+      }
+    },
+    {
+      "id": "qui3-isom-02",
+      "phase": 3,
+      "exercise_number": 2,
+      "title": "Identificação de isômeros planos",
+      "learning_objective": "Distinguir isomeria de cadeia, posição e função em exemplos simples.",
+      "context": "Na isomeria plana, pode mudar o esqueleto carbônico, a posição de um grupo ou a função orgânica.",
+      "simulation": {
+        "scene": "planar_isomerism",
+        "parameters": [
+          {
+            "key": "isomerIndex",
+            "label": "Par de compostos",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1 butano / 2-metilpropano · 2 propan-1-ol / propan-2-ol · 3 etanol / dimetil éter"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual tipo de isomeria plana é ilustrado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "chain",
+              "label": "Isomeria de cadeia."
+            },
+            {
+              "value": "position",
+              "label": "Isomeria de posição."
+            },
+            {
+              "value": "function",
+              "label": "Isomeria de função."
+            }
+          ],
+          "formula": "planar_isomerism",
+          "hint": "Veja o que mudou: esqueleto, posição de grupo ou função orgânica.",
+          "explanation": "Butano e 2-metilpropano diferem pelo esqueleto; propan-1-ol e propan-2-ol pela posição da hidroxila; etanol e dimetil éter pela função."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-organico"
+      }
+    },
+    {
+      "id": "qui3-isom-03",
+      "phase": 3,
+      "exercise_number": 3,
+      "title": "Isomeria geométrica: cis-trans",
+      "learning_objective": "Reconhecer configurações cis e trans em estruturas com rotação restringida.",
+      "context": "Em uma ligação dupla C=C, a rotação é restringida. Grupos de referência do mesmo lado caracterizam cis; em lados opostos, trans, quando os substituintes permitem essa distinção.",
+      "simulation": {
+        "scene": "cis_trans",
+        "parameters": [
+          {
+            "key": "geometryIndex",
+            "label": "Configuração",
+            "value": 1,
+            "min": 1,
+            "max": 2,
+            "step": 1,
+            "unit": "",
+            "note": "1 cis · 2 trans"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual configuração geométrica está representada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "cis",
+              "label": "Cis: grupos de referência do mesmo lado."
+            },
+            {
+              "value": "trans",
+              "label": "Trans: grupos de referência em lados opostos."
+            }
+          ],
+          "formula": "cis_trans",
+          "hint": "Compare os grupos de referência em relação ao eixo da ligação dupla C=C.",
+          "explanation": "Na configuração cis os grupos de referência ficam do mesmo lado da dupla; na trans, em lados opostos."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-organico"
+      }
+    },
+    {
+      "id": "qui3-isom-04",
+      "phase": 3,
+      "exercise_number": 4,
+      "title": "Isomeria óptica e identificação de carbonos quirais",
+      "learning_objective": "Identificar um carbono quiral ligado a quatro substituintes diferentes.",
+      "context": "Um carbono tetraédrico ligado a quatro grupos diferentes é um centro quiral; a molécula pode apresentar enantiômeros.",
+      "simulation": {
+        "scene": "optical_isomerism",
+        "parameters": [
+          {
+            "key": "substituentSet",
+            "label": "Conjunto de substituintes",
+            "value": 1,
+            "min": 1,
+            "max": 2,
+            "step": 1,
+            "unit": "",
+            "note": "1 quatro grupos diferentes · 2 dois grupos iguais"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "O carbono central selecionado é quiral?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "yes",
+              "label": "Sim: está ligado a quatro substituintes diferentes."
+            },
+            {
+              "value": "no",
+              "label": "Não: possui pelo menos dois substituintes iguais."
+            }
+          ],
+          "formula": "chiral_carbon",
+          "hint": "Para ser quiral, o carbono tetraédrico precisa estar ligado a quatro grupos diferentes.",
+          "explanation": "Quatro substituintes diferentes caracterizam um centro quiral; se dois forem iguais, essa condição não é satisfeita."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-organico"
+      }
+    },
+    {
+      "id": "qui3-isom-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Reações orgânicas de substituição",
+      "learning_objective": "Reconhecer reações nas quais um átomo ou grupo é substituído por outro.",
+      "context": "Na substituição, um grupo ligado ao esqueleto carbônico é trocado por outro. Exemplo: CH₄ + Cl₂ → CH₃Cl + HCl, sob luz.",
+      "simulation": {
+        "scene": "substitution_reaction",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Na reação CH₄ + Cl₂ → CH₃Cl + HCl, qual transformação ocorre?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Um hidrogênio do metano é substituído por cloro.",
+            "A ligação dupla é rompida e átomos são adicionados aos carbonos.",
+            "Duas moléculas pequenas são eliminadas para formar uma dupla.",
+            "O carbono é removido da molécula."
+          ],
+          "correct": 0,
+          "hint": "Compare CH₄ com CH₃Cl: qual átomo mudou?",
+          "explanation": "É uma substituição: um hidrogênio do metano foi substituído por cloro, formando clorometano e HCl."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-organico"
+      }
+    },
+    {
+      "id": "qui3-isom-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Reações orgânicas de adição",
+      "learning_objective": "Identificar a adição de átomos ou grupos a uma ligação múltipla.",
+      "context": "Na adição a um alceno, a ligação π da dupla é rompida e novos átomos se ligam aos carbonos. Exemplo: eteno + Br₂ → 1,2-dibromoetano.",
+      "simulation": {
+        "scene": "addition_reaction",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Na reação CH₂=CH₂ + Br₂ → CH₂Br–CH₂Br, o que caracteriza a transformação?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Adição: os átomos de bromo se ligam aos carbonos da antiga dupla.",
+            "Substituição: um hidrogênio é trocado por bromo.",
+            "Eliminação: uma molécula pequena é removida e surge uma dupla.",
+            "Neutralização ácido-base."
+          ],
+          "correct": 0,
+          "hint": "A ligação C=C passa a simples e os átomos de bromo são incorporados.",
+          "explanation": "É uma reação de adição: a insaturação é consumida e os átomos de bromo são adicionados aos dois carbonos."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-organico"
+      }
+    },
+    {
+      "id": "qui3-isom-07",
+      "phase": 3,
+      "exercise_number": 7,
+      "title": "Reações orgânicas de eliminação",
+      "learning_objective": "Reconhecer reações que removem átomos ou grupos e formam ligação múltipla.",
+      "context": "Na desidratação do etanol, em condições adequadas, ocorre eliminação de água e formação de eteno: CH₃CH₂OH → CH₂=CH₂ + H₂O.",
+      "simulation": {
+        "scene": "elimination_reaction",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Na desidratação do etanol formando eteno e água, qual tipo de reação ocorre?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Eliminação: água é removida e forma-se uma ligação dupla.",
+            "Adição: a molécula recebe átomos na dupla.",
+            "Substituição: um átomo é trocado por outro.",
+            "Polimerização por adição."
+          ],
+          "correct": 0,
+          "hint": "Uma molécula pequena, H₂O, é retirada e surge uma ligação C=C.",
+          "explanation": "A desidratação é uma eliminação: grupos são removidos de carbonos vizinhos, formando ligação múltipla."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-organico"
+      }
+    },
+    {
+      "id": "qui3-isom-08",
+      "phase": 3,
+      "exercise_number": 8,
+      "title": "Identificação dos principais tipos de reações orgânicas",
+      "learning_objective": "Diferenciar substituição, adição e eliminação por meio de exemplos.",
+      "context": "Observe o que ocorre com grupos ligados ao esqueleto carbônico e com as ligações múltiplas.",
+      "simulation": {
+        "scene": "organic_reaction_compare",
+        "parameters": [
+          {
+            "key": "reactionIndex",
+            "label": "Transformação",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1 halogenação do metano · 2 bromação do eteno · 3 desidratação do etanol"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual tipo de reação está representado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "substitution",
+              "label": "Substituição."
+            },
+            {
+              "value": "addition",
+              "label": "Adição."
+            },
+            {
+              "value": "elimination",
+              "label": "Eliminação."
+            }
+          ],
+          "formula": "reaction_type",
+          "hint": "Houve troca de grupo, incorporação de átomos ou saída de uma molécula pequena com formação de insaturação?",
+          "explanation": "Halogenação do metano é substituição; bromação do eteno é adição; desidratação do etanol é eliminação."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-organico"
+      }
+    },
+    {
+      "id": "qui3-bio-01",
+      "phase": 4,
+      "exercise_number": 1,
+      "title": "Conceitos e classificação dos polímeros",
+      "learning_objective": "Compreender polímeros como macromoléculas formadas pela repetição de unidades menores.",
+      "context": "Polímeros são moléculas grandes constituídas por unidades repetitivas chamadas monômeros. Podem ser naturais ou sintéticos.",
+      "simulation": {
+        "scene": "polymer_overview",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "O que caracteriza um polímero?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Uma macromolécula constituída por unidades repetitivas (monômeros).",
+            "Uma mistura de gases sem ligação química.",
+            "Uma molécula formada obrigatoriamente por dois átomos.",
+            "Uma substância que contém somente metais."
+          ],
+          "correct": 0,
+          "hint": "A palavra polímero remete a muitas unidades estruturais repetidas.",
+          "explanation": "Polímeros são macromoléculas formadas pela repetição de unidades estruturais; monômeros e ligações determinam propriedades e aplicações."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "bioquimica"
+      }
+    },
+    {
+      "id": "qui3-bio-02",
+      "phase": 4,
+      "exercise_number": 2,
+      "title": "Identificação de polímeros naturais e sintéticos",
+      "learning_objective": "Classificar exemplos de polímeros conforme sua origem.",
+      "context": "Celulose, amido, proteínas e DNA são exemplos de polímeros naturais. Polietileno, PVC, PET e náilon são exemplos de sintéticos.",
+      "simulation": {
+        "scene": "natural_synthetic_polymers",
+        "parameters": [
+          {
+            "key": "polymerIndex",
+            "label": "Polímero",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": "",
+            "note": "1 celulose · 2 amido · 3 DNA · 4 polietileno · 5 PVC · 6 PET"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "O polímero selecionado é natural ou sintético?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "natural",
+              "label": "Natural."
+            },
+            {
+              "value": "synthetic",
+              "label": "Sintético."
+            }
+          ],
+          "formula": "polymer_origin",
+          "hint": "Identifique se é produzido por organismos vivos ou obtido por síntese industrial.",
+          "explanation": "Celulose, amido e DNA são polímeros naturais; polietileno, PVC e PET são sintéticos."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "bioquimica"
+      }
+    },
+    {
+      "id": "qui3-bio-03",
+      "phase": 4,
+      "exercise_number": 3,
+      "title": "Processos de polimerização e formação de macromoléculas",
+      "learning_objective": "Diferenciar polimerização por adição e por condensação em exemplos introdutórios.",
+      "context": "Na adição, monômeros insaturados se unem sem eliminar moléculas pequenas. Na condensação, a ligação pode liberar moléculas pequenas, como água.",
+      "simulation": {
+        "scene": "polymerization",
+        "parameters": [
+          {
+            "key": "monomerIndex",
+            "label": "Monômero / processo",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1 eteno · 2 aminoácidos · 3 ácido lático (modelo simples)"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual processo de polimerização é associado ao exemplo?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "addition",
+              "label": "Polimerização por adição."
+            },
+            {
+              "value": "condensation",
+              "label": "Polimerização por condensação."
+            }
+          ],
+          "formula": "polymerization_type",
+          "hint": "Ligação dupla C=C é exemplo clássico de adição; união entre grupos funcionais com liberação de molécula pequena é condensação.",
+          "explanation": "Eteno forma polietileno por adição. Aminoácidos formam ligações peptídicas por condensação com liberação de água; ácido lático pode formar poliéster por condensação."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "bioquimica"
+      }
+    },
+    {
+      "id": "qui3-bio-04",
+      "phase": 4,
+      "exercise_number": 4,
+      "title": "Tipos de plásticos, propriedades e aplicações",
+      "learning_objective": "Relacionar polímeros sintéticos comuns às suas propriedades e usos.",
+      "context": "PE, PET, PVC e PP possuem propriedades distintas e são usados em embalagens, garrafas, tubulações, fibras e outros produtos.",
+      "simulation": {
+        "scene": "plastic_types",
+        "parameters": [
+          {
+            "key": "plasticIndex",
+            "label": "Plástico",
+            "value": 1,
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "unit": "",
+            "note": "1 PE · 2 PET · 3 PVC · 4 PP"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual aplicação é frequentemente associada ao plástico selecionado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "flexible_packaging",
+              "label": "Filmes, sacolas e embalagens flexíveis (PE)."
+            },
+            {
+              "value": "bottles_fibers",
+              "label": "Garrafas e fibras têxteis (PET)."
+            },
+            {
+              "value": "pipes_profiles",
+              "label": "Tubulações e perfis (PVC)."
+            },
+            {
+              "value": "containers_housewares",
+              "label": "Potes, tampas e utensílios (PP)."
+            }
+          ],
+          "formula": "plastic_application",
+          "hint": "Relacione o tipo de polímero à aplicação comum indicada.",
+          "explanation": "PE é usado em filmes e embalagens; PET em garrafas e fibras; PVC em tubos e perfis; PP em potes, tampas e utensílios. Aplicações dependem do grau e da formulação."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "bioquimica"
+      }
+    },
+    {
+      "id": "qui3-bio-05",
+      "phase": 4,
+      "exercise_number": 5,
+      "title": "Reciclagem de polímeros e impactos ambientais",
+      "learning_objective": "Reconhecer estratégias de reciclagem e impactos do descarte inadequado.",
+      "context": "A reciclagem mecânica envolve triagem, lavagem, moagem e reprocessamento. Redução do consumo e descarte correto ajudam a diminuir resíduos.",
+      "simulation": {
+        "scene": "polymer_recycling",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual sequência descreve de forma simplificada a reciclagem mecânica?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Triagem, lavagem, moagem e reprocessamento.",
+            "Combustão completa e descarte das cinzas em rios.",
+            "Mistura indiscriminada de resíduos e deposição no solo.",
+            "Dissolução em água sem separação e evaporação."
+          ],
+          "correct": 0,
+          "hint": "Pense nas etapas para preparar o material, fragmentá-lo e processá-lo novamente.",
+          "explanation": "A reciclagem mecânica inclui triagem do polímero, limpeza, moagem ou trituração e reprocessamento. A qualidade depende da separação e do estado do material."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "bioquimica"
+      }
+    },
+    {
+      "id": "qui3-bio-06",
+      "phase": 4,
+      "exercise_number": 6,
+      "title": "Carboidratos: estrutura, classificação e funções biológicas",
+      "learning_objective": "Distinguir mono-, di- e polissacarídeos e relacioná-los às funções biológicas.",
+      "context": "Glicose é monossacarídeo; sacarose é dissacarídeo; amido e celulose são polissacarídeos.",
+      "simulation": {
+        "scene": "carbohydrates",
+        "parameters": [
+          {
+            "key": "carbohydrateIndex",
+            "label": "Carboidrato",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1 glicose · 2 sacarose · 3 amido"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Como o carboidrato selecionado é classificado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "mono",
+              "label": "Monossacarídeo."
+            },
+            {
+              "value": "di",
+              "label": "Dissacarídeo."
+            },
+            {
+              "value": "poly",
+              "label": "Polissacarídeo."
+            }
+          ],
+          "formula": "carbohydrate_class",
+          "hint": "Monossacarídeos são unidades simples; dissacarídeos unem duas unidades; polissacarídeos formam cadeias longas.",
+          "explanation": "Glicose é monossacarídeo; sacarose tem duas unidades; amido é um polímero de glicose, portanto polissacarídeo."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "bioquimica"
+      }
+    },
+    {
+      "id": "qui3-bio-07",
+      "phase": 4,
+      "exercise_number": 7,
+      "title": "Lipídios: estrutura, propriedades e funções biológicas",
+      "learning_objective": "Reconhecer funções dos lipídios, como reserva energética, composição de membranas e proteção.",
+      "context": "Triglicerídeos são formados por glicerol e três ácidos graxos. Fosfolipídios são anfipáticos e compõem membranas; ceras protegem e impermeabilizam superfícies.",
+      "simulation": {
+        "scene": "lipids",
+        "parameters": [
+          {
+            "key": "lipidIndex",
+            "label": "Tipo de lipídio",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1 triglicerídeo · 2 fosfolipídio · 3 cera"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual característica é mais diretamente associada ao lipídio selecionado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "energy_storage",
+              "label": "Reserva energética (triglicerídeo)."
+            },
+            {
+              "value": "membrane",
+              "label": "Composição de membranas celulares (fosfolipídio)."
+            },
+            {
+              "value": "waterproofing",
+              "label": "Impermeabilização e proteção (cera)."
+            }
+          ],
+          "formula": "lipid_function",
+          "hint": "Associe a estrutura a armazenamento, membrana ou proteção.",
+          "explanation": "Triglicerídeos armazenam energia; fosfolipídios formam bicamadas; ceras contribuem para impermeabilização e proteção."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "bioquimica"
+      }
+    },
+    {
+      "id": "qui3-bio-08",
+      "phase": 4,
+      "exercise_number": 8,
+      "title": "Proteínas: estrutura, composição e funções biológicas",
+      "learning_objective": "Relacionar proteínas a cadeias de aminoácidos e reconhecer níveis de organização.",
+      "context": "Proteínas são polímeros de aminoácidos ligados por ligações peptídicas. A estrutura tridimensional está relacionada às funções.",
+      "simulation": {
+        "scene": "proteins",
+        "parameters": [
+          {
+            "key": "proteinLevel",
+            "label": "Nível estrutural",
+            "value": 1,
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "unit": "",
+            "note": "1 primária · 2 secundária · 3 terciária · 4 quaternária"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual nível de organização proteica está representado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "primary",
+              "label": "Primária: sequência de aminoácidos."
+            },
+            {
+              "value": "secondary",
+              "label": "Secundária: hélice α ou folha β."
+            },
+            {
+              "value": "tertiary",
+              "label": "Terciária: dobramento 3D de uma cadeia."
+            },
+            {
+              "value": "quaternary",
+              "label": "Quaternária: associação de subunidades."
+            }
+          ],
+          "formula": "protein_structure",
+          "hint": "Observe se aparece sequência linear, padrão local, dobramento completo ou várias cadeias associadas.",
+          "explanation": "Primária: sequência; secundária: hélices e folhas; terciária: dobramento 3D de uma cadeia; quaternária: associação de subunidades."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "bioquimica"
+      }
+    },
+    {
+      "id": "qui3-eq-01",
+      "phase": 5,
+      "exercise_number": 1,
+      "title": "Conceitos de equilíbrio químico e reações reversíveis",
+      "learning_objective": "Compreender o equilíbrio como estado dinâmico em que as velocidades direta e inversa se igualam.",
+      "context": "Em sistema fechado e reversível, o equilíbrio ocorre quando as velocidades direta e inversa são iguais. As concentrações permanecem constantes, embora as reações continuem.",
+      "simulation": {
+        "scene": "equilibrium_overview",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual afirmação descreve corretamente o equilíbrio químico dinâmico?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "As velocidades direta e inversa são iguais e as concentrações permanecem constantes.",
+            "A reação para completamente.",
+            "As concentrações de reagentes e produtos precisam ser iguais.",
+            "Apenas os produtos continuam reagindo."
+          ],
+          "correct": 0,
+          "hint": "Equilíbrio não significa reação parada nem concentrações iguais; compare as velocidades.",
+          "explanation": "No equilíbrio dinâmico, as reações direta e inversa continuam ocorrendo à mesma velocidade. Por isso, as concentrações permanecem constantes, mas não precisam ser iguais."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "equilibrio-acido-base"
+      }
+    },
+    {
+      "id": "qui3-eq-02",
+      "phase": 5,
+      "exercise_number": 2,
+      "title": "Identificação das condições de equilíbrio químico",
+      "learning_objective": "Identificar equilíbrio pela igualdade entre velocidades direta e inversa.",
+      "context": "A igualdade entre as velocidades direta e inversa caracteriza o equilíbrio dinâmico. Se forem diferentes, a composição ainda evolui em determinado sentido.",
+      "simulation": {
+        "scene": "equilibrium_rates",
+        "parameters": [
+          {
+            "key": "forwardRate",
+            "label": "Velocidade direta",
+            "value": 5,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "unit": "unid./s",
+            "note": ""
+          },
+          {
+            "key": "reverseRate",
+            "label": "Velocidade inversa",
+            "value": 5,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "unit": "unid./s",
+            "note": ""
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Com as velocidades selecionadas, qual é a situação do sistema?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "equilibrium",
+              "label": "Em equilíbrio dinâmico."
+            },
+            {
+              "value": "forward",
+              "label": "Avanço líquido no sentido direto."
+            },
+            {
+              "value": "reverse",
+              "label": "Avanço líquido no sentido inverso."
+            }
+          ],
+          "formula": "equilibrium_status",
+          "hint": "Compare as velocidades. O equilíbrio ocorre quando elas têm o mesmo valor.",
+          "explanation": "Quando v direta = v inversa, o sistema está em equilíbrio. Se direta for maior, há avanço líquido direto; se for menor, inverso."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "equilibrio-acido-base"
+      }
+    },
+    {
+      "id": "qui3-eq-03",
+      "phase": 5,
+      "exercise_number": 3,
+      "title": "Cálculo e interpretação da constante de equilíbrio",
+      "learning_objective": "Calcular Kc a partir das concentrações de reagentes e produtos no equilíbrio.",
+      "context": "Para N₂(g) + 3H₂(g) ⇌ 2NH₃(g), Kc = [NH₃]² / ([N₂][H₂]³). Os coeficientes balanceados tornam-se expoentes.",
+      "simulation": {
+        "scene": "kc_calculation",
+        "parameters": [
+          {
+            "key": "nh3",
+            "label": "[NH₃] no equilíbrio",
+            "value": 2,
+            "min": 0.5,
+            "max": 4,
+            "step": 0.5,
+            "unit": "mol/L",
+            "note": ""
+          },
+          {
+            "key": "n2",
+            "label": "[N₂] no equilíbrio",
+            "value": 1,
+            "min": 0.5,
+            "max": 3,
+            "step": 0.5,
+            "unit": "mol/L",
+            "note": ""
+          },
+          {
+            "key": "h2",
+            "label": "[H₂] no equilíbrio",
+            "value": 2,
+            "min": 0.5,
+            "max": 3,
+            "step": 0.5,
+            "unit": "mol/L",
+            "note": ""
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual é o valor de Kc para as concentrações selecionadas?",
+        "answer": {
+          "type": "numeric",
+          "formula": "kc_ammonia",
+          "display_unit": "(mol/L)⁻²",
+          "tolerance": 0.01,
+          "hint": "Use Kc = [NH₃]² / ([N₂] × [H₂]³), respeitando o expoente 3 do H₂.",
+          "explanation": "Para N₂ + 3H₂ ⇌ 2NH₃, Kc = [NH₃]² / ([N₂][H₂]³). Com 2, 1 e 2 mol/L, Kc = 4/(1×8) = 0,5 na forma em concentração."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "equilibrio-acido-base"
+      }
+    },
+    {
+      "id": "qui3-eq-04",
+      "phase": 5,
+      "exercise_number": 4,
+      "title": "Princípio de Le Chatelier e deslocamento do equilíbrio",
+      "learning_objective": "Prever o sentido de deslocamento após uma perturbação externa.",
+      "context": "Para N₂(g) + 3H₂(g) ⇌ 2NH₃(g), a reação direta é exotérmica. Aumentar pressão favorece o lado com menos mols gasosos; aumentar temperatura favorece o sentido endotérmico.",
+      "simulation": {
+        "scene": "le_chatelier",
+        "parameters": [
+          {
+            "key": "scenarioIndex",
+            "label": "Perturbação aplicada",
+            "value": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "unit": "",
+            "note": "1 adicionar N₂ · 2 retirar NH₃ · 3 aumentar pressão · 4 aumentar temperatura · 5 diminuir temperatura · 6 adicionar catalisador"
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Para o cenário escolhido, qual é a resposta do equilíbrio?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "right",
+              "label": "Desloca-se para a direita, favorecendo NH₃."
+            },
+            {
+              "value": "left",
+              "label": "Desloca-se para a esquerda, favorecendo N₂ e H₂."
+            },
+            {
+              "value": "no_shift",
+              "label": "Não ocorre deslocamento da posição de equilíbrio."
+            }
+          ],
+          "formula": "le_chatelier_shift",
+          "hint": "O sistema tende a atenuar a perturbação. Considere reação direta exotérmica e 4 mols gasosos à esquerda contra 2 à direita.",
+          "explanation": "Adicionar N₂ ou retirar NH₃ favorece direita; aumentar pressão favorece direita; aumentar temperatura favorece esquerda; diminuir temperatura favorece direita. Catalisador não desloca o equilíbrio."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "equilibrio-acido-base"
+      }
+    },
+    {
+      "id": "qui3-eq-05",
+      "phase": 5,
+      "exercise_number": 5,
+      "title": "Conceitos de ácidos, bases e escala de pH",
+      "learning_objective": "Reconhecer conceitos introdutórios de ácido, base e pH.",
+      "context": "Na abordagem escolar a 25 °C, pH menor que 7 é ácido, igual a 7 neutro e maior que 7 básico.",
+      "simulation": {
+        "scene": "acid_base_concept",
+        "parameters": [],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "A 25 °C, qual classificação corresponde a uma solução aquosa com pH = 3?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Ácida.",
+            "Neutra.",
+            "Básica.",
+            "Necessariamente concentrada em qualquer soluto."
+          ],
+          "correct": 0,
+          "hint": "Compare o pH com o valor neutro 7 a 25 °C.",
+          "explanation": "A 25 °C, pH < 7 é ácido, pH = 7 é neutro e pH > 7 é básico."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "equilibrio-acido-base"
+      }
+    },
+    {
+      "id": "qui3-eq-06",
+      "phase": 5,
+      "exercise_number": 6,
+      "title": "Identificação de substâncias ácidas, básicas e neutras",
+      "learning_objective": "Classificar soluções aquosas de acordo com o pH.",
+      "context": "No modelo escolar a 25 °C, pH abaixo de 7 indica caráter ácido, 7 neutralidade e acima de 7 caráter básico.",
+      "simulation": {
+        "scene": "ph_classification",
+        "parameters": [
+          {
+            "key": "phValue",
+            "label": "Valor de pH",
+            "value": 3,
+            "min": 1,
+            "max": 13,
+            "step": 1,
+            "unit": "",
+            "note": "Escala didática; neutralidade em pH 7 a 25 °C."
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Como a solução selecionada deve ser classificada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "choices": [
+            {
+              "value": "acidic",
+              "label": "Ácida."
+            },
+            {
+              "value": "neutral",
+              "label": "Neutra."
+            },
+            {
+              "value": "basic",
+              "label": "Básica."
+            }
+          ],
+          "formula": "ph_class",
+          "hint": "Compare o valor indicado com 7: abaixo, igual ou acima.",
+          "explanation": "A 25 °C: pH < 7 é ácido; pH = 7 é neutro; pH > 7 é básico."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "equilibrio-acido-base"
+      }
+    },
+    {
+      "id": "qui3-eq-07",
+      "phase": 5,
+      "exercise_number": 7,
+      "title": "Cálculo e interpretação do pH e pOH",
+      "learning_objective": "Calcular pOH e pH a partir da concentração de íons hidróxido a 25 °C.",
+      "context": "A 25 °C, pH + pOH = 14. O pOH é −log[OH⁻]. Para [OH⁻] = 10⁻³ mol/L, pOH = 3 e pH = 11.",
+      "simulation": {
+        "scene": "ph_poh_calculation",
+        "parameters": [
+          {
+            "key": "ohExponent",
+            "label": "Expoente de [OH⁻] = 10⁻ⁿ",
+            "value": 3,
+            "min": 1,
+            "max": 13,
+            "step": 1,
+            "unit": "n",
+            "note": "A concentração é 10⁻ⁿ mol/L."
+          }
+        ],
+        "description": "Observe a representação e relacione os elementos visuais ao conceito."
+      },
+      "challenge": {
+        "prompt": "Qual é o pH da solução selecionada?",
+        "answer": {
+          "type": "numeric",
+          "formula": "ph_from_oh_exponent",
+          "display_unit": "pH",
+          "tolerance": 0.01,
+          "hint": "Calcule pOH = −log[OH⁻]. Como [OH⁻] = 10⁻ⁿ, pOH = n. Use pH + pOH = 14 a 25 °C.",
+          "explanation": "Com [OH⁻] = 10⁻ⁿ, pOH = n. A 25 °C, pH = 14 − n. Para n=3, pH=11."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "equilibrio-acido-base"
+      }
+    }
+  ]
+}
