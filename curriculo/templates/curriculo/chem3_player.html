@@ -99,7 +99,7 @@ const $=id=>document.getElementById(id);
 const P=JSON.parse(document.getElementById('chem3-data').textContent);
 const state={data:P,currentId:null,params:{},selectedChoice:null,completed:new Set(P.completed_ids||[]),xp:P.xp_total||0,time:0,sceneStep:0,polymerUnits:5,activeFunctionalGroup:0,recycleStage:0};
 const C={blue:'#287f87',cyan:'#35b7a5',green:'#3d9b70',amber:'#dda047',red:'#d7655c',ink:'#263b49',muted:'#748795',purple:'#8870b8',pink:'#c7789b'};
-let canvas=null,ctx=null,W=900,H=360,resizeObserver=null,raf=null;
+let canvas=null,ctx=null,W=900,H=360,dpr=1,resizeObserver=null,raf=null;
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function fmt(v,d=2){if(!Number.isFinite(Number(v)))return '—';return Number(v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})}
 function parseNum(v){const raw=String(v??'').trim();return raw?Number(raw.replace(',','.')):NaN}
