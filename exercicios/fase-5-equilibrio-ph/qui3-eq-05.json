@@ -1,0 +1,32 @@
+{
+  "id": "qui3-eq-05",
+  "phase": 5,
+  "exercise_number": 5,
+  "title": "Conceitos de ácidos, bases e escala de pH",
+  "learning_objective": "Reconhecer conceitos introdutórios de ácido, base e pH.",
+  "context": "Na abordagem escolar a 25 °C, pH menor que 7 é ácido, igual a 7 neutro e maior que 7 básico.",
+  "simulation": {
+    "scene": "acid_base_concept",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "A 25 °C, qual classificação corresponde a uma solução aquosa com pH = 3?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Ácida.",
+        "Neutra.",
+        "Básica.",
+        "Necessariamente concentrada em qualquer soluto."
+      ],
+      "correct": 0,
+      "hint": "Compare o pH com o valor neutro 7 a 25 °C.",
+      "explanation": "A 25 °C, pH < 7 é ácido, pH = 7 é neutro e pH > 7 é básico."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "equilibrio-acido-base"
+  }
+}
