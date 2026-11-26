@@ -1,0 +1,38 @@
+{
+  "id": "qui2-sol-03",
+  "phase": 2,
+  "exercise_number": 3,
+  "title": "Análise e interpretação de curvas de solubilidade",
+  "learning_objective": "Ler uma curva de solubilidade e identificar a quantidade de soluto que pode se dissolver em função da temperatura.",
+  "context": "A solubilidade do nitrato de potássio (KNO₃) aumenta bastante com a temperatura. A cena usa valores aproximados de uma curva didática, expressos em gramas de soluto por 100 g de água.",
+  "simulation": {
+    "scene": "solubility_curve",
+    "parameters": [
+      {
+        "key": "temperature",
+        "label": "Temperatura",
+        "value": 40,
+        "min": 20,
+        "max": 80,
+        "step": 10,
+        "unit": "°C"
+      }
+    ],
+    "description": "Mova a temperatura e observe a posição correspondente na curva de solubilidade do KNO₃."
+  },
+  "challenge": {
+    "prompt": "Qual é a solubilidade aproximada do KNO₃ na temperatura selecionada?",
+    "answer": {
+      "type": "numeric",
+      "formula": "kno3_solubility",
+      "display_unit": "g/100 g água",
+      "tolerance": 0.005,
+      "hint": "Localize a temperatura no eixo horizontal e leia o valor correspondente no eixo vertical.",
+      "explanation": "Na curva didática utilizada: 20 °C ≈ 32; 30 °C ≈ 46; 40 °C ≈ 64; 50 °C ≈ 86; 60 °C ≈ 110; 70 °C ≈ 138; 80 °C ≈ 169 g por 100 g de água."
+    }
+  },
+  "completion": {
+    "xp": 40,
+    "skill": "quimica-quantitativa"
+  }
+}
