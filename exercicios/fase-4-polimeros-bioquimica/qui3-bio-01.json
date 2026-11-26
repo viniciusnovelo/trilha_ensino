@@ -1,0 +1,32 @@
+{
+  "id": "qui3-bio-01",
+  "phase": 4,
+  "exercise_number": 1,
+  "title": "Conceitos e classificação dos polímeros",
+  "learning_objective": "Compreender polímeros como macromoléculas formadas pela repetição de unidades menores.",
+  "context": "Polímeros são moléculas grandes constituídas por unidades repetitivas chamadas monômeros. Podem ser naturais ou sintéticos.",
+  "simulation": {
+    "scene": "polymer_overview",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "O que caracteriza um polímero?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Uma macromolécula constituída por unidades repetitivas (monômeros).",
+        "Uma mistura de gases sem ligação química.",
+        "Uma molécula formada obrigatoriamente por dois átomos.",
+        "Uma substância que contém somente metais."
+      ],
+      "correct": 0,
+      "hint": "A palavra polímero remete a muitas unidades estruturais repetidas.",
+      "explanation": "Polímeros são macromoléculas formadas pela repetição de unidades estruturais; monômeros e ligações determinam propriedades e aplicações."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "bioquimica"
+  }
+}
