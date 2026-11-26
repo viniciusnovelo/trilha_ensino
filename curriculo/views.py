@@ -3580,6 +3580,7 @@ def finalizar_fase(
 # ============================================================
 
 @login_required
+@login_required
 def revisao_fase(request, fase_id):
 
     fase = get_object_or_404(
