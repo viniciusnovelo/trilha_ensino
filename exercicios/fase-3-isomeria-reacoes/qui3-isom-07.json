@@ -1,0 +1,32 @@
+{
+  "id": "qui3-isom-07",
+  "phase": 3,
+  "exercise_number": 7,
+  "title": "Reações orgânicas de eliminação",
+  "learning_objective": "Reconhecer reações que removem átomos ou grupos e formam ligação múltipla.",
+  "context": "Na desidratação do etanol, em condições adequadas, ocorre eliminação de água e formação de eteno: CH₃CH₂OH → CH₂=CH₂ + H₂O.",
+  "simulation": {
+    "scene": "elimination_reaction",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Na desidratação do etanol formando eteno e água, qual tipo de reação ocorre?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Eliminação: água é removida e forma-se uma ligação dupla.",
+        "Adição: a molécula recebe átomos na dupla.",
+        "Substituição: um átomo é trocado por outro.",
+        "Polimerização por adição."
+      ],
+      "correct": 0,
+      "hint": "Uma molécula pequena, H₂O, é retirada e surge uma ligação C=C.",
+      "explanation": "A desidratação é uma eliminação: grupos são removidos de carbonos vizinhos, formando ligação múltipla."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-organico"
+  }
+}
