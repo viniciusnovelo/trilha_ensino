@@ -1,0 +1,47 @@
+{
+  "id": "qui2-cin-04",
+  "phase": 4,
+  "exercise_number": 4,
+  "title": "Influência dos catalisadores na velocidade das reações",
+  "learning_objective": "Identificar que catalisadores oferecem um caminho reacional com menor energia de ativação sem serem consumidos globalmente.",
+  "context": "Um catalisador aumenta a velocidade de uma reação ao fornecer um mecanismo alternativo com menor energia de ativação. Ele não altera a variação de entalpia da reação nem a posição do equilíbrio.",
+  "simulation": {
+    "scene": "catalyst_kinetics",
+    "parameters": [
+      {
+        "key": "catalyst",
+        "label": "Catalisador presente?",
+        "value": 1,
+        "min": 0,
+        "max": 1,
+        "step": 1,
+        "unit": "",
+        "note": "0: não · 1: sim"
+      }
+    ],
+    "description": "Compare os perfis de energia da reação com e sem catalisador."
+  },
+  "challenge": {
+    "prompt": "Qual descrição corresponde à condição selecionada?",
+    "answer": {
+      "type": "dynamic_choice",
+      "formula": "catalyst_effect",
+      "choices": [
+        {
+          "value": "without",
+          "label": "Sem catalisador: maior energia de ativação no perfil apresentado"
+        },
+        {
+          "value": "with",
+          "label": "Com catalisador: menor energia de ativação no perfil apresentado"
+        }
+      ],
+      "hint": "Observe qual curva possui o pico de energia mais baixo. O catalisador altera o caminho reacional, não o ΔH global.",
+      "explanation": "Com catalisador, a energia de ativação do caminho apresentado é menor e a reação tende a ocorrer mais rapidamente. O catalisador não é consumido globalmente e não modifica o ΔH da reação."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
