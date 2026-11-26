@@ -1,0 +1,32 @@
+{
+  "id": "qui2-cin-07",
+  "phase": 4,
+  "exercise_number": 7,
+  "title": "Análise de situações práticas envolvendo a cinética química",
+  "learning_objective": "Aplicar fatores cinéticos a uma situação cotidiana, relacionando temperatura e superfície de contato à velocidade de reação.",
+  "context": "Um comprimido efervescente reage com água. A fragmentação aumenta a superfície exposta e a temperatura pode aumentar a frequência de colisões efetivas. As condições devem ser controladas conforme as orientações do produto.",
+  "simulation": {
+    "scene": "kinetics_practical",
+    "parameters": [],
+    "description": "Observe o comprimido inteiro e fragmentado e compare a interação com água em diferentes temperaturas."
+  },
+  "challenge": {
+    "prompt": "Qual procedimento tende a acelerar a reação do comprimido efervescente, mantendo as condições de uso seguras?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Fragmentar o comprimido e utilizar água em temperatura mais elevada, dentro das orientações do produto.",
+        "Congelar a água e manter o comprimido inteiro.",
+        "Reduzir a superfície de contato e diminuir a temperatura.",
+        "Retirar toda a água do sistema."
+      ],
+      "correct": 0,
+      "hint": "Considere quais mudanças aumentam a superfície de contato e a energia cinética das partículas.",
+      "explanation": "Fragmentar o comprimido aumenta a superfície de contato; elevar moderadamente a temperatura, respeitando as instruções, tende a aumentar a frequência de colisões efetivas e acelerar a reação."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
