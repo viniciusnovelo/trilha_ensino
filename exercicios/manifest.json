@@ -1,0 +1,210 @@
+{
+  "module": "2º Módulo de Química",
+  "exercise_count": 34,
+  "exercises": [
+    {
+      "id": "qui2-est-01",
+      "phase": 1,
+      "title": "Conceito de mol e quantidade de matéria",
+      "path": "exercicios/fase-1-grandezas-quimicas-estequiometria/qui2-est-01.json"
+    },
+    {
+      "id": "qui2-est-02",
+      "phase": 1,
+      "title": "Cálculo de massa molar dos elementos e compostos químicos",
+      "path": "exercicios/fase-1-grandezas-quimicas-estequiometria/qui2-est-02.json"
+    },
+    {
+      "id": "qui2-est-03",
+      "phase": 1,
+      "title": "Conversão entre massa, massa molar e quantidade de matéria",
+      "path": "exercicios/fase-1-grandezas-quimicas-estequiometria/qui2-est-03.json"
+    },
+    {
+      "id": "qui2-est-04",
+      "phase": 1,
+      "title": "Relações quantitativas em equações químicas",
+      "path": "exercicios/fase-1-grandezas-quimicas-estequiometria/qui2-est-04.json"
+    },
+    {
+      "id": "qui2-est-05",
+      "phase": 1,
+      "title": "Cálculos estequiométricos básicos",
+      "path": "exercicios/fase-1-grandezas-quimicas-estequiometria/qui2-est-05.json"
+    },
+    {
+      "id": "qui2-est-06",
+      "phase": 1,
+      "title": "Identificação do reagente limitante e do reagente em excesso",
+      "path": "exercicios/fase-1-grandezas-quimicas-estequiometria/qui2-est-06.json"
+    },
+    {
+      "id": "qui2-est-07",
+      "phase": 1,
+      "title": "Cálculo das quantidades de produtos e reagentes em excesso",
+      "path": "exercicios/fase-1-grandezas-quimicas-estequiometria/qui2-est-07.json"
+    },
+    {
+      "id": "qui2-sol-01",
+      "phase": 2,
+      "title": "Conceitos e classificação de soluções e dispersões",
+      "path": "exercicios/fase-2-solucoes-dispersoes/qui2-sol-01.json"
+    },
+    {
+      "id": "qui2-sol-02",
+      "phase": 2,
+      "title": "Solubilidade: conceitos e interpretação",
+      "path": "exercicios/fase-2-solucoes-dispersoes/qui2-sol-02.json"
+    },
+    {
+      "id": "qui2-sol-03",
+      "phase": 2,
+      "title": "Análise e interpretação de curvas de solubilidade",
+      "path": "exercicios/fase-2-solucoes-dispersoes/qui2-sol-03.json"
+    },
+    {
+      "id": "qui2-sol-04",
+      "phase": 2,
+      "title": "Cálculo da concentração comum (g/L)",
+      "path": "exercicios/fase-2-solucoes-dispersoes/qui2-sol-04.json"
+    },
+    {
+      "id": "qui2-sol-05",
+      "phase": 2,
+      "title": "Cálculo da concentração molar (mol/L)",
+      "path": "exercicios/fase-2-solucoes-dispersoes/qui2-sol-05.json"
+    },
+    {
+      "id": "qui2-sol-06",
+      "phase": 2,
+      "title": "Relação entre quantidade de soluto, volume e concentração",
+      "path": "exercicios/fase-2-solucoes-dispersoes/qui2-sol-06.json"
+    },
+    {
+      "id": "qui2-sol-07",
+      "phase": 2,
+      "title": "Processos de diluição de soluções",
+      "path": "exercicios/fase-2-solucoes-dispersoes/qui2-sol-07.json"
+    },
+    {
+      "id": "qui2-agua-01",
+      "phase": 3,
+      "title": "Parâmetros de qualidade da água e sua importância ambiental",
+      "path": "exercicios/fase-3-aplicacoes-recursos-hidricos/qui2-agua-01.json"
+    },
+    {
+      "id": "qui2-agua-02",
+      "phase": 3,
+      "title": "Demanda Bioquímica de Oxigênio (DBO): conceito e interpretação",
+      "path": "exercicios/fase-3-aplicacoes-recursos-hidricos/qui2-agua-02.json"
+    },
+    {
+      "id": "qui2-agua-03",
+      "phase": 3,
+      "title": "Análise da qualidade da água por meio de indicadores de DBO",
+      "path": "exercicios/fase-3-aplicacoes-recursos-hidricos/qui2-agua-03.json"
+    },
+    {
+      "id": "qui2-agua-04",
+      "phase": 3,
+      "title": "Identificação das principais etapas do tratamento de água",
+      "path": "exercicios/fase-3-aplicacoes-recursos-hidricos/qui2-agua-04.json"
+    },
+    {
+      "id": "qui2-agua-05",
+      "phase": 3,
+      "title": "Processos de separação e remoção de impurezas no tratamento de água",
+      "path": "exercicios/fase-3-aplicacoes-recursos-hidricos/qui2-agua-05.json"
+    },
+    {
+      "id": "qui2-agua-06",
+      "phase": 3,
+      "title": "Aplicações dos processos de tratamento de água em situações práticas",
+      "path": "exercicios/fase-3-aplicacoes-recursos-hidricos/qui2-agua-06.json"
+    },
+    {
+      "id": "qui2-cin-01",
+      "phase": 4,
+      "title": "Conceito de velocidade das reações químicas",
+      "path": "exercicios/fase-4-cinetica-quimica/qui2-cin-01.json"
+    },
+    {
+      "id": "qui2-cin-02",
+      "phase": 4,
+      "title": "Cálculo e interpretação da velocidade média de uma reação",
+      "path": "exercicios/fase-4-cinetica-quimica/qui2-cin-02.json"
+    },
+    {
+      "id": "qui2-cin-03",
+      "phase": 4,
+      "title": "Influência da temperatura na velocidade das reações",
+      "path": "exercicios/fase-4-cinetica-quimica/qui2-cin-03.json"
+    },
+    {
+      "id": "qui2-cin-04",
+      "phase": 4,
+      "title": "Influência dos catalisadores na velocidade das reações",
+      "path": "exercicios/fase-4-cinetica-quimica/qui2-cin-04.json"
+    },
+    {
+      "id": "qui2-cin-05",
+      "phase": 4,
+      "title": "Influência da superfície de contato na velocidade das reações",
+      "path": "exercicios/fase-4-cinetica-quimica/qui2-cin-05.json"
+    },
+    {
+      "id": "qui2-cin-06",
+      "phase": 4,
+      "title": "Comparação dos fatores que influenciam a velocidade das reações químicas",
+      "path": "exercicios/fase-4-cinetica-quimica/qui2-cin-06.json"
+    },
+    {
+      "id": "qui2-cin-07",
+      "phase": 4,
+      "title": "Análise de situações práticas envolvendo a cinética química",
+      "path": "exercicios/fase-4-cinetica-quimica/qui2-cin-07.json"
+    },
+    {
+      "id": "qui2-eletro-01",
+      "phase": 5,
+      "title": "Conceitos de oxidação e redução",
+      "path": "exercicios/fase-5-eletroquimica/qui2-eletro-01.json"
+    },
+    {
+      "id": "qui2-eletro-02",
+      "phase": 5,
+      "title": "Identificação de processos de oxidação e redução em reações químicas",
+      "path": "exercicios/fase-5-eletroquimica/qui2-eletro-02.json"
+    },
+    {
+      "id": "qui2-eletro-03",
+      "phase": 5,
+      "title": "Funcionamento básico de pilhas eletroquímicas",
+      "path": "exercicios/fase-5-eletroquimica/qui2-eletro-03.json"
+    },
+    {
+      "id": "qui2-eletro-04",
+      "phase": 5,
+      "title": "Identificação do fluxo de elétrons e conversão de energia nas pilhas",
+      "path": "exercicios/fase-5-eletroquimica/qui2-eletro-04.json"
+    },
+    {
+      "id": "qui2-eletro-05",
+      "phase": 5,
+      "title": "Funcionamento básico de baterias e suas aplicações",
+      "path": "exercicios/fase-5-eletroquimica/qui2-eletro-05.json"
+    },
+    {
+      "id": "qui2-eletro-06",
+      "phase": 5,
+      "title": "Processos de corrosão e suas causas",
+      "path": "exercicios/fase-5-eletroquimica/qui2-eletro-06.json"
+    },
+    {
+      "id": "qui2-eletro-07",
+      "phase": 5,
+      "title": "Análise de situações práticas envolvendo oxirredução e corrosão",
+      "path": "exercicios/fase-5-eletroquimica/qui2-eletro-07.json"
+    }
+  ]
+}
