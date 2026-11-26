@@ -1,0 +1,59 @@
+{
+  "id": "qui2-sol-02",
+  "phase": 2,
+  "exercise_number": 2,
+  "title": "Solubilidade: conceitos e interpretação",
+  "learning_objective": "Interpretar a quantidade máxima de soluto que pode se dissolver em determinada quantidade de solvente, em condições definidas.",
+  "context": "A solubilidade depende da natureza do soluto e do solvente e, para muitos sólidos em líquidos, da temperatura. Compare a massa adicionada com o limite de solubilidade indicado para a condição estudada.",
+  "simulation": {
+    "scene": "solubility_status",
+    "parameters": [
+      {
+        "key": "solubility",
+        "label": "Solubilidade",
+        "value": 36,
+        "min": 10,
+        "max": 80,
+        "step": 1,
+        "unit": "g/100 g água"
+      },
+      {
+        "key": "soluteMass",
+        "label": "Massa de soluto adicionada",
+        "value": 24,
+        "min": 5,
+        "max": 100,
+        "step": 1,
+        "unit": "g"
+      }
+    ],
+    "description": "Ajuste o limite de solubilidade e a massa de soluto adicionada a 100 g de água."
+  },
+  "challenge": {
+    "prompt": "Como fica a mistura após atingir o equilíbrio, considerando os valores selecionados?",
+    "answer": {
+      "type": "dynamic_choice",
+      "formula": "solution_status",
+      "choices": [
+        {
+          "value": "unsaturated",
+          "label": "Solução insaturada: todo o soluto pode dissolver"
+        },
+        {
+          "value": "saturated",
+          "label": "Solução saturada: atingiu o limite de solubilidade"
+        },
+        {
+          "value": "excess",
+          "label": "Solução saturada com excesso de soluto não dissolvido"
+        }
+      ],
+      "hint": "Compare a massa adicionada com a solubilidade em 100 g de água. Abaixo do limite é insaturada; no limite é saturada; acima dele sobra soluto.",
+      "explanation": "A solubilidade representa a quantidade máxima que se dissolve em uma condição definida. Se a massa adicionada superar esse limite, a solução fica saturada e o excesso permanece sem dissolver."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
