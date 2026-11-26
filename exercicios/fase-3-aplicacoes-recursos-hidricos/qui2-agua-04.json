@@ -1,0 +1,32 @@
+{
+  "id": "qui2-agua-04",
+  "phase": 3,
+  "exercise_number": 4,
+  "title": "Identificação das principais etapas do tratamento de água",
+  "learning_objective": "Reconhecer a sequência geral de etapas de uma estação convencional de tratamento de água.",
+  "context": "O tratamento convencional pode incluir coagulação, floculação, decantação, filtração e desinfecção. Em sistemas reais, etapas adicionais podem ser necessárias conforme a qualidade da água bruta.",
+  "simulation": {
+    "scene": "water_treatment",
+    "parameters": [],
+    "description": "Observe o percurso da água pelas principais etapas de tratamento."
+  },
+  "challenge": {
+    "prompt": "Qual sequência representa corretamente uma sequência convencional simplificada?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Coagulação → floculação → decantação → filtração → desinfecção.",
+        "Desinfecção → decantação → coagulação → filtração → floculação.",
+        "Filtração → adição de areia → decantação → coagulação.",
+        "Floculação → desinfecção → entrada de água bruta → decantação."
+      ],
+      "correct": 0,
+      "hint": "Partículas finas são desestabilizadas e agrupadas antes de sedimentarem; a filtração ocorre depois da decantação.",
+      "explanation": "Na sequência simplificada, a coagulação desestabiliza partículas; a floculação reúne partículas em flocos; a decantação permite sua sedimentação; a filtração retém partículas remanescentes; a desinfecção inativa microrganismos."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
