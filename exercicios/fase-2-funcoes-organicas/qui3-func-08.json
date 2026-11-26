@@ -1,0 +1,59 @@
+{
+  "id": "qui3-func-08",
+  "phase": 2,
+  "exercise_number": 8,
+  "title": "Funções orgânicas em substâncias do cotidiano",
+  "learning_objective": "Relacionar funções orgânicas a substâncias encontradas no cotidiano.",
+  "context": "Etanol, acetona, ácido acético, acetato de etila e metilamina são exemplos de compostos que podem ser classificados por seus grupos funcionais.",
+  "simulation": {
+    "scene": "organic_daily_life",
+    "parameters": [
+      {
+        "key": "substanceIndex",
+        "label": "Substância",
+        "value": 1,
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "unit": "",
+        "note": "1 etanol · 2 acetona · 3 ácido acético · 4 acetato de etila · 5 metilamina"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual função orgânica está presente na substância selecionada?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "alcohol",
+          "label": "Álcool."
+        },
+        {
+          "value": "ketone",
+          "label": "Cetona."
+        },
+        {
+          "value": "acid",
+          "label": "Ácido carboxílico."
+        },
+        {
+          "value": "ester",
+          "label": "Éster."
+        },
+        {
+          "value": "amine",
+          "label": "Amina."
+        }
+      ],
+      "formula": "daily_function",
+      "hint": "Associe etanol (–OH), acetona (C=O interno), ácido acético (–COOH), acetato de etila (–COO–) e metilamina (–NH₂).",
+      "explanation": "Etanol é álcool; acetona é cetona; ácido acético é ácido carboxílico; acetato de etila é éster; metilamina é amina."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "identificacao-funcional"
+  }
+}
