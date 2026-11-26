@@ -1,0 +1,32 @@
+{
+  "id": "qui2-eletro-04",
+  "phase": 5,
+  "exercise_number": 4,
+  "title": "Identificação do fluxo de elétrons e conversão de energia nas pilhas",
+  "learning_objective": "Identificar o sentido do fluxo de elétrons no circuito externo de uma pilha de Daniell.",
+  "context": "Na pilha de Daniell, o zinco é o ânodo e sofre oxidação; o cobre é o cátodo e recebe elétrons na redução. O fluxo eletrônico externo ocorre do eletrodo de zinco para o de cobre.",
+  "simulation": {
+    "scene": "electron_flow",
+    "parameters": [],
+    "description": "Acompanhe as setas de elétrons no circuito externo e a migração de íons na ponte salina."
+  },
+  "challenge": {
+    "prompt": "Em uma pilha de Daniell Zn/Cu, qual é o sentido do fluxo de elétrons pelo circuito externo?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Do eletrodo de zinco (ânodo) para o eletrodo de cobre (cátodo).",
+        "Do eletrodo de cobre para o eletrodo de zinco.",
+        "Da ponte salina diretamente para o fio, sem passar pelos eletrodos.",
+        "Não há fluxo de elétrons em uma pilha galvânica."
+      ],
+      "correct": 0,
+      "hint": "O zinco sofre oxidação e libera elétrons; o cobre recebe elétrons na redução.",
+      "explanation": "Os elétrons saem do ânodo de zinco, percorrem o circuito externo e chegam ao cátodo de cobre. A ponte salina fecha o circuito por movimento de íons, não pelo transporte de elétrons."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
