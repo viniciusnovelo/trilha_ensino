@@ -1,0 +1,47 @@
+{
+  "id": "qui3-bio-02",
+  "phase": 4,
+  "exercise_number": 2,
+  "title": "Identificação de polímeros naturais e sintéticos",
+  "learning_objective": "Classificar exemplos de polímeros conforme sua origem.",
+  "context": "Celulose, amido, proteínas e DNA são exemplos de polímeros naturais. Polietileno, PVC, PET e náilon são exemplos de sintéticos.",
+  "simulation": {
+    "scene": "natural_synthetic_polymers",
+    "parameters": [
+      {
+        "key": "polymerIndex",
+        "label": "Polímero",
+        "value": 1,
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "unit": "",
+        "note": "1 celulose · 2 amido · 3 DNA · 4 polietileno · 5 PVC · 6 PET"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "O polímero selecionado é natural ou sintético?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "natural",
+          "label": "Natural."
+        },
+        {
+          "value": "synthetic",
+          "label": "Sintético."
+        }
+      ],
+      "formula": "polymer_origin",
+      "hint": "Identifique se é produzido por organismos vivos ou obtido por síntese industrial.",
+      "explanation": "Celulose, amido e DNA são polímeros naturais; polietileno, PVC e PET são sintéticos."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "bioquimica"
+  }
+}
