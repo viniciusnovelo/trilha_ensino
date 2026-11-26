@@ -1,0 +1,32 @@
+{
+  "id": "qui2-sol-01",
+  "phase": 2,
+  "exercise_number": 1,
+  "title": "Conceitos e classificação de soluções e dispersões",
+  "learning_objective": "Diferenciar soluções verdadeiras, coloides e suspensões segundo o tamanho das partículas e o comportamento da mistura.",
+  "context": "As dispersões podem apresentar partículas de diferentes tamanhos. Isso influencia a aparência, a sedimentação e a possibilidade de separação por filtração comum.",
+  "simulation": {
+    "scene": "solution_types",
+    "parameters": [],
+    "description": "Compare visualmente uma solução, um coloide e uma suspensão."
+  },
+  "challenge": {
+    "prompt": "Qual alternativa descreve corretamente uma solução verdadeira?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "É uma mistura homogênea, com partículas do soluto em escala molecular ou iônica.",
+        "Sempre apresenta partículas visíveis que sedimentam rapidamente.",
+        "É necessariamente formada por duas fases visíveis.",
+        "Não pode ser formada pela dissolução de um sólido em um líquido."
+      ],
+      "correct": 0,
+      "hint": "Uma solução verdadeira apresenta uma única fase e aspecto uniforme; suas partículas dispersas são muito pequenas.",
+      "explanation": "Soluções verdadeiras são misturas homogêneas em escala molecular ou iônica. Coloides têm partículas intermediárias e podem espalhar luz; suspensões possuem partículas maiores que podem sedimentar."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-quimico"
+  }
+}
