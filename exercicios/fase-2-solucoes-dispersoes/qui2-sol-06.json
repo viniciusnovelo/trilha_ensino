@@ -1,0 +1,47 @@
+{
+  "id": "qui2-sol-06",
+  "phase": 2,
+  "exercise_number": 6,
+  "title": "Relação entre quantidade de soluto, volume e concentração",
+  "learning_objective": "Determinar a massa de soluto necessária para preparar uma solução com concentração comum e volume definidos.",
+  "context": "Para preparar uma solução com concentração desejada, a massa de soluto pode ser determinada rearranjando a expressão C = m/V.",
+  "simulation": {
+    "scene": "solute_mass",
+    "parameters": [
+      {
+        "key": "concentration",
+        "label": "Concentração desejada",
+        "value": 18,
+        "min": 5,
+        "max": 60,
+        "step": 1,
+        "unit": "g/L"
+      },
+      {
+        "key": "volume",
+        "label": "Volume final",
+        "value": 0.75,
+        "min": 0.1,
+        "max": 2,
+        "step": 0.05,
+        "unit": "L"
+      }
+    ],
+    "description": "Ajuste a concentração desejada e o volume final para dimensionar a massa de soluto."
+  },
+  "challenge": {
+    "prompt": "Qual massa de soluto deve ser utilizada?",
+    "answer": {
+      "type": "numeric",
+      "formula": "required_solute_mass",
+      "display_unit": "g",
+      "tolerance": 0.005,
+      "hint": "Isole m na expressão C = m/V: m = C·V.",
+      "explanation": "m = C·V. Para 18 g/L e 0,75 L: m = 13,5 g."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "quimica-quantitativa"
+  }
+}
