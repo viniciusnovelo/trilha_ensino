@@ -1,0 +1,47 @@
+{
+  "id": "qui2-sol-04",
+  "phase": 2,
+  "exercise_number": 4,
+  "title": "Cálculo da concentração comum (g/L)",
+  "learning_objective": "Calcular a concentração comum de uma solução pela razão entre massa de soluto e volume da solução.",
+  "context": "Uma solução preparada em laboratório contém determinada massa de soluto dissolvida em um volume final de solução. A concentração comum indica quantos gramas de soluto existem em cada litro de solução.",
+  "simulation": {
+    "scene": "common_concentration",
+    "parameters": [
+      {
+        "key": "mass",
+        "label": "Massa do soluto",
+        "value": 15,
+        "min": 2,
+        "max": 50,
+        "step": 1,
+        "unit": "g"
+      },
+      {
+        "key": "volume",
+        "label": "Volume da solução",
+        "value": 0.5,
+        "min": 0.1,
+        "max": 2,
+        "step": 0.1,
+        "unit": "L"
+      }
+    ],
+    "description": "Altere a massa de soluto e o volume final para observar a concentração comum."
+  },
+  "challenge": {
+    "prompt": "Qual é a concentração comum da solução?",
+    "answer": {
+      "type": "numeric",
+      "formula": "common_concentration",
+      "display_unit": "g/L",
+      "tolerance": 0.005,
+      "hint": "Use C = m/V, com a massa em gramas e o volume em litros.",
+      "explanation": "C = m/V. Para 15 g em 0,5 L: C = 15/0,5 = 30 g/L."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "quimica-quantitativa"
+  }
+}
