@@ -2608,6 +2608,10 @@ def fase_detalhe(
         from .chem2_views import chem2_player
         return chem2_player(request, fase_id)
 
+    if slug_disciplina == 'quimica-3':
+        from .chem3_views import chem3_player
+        return chem3_player(request, fase_id)
+
     if slug_disciplina == 'matematica-1':
         from .math1_views import math1_player
         return math1_player(request, fase_id)
@@ -2758,6 +2762,10 @@ def verificar_resposta(
     if fase.modulo.disciplina.slug == 'quimica-2':
         from .chem2_views import chem2_check_answer
         return chem2_check_answer(request, fase_id)
+
+    if fase.modulo.disciplina.slug == 'quimica-3':
+        from .chem3_views import chem3_check_answer
+        return chem3_check_answer(request, fase_id)
 
     if not fase_esta_liberada(
         request,
