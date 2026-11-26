@@ -1,0 +1,70 @@
+{
+  "id": "qui2-cin-06",
+  "phase": 4,
+  "exercise_number": 6,
+  "title": "Comparação dos fatores que influenciam a velocidade das reações químicas",
+  "learning_objective": "Comparar efeitos combinados de temperatura, catalisador e superfície de contato em uma situação didática.",
+  "context": "A velocidade de uma reação pode ser influenciada por mais de um fator simultaneamente. A cena reúne temperatura, presença de catalisador e forma física do sólido para comparar condições qualitativamente.",
+  "simulation": {
+    "scene": "kinetics_compare",
+    "parameters": [
+      {
+        "key": "temperature",
+        "label": "Temperatura",
+        "value": 50,
+        "min": 10,
+        "max": 60,
+        "step": 5,
+        "unit": "°C"
+      },
+      {
+        "key": "catalyst",
+        "label": "Catalisador presente?",
+        "value": 1,
+        "min": 0,
+        "max": 1,
+        "step": 1,
+        "unit": "",
+        "note": "0: não · 1: sim"
+      },
+      {
+        "key": "surfaceIndex",
+        "label": "Forma do sólido",
+        "value": 1,
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "unit": "",
+        "note": "1: pó · 2: fragmentos · 3: bloco"
+      }
+    ],
+    "description": "Ajuste os três fatores e observe a classificação qualitativa da condição simulada."
+  },
+  "challenge": {
+    "prompt": "Considerando a combinação selecionada, qual é a classificação qualitativa da velocidade na simulação?",
+    "answer": {
+      "type": "dynamic_choice",
+      "formula": "relative_rate",
+      "choices": [
+        {
+          "value": "low",
+          "label": "Baixa"
+        },
+        {
+          "value": "medium",
+          "label": "Intermediária"
+        },
+        {
+          "value": "high",
+          "label": "Elevada"
+        }
+      ],
+      "hint": "Temperatura mais alta, catalisador e maior superfície de contato favorecem a velocidade. Observe a combinação, não apenas um fator isolado.",
+      "explanation": "A classificação da cena é um modelo didático qualitativo. Ela combina os efeitos dos três fatores; não representa uma lei cinética quantitativa universal. Em uma reação real, o efeito depende do mecanismo e das condições."
+    }
+  },
+  "completion": {
+    "xp": 45,
+    "skill": "raciocinio-quimico"
+  }
+}
