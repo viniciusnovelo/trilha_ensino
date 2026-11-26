@@ -1,0 +1,32 @@
+{
+  "id": "qui2-eletro-01",
+  "phase": 5,
+  "exercise_number": 1,
+  "title": "Conceitos de oxidação e redução",
+  "learning_objective": "Diferenciar oxidação e redução pela perda e pelo ganho de elétrons.",
+  "context": "Em reações de oxirredução, há transferência de elétrons entre espécies químicas. Oxidação corresponde à perda de elétrons e redução corresponde ao ganho de elétrons.",
+  "simulation": {
+    "scene": "redox_concept",
+    "parameters": [],
+    "description": "Acompanhe a transferência esquemática de elétrons entre duas espécies."
+  },
+  "challenge": {
+    "prompt": "Qual alternativa define corretamente oxidação e redução?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Oxidação é perda de elétrons; redução é ganho de elétrons.",
+        "Oxidação é ganho de elétrons; redução é perda de elétrons.",
+        "Oxidação e redução sempre ocorrem separadamente.",
+        "Ambos os processos significam apenas ganho de oxigênio."
+      ],
+      "correct": 0,
+      "hint": "Lembre-se de OIL RIG: Oxidation Is Loss, Reduction Is Gain (perda e ganho de elétrons).",
+      "explanation": "Oxidação envolve perda de elétrons e aumento do número de oxidação; redução envolve ganho de elétrons e diminuição do número de oxidação. Os dois processos ocorrem simultaneamente em uma reação redox."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-quimico"
+  }
+}
