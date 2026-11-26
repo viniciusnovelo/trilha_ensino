@@ -22,21 +22,66 @@ def _public_exercise(q):
 
 @login_required
 @ensure_csrf_cookie
-def chem1_player(request,fase_id):
-    fase=get_object_or_404(Fase.objects.select_related('modulo__disciplina'),pk=fase_id,modulo__disciplina__slug='quimica-1')
-    if not fase_esta_liberada(request,fase): return HttpResponseForbidden('Esta fase ainda não está liberada.')
-    qs=list(fase.questoes.prefetch_related('opcoes').order_by('id'))
-    if len(qs)!=1 or not qs[0].dados_dinamicos: return HttpResponseBadRequest('Fase sem exercício válido.')
-    q=qs[0]; profile,_=PerfilUsuario.objects.get_or_create(usuario=request.user)
-    attempt=TentativaFase.objects.create(perfil=profile,fase=fase,fase_titulo_snapshot=fase.titulo,total_questoes=1)
-    request.session['chem1_attempt_id']=attempt.pk; request.session['chem1_phase_id']=fase.pk
-    module_phases=list(fase.modulo.fases.order_by('ordem','id'))
-    pos=next((i for i,x in enumerate(module_phases,1) if x.pk==fase.pk),1)
-    data=_public_exercise(q); answer=q.dados_dinamicos['challenge']['answer']; choices=answer.get('choices',[])
-    if answer['type']=='choice': choices=[{'value':str(i),'label':v} for i,v in enumerate(choices)]
-    payload={'phase':{'order':pos,'total_phases':len(module_phases)},'exercise':data,'question_id':q.pk,'choices':choices,'options':[{'id':o.pk,'text':o.texto} for o in q.opcoes.all()]}
-    context=contexto_papel(request); context.update({'fase':fase,'chem1_payload':payload,'tema_aplicado':profile.tema_fundo if papel_efetivo(request)=='aluno' else fase.modulo.disciplina.tema})
-    return render(request,'curriculo/chem1_player.html',context)
+def chem1_player(request, fase_id):
+    fase = get_object_or_404(Fase.objects.select_related('modulo__disciplina'), pk=fase_id, modulo__disciplina__slug='quimica-1')
+    if not fase_esta_liberada(request, fase):
+        return HttpResponseForbidden('Esta fase ainda não está liberada.')
+    perfil, _ = PerfilUsuario.objects.get_or_create(usuario=request.user)
+    attempt = TentativaFase.objects.create(perfil=perfil, fase=fase, fase_titulo_snapshot=fase.titulo, total_questoes=1)
+    request.session['chem1_attempt_id'] = attempt.pk
+    request.session['chem1_phase_id'] = fase.pk
+
+    all_phases = list(Fase.objects.filter(modulo__disciplina=fase.modulo.disciplina).select_related('modulo').prefetch_related('questoes__opcoes').order_by('modulo__ordem','ordem','id'))
+    phase_rows = []
+    exercise_rows = []
+    completed_ids = set(ProgressoFase.objects.filter(perfil=perfil, concluida=True, fase__modulo__disciplina=fase.modulo.disciplina).values_list('fase_id', flat=True))
+    for module_index, module in enumerate(fase.modulo.disciplina.modulos.order_by('ordem'), start=1):
+        module_phases = [item for item in all_phases if item.modulo_id == module.pk]
+        ids = []
+        for item in module_phases:
+            question = item.questoes.all().first()
+            if not question or not question.dados_dinamicos:
+                continue
+            source = json.loads(json.dumps(question.dados_dinamicos))
+            answer = source['challenge']['answer']
+            answer.pop('correct', None)
+            answer.pop('formula', None)
+            answer.pop('tolerance', None)
+            source.update({
+                'phase': module_index,
+                'phase_id': item.pk,
+                'question_id': question.pk,
+                'exercise_number': item.ordem,
+                'completed': item.pk in completed_ids,
+                'completion': source.get('completion', {'xp': item.xp_recompensa}),
+            })
+            if answer.get('type') == 'choice':
+                source['db_choices'] = [{'id': option.pk, 'text': option.texto} for option in question.opcoes.all()]
+            else:
+                source['db_choices'] = []
+            exercise_rows.append(source)
+            ids.append(source['id'])
+        phase_rows.append({'number': module_index, 'title': module.titulo, 'exercise_ids': ids, 'exercise_count': len(ids)})
+    active_question = fase.questoes.first()
+    active_id = active_question.codigo_fonte
+    safe_payload = {
+        'phases': phase_rows,
+        'exercises': exercise_rows,
+        'active_id': active_id,
+        'active_phase_id': fase.pk,
+        'attempt_id': attempt.pk,
+        'xp_total': perfil.xp_total,
+        'completed_ids': [item['id'] for item in exercise_rows if item['completed']],
+        'urls': {
+            'check': reverse('chem1_check_answer', args=[fase.pk]),
+            'finish': reverse('chem1_finish_phase', args=[fase.pk]),
+            'map': reverse('trilha', args=[fase.modulo.disciplina_id]),
+        },
+    }
+    context = contexto_papel(request)
+    context.update({'fase': fase, 'chem1_payload': safe_payload})
+    return render(request, 'curriculo/chem1_player.html', context)
+
 
 @login_required
 @require_POST
