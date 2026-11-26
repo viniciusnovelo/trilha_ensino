@@ -87,7 +87,7 @@ body[data-appearance="claro"] .transport button{color:#17283b;background:#e2ebf4
 <a class="back-link" href="{% url 'trilha' fase.modulo.disciplina_id %}"><span>←</span><span>Painel</span></a>
 <div class="brand"><p class="brand-kicker">TRILHA</p><h1 class="brand-title">Química 2</h1></div>
 <div class="hud">{% if papel_efetivo == 'aluno' %}{% include 'gamificacao/partials/controle_aparencia.html' %}{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span><span class="hud-pill coins">◎ {{ perfil.moedas }}</span><span class="hud-pill lives">♡ {{ perfil.vidas }}</span>{% else %}<span class="hud-pill teacher">Professor</span>{% endif %}<span class="hud-pill xp" id="xpPill">{{ chem2_payload.xp_total }} XP</span></div>
-</div><div class="phase-progress"><div class="phase-meta"><span class="phase-name">QUÍMICA 2</span><span id="progressText">0 / 33</span></div><div class="phase-track"><div class="phase-fill" id="progressFill"></div></div></div></div></header>
+</div><div class="phase-progress"><div class="phase-meta"><span class="phase-name">QUÍMICA 2</span><span id="progressText">0 / 34</span></div><div class="phase-track"><div class="phase-fill" id="progressFill"></div></div></div></div></header>
 <main class="shell">
 <nav id="navigation" class="chem-navigation" aria-label="Navegação dos exercícios"></nav>
 <div id="content"><div class="panel empty">Carregando laboratório de Química…</div></div>
@@ -161,20 +161,28 @@ drawCurrent();
 function clearFeedback(){const f=$('feedback');if(f){f.className='feedback';f.innerHTML=''}const c=$('checkBtn');if(c){c.disabled=false;c.textContent='Verificar resposta'}}
 function toggleHint(){const e=current(),box=$('hintBox');box.classList.toggle('show');box.innerHTML=box.classList.contains('show')?`<b>Dica:</b> ${safe(e.challenge.answer.hint||'Observe as relações matemáticas da representação.')}`:''}
 function compute(e){const p=state.params;switch(e.challenge.answer.formula){
-case'water_phase': return p.temperature===0||p.temperature===100?'transition':p.temperature<0?'solid':p.temperature<100?'liquid':'gas';
-case'neutron_count': return p.A-p.Z;
-case'valence_electrons': {const z=p.Z; if(z<=2)return z; if(z<=10)return z-2; if(z<=18)return z-10; return z-18;}
-case'element_from_z': {const el=['H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si','P','S','Cl','Ar','K','Ca']; return el[Math.max(0,Math.min(19,p.Z-1))];}
-case'period_from_z': return String(p.Z<=2?1:p.Z<=10?2:p.Z<=18?3:4);
-case'covalent_order': return p.sharedPairs;
-case'oxygen_coefficient': return 1;
-case'water_from_oxygen': return 2*p.o2;
-case'lavoisier_mass': return p.massA+p.massB;
-case'water_oxygen_mass': return p.totalMass*8/9;
-case'fes_sulfur_mass': return p.totalMass*4/11;
-case'heat_quantity': return p.mass*p.c*p.deltaT;
-case'energy_source_type': return p.sourceIndex<=4?'renewable':'nonrenewable';
+case'compound_molar_mass':return ({1:18,2:44,3:58.5,4:100.1})[p.compoundIndex];
+case'moles_from_mass':return p.mass/p.molarMass;
+case'ammonia_from_nitrogen':return 2*p.nN2;
+case'co2_mass':return p.massCaCO3*44/100.1;
+case'limiting_reagent':return Math.abs(p.nH2/2-p.nO2)<1e-9?'none':p.nH2/2<p.nO2?'H2':'O2';
+case'product_and_excess':{const x=Math.min(p.nH2/2,p.nO2);return [2*x,p.nH2/2<p.nO2?p.nO2-x:p.nH2-2*x]}
+case'solution_status':return p.soluteMass<p.solubility?'unsaturated':Math.abs(p.soluteMass-p.solubility)<1e-9?'saturated':'excess';
+case'kno3_solubility':return ({20:32,30:46,40:64,50:86,60:110,70:138,80:169})[p.temperature];
+case'common_concentration':return p.mass/p.volume;
+case'molar_concentration':return p.mass/(p.molarMass*p.volume);
+case'required_solute_mass':return p.concentration*p.volume;
+case'dilution_concentration':return p.C1*p.V1/p.V2;
+case'dbo_quality':return p.DBO<3?'low':p.DBO<=5?'moderate':'high';
+case'water_problem_solution':return ({1:'particles',2:'microbes',3:'dissolved'})[p.problemIndex];
+case'average_reaction_rate':return p.deltaC/p.time;
+case'temperature_effect':return p.temperature>25?'faster':p.temperature<25?'slower':'similar';
+case'catalyst_effect':return p.catalyst?'with':'without';
+case'surface_effect':return ({1:'fast',2:'medium',3:'slow'})[p.surfaceIndex];
+case'relative_rate':{const n=Number(p.temperature>25)+Number(p.catalyst>=.5)+Number(p.surfaceIndex===1);return n>=3?'high':n===2?'medium':'low'}
+case'corrosion_risk':return ({1:'low',2:'medium',3:'high'})[p.environmentIndex];
 default:return NaN}}
+
 async function checkAnswer(e){
  const a=e.challenge.answer;let body={questao_id:e.question_id,parameters:state.params};
  if(a.type==='choice'){if(state.selectedChoice===null){showFeedback(false,'Selecione uma alternativa antes de verificar.');return}const opt=e.db_choices[state.selectedChoice];body.option_id=opt.id;}
