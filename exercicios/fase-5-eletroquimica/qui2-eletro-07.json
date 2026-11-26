@@ -1,0 +1,32 @@
+{
+  "id": "qui2-eletro-07",
+  "phase": 5,
+  "exercise_number": 7,
+  "title": "Análise de situações práticas envolvendo oxirredução e corrosão",
+  "learning_objective": "Selecionar estratégias de proteção de metais com base em processos de oxidação e redução.",
+  "context": "Estruturas de aço podem ser protegidas por revestimentos, como a galvanização, ou por proteção catódica com ânodos de sacrifício, que se oxidam preferencialmente.",
+  "simulation": {
+    "scene": "corrosion_protection",
+    "parameters": [],
+    "description": "Observe duas estratégias de proteção: revestimento metálico e ânodo de sacrifício."
+  },
+  "challenge": {
+    "prompt": "Como um ânodo de sacrifício protege uma estrutura de aço?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Um metal mais facilmente oxidável é conectado ao aço e se oxida preferencialmente.",
+        "O aço é obrigado a oxidar mais rapidamente para formar uma camada espessa.",
+        "O ânodo de sacrifício impede qualquer transferência de elétrons no sistema.",
+        "A estrutura é protegida apenas pela remoção de todo o oxigênio do ambiente."
+      ],
+      "correct": 0,
+      "hint": "O metal de sacrifício funciona como espécie que se oxida no lugar da estrutura protegida.",
+      "explanation": "Na proteção catódica, um metal mais facilmente oxidável atua como ânodo de sacrifício. Ele se corrói preferencialmente, mantendo a estrutura de aço como cátodo e reduzindo sua oxidação."
+    }
+  },
+  "completion": {
+    "xp": 40,
+    "skill": "raciocinio-quimico"
+  }
+}
