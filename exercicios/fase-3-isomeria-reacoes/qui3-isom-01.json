@@ -1,0 +1,32 @@
+{
+  "id": "qui3-isom-01",
+  "phase": 3,
+  "exercise_number": 1,
+  "title": "Conceitos fundamentais de isomeria",
+  "learning_objective": "Compreender a isomeria como a ocorrência de compostos com mesma fórmula molecular e estruturas diferentes.",
+  "context": "Isômeros possuem a mesma fórmula molecular, mas diferem na conectividade dos átomos (isomeria plana) ou na disposição espacial (estereoisomeria).",
+  "simulation": {
+    "scene": "isomerism_overview",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "O que caracteriza dois compostos como isômeros?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Possuírem a mesma fórmula molecular e diferentes estruturas ou arranjos espaciais.",
+        "Terem sempre fórmulas moleculares diferentes.",
+        "Possuírem obrigatoriamente a mesma estrutura.",
+        "Terem massas molares diferentes apesar da mesma fórmula molecular."
+      ],
+      "correct": 0,
+      "hint": "Compare a quantidade de cada tipo de átomo e depois observe como estão conectados ou orientados.",
+      "explanation": "Isômeros compartilham a mesma fórmula molecular, mas diferem na estrutura plana ou na configuração espacial."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-organico"
+  }
+}
