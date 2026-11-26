@@ -1,0 +1,1000 @@
+{
+  "module": {
+    "subject": "Química",
+    "module_number": 2,
+    "title": "2º Módulo de Química",
+    "description": "Grandezas Químicas e Estequiometria; Soluções e Dispersões; Aplicações Práticas e Recursos Hídricos; Cinética Química; Eletroquímica.",
+    "version": "1.0.0",
+    "language": "pt-BR"
+  },
+  "phases": [
+    {
+      "number": 1,
+      "title": "Grandezas Químicas e Estequiometria",
+      "subtitle": "Mol, massa molar e relações quantitativas",
+      "description": "Conecte a escala microscópica das partículas às quantidades mensuráveis em laboratório.",
+      "slug": "grandezas-quimicas-estequiometria",
+      "prefix": "qui2-est",
+      "exercise_ids": [
+        "qui2-est-01",
+        "qui2-est-02",
+        "qui2-est-03",
+        "qui2-est-04",
+        "qui2-est-05",
+        "qui2-est-06",
+        "qui2-est-07"
+      ],
+      "exercise_count": 7
+    },
+    {
+      "number": 2,
+      "title": "Soluções e Dispersões",
+      "subtitle": "Solubilidade, concentração e diluição",
+      "description": "Investigue como solutos e solventes formam dispersões e como expressar quantitativamente a composição de soluções.",
+      "slug": "solucoes-dispersoes",
+      "prefix": "qui2-sol",
+      "exercise_ids": [
+        "qui2-sol-01",
+        "qui2-sol-02",
+        "qui2-sol-03",
+        "qui2-sol-04",
+        "qui2-sol-05",
+        "qui2-sol-06",
+        "qui2-sol-07"
+      ],
+      "exercise_count": 7
+    },
+    {
+      "number": 3,
+      "title": "Aplicações Práticas e Recursos Hídricos",
+      "subtitle": "Qualidade da água, DBO e tratamento",
+      "description": "Relacione indicadores ambientais e etapas de tratamento à qualidade da água.",
+      "slug": "aplicacoes-recursos-hidricos",
+      "prefix": "qui2-agua",
+      "exercise_ids": [
+        "qui2-agua-01",
+        "qui2-agua-02",
+        "qui2-agua-03",
+        "qui2-agua-04",
+        "qui2-agua-05",
+        "qui2-agua-06"
+      ],
+      "exercise_count": 6
+    },
+    {
+      "number": 4,
+      "title": "Cinética Química",
+      "subtitle": "Velocidade das reações e fatores de influência",
+      "description": "Observe como concentração, temperatura, catalisadores e superfície de contato alteram a velocidade das reações.",
+      "slug": "cinetica-quimica",
+      "prefix": "qui2-cin",
+      "exercise_ids": [
+        "qui2-cin-01",
+        "qui2-cin-02",
+        "qui2-cin-03",
+        "qui2-cin-04",
+        "qui2-cin-05",
+        "qui2-cin-06",
+        "qui2-cin-07"
+      ],
+      "exercise_count": 7
+    },
+    {
+      "number": 5,
+      "title": "Eletroquímica",
+      "subtitle": "Oxidação, redução, pilhas e corrosão",
+      "description": "Acompanhe a transferência de elétrons nas reações de oxirredução e suas aplicações em pilhas, baterias e proteção contra corrosão.",
+      "slug": "eletroquimica",
+      "prefix": "qui2-eletro",
+      "exercise_ids": [
+        "qui2-eletro-01",
+        "qui2-eletro-02",
+        "qui2-eletro-03",
+        "qui2-eletro-04",
+        "qui2-eletro-05",
+        "qui2-eletro-06",
+        "qui2-eletro-07"
+      ],
+      "exercise_count": 7
+    }
+  ],
+  "exercises": [
+    {
+      "id": "qui2-est-01",
+      "phase": 1,
+      "exercise_number": 1,
+      "title": "Conceito de mol e quantidade de matéria",
+      "learning_objective": "Compreender o mol como unidade de quantidade de matéria e relacioná-lo à constante de Avogadro.",
+      "context": "Em uma amostra, o número de partículas é enorme. O mol permite expressar essa quantidade por meio de uma unidade conveniente, assim como uma dúzia representa doze unidades.",
+      "simulation": {
+        "scene": "mole_model",
+        "parameters": [],
+        "description": "Observe a relação entre uma porção macroscópica de matéria e a quantidade de entidades microscópicas."
+      },
+      "challenge": {
+        "prompt": "O que representa 1 mol de qualquer entidade química?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Uma quantidade de 6,02 × 10²³ entidades elementares.",
+            "A massa de 1 grama de qualquer substância.",
+            "Sempre 22,4 litros de qualquer material.",
+            "Uma única molécula ou átomo."
+          ],
+          "correct": 0,
+          "hint": "O mol é uma unidade de contagem. Lembre-se da constante de Avogadro, aproximadamente 6,02 × 10²³ mol⁻¹.",
+          "explanation": "Um mol contém aproximadamente 6,02 × 10²³ entidades elementares especificadas (átomos, moléculas, íons etc.). A massa de um mol depende da identidade química da substância."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-est-02",
+      "phase": 1,
+      "exercise_number": 2,
+      "title": "Cálculo de massa molar dos elementos e compostos químicos",
+      "learning_objective": "Calcular a massa molar de substâncias a partir das massas atômicas aproximadas de seus elementos.",
+      "context": "A massa molar é a massa correspondente a 1 mol de entidades. Para um composto, somam-se as contribuições de cada elemento, considerando os índices da fórmula química.",
+      "simulation": {
+        "scene": "molar_mass",
+        "parameters": [
+          {
+            "key": "compoundIndex",
+            "label": "Composto selecionado",
+            "value": 3,
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "unit": "",
+            "note": "1: H₂O · 2: CO₂ · 3: NaCl · 4: CaCO₃"
+          }
+        ],
+        "description": "Selecione um composto e observe como cada elemento contribui para a massa molar."
+      },
+      "challenge": {
+        "prompt": "Qual é a massa molar do composto selecionado?",
+        "answer": {
+          "type": "numeric",
+          "formula": "compound_molar_mass",
+          "display_unit": "g/mol",
+          "tolerance": 0.001,
+          "hint": "Some as massas atômicas multiplicadas pelas quantidades de cada átomo indicadas na fórmula.",
+          "explanation": "Para NaCl: M = 23,0 + 35,5 = 58,5 g/mol. A massa molar de cada substância é obtida somando as massas molares atômicas de sua fórmula."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-est-03",
+      "phase": 1,
+      "exercise_number": 3,
+      "title": "Conversão entre massa, massa molar e quantidade de matéria",
+      "learning_objective": "Relacionar massa, massa molar e quantidade de matéria por meio de n = m/M.",
+      "context": "Uma amostra de água tem massa conhecida. Sabendo que a massa molar da água é 18 g/mol, é possível determinar quantos mols estão presentes.",
+      "simulation": {
+        "scene": "mass_to_moles",
+        "parameters": [
+          {
+            "key": "mass",
+            "label": "Massa da amostra",
+            "value": 36,
+            "min": 9,
+            "max": 90,
+            "step": 1,
+            "unit": "g"
+          },
+          {
+            "key": "molarMass",
+            "label": "Massa molar",
+            "value": 18,
+            "min": 10,
+            "max": 60,
+            "step": 1,
+            "unit": "g/mol"
+          }
+        ],
+        "description": "Ajuste a massa da amostra e a massa molar para observar a quantidade de matéria correspondente."
+      },
+      "challenge": {
+        "prompt": "Quantos mols existem na amostra selecionada?",
+        "answer": {
+          "type": "numeric",
+          "formula": "moles_from_mass",
+          "display_unit": "mol",
+          "tolerance": 0.005,
+          "hint": "Use n = m/M: divida a massa da amostra pela massa molar.",
+          "explanation": "A quantidade de matéria é n = m/M. Com 36 g e 18 g/mol: n = 36/18 = 2 mol."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-est-04",
+      "phase": 1,
+      "exercise_number": 4,
+      "title": "Relações quantitativas em equações químicas",
+      "learning_objective": "Interpretar os coeficientes de uma equação balanceada como proporções em mol entre reagentes e produtos.",
+      "context": "Na síntese da amônia, N₂ + 3H₂ → 2NH₃. Os coeficientes indicam que 1 mol de nitrogênio reage com 3 mol de hidrogênio para formar 2 mol de amônia.",
+      "simulation": {
+        "scene": "stoich_ratio",
+        "parameters": [
+          {
+            "key": "nN2",
+            "label": "Quantidade de N₂",
+            "value": 2.5,
+            "min": 0.5,
+            "max": 6,
+            "step": 0.5,
+            "unit": "mol"
+          }
+        ],
+        "description": "Ajuste a quantidade de N₂ e observe a proporção estequiométrica com H₂ e NH₃."
+      },
+      "challenge": {
+        "prompt": "Quantos mols de NH₃ podem ser formados a partir da quantidade selecionada de N₂, considerando H₂ em excesso?",
+        "answer": {
+          "type": "numeric",
+          "formula": "ammonia_from_nitrogen",
+          "display_unit": "mol",
+          "tolerance": 0.005,
+          "hint": "Compare os coeficientes: 1 mol de N₂ produz 2 mol de NH₃.",
+          "explanation": "Pela equação N₂ + 3H₂ → 2NH₃, a razão N₂:NH₃ é 1:2. Portanto, n(NH₃) = 2 × n(N₂)."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-est-05",
+      "phase": 1,
+      "exercise_number": 5,
+      "title": "Cálculos estequiométricos básicos",
+      "learning_objective": "Aplicar a proporção molar de uma equação balanceada para calcular a massa de produto formada.",
+      "context": "A decomposição térmica do carbonato de cálcio pode ser representada por CaCO₃ → CaO + CO₂. Usando massas molares aproximadas de 100 g/mol para CaCO₃ e 44 g/mol para CO₂, é possível estimar a massa de gás produzida.",
+      "simulation": {
+        "scene": "stoich_mass",
+        "parameters": [
+          {
+            "key": "massCaCO3",
+            "label": "Massa de CaCO₃",
+            "value": 250,
+            "min": 50,
+            "max": 500,
+            "step": 10,
+            "unit": "g"
+          }
+        ],
+        "description": "Ajuste a massa inicial de CaCO₃ e acompanhe a conversão para a massa teórica de CO₂."
+      },
+      "challenge": {
+        "prompt": "Qual massa teórica de CO₂ é formada, supondo decomposição completa?",
+        "answer": {
+          "type": "numeric",
+          "formula": "co2_mass",
+          "display_unit": "g",
+          "tolerance": 0.005,
+          "hint": "A equação tem proporção 1:1 em mol. Converta a massa inicial em mol e depois use a massa molar do CO₂.",
+          "explanation": "n(CaCO₃) = m/100. A proporção é 1 mol de CaCO₃ para 1 mol de CO₂. Assim, m(CO₂) = m(CaCO₃) × 44/100. Para 250 g, são 110 g."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-est-06",
+      "phase": 1,
+      "exercise_number": 6,
+      "title": "Identificação do reagente limitante e do reagente em excesso",
+      "learning_objective": "Identificar o reagente limitante comparando as quantidades disponíveis com a proporção da equação balanceada.",
+      "context": "Na reação 2H₂ + O₂ → 2H₂O, a proporção exigida é de 2 mol de H₂ para cada 1 mol de O₂. O reagente que se esgota primeiro limita a quantidade de produto.",
+      "simulation": {
+        "scene": "limiting_reagent",
+        "parameters": [
+          {
+            "key": "nH2",
+            "label": "Quantidade de H₂",
+            "value": 4,
+            "min": 1,
+            "max": 10,
+            "step": 0.5,
+            "unit": "mol"
+          },
+          {
+            "key": "nO2",
+            "label": "Quantidade de O₂",
+            "value": 3,
+            "min": 0.5,
+            "max": 8,
+            "step": 0.5,
+            "unit": "mol"
+          }
+        ],
+        "description": "Altere as quantidades de H₂ e O₂ para observar qual reagente se esgota primeiro."
+      },
+      "challenge": {
+        "prompt": "Qual é o reagente limitante na mistura selecionada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "limiting_reagent",
+          "choices": [
+            {
+              "value": "H2",
+              "label": "Hidrogênio (H₂)"
+            },
+            {
+              "value": "O2",
+              "label": "Oxigênio (O₂)"
+            },
+            {
+              "value": "none",
+              "label": "Nenhum: proporção estequiométrica exata"
+            }
+          ],
+          "hint": "Divida cada quantidade disponível pelo respectivo coeficiente: n(H₂)/2 e n(O₂)/1. O menor valor indica o limitante.",
+          "explanation": "Para 4 mol de H₂ e 3 mol de O₂, são necessários apenas 2 mol de O₂ para consumir todo o H₂. Portanto, H₂ é o reagente limitante e O₂ fica em excesso."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-est-07",
+      "phase": 1,
+      "exercise_number": 7,
+      "title": "Cálculo das quantidades de produtos e reagentes em excesso",
+      "learning_objective": "Calcular a quantidade de produto e a quantidade remanescente do reagente em excesso.",
+      "context": "Considere novamente 2H₂ + O₂ → 2H₂O. Após identificar o reagente limitante, os coeficientes permitem calcular quanto produto se forma e quanto do outro reagente sobra.",
+      "simulation": {
+        "scene": "product_excess",
+        "parameters": [
+          {
+            "key": "nH2",
+            "label": "Quantidade de H₂",
+            "value": 6,
+            "min": 1,
+            "max": 12,
+            "step": 0.5,
+            "unit": "mol"
+          },
+          {
+            "key": "nO2",
+            "label": "Quantidade de O₂",
+            "value": 4,
+            "min": 1,
+            "max": 10,
+            "step": 0.5,
+            "unit": "mol"
+          }
+        ],
+        "description": "Ajuste as quantidades iniciais e observe o consumo dos reagentes, a formação de água e o excesso remanescente."
+      },
+      "challenge": {
+        "prompt": "Informe a quantidade de H₂O formada e a quantidade do reagente em excesso que permanece.",
+        "answer": {
+          "type": "pair_numeric",
+          "formula": "product_and_excess",
+          "components": [
+            {
+              "key": "water",
+              "label": "Água formada",
+              "unit": "mol"
+            },
+            {
+              "key": "excess",
+              "label": "Reagente em excesso restante",
+              "unit": "mol"
+            }
+          ],
+          "tolerance": 0.01,
+          "hint": "Use a razão 2H₂ : 1O₂ : 2H₂O. Primeiro determine o limitante; depois calcule o reagente consumido e subtraia do total disponível.",
+          "explanation": "Com 6 mol de H₂ são necessários 3 mol de O₂. Formam-se 6 mol de H₂O e sobram 4 − 3 = 1 mol de O₂."
+        }
+      },
+      "completion": {
+        "xp": 45,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-sol-01",
+      "phase": 2,
+      "exercise_number": 1,
+      "title": "Conceitos e classificação de soluções e dispersões",
+      "learning_objective": "Diferenciar soluções verdadeiras, coloides e suspensões segundo o tamanho das partículas e o comportamento da mistura.",
+      "context": "As dispersões podem apresentar partículas de diferentes tamanhos. Isso influencia a aparência, a sedimentação e a possibilidade de separação por filtração comum.",
+      "simulation": {
+        "scene": "solution_types",
+        "parameters": [],
+        "description": "Compare visualmente uma solução, um coloide e uma suspensão."
+      },
+      "challenge": {
+        "prompt": "Qual alternativa descreve corretamente uma solução verdadeira?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "É uma mistura homogênea, com partículas do soluto em escala molecular ou iônica.",
+            "Sempre apresenta partículas visíveis que sedimentam rapidamente.",
+            "É necessariamente formada por duas fases visíveis.",
+            "Não pode ser formada pela dissolução de um sólido em um líquido."
+          ],
+          "correct": 0,
+          "hint": "Uma solução verdadeira apresenta uma única fase e aspecto uniforme; suas partículas dispersas são muito pequenas.",
+          "explanation": "Soluções verdadeiras são misturas homogêneas em escala molecular ou iônica. Coloides têm partículas intermediárias e podem espalhar luz; suspensões possuem partículas maiores que podem sedimentar."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-sol-02",
+      "phase": 2,
+      "exercise_number": 2,
+      "title": "Solubilidade: conceitos e interpretação",
+      "learning_objective": "Interpretar a quantidade máxima de soluto que pode se dissolver em determinada quantidade de solvente, em condições definidas.",
+      "context": "A solubilidade depende da natureza do soluto e do solvente e, para muitos sólidos em líquidos, da temperatura. Compare a massa adicionada com o limite de solubilidade indicado para a condição estudada.",
+      "simulation": {
+        "scene": "solubility_status",
+        "parameters": [
+          {
+            "key": "solubility",
+            "label": "Solubilidade",
+            "value": 36,
+            "min": 10,
+            "max": 80,
+            "step": 1,
+            "unit": "g/100 g água"
+          },
+          {
+            "key": "soluteMass",
+            "label": "Massa de soluto adicionada",
+            "value": 24,
+            "min": 5,
+            "max": 100,
+            "step": 1,
+            "unit": "g"
+          }
+        ],
+        "description": "Ajuste o limite de solubilidade e a massa de soluto adicionada a 100 g de água."
+      },
+      "challenge": {
+        "prompt": "Como fica a mistura após atingir o equilíbrio, considerando os valores selecionados?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "solution_status",
+          "choices": [
+            {
+              "value": "unsaturated",
+              "label": "Solução insaturada: todo o soluto pode dissolver"
+            },
+            {
+              "value": "saturated",
+              "label": "Solução saturada: atingiu o limite de solubilidade"
+            },
+            {
+              "value": "excess",
+              "label": "Solução saturada com excesso de soluto não dissolvido"
+            }
+          ],
+          "hint": "Compare a massa adicionada com a solubilidade em 100 g de água. Abaixo do limite é insaturada; no limite é saturada; acima dele sobra soluto.",
+          "explanation": "A solubilidade representa a quantidade máxima que se dissolve em uma condição definida. Se a massa adicionada superar esse limite, a solução fica saturada e o excesso permanece sem dissolver."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-sol-03",
+      "phase": 2,
+      "exercise_number": 3,
+      "title": "Análise e interpretação de curvas de solubilidade",
+      "learning_objective": "Ler uma curva de solubilidade e identificar a quantidade de soluto que pode se dissolver em função da temperatura.",
+      "context": "A solubilidade do nitrato de potássio (KNO₃) aumenta bastante com a temperatura. A cena usa valores aproximados de uma curva didática, expressos em gramas de soluto por 100 g de água.",
+      "simulation": {
+        "scene": "solubility_curve",
+        "parameters": [
+          {
+            "key": "temperature",
+            "label": "Temperatura",
+            "value": 40,
+            "min": 20,
+            "max": 80,
+            "step": 10,
+            "unit": "°C"
+          }
+        ],
+        "description": "Mova a temperatura e observe a posição correspondente na curva de solubilidade do KNO₃."
+      },
+      "challenge": {
+        "prompt": "Qual é a solubilidade aproximada do KNO₃ na temperatura selecionada?",
+        "answer": {
+          "type": "numeric",
+          "formula": "kno3_solubility",
+          "display_unit": "g/100 g água",
+          "tolerance": 0.005,
+          "hint": "Localize a temperatura no eixo horizontal e leia o valor correspondente no eixo vertical.",
+          "explanation": "Na curva didática utilizada: 20 °C ≈ 32; 30 °C ≈ 46; 40 °C ≈ 64; 50 °C ≈ 86; 60 °C ≈ 110; 70 °C ≈ 138; 80 °C ≈ 169 g por 100 g de água."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-sol-04",
+      "phase": 2,
+      "exercise_number": 4,
+      "title": "Cálculo da concentração comum (g/L)",
+      "learning_objective": "Calcular a concentração comum de uma solução pela razão entre massa de soluto e volume da solução.",
+      "context": "Uma solução preparada em laboratório contém determinada massa de soluto dissolvida em um volume final de solução. A concentração comum indica quantos gramas de soluto existem em cada litro de solução.",
+      "simulation": {
+        "scene": "common_concentration",
+        "parameters": [
+          {
+            "key": "mass",
+            "label": "Massa do soluto",
+            "value": 15,
+            "min": 2,
+            "max": 50,
+            "step": 1,
+            "unit": "g"
+          },
+          {
+            "key": "volume",
+            "label": "Volume da solução",
+            "value": 0.5,
+            "min": 0.1,
+            "max": 2,
+            "step": 0.1,
+            "unit": "L"
+          }
+        ],
+        "description": "Altere a massa de soluto e o volume final para observar a concentração comum."
+      },
+      "challenge": {
+        "prompt": "Qual é a concentração comum da solução?",
+        "answer": {
+          "type": "numeric",
+          "formula": "common_concentration",
+          "display_unit": "g/L",
+          "tolerance": 0.005,
+          "hint": "Use C = m/V, com a massa em gramas e o volume em litros.",
+          "explanation": "C = m/V. Para 15 g em 0,5 L: C = 15/0,5 = 30 g/L."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-sol-05",
+      "phase": 2,
+      "exercise_number": 5,
+      "title": "Cálculo da concentração molar (mol/L)",
+      "learning_objective": "Determinar a concentração em quantidade de matéria a partir da massa do soluto, massa molar e volume da solução.",
+      "context": "A concentração molar, ou quantidade de matéria por volume, é calculada convertendo primeiro a massa do soluto em mols e dividindo pelo volume final da solução.",
+      "simulation": {
+        "scene": "molar_concentration",
+        "parameters": [
+          {
+            "key": "mass",
+            "label": "Massa de NaCl",
+            "value": 11.7,
+            "min": 2,
+            "max": 30,
+            "step": 0.5,
+            "unit": "g"
+          },
+          {
+            "key": "molarMass",
+            "label": "Massa molar do NaCl",
+            "value": 58.5,
+            "min": 40,
+            "max": 80,
+            "step": 0.5,
+            "unit": "g/mol"
+          },
+          {
+            "key": "volume",
+            "label": "Volume da solução",
+            "value": 0.5,
+            "min": 0.1,
+            "max": 1.5,
+            "step": 0.1,
+            "unit": "L"
+          }
+        ],
+        "description": "Ajuste a massa de NaCl, sua massa molar e o volume da solução."
+      },
+      "challenge": {
+        "prompt": "Qual é a concentração molar da solução?",
+        "answer": {
+          "type": "numeric",
+          "formula": "molar_concentration",
+          "display_unit": "mol/L",
+          "tolerance": 0.005,
+          "hint": "Calcule n = m/M e depois divida por V: C = n/V = m/(M·V).",
+          "explanation": "n = 11,7/58,5 = 0,20 mol. C = 0,20/0,50 = 0,40 mol/L."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-sol-06",
+      "phase": 2,
+      "exercise_number": 6,
+      "title": "Relação entre quantidade de soluto, volume e concentração",
+      "learning_objective": "Determinar a massa de soluto necessária para preparar uma solução com concentração comum e volume definidos.",
+      "context": "Para preparar uma solução com concentração desejada, a massa de soluto pode ser determinada rearranjando a expressão C = m/V.",
+      "simulation": {
+        "scene": "solute_mass",
+        "parameters": [
+          {
+            "key": "concentration",
+            "label": "Concentração desejada",
+            "value": 18,
+            "min": 5,
+            "max": 60,
+            "step": 1,
+            "unit": "g/L"
+          },
+          {
+            "key": "volume",
+            "label": "Volume final",
+            "value": 0.75,
+            "min": 0.1,
+            "max": 2,
+            "step": 0.05,
+            "unit": "L"
+          }
+        ],
+        "description": "Ajuste a concentração desejada e o volume final para dimensionar a massa de soluto."
+      },
+      "challenge": {
+        "prompt": "Qual massa de soluto deve ser utilizada?",
+        "answer": {
+          "type": "numeric",
+          "formula": "required_solute_mass",
+          "display_unit": "g",
+          "tolerance": 0.005,
+          "hint": "Isole m na expressão C = m/V: m = C·V.",
+          "explanation": "m = C·V. Para 18 g/L e 0,75 L: m = 13,5 g."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-sol-07",
+      "phase": 2,
+      "exercise_number": 7,
+      "title": "Processos de diluição de soluções",
+      "learning_objective": "Calcular a concentração final após adicionar solvente, mantendo a quantidade de soluto constante.",
+      "context": "Na diluição, adiciona-se solvente sem retirar soluto. Por isso, a quantidade de matéria do soluto permanece constante e vale C₁V₁ = C₂V₂.",
+      "simulation": {
+        "scene": "dilution",
+        "parameters": [
+          {
+            "key": "C1",
+            "label": "Concentração inicial",
+            "value": 2.0,
+            "min": 0.5,
+            "max": 5,
+            "step": 0.1,
+            "unit": "mol/L"
+          },
+          {
+            "key": "V1",
+            "label": "Volume inicial",
+            "value": 100,
+            "min": 20,
+            "max": 100,
+            "step": 5,
+            "unit": "mL"
+          },
+          {
+            "key": "V2",
+            "label": "Volume final",
+            "value": 250,
+            "min": 100,
+            "max": 500,
+            "step": 10,
+            "unit": "mL"
+          }
+        ],
+        "description": "Observe a solução inicial e o aumento do volume após a adição de solvente."
+      },
+      "challenge": {
+        "prompt": "Qual é a concentração final após a diluição?",
+        "answer": {
+          "type": "numeric",
+          "formula": "dilution_concentration",
+          "display_unit": "mol/L",
+          "tolerance": 0.005,
+          "hint": "Use C₂ = C₁·V₁/V₂. Os dois volumes devem estar na mesma unidade.",
+          "explanation": "C₂ = 2,0 × 100/250 = 0,80 mol/L. O número de mols de soluto permanece constante."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-agua-01",
+      "phase": 3,
+      "exercise_number": 1,
+      "title": "Parâmetros de qualidade da água e sua importância ambiental",
+      "learning_objective": "Reconhecer que a avaliação da qualidade da água depende de parâmetros físicos, químicos e biológicos.",
+      "context": "A água pode parecer transparente e ainda conter substâncias dissolvidas ou microrganismos. Por isso, sua avaliação combina diferentes indicadores e considera o uso pretendido.",
+      "simulation": {
+        "scene": "water_quality",
+        "parameters": [],
+        "description": "Observe alguns grupos de indicadores utilizados na avaliação da qualidade da água."
+      },
+      "challenge": {
+        "prompt": "Por que a qualidade da água não deve ser avaliada apenas pela aparência?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Porque parâmetros físicos, químicos e microbiológicos podem indicar problemas que não são visíveis.",
+            "Porque a transparência garante que a água é potável.",
+            "Porque apenas a temperatura determina a segurança da água.",
+            "Porque a água sem cor não contém substâncias dissolvidas."
+          ],
+          "correct": 0,
+          "hint": "Nem todos os contaminantes alteram cor, odor ou transparência. Pense em microrganismos e substâncias dissolvidas.",
+          "explanation": "A avaliação adequada considera parâmetros como turbidez, pH, oxigênio dissolvido, DBO e indicadores microbiológicos. A aparência isolada não garante potabilidade."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-agua-02",
+      "phase": 3,
+      "exercise_number": 2,
+      "title": "Demanda Bioquímica de Oxigênio (DBO): conceito e interpretação",
+      "learning_objective": "Compreender a DBO como indicador da quantidade de oxigênio consumida por microrganismos na decomposição de matéria orgânica biodegradável.",
+      "context": "Quando há matéria orgânica biodegradável na água, microrganismos podem consumi-la e utilizar oxigênio dissolvido durante a decomposição. A DBO estima essa demanda sob condições e período de ensaio definidos.",
+      "simulation": {
+        "scene": "dbo_concept",
+        "parameters": [],
+        "description": "Acompanhe a representação de microrganismos consumindo oxigênio durante a decomposição de matéria orgânica."
+      },
+      "challenge": {
+        "prompt": "O que uma DBO elevada geralmente indica?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Maior quantidade de matéria orgânica biodegradável e maior consumo potencial de oxigênio.",
+            "Ausência completa de matéria orgânica.",
+            "Aumento automático da concentração de oxigênio dissolvido.",
+            "Que a água está necessariamente livre de microrganismos."
+          ],
+          "correct": 0,
+          "hint": "A DBO se relaciona ao oxigênio consumido no processo de biodegradação da matéria orgânica.",
+          "explanation": "Uma DBO elevada pode indicar maior carga de matéria orgânica biodegradável e consumo de oxigênio por microrganismos, o que pode reduzir o oxigênio disponível no ambiente aquático."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-agua-03",
+      "phase": 3,
+      "exercise_number": 3,
+      "title": "Análise da qualidade da água por meio de indicadores de DBO",
+      "learning_objective": "Interpretar um valor de DBO em uma escala didática e relacioná-lo à possível carga orgânica da amostra.",
+      "context": "A simulação utiliza faixas simplificadas para exercitar a leitura de indicadores: valores menores sugerem menor demanda bioquímica e valores maiores sugerem maior demanda. Essas faixas não substituem padrões legais ou análises laboratoriais completas.",
+      "simulation": {
+        "scene": "dbo_indicator",
+        "parameters": [
+          {
+            "key": "DBO",
+            "label": "DBO da amostra",
+            "value": 4,
+            "min": 0.5,
+            "max": 12,
+            "step": 0.5,
+            "unit": "mg O₂/L"
+          }
+        ],
+        "description": "Altere a DBO e observe como o indicador didático de carga orgânica muda."
+      },
+      "challenge": {
+        "prompt": "Como a amostra é classificada nesta escala didática de DBO?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "dbo_quality",
+          "choices": [
+            {
+              "value": "low",
+              "label": "Baixa demanda bioquímica"
+            },
+            {
+              "value": "moderate",
+              "label": "Demanda bioquímica intermediária"
+            },
+            {
+              "value": "high",
+              "label": "Alta demanda bioquímica"
+            }
+          ],
+          "hint": "Nesta atividade, abaixo de 3 mg O₂/L é baixa; de 3 a 5 mg O₂/L é intermediária; acima de 5 mg O₂/L é alta.",
+          "explanation": "A DBO selecionada é comparada com faixas simplificadas para fins didáticos. Valores de referência e interpretação ambiental dependem do tipo de água, método, legislação e condições locais."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-agua-04",
+      "phase": 3,
+      "exercise_number": 4,
+      "title": "Identificação das principais etapas do tratamento de água",
+      "learning_objective": "Reconhecer a sequência geral de etapas de uma estação convencional de tratamento de água.",
+      "context": "O tratamento convencional pode incluir coagulação, floculação, decantação, filtração e desinfecção. Em sistemas reais, etapas adicionais podem ser necessárias conforme a qualidade da água bruta.",
+      "simulation": {
+        "scene": "water_treatment",
+        "parameters": [],
+        "description": "Observe o percurso da água pelas principais etapas de tratamento."
+      },
+      "challenge": {
+        "prompt": "Qual sequência representa corretamente uma sequência convencional simplificada?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Coagulação → floculação → decantação → filtração → desinfecção.",
+            "Desinfecção → decantação → coagulação → filtração → floculação.",
+            "Filtração → adição de areia → decantação → coagulação.",
+            "Floculação → desinfecção → entrada de água bruta → decantação."
+          ],
+          "correct": 0,
+          "hint": "Partículas finas são desestabilizadas e agrupadas antes de sedimentarem; a filtração ocorre depois da decantação.",
+          "explanation": "Na sequência simplificada, a coagulação desestabiliza partículas; a floculação reúne partículas em flocos; a decantação permite sua sedimentação; a filtração retém partículas remanescentes; a desinfecção inativa microrganismos."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-agua-05",
+      "phase": 3,
+      "exercise_number": 5,
+      "title": "Processos de separação e remoção de impurezas no tratamento de água",
+      "learning_objective": "Relacionar processos físicos e físico-químicos à remoção de impurezas durante o tratamento de água.",
+      "context": "A água bruta pode conter partículas suspensas que não sedimentam rapidamente. A coagulação e a floculação favorecem a formação de agregados maiores, que podem ser removidos nas etapas seguintes.",
+      "simulation": {
+        "scene": "water_separation",
+        "parameters": [],
+        "description": "Observe como partículas pequenas se agrupam e são separadas durante o tratamento."
+      },
+      "challenge": {
+        "prompt": "Qual é a principal função da filtração após a decantação?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Reter partículas que permaneceram na água após a sedimentação dos flocos.",
+            "Transformar sais dissolvidos em moléculas de água.",
+            "Aumentar a quantidade de matéria orgânica na água.",
+            "Substituir todas as etapas de desinfecção."
+          ],
+          "correct": 0,
+          "hint": "Após a decantação, ainda podem permanecer partículas menores suspensas; o filtro atua como uma barreira física.",
+          "explanation": "A filtração remove partículas suspensas remanescentes ao fazer a água atravessar um meio filtrante. Ela não substitui a desinfecção, que tem a função de inativar microrganismos."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-agua-06",
+      "phase": 3,
+      "exercise_number": 6,
+      "title": "Aplicações dos processos de tratamento de água em situações práticas",
+      "learning_objective": "Selecionar uma etapa ou estratégia de tratamento adequada ao tipo de problema identificado na água.",
+      "context": "Diferentes problemas exigem processos distintos: turbidez por partículas, contaminação microbiológica ou presença de substâncias dissolvidas não são resolvidos necessariamente pela mesma etapa.",
+      "simulation": {
+        "scene": "water_scenario",
+        "parameters": [
+          {
+            "key": "problemIndex",
+            "label": "Problema predominante",
+            "value": 2,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1: partículas suspensas · 2: microrganismos · 3: substâncias dissolvidas"
+          }
+        ],
+        "description": "Selecione o problema predominante observado na água e identifique a estratégia de tratamento mais diretamente relacionada."
+      },
+      "challenge": {
+        "prompt": "Qual estratégia é mais diretamente indicada para o problema selecionado?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "water_problem_solution",
+          "choices": [
+            {
+              "value": "particles",
+              "label": "Coagulação/floculação, decantação e filtração"
+            },
+            {
+              "value": "microbes",
+              "label": "Desinfecção adequada"
+            },
+            {
+              "value": "dissolved",
+              "label": "Tratamento específico, conforme a substância dissolvida"
+            }
+          ],
+          "hint": "Partículas suspensas, microrganismos e substâncias dissolvidas exigem processos diferentes.",
+          "explanation": "A estratégia depende do contaminante: partículas podem ser agregadas e removidas por decantação e filtração; microrganismos exigem desinfecção; substâncias dissolvidas podem requerer processos específicos como adsorção ou membranas."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-cin-01",
+      "phase": 4,
+      "exercise_number": 1,
+      "title": "Conceito de velocidade das reações químicas",
+      "learning_objective": "Compreender a velocidade de reação como a variação da quantidade ou concentração de reagentes e produtos ao longo do tempo.",
+      "context": "Uma reação pode ser rápida, como uma combustão, ou lenta, como certos processos de corrosão. A velocidade é analisada a partir da mudança na concentração de espécies químicas em determinado intervalo de tempo.",
+      "simulation": {
+        "scene": "kinetics_concept",
+        "parameters": [],
+        "description": "Observe a transformação de reagentes em produtos ao longo do tempo."
+      },
+      "challenge": {
+        "prompt": "Como a velocidade média de uma reação pode ser descrita?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Pela variação da concentração de reagente ou produto dividida pelo intervalo de tempo.",
+            "Pela massa total do recipiente, independentemente do tempo.",
+            "Apenas pela temperatura inicial da reação.",
+            "Pela cor dos reagentes, sem considerar o tempo."
+          ],
+          "correct": 0,
+          "hint": "A velocidade relaciona uma variação observável da reação com o intervalo de tempo em que ela ocorre.",
