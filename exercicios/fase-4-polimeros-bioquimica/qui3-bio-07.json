@@ -1,0 +1,51 @@
+{
+  "id": "qui3-bio-07",
+  "phase": 4,
+  "exercise_number": 7,
+  "title": "Lipídios: estrutura, propriedades e funções biológicas",
+  "learning_objective": "Reconhecer funções dos lipídios, como reserva energética, composição de membranas e proteção.",
+  "context": "Triglicerídeos são formados por glicerol e três ácidos graxos. Fosfolipídios são anfipáticos e compõem membranas; ceras protegem e impermeabilizam superfícies.",
+  "simulation": {
+    "scene": "lipids",
+    "parameters": [
+      {
+        "key": "lipidIndex",
+        "label": "Tipo de lipídio",
+        "value": 1,
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "unit": "",
+        "note": "1 triglicerídeo · 2 fosfolipídio · 3 cera"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual característica é mais diretamente associada ao lipídio selecionado?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "energy_storage",
+          "label": "Reserva energética (triglicerídeo)."
+        },
+        {
+          "value": "membrane",
+          "label": "Composição de membranas celulares (fosfolipídio)."
+        },
+        {
+          "value": "waterproofing",
+          "label": "Impermeabilização e proteção (cera)."
+        }
+      ],
+      "formula": "lipid_function",
+      "hint": "Associe a estrutura a armazenamento, membrana ou proteção.",
+      "explanation": "Triglicerídeos armazenam energia; fosfolipídios formam bicamadas; ceras contribuem para impermeabilização e proteção."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "bioquimica"
+  }
+}
