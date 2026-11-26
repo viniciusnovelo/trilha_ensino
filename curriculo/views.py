@@ -2616,7 +2616,10 @@ def fase_detalhe(
         from .math3_views import math3_player
         return math3_player(request, fase_id)
 
-    if slug_disciplina == 'fisica' and fase.questoes.filter(codigo_fonte__isnull=False).exists():
+    # Física pode estar cadastrada com slugs diferentes (ex.: fisica ou fisica-1).
+    # O identificador confiável do player é a presença de questões dinâmicas
+    # com codigo_fonte, depois de tratar explicitamente Matemática e Química.
+    if fase.questoes.filter(codigo_fonte__isnull=False).exists():
         from .physics_views import physics_player
         return physics_player(request, fase_id)
 
