@@ -1,0 +1,32 @@
+{
+  "id": "qui2-est-01",
+  "phase": 1,
+  "exercise_number": 1,
+  "title": "Conceito de mol e quantidade de matéria",
+  "learning_objective": "Compreender o mol como unidade de quantidade de matéria e relacioná-lo à constante de Avogadro.",
+  "context": "Em uma amostra, o número de partículas é enorme. O mol permite expressar essa quantidade por meio de uma unidade conveniente, assim como uma dúzia representa doze unidades.",
+  "simulation": {
+    "scene": "mole_model",
+    "parameters": [],
+    "description": "Observe a relação entre uma porção macroscópica de matéria e a quantidade de entidades microscópicas."
+  },
+  "challenge": {
+    "prompt": "O que representa 1 mol de qualquer entidade química?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Uma quantidade de 6,02 × 10²³ entidades elementares.",
+        "A massa de 1 grama de qualquer substância.",
+        "Sempre 22,4 litros de qualquer material.",
+        "Uma única molécula ou átomo."
+      ],
+      "correct": 0,
+      "hint": "O mol é uma unidade de contagem. Lembre-se da constante de Avogadro, aproximadamente 6,02 × 10²³ mol⁻¹.",
+      "explanation": "Um mol contém aproximadamente 6,02 × 10²³ entidades elementares especificadas (átomos, moléculas, íons etc.). A massa de um mol depende da identidade química da substância."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-quimico"
+  }
+}
