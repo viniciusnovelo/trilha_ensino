@@ -1,0 +1,51 @@
+{
+  "id": "qui3-isom-02",
+  "phase": 3,
+  "exercise_number": 2,
+  "title": "Identificação de isômeros planos",
+  "learning_objective": "Distinguir isomeria de cadeia, posição e função em exemplos simples.",
+  "context": "Na isomeria plana, pode mudar o esqueleto carbônico, a posição de um grupo ou a função orgânica.",
+  "simulation": {
+    "scene": "planar_isomerism",
+    "parameters": [
+      {
+        "key": "isomerIndex",
+        "label": "Par de compostos",
+        "value": 1,
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "unit": "",
+        "note": "1 butano / 2-metilpropano · 2 propan-1-ol / propan-2-ol · 3 etanol / dimetil éter"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual tipo de isomeria plana é ilustrado?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "chain",
+          "label": "Isomeria de cadeia."
+        },
+        {
+          "value": "position",
+          "label": "Isomeria de posição."
+        },
+        {
+          "value": "function",
+          "label": "Isomeria de função."
+        }
+      ],
+      "formula": "planar_isomerism",
+      "hint": "Veja o que mudou: esqueleto, posição de grupo ou função orgânica.",
+      "explanation": "Butano e 2-metilpropano diferem pelo esqueleto; propan-1-ol e propan-2-ol pela posição da hidroxila; etanol e dimetil éter pela função."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-organico"
+  }
+}
