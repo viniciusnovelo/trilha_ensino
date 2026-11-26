@@ -1,0 +1,55 @@
+{
+  "id": "qui3-org-04",
+  "phase": 1,
+  "exercise_number": 4,
+  "title": "Cadeias abertas, fechadas, normais e ramificadas",
+  "learning_objective": "Distinguir cadeias acíclicas e cíclicas e identificar ramificações.",
+  "context": "Cadeias abertas não formam ciclo; fechadas formam ciclos. Normais não têm ramificações; ramificadas têm pelo menos um ramo lateral.",
+  "simulation": {
+    "scene": "chain_topology",
+    "parameters": [
+      {
+        "key": "topology",
+        "label": "Estrutura selecionada",
+        "value": 1,
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "unit": "",
+        "note": "1 aberta normal · 2 aberta ramificada · 3 fechada normal · 4 fechada ramificada"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Como a cadeia representada deve ser classificada?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "open_normal",
+          "label": "Aberta e normal."
+        },
+        {
+          "value": "open_branched",
+          "label": "Aberta e ramificada."
+        },
+        {
+          "value": "closed_normal",
+          "label": "Fechada e normal."
+        },
+        {
+          "value": "closed_branched",
+          "label": "Fechada e ramificada."
+        }
+      ],
+      "formula": "chain_topology",
+      "hint": "Verifique se as extremidades se conectam formando um anel e se há carbono fora do caminho principal.",
+      "explanation": "Cadeias abertas têm extremidades livres; fechadas formam ciclos. Um ramo lateral caracteriza cadeia ramificada."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "estrutura-carbonica"
+  }
+}
