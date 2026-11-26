@@ -32,7 +32,7 @@ class Command(BaseCommand):
     def _validate(self, data, exercises_dir, simulator_path):
         if not isinstance(data, dict) or not isinstance(data.get("module"), dict):
             raise CommandError("Estrutura inválida: objeto 'module' ausente.")
-        if data["module"].get("module_number") != 2:
+        if data["module"].get("module_number") != 3:
             raise CommandError("O JSON não identifica o módulo como Química 3.")
 
         phases = data.get("phases")
@@ -194,7 +194,7 @@ class Command(BaseCommand):
                     "materia": materia,
                     "autor": quimica1.autor if quimica1 else None,
                     "tema": quimica1.tema if quimica1 else "tema-padrao",
-                    "ordem": 2,
+                    "ordem": 3,
                     "ativo": quimica1.ativo if quimica1 else False,
                 },
             )
