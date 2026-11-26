@@ -2649,3 +2649,55 @@ class CatalogoMateriaTests(AutenticacaoBaseTests):
         self.assertFalse(
             jogo.ativo,
         )
+
+
+class RevisaoFaseAutenticacaoTests(AutenticacaoBaseTests):
+    def setUp(self):
+        self.aluno = self.criar_usuario(username="aluno_revisao")
+        materia = Materia.objects.create(
+            nome="Matéria de Revisão",
+            slug="materia-revisao",
+        )
+        disciplina = Disciplina.objects.create(
+            nome="Trilha de Revisão",
+            slug="trilha-revisao",
+            materia=materia,
+            ativo=True,
+        )
+        modulo = Modulo.objects.create(
+            disciplina=disciplina,
+            titulo="Módulo de Revisão",
+            ordem=1,
+        )
+        self.fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase de Revisão",
+            ordem=1,
+        )
+
+    def test_revisao_redireciona_usuario_anonimo_para_login(self):
+        response = self.client.get(
+            reverse("revisao_fase", args=[self.fase.pk])
+        )
+
+        self.assertRedirects(
+            response,
+            (
+                f"{reverse('login')}"
+                f"?next={reverse('revisao_fase', args=[self.fase.pk])}"
+            ),
+        )
+
+    def test_aluno_autenticado_acessa_tela_de_revisao(self):
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+        response = self.client.get(
+            reverse("revisao_fase", args=[self.fase.pk])
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "gamificacao/revisao_fase.html")
+
