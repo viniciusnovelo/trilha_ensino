@@ -1,0 +1,63 @@
+{
+  "id": "qui3-func-02",
+  "phase": 2,
+  "exercise_number": 2,
+  "title": "Identificação e nomenclatura de hidrocarbonetos",
+  "learning_objective": "Relacionar tamanho da cadeia e insaturação ao nome básico de hidrocarbonetos.",
+  "context": "Hidrocarbonetos contêm carbono e hidrogênio. Prefixos indicam o número de carbonos e sufixos distinguem ligações simples, duplas e triplas.",
+  "simulation": {
+    "scene": "hydrocarbon_naming",
+    "parameters": [
+      {
+        "key": "compoundIndex",
+        "label": "Hidrocarboneto",
+        "value": 1,
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "unit": "",
+        "note": "1 etano · 2 eteno · 3 etino · 4 propano · 5 propeno · 6 butano"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual é o nome do hidrocarboneto mostrado?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "etano",
+          "label": "Etano."
+        },
+        {
+          "value": "eteno",
+          "label": "Eteno."
+        },
+        {
+          "value": "etino",
+          "label": "Etino."
+        },
+        {
+          "value": "propano",
+          "label": "Propano."
+        },
+        {
+          "value": "propeno",
+          "label": "Propeno."
+        },
+        {
+          "value": "butano",
+          "label": "Butano."
+        }
+      ],
+      "formula": "hydrocarbon_name",
+      "hint": "Conte os carbonos e observe se a ligação é simples, dupla ou tripla.",
+      "explanation": "O prefixo indica quantidade de carbonos; -ano representa ligações simples, -eno dupla e -ino tripla."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "identificacao-funcional"
+  }
+}
