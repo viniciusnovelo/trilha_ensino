@@ -1,0 +1,51 @@
+{
+  "id": "qui3-bio-06",
+  "phase": 4,
+  "exercise_number": 6,
+  "title": "Carboidratos: estrutura, classificação e funções biológicas",
+  "learning_objective": "Distinguir mono-, di- e polissacarídeos e relacioná-los às funções biológicas.",
+  "context": "Glicose é monossacarídeo; sacarose é dissacarídeo; amido e celulose são polissacarídeos.",
+  "simulation": {
+    "scene": "carbohydrates",
+    "parameters": [
+      {
+        "key": "carbohydrateIndex",
+        "label": "Carboidrato",
+        "value": 1,
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "unit": "",
+        "note": "1 glicose · 2 sacarose · 3 amido"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Como o carboidrato selecionado é classificado?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "mono",
+          "label": "Monossacarídeo."
+        },
+        {
+          "value": "di",
+          "label": "Dissacarídeo."
+        },
+        {
+          "value": "poly",
+          "label": "Polissacarídeo."
+        }
+      ],
+      "formula": "carbohydrate_class",
+      "hint": "Monossacarídeos são unidades simples; dissacarídeos unem duas unidades; polissacarídeos formam cadeias longas.",
+      "explanation": "Glicose é monossacarídeo; sacarose tem duas unidades; amido é um polímero de glicose, portanto polissacarídeo."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "bioquimica"
+  }
+}
