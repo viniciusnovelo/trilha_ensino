@@ -1,0 +1,51 @@
+{
+  "id": "qui3-org-02",
+  "phase": 1,
+  "exercise_number": 2,
+  "title": "Tetravalência do carbono e formação de ligações",
+  "learning_objective": "Relacionar a quantidade de ligações do carbono à sua tetravalência.",
+  "context": "Uma ligação dupla conta como duas unidades e uma tripla como três. A soma das ordens de ligação ao redor do carbono costuma ser quatro.",
+  "simulation": {
+    "scene": "carbon_valence",
+    "parameters": [
+      {
+        "key": "bondUnits",
+        "label": "Unidades de ligação",
+        "value": 4,
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "unit": "unid.",
+        "note": "Soma das ordens de ligação conectadas ao carbono."
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "A configuração selecionada completa a tetravalência do carbono?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "incomplete",
+          "label": "Não: faltam unidades de ligação."
+        },
+        {
+          "value": "complete",
+          "label": "Sim: quatro unidades de ligação."
+        },
+        {
+          "value": "exceeded",
+          "label": "Não: há mais de quatro unidades."
+        }
+      ],
+      "formula": "carbon_valence",
+      "hint": "Some as ordens das ligações. A valência usual do carbono neutro é quatro.",
+      "explanation": "Com quatro unidades, a valência está completa; menos indica representação incompleta e mais não corresponde ao modelo usual do carbono neutro."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "estrutura-carbonica"
+  }
+}
