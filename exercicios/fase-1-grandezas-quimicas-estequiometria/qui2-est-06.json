@@ -1,0 +1,59 @@
+{
+  "id": "qui2-est-06",
+  "phase": 1,
+  "exercise_number": 6,
+  "title": "Identificação do reagente limitante e do reagente em excesso",
+  "learning_objective": "Identificar o reagente limitante comparando as quantidades disponíveis com a proporção da equação balanceada.",
+  "context": "Na reação 2H₂ + O₂ → 2H₂O, a proporção exigida é de 2 mol de H₂ para cada 1 mol de O₂. O reagente que se esgota primeiro limita a quantidade de produto.",
+  "simulation": {
+    "scene": "limiting_reagent",
+    "parameters": [
+      {
+        "key": "nH2",
+        "label": "Quantidade de H₂",
+        "value": 4,
+        "min": 1,
+        "max": 10,
+        "step": 0.5,
+        "unit": "mol"
+      },
+      {
+        "key": "nO2",
+        "label": "Quantidade de O₂",
+        "value": 3,
+        "min": 0.5,
+        "max": 8,
+        "step": 0.5,
+        "unit": "mol"
+      }
+    ],
+    "description": "Altere as quantidades de H₂ e O₂ para observar qual reagente se esgota primeiro."
+  },
+  "challenge": {
+    "prompt": "Qual é o reagente limitante na mistura selecionada?",
+    "answer": {
+      "type": "dynamic_choice",
+      "formula": "limiting_reagent",
+      "choices": [
+        {
+          "value": "H2",
+          "label": "Hidrogênio (H₂)"
+        },
+        {
+          "value": "O2",
+          "label": "Oxigênio (O₂)"
+        },
+        {
+          "value": "none",
+          "label": "Nenhum: proporção estequiométrica exata"
+        }
+      ],
+      "hint": "Divida cada quantidade disponível pelo respectivo coeficiente: n(H₂)/2 e n(O₂)/1. O menor valor indica o limitante.",
+      "explanation": "Para 4 mol de H₂ e 3 mol de O₂, são necessários apenas 2 mol de O₂ para consumir todo o H₂. Portanto, H₂ é o reagente limitante e O₂ fica em excesso."
+    }
+  },
+  "completion": {
+    "xp": 40,
+    "skill": "raciocinio-quimico"
+  }
+}
