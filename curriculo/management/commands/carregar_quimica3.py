@@ -42,7 +42,7 @@ class Command(BaseCommand):
         if len(phases) != 5:
             raise CommandError(f"Esperadas 5 fases; encontradas {len(phases)}.")
         if len(exercises) != 38:
-            raise CommandError(f"Esperados 34 exercícios; encontrados {len(exercises)}.")
+            raise CommandError(f"Esperados 38 exercícios; encontrados {len(exercises)}.")
 
         phase_numbers = [p.get("number") for p in phases]
         if len(set(phase_numbers)) != len(phase_numbers):
