@@ -126,7 +126,7 @@ $('content').innerHTML=`<main class="layout math-layout">
 <div class="canvas-top"><span><i class="live-dot"></i>${safe(e.simulation.scene.replaceAll('_',' ').toUpperCase())}</span><span id="sceneStatus">${e.simulation.parameters.length?'Parâmetros ajustáveis':'Representação conceitual'}</span></div>
 <canvas id="simCanvas" aria-label="Simulação química interativa"></canvas>
 <div class="canvas-foot">${safe(e.simulation.description||'')}</div>
-<div class="transport"><button id="playBtn" type="button">Ⅱ Pausar</button><button id="stepBtn" type="button">Avançar 1 passo</button><button id="resetBtn" type="button">↺ Reiniciar</button></div>
+
 <div class="readouts" id="readouts"></div></div>
 ${controls?`<div class="params">${controls}</div><div class="control-actions"><button class="btn soft" id="resetParams">↺ Restaurar valores</button></div>`:''}
 </section>
@@ -137,9 +137,6 @@ ${answerHTML}
 <div class="feedback" id="feedback"></div><div class="solution" id="hintBox"></div><div class="solution" id="solutionBox"></div>
 <p class="muted math-note">Ajuste os parâmetros da simulação antes de responder. Os valores utilizados serão guardados no histórico.</p>
 </section></main>`;
-$('playBtn').addEventListener('click',togglePlay);
-$('resetBtn').addEventListener('click',()=>{state.time=0;state.playing=true;updateTransport();drawCurrent()});
-$('stepBtn').addEventListener('click',()=>{state.time+=1;drawCurrent()});
 $('hintBtn').addEventListener('click',toggleHint);$('solutionBtn').addEventListener('click',toggleSolution);
 $('checkBtn').addEventListener('click',()=>checkAnswer(e));$('nextBtn').addEventListener('click',nextExercise);
 $('content').querySelectorAll('[data-param]').forEach(input=>input.addEventListener('input',ev=>{const key=ev.target.dataset.param,pdef=e.simulation.parameters.find(p=>p.key===key);state.params[key]=Number(ev.target.value);$('value-'+key).textContent=fmt(state.params[key],decimals(pdef.step))+' '+pdef.unit;clearFeedback();drawCurrent()}));
