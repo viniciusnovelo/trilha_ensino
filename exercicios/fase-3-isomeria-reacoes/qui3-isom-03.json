@@ -1,0 +1,47 @@
+{
+  "id": "qui3-isom-03",
+  "phase": 3,
+  "exercise_number": 3,
+  "title": "Isomeria geométrica: cis-trans",
+  "learning_objective": "Reconhecer configurações cis e trans em estruturas com rotação restringida.",
+  "context": "Em uma ligação dupla C=C, a rotação é restringida. Grupos de referência do mesmo lado caracterizam cis; em lados opostos, trans, quando os substituintes permitem essa distinção.",
+  "simulation": {
+    "scene": "cis_trans",
+    "parameters": [
+      {
+        "key": "geometryIndex",
+        "label": "Configuração",
+        "value": 1,
+        "min": 1,
+        "max": 2,
+        "step": 1,
+        "unit": "",
+        "note": "1 cis · 2 trans"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual configuração geométrica está representada?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "cis",
+          "label": "Cis: grupos de referência do mesmo lado."
+        },
+        {
+          "value": "trans",
+          "label": "Trans: grupos de referência em lados opostos."
+        }
+      ],
+      "formula": "cis_trans",
+      "hint": "Compare os grupos de referência em relação ao eixo da ligação dupla C=C.",
+      "explanation": "Na configuração cis os grupos de referência ficam do mesmo lado da dupla; na trans, em lados opostos."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-organico"
+  }
+}
