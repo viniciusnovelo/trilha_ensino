@@ -1,0 +1,274 @@
+{
+  "module": {
+    "subject": "Química",
+    "module_number": 3,
+    "title": "3º Módulo de Química",
+    "description": "Introdução à Química Orgânica; Funções Orgânicas; Isomeria e Reações Orgânicas; Polímeros e Bioquímica; Equilíbrio Químico e Escala de pH.",
+    "version": "1.0.0",
+    "language": "pt-BR"
+  },
+  "phase_count": 5,
+  "exercise_count": 38,
+  "phases": [
+    {
+      "number": 1,
+      "slug": "introducao-quimica-organica",
+      "title": "Introdução à Química Orgânica",
+      "exercise_count": 7
+    },
+    {
+      "number": 2,
+      "slug": "funcoes-organicas",
+      "title": "Funções Orgânicas",
+      "exercise_count": 8
+    },
+    {
+      "number": 3,
+      "slug": "isomeria-reacoes",
+      "title": "Isomeria e Reações Orgânicas",
+      "exercise_count": 8
+    },
+    {
+      "number": 4,
+      "slug": "polimeros-bioquimica",
+      "title": "Polímeros e Bioquímica",
+      "exercise_count": 8
+    },
+    {
+      "number": 5,
+      "slug": "equilibrio-ph",
+      "title": "Equilíbrio Químico e Escala de pH",
+      "exercise_count": 7
+    }
+  ],
+  "exercises": [
+    {
+      "id": "qui3-org-01",
+      "phase": 1,
+      "title": "O carbono e suas propriedades químicas",
+      "path": "exercicios/fase-1-introducao-quimica-organica/qui3-org-01.json"
+    },
+    {
+      "id": "qui3-org-02",
+      "phase": 1,
+      "title": "Tetravalência do carbono e formação de ligações",
+      "path": "exercicios/fase-1-introducao-quimica-organica/qui3-org-02.json"
+    },
+    {
+      "id": "qui3-org-03",
+      "phase": 1,
+      "title": "Classificação das cadeias carbônicas",
+      "path": "exercicios/fase-1-introducao-quimica-organica/qui3-org-03.json"
+    },
+    {
+      "id": "qui3-org-04",
+      "phase": 1,
+      "title": "Cadeias abertas, fechadas, normais e ramificadas",
+      "path": "exercicios/fase-1-introducao-quimica-organica/qui3-org-04.json"
+    },
+    {
+      "id": "qui3-org-05",
+      "phase": 1,
+      "title": "Ligações simples, duplas e triplas entre carbonos",
+      "path": "exercicios/fase-1-introducao-quimica-organica/qui3-org-05.json"
+    },
+    {
+      "id": "qui3-org-06",
+      "phase": 1,
+      "title": "Hibridização do carbono: sp³, sp² e sp",
+      "path": "exercicios/fase-1-introducao-quimica-organica/qui3-org-06.json"
+    },
+    {
+      "id": "qui3-org-07",
+      "phase": 1,
+      "title": "Representação e identificação de estruturas orgânicas",
+      "path": "exercicios/fase-1-introducao-quimica-organica/qui3-org-07.json"
+    },
+    {
+      "id": "qui3-func-01",
+      "phase": 2,
+      "title": "Conceitos e identificação das funções orgânicas",
+      "path": "exercicios/fase-2-funcoes-organicas/qui3-func-01.json"
+    },
+    {
+      "id": "qui3-func-02",
+      "phase": 2,
+      "title": "Identificação e nomenclatura de hidrocarbonetos",
+      "path": "exercicios/fase-2-funcoes-organicas/qui3-func-02.json"
+    },
+    {
+      "id": "qui3-func-03",
+      "phase": 2,
+      "title": "Identificação de álcoois e éteres",
+      "path": "exercicios/fase-2-funcoes-organicas/qui3-func-03.json"
+    },
+    {
+      "id": "qui3-func-04",
+      "phase": 2,
+      "title": "Identificação de aldeídos e cetonas",
+      "path": "exercicios/fase-2-funcoes-organicas/qui3-func-04.json"
+    },
+    {
+      "id": "qui3-func-05",
+      "phase": 2,
+      "title": "Identificação de ácidos carboxílicos e ésteres",
+      "path": "exercicios/fase-2-funcoes-organicas/qui3-func-05.json"
+    },
+    {
+      "id": "qui3-func-06",
+      "phase": 2,
+      "title": "Identificação de aminas e amidas",
+      "path": "exercicios/fase-2-funcoes-organicas/qui3-func-06.json"
+    },
+    {
+      "id": "qui3-func-07",
+      "phase": 2,
+      "title": "Diferenciação das funções orgânicas por grupos funcionais",
+      "path": "exercicios/fase-2-funcoes-organicas/qui3-func-07.json"
+    },
+    {
+      "id": "qui3-func-08",
+      "phase": 2,
+      "title": "Funções orgânicas em substâncias do cotidiano",
+      "path": "exercicios/fase-2-funcoes-organicas/qui3-func-08.json"
+    },
+    {
+      "id": "qui3-isom-01",
+      "phase": 3,
+      "title": "Conceitos fundamentais de isomeria",
+      "path": "exercicios/fase-3-isomeria-reacoes/qui3-isom-01.json"
+    },
+    {
+      "id": "qui3-isom-02",
+      "phase": 3,
+      "title": "Identificação de isômeros planos",
+      "path": "exercicios/fase-3-isomeria-reacoes/qui3-isom-02.json"
+    },
+    {
+      "id": "qui3-isom-03",
+      "phase": 3,
+      "title": "Isomeria geométrica: cis-trans",
+      "path": "exercicios/fase-3-isomeria-reacoes/qui3-isom-03.json"
+    },
+    {
+      "id": "qui3-isom-04",
+      "phase": 3,
+      "title": "Isomeria óptica e identificação de carbonos quirais",
+      "path": "exercicios/fase-3-isomeria-reacoes/qui3-isom-04.json"
+    },
+    {
+      "id": "qui3-isom-05",
+      "phase": 3,
+      "title": "Reações orgânicas de substituição",
+      "path": "exercicios/fase-3-isomeria-reacoes/qui3-isom-05.json"
+    },
+    {
+      "id": "qui3-isom-06",
+      "phase": 3,
+      "title": "Reações orgânicas de adição",
+      "path": "exercicios/fase-3-isomeria-reacoes/qui3-isom-06.json"
+    },
+    {
+      "id": "qui3-isom-07",
+      "phase": 3,
+      "title": "Reações orgânicas de eliminação",
+      "path": "exercicios/fase-3-isomeria-reacoes/qui3-isom-07.json"
+    },
+    {
+      "id": "qui3-isom-08",
+      "phase": 3,
+      "title": "Identificação dos principais tipos de reações orgânicas",
+      "path": "exercicios/fase-3-isomeria-reacoes/qui3-isom-08.json"
+    },
+    {
+      "id": "qui3-bio-01",
+      "phase": 4,
+      "title": "Conceitos e classificação dos polímeros",
+      "path": "exercicios/fase-4-polimeros-bioquimica/qui3-bio-01.json"
+    },
+    {
+      "id": "qui3-bio-02",
+      "phase": 4,
+      "title": "Identificação de polímeros naturais e sintéticos",
+      "path": "exercicios/fase-4-polimeros-bioquimica/qui3-bio-02.json"
+    },
+    {
+      "id": "qui3-bio-03",
+      "phase": 4,
+      "title": "Processos de polimerização e formação de macromoléculas",
+      "path": "exercicios/fase-4-polimeros-bioquimica/qui3-bio-03.json"
+    },
+    {
+      "id": "qui3-bio-04",
+      "phase": 4,
+      "title": "Tipos de plásticos, propriedades e aplicações",
+      "path": "exercicios/fase-4-polimeros-bioquimica/qui3-bio-04.json"
+    },
+    {
+      "id": "qui3-bio-05",
+      "phase": 4,
+      "title": "Reciclagem de polímeros e impactos ambientais",
+      "path": "exercicios/fase-4-polimeros-bioquimica/qui3-bio-05.json"
+    },
+    {
+      "id": "qui3-bio-06",
+      "phase": 4,
+      "title": "Carboidratos: estrutura, classificação e funções biológicas",
+      "path": "exercicios/fase-4-polimeros-bioquimica/qui3-bio-06.json"
+    },
+    {
+      "id": "qui3-bio-07",
+      "phase": 4,
+      "title": "Lipídios: estrutura, propriedades e funções biológicas",
+      "path": "exercicios/fase-4-polimeros-bioquimica/qui3-bio-07.json"
+    },
+    {
+      "id": "qui3-bio-08",
+      "phase": 4,
+      "title": "Proteínas: estrutura, composição e funções biológicas",
+      "path": "exercicios/fase-4-polimeros-bioquimica/qui3-bio-08.json"
+    },
+    {
+      "id": "qui3-eq-01",
+      "phase": 5,
+      "title": "Conceitos de equilíbrio químico e reações reversíveis",
+      "path": "exercicios/fase-5-equilibrio-ph/qui3-eq-01.json"
+    },
+    {
+      "id": "qui3-eq-02",
+      "phase": 5,
+      "title": "Identificação das condições de equilíbrio químico",
+      "path": "exercicios/fase-5-equilibrio-ph/qui3-eq-02.json"
+    },
+    {
+      "id": "qui3-eq-03",
+      "phase": 5,
+      "title": "Cálculo e interpretação da constante de equilíbrio",
+      "path": "exercicios/fase-5-equilibrio-ph/qui3-eq-03.json"
+    },
+    {
+      "id": "qui3-eq-04",
+      "phase": 5,
+      "title": "Princípio de Le Chatelier e deslocamento do equilíbrio",
+      "path": "exercicios/fase-5-equilibrio-ph/qui3-eq-04.json"
+    },
+    {
+      "id": "qui3-eq-05",
+      "phase": 5,
+      "title": "Conceitos de ácidos, bases e escala de pH",
+      "path": "exercicios/fase-5-equilibrio-ph/qui3-eq-05.json"
+    },
+    {
+      "id": "qui3-eq-06",
+      "phase": 5,
+      "title": "Identificação de substâncias ácidas, básicas e neutras",
+      "path": "exercicios/fase-5-equilibrio-ph/qui3-eq-06.json"
+    },
+    {
+      "id": "qui3-eq-07",
+      "phase": 5,
+      "title": "Cálculo e interpretação do pH e pOH",
+      "path": "exercicios/fase-5-equilibrio-ph/qui3-eq-07.json"
+    }
+  ]
+}
