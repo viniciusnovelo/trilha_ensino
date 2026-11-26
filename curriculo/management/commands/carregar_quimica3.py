@@ -112,7 +112,7 @@ class Command(BaseCommand):
             if any(exercise_id not in by_id for exercise_id in ids):
                 raise CommandError(f"Fase {phase['number']}: referência a exercício inexistente.")
 
-        manifest_path = exercises_dir / "manifest.json"
+        manifest_path = exercises_dir / "manifest_quimica3.json"
         manifest = self._load_json(manifest_path, "Manifesto")
         manifest_items = manifest.get("exercises", [])
         if manifest.get("exercise_count") != len(exercises) or len(manifest_items) != len(exercises):
