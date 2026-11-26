@@ -1,0 +1,50 @@
+{
+  "id": "qui2-cin-03",
+  "phase": 4,
+  "exercise_number": 3,
+  "title": "Influência da temperatura na velocidade das reações",
+  "learning_objective": "Relacionar o aumento da temperatura ao aumento da energia cinética média das partículas e à frequência de colisões efetivas.",
+  "context": "Ao elevar a temperatura, as partículas apresentam maior energia cinética média. Em muitas reações, isso aumenta a fração de colisões com energia suficiente para superar a energia de ativação.",
+  "simulation": {
+    "scene": "temperature_kinetics",
+    "parameters": [
+      {
+        "key": "temperature",
+        "label": "Temperatura da reação",
+        "value": 50,
+        "min": 10,
+        "max": 60,
+        "step": 5,
+        "unit": "°C"
+      }
+    ],
+    "description": "Compare o comportamento das partículas na temperatura selecionada com a referência de 25 °C."
+  },
+  "challenge": {
+    "prompt": "Em comparação com a referência de 25 °C, como a temperatura selecionada tende a afetar a velocidade da reação?",
+    "answer": {
+      "type": "dynamic_choice",
+      "formula": "temperature_effect",
+      "choices": [
+        {
+          "value": "slower",
+          "label": "Tende a diminuir a velocidade"
+        },
+        {
+          "value": "similar",
+          "label": "Mantém comportamento semelhante à referência"
+        },
+        {
+          "value": "faster",
+          "label": "Tende a aumentar a velocidade"
+        }
+      ],
+      "hint": "Compare a temperatura atual com 25 °C. Temperaturas mais elevadas tendem a aumentar a energia cinética e a frequência de colisões efetivas.",
+      "explanation": "Na comparação didática, temperatura acima de 25 °C tende a acelerar a reação; abaixo tende a reduzi-la; igual à referência representa condição semelhante. O efeito quantitativo depende da reação."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
