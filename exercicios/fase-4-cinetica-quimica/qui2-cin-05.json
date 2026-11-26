@@ -1,0 +1,51 @@
+{
+  "id": "qui2-cin-05",
+  "phase": 4,
+  "exercise_number": 5,
+  "title": "Influência da superfície de contato na velocidade das reações",
+  "learning_objective": "Relacionar a fragmentação de um sólido ao aumento da superfície de contato disponível para colisões.",
+  "context": "Uma mesma massa de sólido pode reagir em velocidades diferentes conforme seu tamanho de partícula. Fragmentar o material expõe uma área maior ao contato com outros reagentes.",
+  "simulation": {
+    "scene": "surface_kinetics",
+    "parameters": [
+      {
+        "key": "surfaceIndex",
+        "label": "Forma do sólido",
+        "value": 1,
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "unit": "",
+        "note": "1: pó · 2: fragmentos · 3: bloco"
+      }
+    ],
+    "description": "Compare o sólido em pó, em pequenos fragmentos e em um bloco maior."
+  },
+  "challenge": {
+    "prompt": "Como a forma selecionada tende a influenciar a velocidade da reação?",
+    "answer": {
+      "type": "dynamic_choice",
+      "formula": "surface_effect",
+      "choices": [
+        {
+          "value": "fast",
+          "label": "Maior velocidade: maior superfície de contato"
+        },
+        {
+          "value": "medium",
+          "label": "Velocidade intermediária"
+        },
+        {
+          "value": "slow",
+          "label": "Menor velocidade: menor superfície de contato"
+        }
+      ],
+      "hint": "Quanto menores as partículas, maior tende a ser a área total exposta para a mesma massa.",
+      "explanation": "O pó apresenta maior superfície de contato e tende a reagir mais rapidamente. Um bloco apresenta menor área exposta e tende a reagir mais lentamente, mantidas as demais condições."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
