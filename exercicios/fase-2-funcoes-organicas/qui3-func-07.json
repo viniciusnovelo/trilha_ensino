@@ -1,0 +1,75 @@
+{
+  "id": "qui3-func-07",
+  "phase": 2,
+  "exercise_number": 7,
+  "title": "Diferenciação das funções orgânicas por grupos funcionais",
+  "learning_objective": "Identificar funções orgânicas a partir de suas unidades estruturais.",
+  "context": "Reconhecer visualmente o grupo funcional facilita a classificação e a nomenclatura dos compostos orgânicos.",
+  "simulation": {
+    "scene": "functional_group_compare",
+    "parameters": [
+      {
+        "key": "groupIndex",
+        "label": "Grupo funcional",
+        "value": 1,
+        "min": 1,
+        "max": 9,
+        "step": 1,
+        "unit": "",
+        "note": "1 hidrocarboneto · 2 álcool · 3 éter · 4 aldeído · 5 cetona · 6 ácido · 7 éster · 8 amina · 9 amida"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual função corresponde ao grupo destacado?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "hydrocarbon",
+          "label": "Hidrocarboneto."
+        },
+        {
+          "value": "alcohol",
+          "label": "Álcool."
+        },
+        {
+          "value": "ether",
+          "label": "Éter."
+        },
+        {
+          "value": "aldehyde",
+          "label": "Aldeído."
+        },
+        {
+          "value": "ketone",
+          "label": "Cetona."
+        },
+        {
+          "value": "acid",
+          "label": "Ácido carboxílico."
+        },
+        {
+          "value": "ester",
+          "label": "Éster."
+        },
+        {
+          "value": "amine",
+          "label": "Amina."
+        },
+        {
+          "value": "amide",
+          "label": "Amida."
+        }
+      ],
+      "formula": "functional_group",
+      "hint": "Compare a estrutura com –OH, C–O–C, –CHO, >C=O, –COOH, –COO– e –NH₂.",
+      "explanation": "Cada função possui um padrão: hidrocarbonetos têm apenas C e H; álcoois têm hidroxila; éteres C–O–C; aldeídos e cetonas carbonila em posições distintas; ácidos carboxila; ésteres –COO–; aminas grupo amino."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "identificacao-funcional"
+  }
+}
