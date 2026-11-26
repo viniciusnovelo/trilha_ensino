@@ -1,0 +1,39 @@
+{
+  "id": "qui2-est-02",
+  "phase": 1,
+  "exercise_number": 2,
+  "title": "Cálculo de massa molar dos elementos e compostos químicos",
+  "learning_objective": "Calcular a massa molar de substâncias a partir das massas atômicas aproximadas de seus elementos.",
+  "context": "A massa molar é a massa correspondente a 1 mol de entidades. Para um composto, somam-se as contribuições de cada elemento, considerando os índices da fórmula química.",
+  "simulation": {
+    "scene": "molar_mass",
+    "parameters": [
+      {
+        "key": "compoundIndex",
+        "label": "Composto selecionado",
+        "value": 3,
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "unit": "",
+        "note": "1: H₂O · 2: CO₂ · 3: NaCl · 4: CaCO₃"
+      }
+    ],
+    "description": "Selecione um composto e observe como cada elemento contribui para a massa molar."
+  },
+  "challenge": {
+    "prompt": "Qual é a massa molar do composto selecionado?",
+    "answer": {
+      "type": "numeric",
+      "formula": "compound_molar_mass",
+      "display_unit": "g/mol",
+      "tolerance": 0.001,
+      "hint": "Some as massas atômicas multiplicadas pelas quantidades de cada átomo indicadas na fórmula.",
+      "explanation": "Para NaCl: M = 23,0 + 35,5 = 58,5 g/mol. A massa molar de cada substância é obtida somando as massas molares atômicas de sua fórmula."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "quimica-quantitativa"
+  }
+}
