@@ -1,0 +1,32 @@
+{
+  "id": "qui3-org-01",
+  "phase": 1,
+  "exercise_number": 1,
+  "title": "O carbono e suas propriedades químicas",
+  "learning_objective": "Reconhecer propriedades que explicam a diversidade dos compostos orgânicos.",
+  "context": "O carbono pode formar quatro ligações covalentes e ligar-se a outros átomos de carbono, originando cadeias, anéis e ramificações.",
+  "simulation": {
+    "scene": "carbon_properties",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual propriedade do carbono é fundamental para formar grande variedade de cadeias orgânicas?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Tetravalência e capacidade de formar ligações C–C.",
+        "Formar apenas ligações iônicas.",
+        "Possuir sempre carga +4.",
+        "Não formar ligações com hidrogênio."
+      ],
+      "correct": 0,
+      "hint": "Pense na capacidade de completar quatro ligações covalentes e encadear-se com outros carbonos.",
+      "explanation": "A tetravalência permite quatro ligações covalentes; a catenação permite cadeias longas, ramificadas e cíclicas."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "estrutura-carbonica"
+  }
+}
