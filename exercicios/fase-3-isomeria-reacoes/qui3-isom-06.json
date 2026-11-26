@@ -1,0 +1,32 @@
+{
+  "id": "qui3-isom-06",
+  "phase": 3,
+  "exercise_number": 6,
+  "title": "Reações orgânicas de adição",
+  "learning_objective": "Identificar a adição de átomos ou grupos a uma ligação múltipla.",
+  "context": "Na adição a um alceno, a ligação π da dupla é rompida e novos átomos se ligam aos carbonos. Exemplo: eteno + Br₂ → 1,2-dibromoetano.",
+  "simulation": {
+    "scene": "addition_reaction",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Na reação CH₂=CH₂ + Br₂ → CH₂Br–CH₂Br, o que caracteriza a transformação?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Adição: os átomos de bromo se ligam aos carbonos da antiga dupla.",
+        "Substituição: um hidrogênio é trocado por bromo.",
+        "Eliminação: uma molécula pequena é removida e surge uma dupla.",
+        "Neutralização ácido-base."
+      ],
+      "correct": 0,
+      "hint": "A ligação C=C passa a simples e os átomos de bromo são incorporados.",
+      "explanation": "É uma reação de adição: a insaturação é consumida e os átomos de bromo são adicionados aos dois carbonos."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-organico"
+  }
+}
