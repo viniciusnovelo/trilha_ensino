@@ -1,0 +1,38 @@
+{
+  "id": "qui2-est-05",
+  "phase": 1,
+  "exercise_number": 5,
+  "title": "Cálculos estequiométricos básicos",
+  "learning_objective": "Aplicar a proporção molar de uma equação balanceada para calcular a massa de produto formada.",
+  "context": "A decomposição térmica do carbonato de cálcio pode ser representada por CaCO₃ → CaO + CO₂. Usando massas molares aproximadas de 100 g/mol para CaCO₃ e 44 g/mol para CO₂, é possível estimar a massa de gás produzida.",
+  "simulation": {
+    "scene": "stoich_mass",
+    "parameters": [
+      {
+        "key": "massCaCO3",
+        "label": "Massa de CaCO₃",
+        "value": 250,
+        "min": 50,
+        "max": 500,
+        "step": 10,
+        "unit": "g"
+      }
+    ],
+    "description": "Ajuste a massa inicial de CaCO₃ e acompanhe a conversão para a massa teórica de CO₂."
+  },
+  "challenge": {
+    "prompt": "Qual massa teórica de CO₂ é formada, supondo decomposição completa?",
+    "answer": {
+      "type": "numeric",
+      "formula": "co2_mass",
+      "display_unit": "g",
+      "tolerance": 0.005,
+      "hint": "A equação tem proporção 1:1 em mol. Converta a massa inicial em mol e depois use a massa molar do CO₂.",
+      "explanation": "n(CaCO₃) = m/100. A proporção é 1 mol de CaCO₃ para 1 mol de CO₂. Assim, m(CO₂) = m(CaCO₃) × 44/100. Para 250 g, são 110 g."
+    }
+  },
+  "completion": {
+    "xp": 40,
+    "skill": "quimica-quantitativa"
+  }
+}
