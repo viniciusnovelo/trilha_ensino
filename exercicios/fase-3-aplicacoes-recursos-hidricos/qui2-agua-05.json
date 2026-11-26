@@ -1,0 +1,32 @@
+{
+  "id": "qui2-agua-05",
+  "phase": 3,
+  "exercise_number": 5,
+  "title": "Processos de separação e remoção de impurezas no tratamento de água",
+  "learning_objective": "Relacionar processos físicos e físico-químicos à remoção de impurezas durante o tratamento de água.",
+  "context": "A água bruta pode conter partículas suspensas que não sedimentam rapidamente. A coagulação e a floculação favorecem a formação de agregados maiores, que podem ser removidos nas etapas seguintes.",
+  "simulation": {
+    "scene": "water_separation",
+    "parameters": [],
+    "description": "Observe como partículas pequenas se agrupam e são separadas durante o tratamento."
+  },
+  "challenge": {
+    "prompt": "Qual é a principal função da filtração após a decantação?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Reter partículas que permaneceram na água após a sedimentação dos flocos.",
+        "Transformar sais dissolvidos em moléculas de água.",
+        "Aumentar a quantidade de matéria orgânica na água.",
+        "Substituir todas as etapas de desinfecção."
+      ],
+      "correct": 0,
+      "hint": "Após a decantação, ainda podem permanecer partículas menores suspensas; o filtro atua como uma barreira física.",
+      "explanation": "A filtração remove partículas suspensas remanescentes ao fazer a água atravessar um meio filtrante. Ela não substitui a desinfecção, que tem a função de inativar microrganismos."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
