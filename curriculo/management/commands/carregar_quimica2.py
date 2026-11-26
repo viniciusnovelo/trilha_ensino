@@ -23,7 +23,8 @@ class Command(BaseCommand):
         except (OSError, json.JSONDecodeError) as exc:
             raise CommandError(f'Não foi possível ler o JSON: {exc}')
 
-        materia = Materia.objects.filter(slug__icontains='quim').first()
+        quimica1 = Disciplina.objects.filter(slug='quimica-1').first()
+        materia = (quimica1.materia if quimica1 else None) or Materia.objects.filter(slug__icontains='quim').first()
         if materia is None:
             materia = Materia.objects.create(nome='Química', slug='quimica', ordem=2, ativo=True)
         disciplina, _ = Disciplina.objects.get_or_create(
@@ -32,13 +33,19 @@ class Command(BaseCommand):
                 'nome': data.get('module', {}).get('title', 'Química 2'),
                 'descricao': data.get('module', {}).get('description', ''),
                 'materia': materia,
+                'autor': quimica1.autor if quimica1 else None,
+                'tema': quimica1.tema if quimica1 else 'tema-padrao',
                 'ordem': 2,
-                'ativo': False,
+                'ativo': quimica1.ativo if quimica1 else False,
             },
         )
         disciplina.nome = data.get('module', {}).get('title', 'Química 2')
         disciplina.descricao = data.get('module', {}).get('description', '')
         disciplina.materia = materia
+        if quimica1:
+            disciplina.autor = quimica1.autor
+            disciplina.tema = quimica1.tema
+            disciplina.ativo = quimica1.ativo
         disciplina.save()
 
         existing_modules = {m.ordem: m for m in disciplina.modulos.all()}
