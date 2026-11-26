@@ -1,0 +1,32 @@
+{
+  "id": "qui2-eletro-03",
+  "phase": 5,
+  "exercise_number": 3,
+  "title": "Funcionamento básico de pilhas eletroquímicas",
+  "learning_objective": "Compreender como uma pilha converte energia química de uma reação espontânea em energia elétrica.",
+  "context": "Em uma pilha galvânica, a oxidação ocorre no ânodo e a redução no cátodo. Os elétrons percorrem o circuito externo, enquanto a ponte salina permite a movimentação de íons e mantém o equilíbrio de cargas.",
+  "simulation": {
+    "scene": "galvanic_cell",
+    "parameters": [],
+    "description": "Observe os eletrodos, o circuito externo e a ponte salina de uma pilha de Daniell esquemática."
+  },
+  "challenge": {
+    "prompt": "Qual afirmação descreve corretamente o funcionamento básico de uma pilha galvânica?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Converte energia química em elétrica por meio de uma reação redox espontânea.",
+        "Converte energia elétrica em química obrigatoriamente, sem reação redox.",
+        "Os elétrons circulam pela ponte salina e os íons pelo fio metálico.",
+        "A oxidação ocorre no cátodo e a redução no ânodo."
+      ],
+      "correct": 0,
+      "hint": "Na pilha, pense em qual processo ocorre em cada eletrodo e por onde os elétrons passam.",
+      "explanation": "Uma pilha galvânica utiliza uma reação redox espontânea. A oxidação ocorre no ânodo, a redução no cátodo e os elétrons fluem pelo circuito externo do ânodo para o cátodo."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
