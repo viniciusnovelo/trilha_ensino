@@ -116,14 +116,15 @@
                     <div class="min-w-0 flex-1">
                         <div class="mb-1.5 flex items-center justify-between gap-3">
                             <div class="min-w-0">
-                                <p class="text-[9px] uppercase tracking-[.2em] text-white/40 font-black">{{ fase.get_tipo_display }} · FASE {{ fase.ordem }}</p>
-                                <p class="truncate text-sm font-bold text-white/85">{{ fase.titulo }}</p>
+                                <p class="text-[9px] uppercase tracking-[.2em] text-white/40 font-black">{{ fase.modulo.titulo|upper }}</p>
                             </div>
-                            <span id="contador" class="shrink-0 text-xs sm:text-sm text-slate-300 font-black">0 / 0</span>
+                            <span class="shrink-0 text-xs sm:text-sm text-slate-300 font-black">Fase {{ module_phase_order }} de {{ module_phase_total }}</span>
                         </div>
-                        <div class="h-2 bg-black/35 rounded-full overflow-hidden border border-white/5" aria-label="Progresso da fase">
-                            <div id="progress-bar" class="bg-gradient-to-r from-green-400 to-emerald-300 h-full transition-all duration-500" style="width:0%"></div>
+                        <div class="h-2 bg-black/35 rounded-full overflow-hidden border border-white/5" aria-label="Progresso do módulo">
+                            <div class="bg-gradient-to-r from-green-400 to-emerald-300 h-full transition-all duration-500" style="width:{% widthratio module_phase_order module_phase_total 100 %}%"></div>
                         </div>
+                        <span id="contador" class="hidden">0 / 0</span>
+                        <div id="progress-bar" class="hidden"></div>
                     </div>
                 </div>
             </div>
