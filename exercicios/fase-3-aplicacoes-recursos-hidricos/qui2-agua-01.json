@@ -1,0 +1,32 @@
+{
+  "id": "qui2-agua-01",
+  "phase": 3,
+  "exercise_number": 1,
+  "title": "Parâmetros de qualidade da água e sua importância ambiental",
+  "learning_objective": "Reconhecer que a avaliação da qualidade da água depende de parâmetros físicos, químicos e biológicos.",
+  "context": "A água pode parecer transparente e ainda conter substâncias dissolvidas ou microrganismos. Por isso, sua avaliação combina diferentes indicadores e considera o uso pretendido.",
+  "simulation": {
+    "scene": "water_quality",
+    "parameters": [],
+    "description": "Observe alguns grupos de indicadores utilizados na avaliação da qualidade da água."
+  },
+  "challenge": {
+    "prompt": "Por que a qualidade da água não deve ser avaliada apenas pela aparência?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Porque parâmetros físicos, químicos e microbiológicos podem indicar problemas que não são visíveis.",
+        "Porque a transparência garante que a água é potável.",
+        "Porque apenas a temperatura determina a segurança da água.",
+        "Porque a água sem cor não contém substâncias dissolvidas."
+      ],
+      "correct": 0,
+      "hint": "Nem todos os contaminantes alteram cor, odor ou transparência. Pense em microrganismos e substâncias dissolvidas.",
+      "explanation": "A avaliação adequada considera parâmetros como turbidez, pH, oxigênio dissolvido, DBO e indicadores microbiológicos. A aparência isolada não garante potabilidade."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-quimico"
+  }
+}
