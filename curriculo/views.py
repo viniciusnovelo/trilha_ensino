@@ -2595,17 +2595,28 @@ def fase_detalhe(
         id=fase_id,
     )
 
-    # Jogos de Física e Matemática usam players dinâmicos próprios.
-    if fase.modulo.disciplina.slug == 'matematica-1':
+    # Players dinâmicos específicos por jogo.
+    # A verificação de Química precisa vir antes da regra de Física,
+    # pois ambos os jogos utilizam codigo_fonte nas questões.
+    slug_disciplina = fase.modulo.disciplina.slug
+
+    if slug_disciplina == 'quimica-1':
+        from .chem1_views import chem1_player
+        return chem1_player(request, fase_id)
+
+    if slug_disciplina == 'matematica-1':
         from .math1_views import math1_player
         return math1_player(request, fase_id)
-    if fase.modulo.disciplina.slug == 'matematica-2':
+
+    if slug_disciplina == 'matematica-2':
         from .math2_views import math2_player
         return math2_player(request, fase_id)
-    if fase.modulo.disciplina.slug == 'matematica-3':
+
+    if slug_disciplina == 'matematica-3':
         from .math3_views import math3_player
         return math3_player(request, fase_id)
-    if fase.questoes.filter(codigo_fonte__isnull=False).exists():
+
+    if slug_disciplina == 'fisica' and fase.questoes.filter(codigo_fonte__isnull=False).exists():
         from .physics_views import physics_player
         return physics_player(request, fase_id)
 
