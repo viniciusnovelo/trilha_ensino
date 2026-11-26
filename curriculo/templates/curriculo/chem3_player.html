@@ -145,7 +145,7 @@ ${controls?`<div class="params">${controls}</div><div class="control-actions"><b
 <section class="panel math-challenge">
 <div class="muted">DESAFIO</div><h2 class="math-prompt">${safe(e.challenge.prompt)}</h2>
 ${answerHTML}
-<div class="challenge-actions"><button class="btn primary" id="checkBtn">Responder</button><button class="btn soft" id="hintBtn">Ver dica</button><button class="btn" id="solutionBtn">Ver resolução</button><button class="btn" id="nextBtn">Próximo exercício →</button></div>
+<div class="challenge-actions"><button class="btn primary" id="checkBtn">Responder</button><button class="btn soft" id="hintBtn">Ver dica</button><button class="btn" id="solutionBtn">Ver resolução</button><button class="btn" id="nextBtn">${state.data.exercises.findIndex(item=>item.id===e.id)===state.data.exercises.length-1?'Voltar ao mapa':'Próximo exercício →'}</button></div>
 <div class="feedback" id="feedback"></div><div class="solution" id="hintBox"></div><div class="solution" id="solutionBox"></div>
 <p class="muted math-note">Ajuste os parâmetros da simulação antes de responder. Os valores utilizados serão guardados no histórico.</p>
 </section></main>`;
@@ -212,7 +212,7 @@ async function checkAnswer(e){
 function getCookie(name){const value=('; '+document.cookie).split('; '+name+'=');return value.length===2?value.pop().split(';').shift():''}
 function showFeedback(good,msg){const f=$('feedback');f.className='feedback show '+(good?'good':'bad');f.textContent=msg}
 function toggleSolution(){const e=current(),box=$('solutionBox');box.classList.toggle('show');if(!box.classList.contains('show')){box.innerHTML='';return}box.innerHTML='<b>Como pensar:</b> '+safe(e.challenge.answer.hint||'Relacione os dados apresentados à ideia química estudada.')}
-function nextExercise(){const i=state.data.exercises.findIndex(e=>e.id===state.currentId);if(i<state.data.exercises.length-1)loadExercise(state.data.exercises[i+1].id);else toast('Você chegou ao final do módulo atual de Química 3!')}
+function nextExercise(){const i=state.data.exercises.findIndex(e=>e.id===state.currentId);if(i<state.data.exercises.length-1)loadExercise(state.data.exercises[i+1].id);else window.location.href=P.urls.map}
 // Canvas utilities
 function rounded(x,y,w,h,r,fill='#fff',stroke='#dce7eb',lw=1){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.lineWidth=lw;ctx.strokeStyle=stroke;ctx.stroke()}}
 function text(s,x,y,size=12,color=C.ink,weight=700,align='left'){ctx.save();ctx.font=`${weight} ${size}px Inter,system-ui,sans-serif`;ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='middle';ctx.fillText(String(s),x,y);ctx.restore()}
