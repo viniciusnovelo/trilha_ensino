@@ -1,0 +1,58 @@
+{
+  "id": "qui2-est-07",
+  "phase": 1,
+  "exercise_number": 7,
+  "title": "Cálculo das quantidades de produtos e reagentes em excesso",
+  "learning_objective": "Calcular a quantidade de produto e a quantidade remanescente do reagente em excesso.",
+  "context": "Considere novamente 2H₂ + O₂ → 2H₂O. Após identificar o reagente limitante, os coeficientes permitem calcular quanto produto se forma e quanto do outro reagente sobra.",
+  "simulation": {
+    "scene": "product_excess",
+    "parameters": [
+      {
+        "key": "nH2",
+        "label": "Quantidade de H₂",
+        "value": 6,
+        "min": 1,
+        "max": 12,
+        "step": 0.5,
+        "unit": "mol"
+      },
+      {
+        "key": "nO2",
+        "label": "Quantidade de O₂",
+        "value": 4,
+        "min": 1,
+        "max": 10,
+        "step": 0.5,
+        "unit": "mol"
+      }
+    ],
+    "description": "Ajuste as quantidades iniciais e observe o consumo dos reagentes, a formação de água e o excesso remanescente."
+  },
+  "challenge": {
+    "prompt": "Informe a quantidade de H₂O formada e a quantidade do reagente em excesso que permanece.",
+    "answer": {
+      "type": "pair_numeric",
+      "formula": "product_and_excess",
+      "components": [
+        {
+          "key": "water",
+          "label": "Água formada",
+          "unit": "mol"
+        },
+        {
+          "key": "excess",
+          "label": "Reagente em excesso restante",
+          "unit": "mol"
+        }
+      ],
+      "tolerance": 0.01,
+      "hint": "Use a razão 2H₂ : 1O₂ : 2H₂O. Primeiro determine o limitante; depois calcule o reagente consumido e subtraia do total disponível.",
+      "explanation": "Com 6 mol de H₂ são necessários 3 mol de O₂. Formam-se 6 mol de H₂O e sobram 4 − 3 = 1 mol de O₂."
+    }
+  },
+  "completion": {
+    "xp": 45,
+    "skill": "quimica-quantitativa"
+  }
+}
