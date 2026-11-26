@@ -1,0 +1,47 @@
+{
+  "id": "qui3-func-04",
+  "phase": 2,
+  "exercise_number": 4,
+  "title": "Identificação de aldeídos e cetonas",
+  "learning_objective": "Distinguir aldeídos e cetonas pela posição da carbonila.",
+  "context": "Aldeídos possuem carbonila terminal ligada a hidrogênio (–CHO); cetonas têm carbonila entre dois carbonos (R–CO–R’).",
+  "simulation": {
+    "scene": "aldehyde_ketone",
+    "parameters": [
+      {
+        "key": "moleculeIndex",
+        "label": "Molécula",
+        "value": 1,
+        "min": 1,
+        "max": 2,
+        "step": 1,
+        "unit": "",
+        "note": "1 etanal · 2 propanona"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "A molécula selecionada pertence a qual função?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "aldehyde",
+          "label": "Aldeído."
+        },
+        {
+          "value": "ketone",
+          "label": "Cetona."
+        }
+      ],
+      "formula": "aldehyde_or_ketone",
+      "hint": "Carbonila na extremidade caracteriza aldeído; no interior da cadeia, cetona.",
+      "explanation": "No etanal, a carbonila é terminal. Na propanona, o carbono carbonílico liga-se a dois carbonos."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "identificacao-funcional"
+  }
+}
