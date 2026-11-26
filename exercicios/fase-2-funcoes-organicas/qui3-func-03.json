@@ -1,0 +1,47 @@
+{
+  "id": "qui3-func-03",
+  "phase": 2,
+  "exercise_number": 3,
+  "title": "Identificação de álcoois e éteres",
+  "learning_objective": "Diferenciar álcoois e éteres pela posição do oxigênio.",
+  "context": "Álcoois apresentam hidroxila (–OH) ligada a carbono saturado. Éteres apresentam oxigênio entre dois grupos orgânicos (R–O–R’).",
+  "simulation": {
+    "scene": "alcohol_ether",
+    "parameters": [
+      {
+        "key": "moleculeIndex",
+        "label": "Molécula",
+        "value": 1,
+        "min": 1,
+        "max": 2,
+        "step": 1,
+        "unit": "",
+        "note": "1 etanol · 2 dimetil éter"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "A molécula selecionada pertence a qual função?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "alcohol",
+          "label": "Álcool."
+        },
+        {
+          "value": "ether",
+          "label": "Éter."
+        }
+      ],
+      "formula": "alcohol_or_ether",
+      "hint": "Veja se há hidroxila –OH ou oxigênio entre dois grupos carbônicos.",
+      "explanation": "Etanol possui hidroxila ligada à cadeia; dimetil éter apresenta ligação C–O–C."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "identificacao-funcional"
+  }
+}
