@@ -80,7 +80,7 @@ def chem1_player(request, fase_id):
         },
     }
     context = contexto_papel(request)
-    context.update({'fase': fase, 'chem1_payload': safe_payload})
+    context.update({'fase': fase, 'perfil': perfil, 'tema_aplicado': perfil.tema_fundo if papel_efetivo(request) == 'aluno' else fase.modulo.disciplina.tema, 'aparencia_interface': perfil.aparencia_interface, 'chem1_payload': safe_payload})
     return render(request, 'curriculo/chem1_player.html', context)
 
 
