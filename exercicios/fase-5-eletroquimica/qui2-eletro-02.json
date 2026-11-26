@@ -1,0 +1,32 @@
+{
+  "id": "qui2-eletro-02",
+  "phase": 5,
+  "exercise_number": 2,
+  "title": "Identificação de processos de oxidação e redução em reações químicas",
+  "learning_objective": "Identificar qual espécie sofre oxidação em uma reação de deslocamento entre zinco metálico e íons cobre.",
+  "context": "Na reação Zn + Cu²⁺ → Zn²⁺ + Cu, o zinco transfere elétrons para os íons cobre. A análise dos elétrons permite reconhecer a espécie oxidada e a espécie reduzida.",
+  "simulation": {
+    "scene": "redox_identification",
+    "parameters": [],
+    "description": "Observe a transferência de elétrons e a mudança de carga das espécies."
+  },
+  "challenge": {
+    "prompt": "Qual espécie sofre oxidação na reação Zn + Cu²⁺ → Zn²⁺ + Cu?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Zn(s), pois perde dois elétrons e forma Zn²⁺.",
+        "Cu²⁺, pois recebe dois elétrons e forma Cu(s).",
+        "Zn²⁺, pois ganha elétrons.",
+        "Cu(s), pois perde elétrons para o zinco."
+      ],
+      "correct": 0,
+      "hint": "Compare as cargas antes e depois. A espécie que passa de 0 para +2 perdeu dois elétrons.",
+      "explanation": "O Zn(s) passa de número de oxidação 0 para +2, perdendo dois elétrons: Zn → Zn²⁺ + 2e⁻. Portanto, o zinco é oxidado e atua como agente redutor."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-quimico"
+  }
+}
