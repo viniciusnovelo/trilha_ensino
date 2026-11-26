@@ -7,9 +7,13 @@ from . import math2_views
 from . import math3_views
 from . import chem1_views
 from . import chem2_views
+from . import chem3_views
 
 
 urlpatterns = [
+    path('quimica3/fase/<int:fase_id>/', chem3_views.chem3_player, name='chem3_player'),
+    path('quimica3/fase/<int:fase_id>/verificar-resposta/', chem3_views.chem3_check_answer, name='chem3_check_answer'),
+    path('quimica3/fase/<int:fase_id>/finalizar/', chem3_views.chem3_finish_phase, name='chem3_finish_phase'),
     path('quimica2/fase/<int:fase_id>/', chem2_views.chem2_player, name='chem2_player'),
     path('quimica2/fase/<int:fase_id>/verificar-resposta/', chem2_views.chem2_check_answer, name='chem2_check_answer'),
     path('quimica2/fase/<int:fase_id>/finalizar/', chem2_views.chem2_finish_phase, name='chem2_finish_phase'),
