@@ -1,0 +1,32 @@
+{
+  "id": "qui2-eletro-05",
+  "phase": 5,
+  "exercise_number": 5,
+  "title": "Funcionamento básico de baterias e suas aplicações",
+  "learning_objective": "Relacionar o funcionamento de baterias a reações redox e distinguir células primárias e secundárias.",
+  "context": "Baterias são conjuntos de uma ou mais células eletroquímicas. Em células secundárias recarregáveis, a aplicação de energia elétrica pode reverter as reações químicas globais durante a recarga.",
+  "simulation": {
+    "scene": "battery_applications",
+    "parameters": [],
+    "description": "Observe uma bateria esquemática e compare descarga e recarga."
+  },
+  "challenge": {
+    "prompt": "O que caracteriza uma bateria secundária recarregável?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Suas reações eletroquímicas podem ser revertidas por uma etapa de recarga.",
+        "Ela não envolve transferência de elétrons.",
+        "Ela produz energia indefinidamente sem reagentes.",
+        "A recarga ocorre apenas adicionando água ao invólucro."
+      ],
+      "correct": 0,
+      "hint": "Pense no que a corrente elétrica fornecida pelo carregador faz com as reações durante a recarga.",
+      "explanation": "Baterias secundárias permitem ciclos de descarga e recarga. Durante a descarga, a energia química é convertida em elétrica; durante a recarga, uma fonte externa força a reação global no sentido inverso."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-quimico"
+  }
+}
