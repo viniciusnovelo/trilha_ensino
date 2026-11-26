@@ -1,0 +1,51 @@
+{
+  "id": "qui3-org-07",
+  "phase": 1,
+  "exercise_number": 7,
+  "title": "Representação e identificação de estruturas orgânicas",
+  "learning_objective": "Interpretar fórmulas molecular, condensada e em bastão.",
+  "context": "A fórmula molecular informa a quantidade de cada elemento; a condensada agrupa trechos da estrutura; a fórmula em bastão simplifica o esqueleto carbônico.",
+  "simulation": {
+    "scene": "organic_representations",
+    "parameters": [
+      {
+        "key": "representationIndex",
+        "label": "Representação",
+        "value": 1,
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "unit": "",
+        "note": "1 molecular · 2 condensada · 3 bastão"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual informação é destacada pelo tipo de representação selecionado?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "molecular",
+          "label": "Quantidade de átomos de cada elemento."
+        },
+        {
+          "value": "condensed",
+          "label": "Sequência condensada de grupos e ligações."
+        },
+        {
+          "value": "skeletal",
+          "label": "Esqueleto carbônico; carbonos e hidrogênios ligados a C ficam implícitos."
+        }
+      ],
+      "formula": "representation_meaning",
+      "hint": "Veja se aparecem a contagem de átomos, grupos condensados ou o esqueleto em linhas.",
+      "explanation": "A fórmula molecular informa composição; a condensada mostra grupos; a fórmula em bastão simplifica o esqueleto carbônico."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "estrutura-carbonica"
+  }
+}
