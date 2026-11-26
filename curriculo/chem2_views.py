@@ -21,7 +21,7 @@ from gamificacao.models import PerfilUsuario, TentativaFase, RespostaTentativa, 
 def _safe_exercise(question, completed_ids):
     data = json.loads(json.dumps(question.dados_dinamicos or {}))
     answer = data.get('challenge', {}).get('answer', {})
-    for key in ('correct', 'formula', 'tolerance', 'solution'):
+    for key in ('correct', 'formula', 'tolerance', 'solution', 'explanation'):
         answer.pop(key, None)
     data.update({
         'phase_id': question.fase_id,
