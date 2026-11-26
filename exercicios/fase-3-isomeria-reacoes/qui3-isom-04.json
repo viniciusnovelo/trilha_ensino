@@ -1,0 +1,47 @@
+{
+  "id": "qui3-isom-04",
+  "phase": 3,
+  "exercise_number": 4,
+  "title": "Isomeria óptica e identificação de carbonos quirais",
+  "learning_objective": "Identificar um carbono quiral ligado a quatro substituintes diferentes.",
+  "context": "Um carbono tetraédrico ligado a quatro grupos diferentes é um centro quiral; a molécula pode apresentar enantiômeros.",
+  "simulation": {
+    "scene": "optical_isomerism",
+    "parameters": [
+      {
+        "key": "substituentSet",
+        "label": "Conjunto de substituintes",
+        "value": 1,
+        "min": 1,
+        "max": 2,
+        "step": 1,
+        "unit": "",
+        "note": "1 quatro grupos diferentes · 2 dois grupos iguais"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "O carbono central selecionado é quiral?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "yes",
+          "label": "Sim: está ligado a quatro substituintes diferentes."
+        },
+        {
+          "value": "no",
+          "label": "Não: possui pelo menos dois substituintes iguais."
+        }
+      ],
+      "formula": "chiral_carbon",
+      "hint": "Para ser quiral, o carbono tetraédrico precisa estar ligado a quatro grupos diferentes.",
+      "explanation": "Quatro substituintes diferentes caracterizam um centro quiral; se dois forem iguais, essa condição não é satisfeita."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "raciocinio-organico"
+  }
+}
