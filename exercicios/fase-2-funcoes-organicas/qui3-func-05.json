@@ -1,0 +1,47 @@
+{
+  "id": "qui3-func-05",
+  "phase": 2,
+  "exercise_number": 5,
+  "title": "Identificação de ácidos carboxílicos e ésteres",
+  "learning_objective": "Reconhecer os grupos carboxila e éster.",
+  "context": "Ácidos carboxílicos apresentam –COOH. Ésteres apresentam o grupo –COO– entre dois fragmentos carbônicos.",
+  "simulation": {
+    "scene": "acid_ester",
+    "parameters": [
+      {
+        "key": "moleculeIndex",
+        "label": "Molécula",
+        "value": 1,
+        "min": 1,
+        "max": 2,
+        "step": 1,
+        "unit": "",
+        "note": "1 ácido etanoico · 2 etanoato de etila"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual função orgânica está representada?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "carboxylic_acid",
+          "label": "Ácido carboxílico."
+        },
+        {
+          "value": "ester",
+          "label": "Éster."
+        }
+      ],
+      "formula": "acid_or_ester",
+      "hint": "Veja se C=O está junto a –OH ou ligado a outro oxigênio que segue para outra cadeia.",
+      "explanation": "Ácido etanoico contém –COOH; etanoato de etila contém o grupo –COO– característico de éster."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "identificacao-funcional"
+  }
+}
