@@ -998,3 +998,553 @@
           ],
           "correct": 0,
           "hint": "A velocidade relaciona uma variação observável da reação com o intervalo de tempo em que ela ocorre.",
+          "explanation": "A velocidade média pode ser expressa pela variação de concentração dividida pelo intervalo de tempo. Para reagentes consumidos, costuma-se usar o sinal negativo da variação para expressar uma velocidade positiva."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-cin-02",
+      "phase": 4,
+      "exercise_number": 2,
+      "title": "Cálculo e interpretação da velocidade média de uma reação",
+      "learning_objective": "Calcular a velocidade média de consumo de um reagente a partir da variação de concentração e do tempo.",
+      "context": "Durante uma reação, a concentração de um reagente diminui. A velocidade média de consumo pode ser obtida dividindo a diminuição da concentração pelo tempo transcorrido.",
+      "simulation": {
+        "scene": "average_rate",
+        "parameters": [
+          {
+            "key": "deltaC",
+            "label": "Diminuição da concentração",
+            "value": 0.6,
+            "min": 0.1,
+            "max": 1.2,
+            "step": 0.05,
+            "unit": "mol/L"
+          },
+          {
+            "key": "time",
+            "label": "Intervalo de tempo",
+            "value": 30,
+            "min": 5,
+            "max": 120,
+            "step": 5,
+            "unit": "s"
+          }
+        ],
+        "description": "Ajuste a variação de concentração e o tempo para observar a velocidade média."
+      },
+      "challenge": {
+        "prompt": "Qual é a velocidade média de consumo do reagente?",
+        "answer": {
+          "type": "numeric",
+          "formula": "average_reaction_rate",
+          "display_unit": "mol/(L·s)",
+          "tolerance": 0.001,
+          "hint": "Use v = ΔC/Δt para o módulo da diminuição da concentração.",
+          "explanation": "v = 0,60 mol/L ÷ 30 s = 0,020 mol/(L·s). A unidade expressa concentração por unidade de tempo."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "quimica-quantitativa"
+      }
+    },
+    {
+      "id": "qui2-cin-03",
+      "phase": 4,
+      "exercise_number": 3,
+      "title": "Influência da temperatura na velocidade das reações",
+      "learning_objective": "Relacionar o aumento da temperatura ao aumento da energia cinética média das partículas e à frequência de colisões efetivas.",
+      "context": "Ao elevar a temperatura, as partículas apresentam maior energia cinética média. Em muitas reações, isso aumenta a fração de colisões com energia suficiente para superar a energia de ativação.",
+      "simulation": {
+        "scene": "temperature_kinetics",
+        "parameters": [
+          {
+            "key": "temperature",
+            "label": "Temperatura da reação",
+            "value": 50,
+            "min": 10,
+            "max": 60,
+            "step": 5,
+            "unit": "°C"
+          }
+        ],
+        "description": "Compare o comportamento das partículas na temperatura selecionada com a referência de 25 °C."
+      },
+      "challenge": {
+        "prompt": "Em comparação com a referência de 25 °C, como a temperatura selecionada tende a afetar a velocidade da reação?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "temperature_effect",
+          "choices": [
+            {
+              "value": "slower",
+              "label": "Tende a diminuir a velocidade"
+            },
+            {
+              "value": "similar",
+              "label": "Mantém comportamento semelhante à referência"
+            },
+            {
+              "value": "faster",
+              "label": "Tende a aumentar a velocidade"
+            }
+          ],
+          "hint": "Compare a temperatura atual com 25 °C. Temperaturas mais elevadas tendem a aumentar a energia cinética e a frequência de colisões efetivas.",
+          "explanation": "Na comparação didática, temperatura acima de 25 °C tende a acelerar a reação; abaixo tende a reduzi-la; igual à referência representa condição semelhante. O efeito quantitativo depende da reação."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-cin-04",
+      "phase": 4,
+      "exercise_number": 4,
+      "title": "Influência dos catalisadores na velocidade das reações",
+      "learning_objective": "Identificar que catalisadores oferecem um caminho reacional com menor energia de ativação sem serem consumidos globalmente.",
+      "context": "Um catalisador aumenta a velocidade de uma reação ao fornecer um mecanismo alternativo com menor energia de ativação. Ele não altera a variação de entalpia da reação nem a posição do equilíbrio.",
+      "simulation": {
+        "scene": "catalyst_kinetics",
+        "parameters": [
+          {
+            "key": "catalyst",
+            "label": "Catalisador presente?",
+            "value": 1,
+            "min": 0,
+            "max": 1,
+            "step": 1,
+            "unit": "",
+            "note": "0: não · 1: sim"
+          }
+        ],
+        "description": "Compare os perfis de energia da reação com e sem catalisador."
+      },
+      "challenge": {
+        "prompt": "Qual descrição corresponde à condição selecionada?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "catalyst_effect",
+          "choices": [
+            {
+              "value": "without",
+              "label": "Sem catalisador: maior energia de ativação no perfil apresentado"
+            },
+            {
+              "value": "with",
+              "label": "Com catalisador: menor energia de ativação no perfil apresentado"
+            }
+          ],
+          "hint": "Observe qual curva possui o pico de energia mais baixo. O catalisador altera o caminho reacional, não o ΔH global.",
+          "explanation": "Com catalisador, a energia de ativação do caminho apresentado é menor e a reação tende a ocorrer mais rapidamente. O catalisador não é consumido globalmente e não modifica o ΔH da reação."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-cin-05",
+      "phase": 4,
+      "exercise_number": 5,
+      "title": "Influência da superfície de contato na velocidade das reações",
+      "learning_objective": "Relacionar a fragmentação de um sólido ao aumento da superfície de contato disponível para colisões.",
+      "context": "Uma mesma massa de sólido pode reagir em velocidades diferentes conforme seu tamanho de partícula. Fragmentar o material expõe uma área maior ao contato com outros reagentes.",
+      "simulation": {
+        "scene": "surface_kinetics",
+        "parameters": [
+          {
+            "key": "surfaceIndex",
+            "label": "Forma do sólido",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1: pó · 2: fragmentos · 3: bloco"
+          }
+        ],
+        "description": "Compare o sólido em pó, em pequenos fragmentos e em um bloco maior."
+      },
+      "challenge": {
+        "prompt": "Como a forma selecionada tende a influenciar a velocidade da reação?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "surface_effect",
+          "choices": [
+            {
+              "value": "fast",
+              "label": "Maior velocidade: maior superfície de contato"
+            },
+            {
+              "value": "medium",
+              "label": "Velocidade intermediária"
+            },
+            {
+              "value": "slow",
+              "label": "Menor velocidade: menor superfície de contato"
+            }
+          ],
+          "hint": "Quanto menores as partículas, maior tende a ser a área total exposta para a mesma massa.",
+          "explanation": "O pó apresenta maior superfície de contato e tende a reagir mais rapidamente. Um bloco apresenta menor área exposta e tende a reagir mais lentamente, mantidas as demais condições."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-cin-06",
+      "phase": 4,
+      "exercise_number": 6,
+      "title": "Comparação dos fatores que influenciam a velocidade das reações químicas",
+      "learning_objective": "Comparar efeitos combinados de temperatura, catalisador e superfície de contato em uma situação didática.",
+      "context": "A velocidade de uma reação pode ser influenciada por mais de um fator simultaneamente. A cena reúne temperatura, presença de catalisador e forma física do sólido para comparar condições qualitativamente.",
+      "simulation": {
+        "scene": "kinetics_compare",
+        "parameters": [
+          {
+            "key": "temperature",
+            "label": "Temperatura",
+            "value": 50,
+            "min": 10,
+            "max": 60,
+            "step": 5,
+            "unit": "°C"
+          },
+          {
+            "key": "catalyst",
+            "label": "Catalisador presente?",
+            "value": 1,
+            "min": 0,
+            "max": 1,
+            "step": 1,
+            "unit": "",
+            "note": "0: não · 1: sim"
+          },
+          {
+            "key": "surfaceIndex",
+            "label": "Forma do sólido",
+            "value": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1: pó · 2: fragmentos · 3: bloco"
+          }
+        ],
+        "description": "Ajuste os três fatores e observe a classificação qualitativa da condição simulada."
+      },
+      "challenge": {
+        "prompt": "Considerando a combinação selecionada, qual é a classificação qualitativa da velocidade na simulação?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "relative_rate",
+          "choices": [
+            {
+              "value": "low",
+              "label": "Baixa"
+            },
+            {
+              "value": "medium",
+              "label": "Intermediária"
+            },
+            {
+              "value": "high",
+              "label": "Elevada"
+            }
+          ],
+          "hint": "Temperatura mais alta, catalisador e maior superfície de contato favorecem a velocidade. Observe a combinação, não apenas um fator isolado.",
+          "explanation": "A classificação da cena é um modelo didático qualitativo. Ela combina os efeitos dos três fatores; não representa uma lei cinética quantitativa universal. Em uma reação real, o efeito depende do mecanismo e das condições."
+        }
+      },
+      "completion": {
+        "xp": 45,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-cin-07",
+      "phase": 4,
+      "exercise_number": 7,
+      "title": "Análise de situações práticas envolvendo a cinética química",
+      "learning_objective": "Aplicar fatores cinéticos a uma situação cotidiana, relacionando temperatura e superfície de contato à velocidade de reação.",
+      "context": "Um comprimido efervescente reage com água. A fragmentação aumenta a superfície exposta e a temperatura pode aumentar a frequência de colisões efetivas. As condições devem ser controladas conforme as orientações do produto.",
+      "simulation": {
+        "scene": "kinetics_practical",
+        "parameters": [],
+        "description": "Observe o comprimido inteiro e fragmentado e compare a interação com água em diferentes temperaturas."
+      },
+      "challenge": {
+        "prompt": "Qual procedimento tende a acelerar a reação do comprimido efervescente, mantendo as condições de uso seguras?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Fragmentar o comprimido e utilizar água em temperatura mais elevada, dentro das orientações do produto.",
+            "Congelar a água e manter o comprimido inteiro.",
+            "Reduzir a superfície de contato e diminuir a temperatura.",
+            "Retirar toda a água do sistema."
+          ],
+          "correct": 0,
+          "hint": "Considere quais mudanças aumentam a superfície de contato e a energia cinética das partículas.",
+          "explanation": "Fragmentar o comprimido aumenta a superfície de contato; elevar moderadamente a temperatura, respeitando as instruções, tende a aumentar a frequência de colisões efetivas e acelerar a reação."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-eletro-01",
+      "phase": 5,
+      "exercise_number": 1,
+      "title": "Conceitos de oxidação e redução",
+      "learning_objective": "Diferenciar oxidação e redução pela perda e pelo ganho de elétrons.",
+      "context": "Em reações de oxirredução, há transferência de elétrons entre espécies químicas. Oxidação corresponde à perda de elétrons e redução corresponde ao ganho de elétrons.",
+      "simulation": {
+        "scene": "redox_concept",
+        "parameters": [],
+        "description": "Acompanhe a transferência esquemática de elétrons entre duas espécies."
+      },
+      "challenge": {
+        "prompt": "Qual alternativa define corretamente oxidação e redução?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Oxidação é perda de elétrons; redução é ganho de elétrons.",
+            "Oxidação é ganho de elétrons; redução é perda de elétrons.",
+            "Oxidação e redução sempre ocorrem separadamente.",
+            "Ambos os processos significam apenas ganho de oxigênio."
+          ],
+          "correct": 0,
+          "hint": "Lembre-se de OIL RIG: Oxidation Is Loss, Reduction Is Gain (perda e ganho de elétrons).",
+          "explanation": "Oxidação envolve perda de elétrons e aumento do número de oxidação; redução envolve ganho de elétrons e diminuição do número de oxidação. Os dois processos ocorrem simultaneamente em uma reação redox."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-eletro-02",
+      "phase": 5,
+      "exercise_number": 2,
+      "title": "Identificação de processos de oxidação e redução em reações químicas",
+      "learning_objective": "Identificar qual espécie sofre oxidação em uma reação de deslocamento entre zinco metálico e íons cobre.",
+      "context": "Na reação Zn + Cu²⁺ → Zn²⁺ + Cu, o zinco transfere elétrons para os íons cobre. A análise dos elétrons permite reconhecer a espécie oxidada e a espécie reduzida.",
+      "simulation": {
+        "scene": "redox_identification",
+        "parameters": [],
+        "description": "Observe a transferência de elétrons e a mudança de carga das espécies."
+      },
+      "challenge": {
+        "prompt": "Qual espécie sofre oxidação na reação Zn + Cu²⁺ → Zn²⁺ + Cu?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Zn(s), pois perde dois elétrons e forma Zn²⁺.",
+            "Cu²⁺, pois recebe dois elétrons e forma Cu(s).",
+            "Zn²⁺, pois ganha elétrons.",
+            "Cu(s), pois perde elétrons para o zinco."
+          ],
+          "correct": 0,
+          "hint": "Compare as cargas antes e depois. A espécie que passa de 0 para +2 perdeu dois elétrons.",
+          "explanation": "O Zn(s) passa de número de oxidação 0 para +2, perdendo dois elétrons: Zn → Zn²⁺ + 2e⁻. Portanto, o zinco é oxidado e atua como agente redutor."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-eletro-03",
+      "phase": 5,
+      "exercise_number": 3,
+      "title": "Funcionamento básico de pilhas eletroquímicas",
+      "learning_objective": "Compreender como uma pilha converte energia química de uma reação espontânea em energia elétrica.",
+      "context": "Em uma pilha galvânica, a oxidação ocorre no ânodo e a redução no cátodo. Os elétrons percorrem o circuito externo, enquanto a ponte salina permite a movimentação de íons e mantém o equilíbrio de cargas.",
+      "simulation": {
+        "scene": "galvanic_cell",
+        "parameters": [],
+        "description": "Observe os eletrodos, o circuito externo e a ponte salina de uma pilha de Daniell esquemática."
+      },
+      "challenge": {
+        "prompt": "Qual afirmação descreve corretamente o funcionamento básico de uma pilha galvânica?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Converte energia química em elétrica por meio de uma reação redox espontânea.",
+            "Converte energia elétrica em química obrigatoriamente, sem reação redox.",
+            "Os elétrons circulam pela ponte salina e os íons pelo fio metálico.",
+            "A oxidação ocorre no cátodo e a redução no ânodo."
+          ],
+          "correct": 0,
+          "hint": "Na pilha, pense em qual processo ocorre em cada eletrodo e por onde os elétrons passam.",
+          "explanation": "Uma pilha galvânica utiliza uma reação redox espontânea. A oxidação ocorre no ânodo, a redução no cátodo e os elétrons fluem pelo circuito externo do ânodo para o cátodo."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-eletro-04",
+      "phase": 5,
+      "exercise_number": 4,
+      "title": "Identificação do fluxo de elétrons e conversão de energia nas pilhas",
+      "learning_objective": "Identificar o sentido do fluxo de elétrons no circuito externo de uma pilha de Daniell.",
+      "context": "Na pilha de Daniell, o zinco é o ânodo e sofre oxidação; o cobre é o cátodo e recebe elétrons na redução. O fluxo eletrônico externo ocorre do eletrodo de zinco para o de cobre.",
+      "simulation": {
+        "scene": "electron_flow",
+        "parameters": [],
+        "description": "Acompanhe as setas de elétrons no circuito externo e a migração de íons na ponte salina."
+      },
+      "challenge": {
+        "prompt": "Em uma pilha de Daniell Zn/Cu, qual é o sentido do fluxo de elétrons pelo circuito externo?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Do eletrodo de zinco (ânodo) para o eletrodo de cobre (cátodo).",
+            "Do eletrodo de cobre para o eletrodo de zinco.",
+            "Da ponte salina diretamente para o fio, sem passar pelos eletrodos.",
+            "Não há fluxo de elétrons em uma pilha galvânica."
+          ],
+          "correct": 0,
+          "hint": "O zinco sofre oxidação e libera elétrons; o cobre recebe elétrons na redução.",
+          "explanation": "Os elétrons saem do ânodo de zinco, percorrem o circuito externo e chegam ao cátodo de cobre. A ponte salina fecha o circuito por movimento de íons, não pelo transporte de elétrons."
+        }
+      },
+      "completion": {
+        "xp": 35,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-eletro-05",
+      "phase": 5,
+      "exercise_number": 5,
+      "title": "Funcionamento básico de baterias e suas aplicações",
+      "learning_objective": "Relacionar o funcionamento de baterias a reações redox e distinguir células primárias e secundárias.",
+      "context": "Baterias são conjuntos de uma ou mais células eletroquímicas. Em células secundárias recarregáveis, a aplicação de energia elétrica pode reverter as reações químicas globais durante a recarga.",
+      "simulation": {
+        "scene": "battery_applications",
+        "parameters": [],
+        "description": "Observe uma bateria esquemática e compare descarga e recarga."
+      },
+      "challenge": {
+        "prompt": "O que caracteriza uma bateria secundária recarregável?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Suas reações eletroquímicas podem ser revertidas por uma etapa de recarga.",
+            "Ela não envolve transferência de elétrons.",
+            "Ela produz energia indefinidamente sem reagentes.",
+            "A recarga ocorre apenas adicionando água ao invólucro."
+          ],
+          "correct": 0,
+          "hint": "Pense no que a corrente elétrica fornecida pelo carregador faz com as reações durante a recarga.",
+          "explanation": "Baterias secundárias permitem ciclos de descarga e recarga. Durante a descarga, a energia química é convertida em elétrica; durante a recarga, uma fonte externa força a reação global no sentido inverso."
+        }
+      },
+      "completion": {
+        "xp": 30,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-eletro-06",
+      "phase": 5,
+      "exercise_number": 6,
+      "title": "Processos de corrosão e suas causas",
+      "learning_objective": "Relacionar a corrosão de metais à oxidação eletroquímica e avaliar a influência do ambiente.",
+      "context": "A corrosão do ferro é favorecida pela presença de água e oxigênio. Íons dissolvidos, como os presentes em água salgada, podem aumentar a condutividade do meio e acelerar processos corrosivos.",
+      "simulation": {
+        "scene": "corrosion_conditions",
+        "parameters": [
+          {
+            "key": "environmentIndex",
+            "label": "Ambiente",
+            "value": 3,
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "unit": "",
+            "note": "1: seco · 2: úmido · 3: água salgada"
+          }
+        ],
+        "description": "Compare o risco qualitativo de corrosão em ambiente seco, úmido e salino."
+      },
+      "challenge": {
+        "prompt": "Qual é o risco relativo de corrosão na condição selecionada, nesta comparação didática?",
+        "answer": {
+          "type": "dynamic_choice",
+          "formula": "corrosion_risk",
+          "choices": [
+            {
+              "value": "low",
+              "label": "Baixo"
+            },
+            {
+              "value": "medium",
+              "label": "Intermediário"
+            },
+            {
+              "value": "high",
+              "label": "Elevado"
+            }
+          ],
+          "hint": "A presença de água e oxigênio favorece a corrosão; sais dissolvidos podem aumentar a condução iônica.",
+          "explanation": "Na comparação qualitativa proposta, o ambiente seco oferece menor risco; a umidade favorece a corrosão; e a água salgada tende a acelerar o processo por aumentar a condutividade do eletrólito. O resultado real depende de muitos fatores."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "raciocinio-quimico"
+      }
+    },
+    {
+      "id": "qui2-eletro-07",
+      "phase": 5,
+      "exercise_number": 7,
+      "title": "Análise de situações práticas envolvendo oxirredução e corrosão",
+      "learning_objective": "Selecionar estratégias de proteção de metais com base em processos de oxidação e redução.",
+      "context": "Estruturas de aço podem ser protegidas por revestimentos, como a galvanização, ou por proteção catódica com ânodos de sacrifício, que se oxidam preferencialmente.",
+      "simulation": {
+        "scene": "corrosion_protection",
+        "parameters": [],
+        "description": "Observe duas estratégias de proteção: revestimento metálico e ânodo de sacrifício."
+      },
+      "challenge": {
+        "prompt": "Como um ânodo de sacrifício protege uma estrutura de aço?",
+        "answer": {
+          "type": "choice",
+          "choices": [
+            "Um metal mais facilmente oxidável é conectado ao aço e se oxida preferencialmente.",
+            "O aço é obrigado a oxidar mais rapidamente para formar uma camada espessa.",
+            "O ânodo de sacrifício impede qualquer transferência de elétrons no sistema.",
+            "A estrutura é protegida apenas pela remoção de todo o oxigênio do ambiente."
+          ],
+          "correct": 0,
+          "hint": "O metal de sacrifício funciona como espécie que se oxida no lugar da estrutura protegida.",
+          "explanation": "Na proteção catódica, um metal mais facilmente oxidável atua como ânodo de sacrifício. Ele se corrói preferencialmente, mantendo a estrutura de aço como cátodo e reduzindo sua oxidação."
+        }
+      },
+      "completion": {
+        "xp": 40,
+        "skill": "raciocinio-quimico"
+      }
+    }
+  ]
+}
