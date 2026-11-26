@@ -96,9 +96,13 @@ def chem3_player(request, fase_id):
             'map': reverse('trilha', args=[fase.modulo.disciplina_id]),
         },
     }
+    module_phases = list(fase.modulo.fases.order_by('ordem', 'id'))
+    module_phase_order = next((index for index, item in enumerate(module_phases, start=1) if item.pk == fase.pk), 1)
     context = contexto_papel(request)
     context.update({
         'fase': fase, 'perfil': perfil,
+        'module_phase_order': module_phase_order,
+        'module_phase_total': len(module_phases),
         'tema_aplicado': perfil.tema_fundo if papel_efetivo(request) == 'aluno' else fase.modulo.disciplina.tema,
         'aparencia_interface': perfil.aparencia_interface,
         'chem3_payload': payload,
