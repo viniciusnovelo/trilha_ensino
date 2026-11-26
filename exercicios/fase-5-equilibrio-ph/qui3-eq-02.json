@@ -1,0 +1,61 @@
+{
+  "id": "qui3-eq-02",
+  "phase": 5,
+  "exercise_number": 2,
+  "title": "Identificação das condições de equilíbrio químico",
+  "learning_objective": "Identificar equilíbrio pela igualdade entre velocidades direta e inversa.",
+  "context": "A igualdade entre as velocidades direta e inversa caracteriza o equilíbrio dinâmico. Se forem diferentes, a composição ainda evolui em determinado sentido.",
+  "simulation": {
+    "scene": "equilibrium_rates",
+    "parameters": [
+      {
+        "key": "forwardRate",
+        "label": "Velocidade direta",
+        "value": 5,
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "unit": "unid./s",
+        "note": ""
+      },
+      {
+        "key": "reverseRate",
+        "label": "Velocidade inversa",
+        "value": 5,
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "unit": "unid./s",
+        "note": ""
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Com as velocidades selecionadas, qual é a situação do sistema?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "equilibrium",
+          "label": "Em equilíbrio dinâmico."
+        },
+        {
+          "value": "forward",
+          "label": "Avanço líquido no sentido direto."
+        },
+        {
+          "value": "reverse",
+          "label": "Avanço líquido no sentido inverso."
+        }
+      ],
+      "formula": "equilibrium_status",
+      "hint": "Compare as velocidades. O equilíbrio ocorre quando elas têm o mesmo valor.",
+      "explanation": "Quando v direta = v inversa, o sistema está em equilíbrio. Se direta for maior, há avanço líquido direto; se for menor, inverso."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "equilibrio-acido-base"
+  }
+}
