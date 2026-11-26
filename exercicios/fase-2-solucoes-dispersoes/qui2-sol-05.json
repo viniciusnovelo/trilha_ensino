@@ -1,0 +1,56 @@
+{
+  "id": "qui2-sol-05",
+  "phase": 2,
+  "exercise_number": 5,
+  "title": "Cálculo da concentração molar (mol/L)",
+  "learning_objective": "Determinar a concentração em quantidade de matéria a partir da massa do soluto, massa molar e volume da solução.",
+  "context": "A concentração molar, ou quantidade de matéria por volume, é calculada convertendo primeiro a massa do soluto em mols e dividindo pelo volume final da solução.",
+  "simulation": {
+    "scene": "molar_concentration",
+    "parameters": [
+      {
+        "key": "mass",
+        "label": "Massa de NaCl",
+        "value": 11.7,
+        "min": 2,
+        "max": 30,
+        "step": 0.5,
+        "unit": "g"
+      },
+      {
+        "key": "molarMass",
+        "label": "Massa molar do NaCl",
+        "value": 58.5,
+        "min": 40,
+        "max": 80,
+        "step": 0.5,
+        "unit": "g/mol"
+      },
+      {
+        "key": "volume",
+        "label": "Volume da solução",
+        "value": 0.5,
+        "min": 0.1,
+        "max": 1.5,
+        "step": 0.1,
+        "unit": "L"
+      }
+    ],
+    "description": "Ajuste a massa de NaCl, sua massa molar e o volume da solução."
+  },
+  "challenge": {
+    "prompt": "Qual é a concentração molar da solução?",
+    "answer": {
+      "type": "numeric",
+      "formula": "molar_concentration",
+      "display_unit": "mol/L",
+      "tolerance": 0.005,
+      "hint": "Calcule n = m/M e depois divida por V: C = n/V = m/(M·V).",
+      "explanation": "n = 11,7/58,5 = 0,20 mol. C = 0,20/0,50 = 0,40 mol/L."
+    }
+  },
+  "completion": {
+    "xp": 40,
+    "skill": "quimica-quantitativa"
+  }
+}
