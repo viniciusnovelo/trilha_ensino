@@ -15,6 +15,17 @@ body{background:radial-gradient(ellipse at 50% -15%,#70421f 0%,#3b2415 42%,#2117
 .hud{justify-self:end;display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.hud-pill{padding:8px 11px;border-radius:11px;background:rgba(2,6,23,.58);border:1px solid rgba(255,255,255,.12);font-size:11px;font-weight:900;white-space:nowrap}.hud-pill.xp{color:#fde047}.hud-pill.coins{color:#93c5fd}.hud-pill.lives{color:#fda4af}.hud-pill.teacher{color:#c4b5fd}
 .phase-progress{max-width:760px;margin:10px auto 0}.phase-meta{display:flex;justify-content:space-between;color:rgba(255,255,255,.58);font-size:10px;font-weight:850;margin-bottom:6px}.phase-track{height:7px;border-radius:99px;background:rgba(0,0,0,.32);overflow:hidden}.phase-fill{height:100%;width:0;background:linear-gradient(90deg,#facc15,#34d399);border-radius:99px;transition:width .4s}
 .math-layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:22px;align-items:start}
+.chem-navigation{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px;margin:0 0 18px;position:relative;z-index:12}
+.chem-navigation .phase{min-width:0;margin:0;padding:10px;background:var(--panel);border:1px solid var(--panel-border);border-radius:13px}
+.chem-navigation .phase-button{width:100%;display:flex;align-items:center;gap:9px;padding:9px 10px;text-align:left;color:var(--text);background:var(--surface);border:1px solid var(--panel-border);border-radius:9px}
+.chem-navigation .phase-button.active{border-color:var(--accent);background:var(--surface)}
+.chem-navigation .phase-number{display:grid;place-items:center;flex:none;width:27px;height:27px;border-radius:8px;background:var(--accent);color:var(--page);font-weight:900}
+.chem-navigation .phase-title{display:block;color:var(--text);font-size:12px;font-weight:800;line-height:1.3}
+.chem-navigation .phase-sub{display:block;margin-top:3px;color:var(--muted);font-size:10px}
+.chem-navigation .exercise-list{display:flex;flex-wrap:wrap;gap:5px;padding:8px 0 0}
+.chem-navigation .exercise-link{width:auto;max-width:100%;display:flex;align-items:center;gap:6px;padding:6px 8px;color:var(--muted);background:var(--surface);border:1px solid var(--panel-border);border-radius:7px;font-size:10px;text-align:left}
+.chem-navigation .exercise-link.active{color:var(--text);border-color:var(--accent)}
+.chem-navigation .exercise-link.done .exercise-dot{background:var(--green);border-color:var(--green)}
 .panel{min-width:0;background:var(--panel);border:1px solid var(--panel-border);border-radius:22px;padding:clamp(18px,2vw,28px);box-shadow:0 16px 50px #0003;color:var(--text)}
 .math-title{margin:7px 0 12px;font-size:clamp(21px,2vw,27px);line-height:1.25}.math-objective{font-size:14px;line-height:1.5;margin:0 0 15px}.context{background:var(--surface);border:1px solid var(--panel-border);border-radius:12px;padding:13px 15px;color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:14px}
 .math-scene{background:var(--scene);border:1px solid var(--panel-border);border-radius:16px;padding:12px;overflow:hidden}.canvas-top{height:26px;background:transparent;border:0;color:var(--muted);padding:0 2px}.math-scene canvas{display:block;width:100%;height:310px;background:#f7faff;border-radius:5px}
@@ -78,6 +89,7 @@ body[data-appearance="claro"] .transport button{color:#17283b;background:#e2ebf4
 <div class="hud">{% if papel_efetivo == 'aluno' %}{% include 'gamificacao/partials/controle_aparencia.html' %}{% include 'gamificacao/partials/seletor_tema.html' with tema_atual=perfil.tema_fundo %}<span class="hud-pill xp">✦ Nv. {{ perfil.nivel }}</span><span class="hud-pill coins">◎ {{ perfil.moedas }}</span><span class="hud-pill lives">♡ {{ perfil.vidas }}</span>{% else %}<span class="hud-pill teacher">Professor</span>{% endif %}<span class="hud-pill xp" id="xpPill">{{ chem1_payload.xp_total }} XP</span></div>
 </div><div class="phase-progress"><div class="phase-meta"><span class="phase-name">QUÍMICA 1</span><span id="progressText">0 / 33</span></div><div class="phase-track"><div class="phase-fill" id="progressFill"></div></div></div></div></header>
 <main class="shell">
+<nav id="navigation" class="chem-navigation" aria-label="Navegação dos exercícios"></nav>
 <div id="content"><div class="panel empty">Carregando laboratório de Química…</div></div>
 <div class="footer-note">Simulações e desafios do Laboratório de Química · Progresso registrado na plataforma.</div>
 </main><div class="toast" id="toast"></div>
