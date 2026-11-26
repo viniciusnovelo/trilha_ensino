@@ -145,7 +145,7 @@ ${controls?`<div class="params">${controls}</div><div class="control-actions"><b
 <section class="panel math-challenge">
 <div class="muted">DESAFIO</div><h2 class="math-prompt">${safe(e.challenge.prompt)}</h2>
 ${answerHTML}
-<div class="challenge-actions"><button class="btn primary" id="checkBtn">Responder</button><button class="btn soft" id="hintBtn">Ver dica</button><button class="btn" id="solutionBtn">Ver resolução</button><button class="btn" id="nextBtn">Próximo exercício →</button></div>
+<div class="challenge-actions"><button class="btn primary" id="checkBtn">Responder</button><button class="btn soft" id="hintBtn">Ver dica</button><button class="btn" id="solutionBtn">Ver resolução</button><button class="btn" id="nextBtn">${state.data.exercises.findIndex(item=>item.id===e.id)===state.data.exercises.length-1?'Voltar ao mapa':'Próximo exercício →'}</button></div>
 <div class="feedback" id="feedback"></div><div class="solution" id="hintBox"></div><div class="solution" id="solutionBox"></div>
 <p class="muted math-note">Ajuste os parâmetros da simulação antes de responder. Os valores utilizados serão guardados no histórico.</p>
 </section></main>`;
@@ -198,7 +198,7 @@ async function checkAnswer(e){
 function getCookie(name){const value=('; '+document.cookie).split('; '+name+'=');return value.length===2?value.pop().split(';').shift():''}
 function showFeedback(good,msg){const f=$('feedback');f.className='feedback show '+(good?'good':'bad');f.textContent=msg}
 function toggleSolution(){const e=current(),box=$('solutionBox'),a=e.challenge.answer;box.classList.toggle('show');if(!box.classList.contains('show')){box.innerHTML='';return}const v=compute(e);let extra='';if(a.type==='numeric')extra=`<br><b>Resultado para os parâmetros atuais:</b> ${fmt(v,a.digits)} ${safe(a.display_unit||a.unit||'')}.`;else if(a.type==='pair_numeric')extra=`<br><b>Resultados atuais:</b> ${a.components.map((c,i)=>safe(c.label)+' = '+fmt(v[i],a.digits)).join('; ')}.`;else if(a.type==='dynamic_choice')extra=`<br><b>Classificação atual:</b> ${safe(a.choices.find(c=>c.value===v)?.label||'')}.`;else extra=`<br><b>Conceito-chave:</b> ${safe(a.explanation)}`;box.innerHTML=`<b>Resolução:</b> ${safe(a.solution||a.explanation||'Relacione os dados ao conceito estudado.')}${extra}`}
-function nextExercise(){const i=state.data.exercises.findIndex(e=>e.id===state.currentId);if(i<state.data.exercises.length-1)loadExercise(state.data.exercises[i+1].id);else toast('Você chegou ao final do 1º módulo de Química!')}
+function nextExercise(){const i=state.data.exercises.findIndex(e=>e.id===state.currentId);if(i<state.data.exercises.length-1)loadExercise(state.data.exercises[i+1].id);else window.location.href=P.urls.map}
 // Canvas utilities
 function resizeCanvas(){canvas=$('simCanvas');if(!canvas)return;const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(rect.width*dpr));canvas.height=Math.round(360*dpr);canvas.style.height='360px';ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);W=rect.width;H=360;drawCurrent()}
 function gridBg(){ctx.fillStyle='#fbfdff';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#edf1f7';ctx.lineWidth=1;for(let x=20;x<W;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=18;y<H;y+=32){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}}
