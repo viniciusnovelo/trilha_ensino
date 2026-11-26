@@ -1,0 +1,32 @@
+{
+  "id": "qui2-cin-01",
+  "phase": 4,
+  "exercise_number": 1,
+  "title": "Conceito de velocidade das reações químicas",
+  "learning_objective": "Compreender a velocidade de reação como a variação da quantidade ou concentração de reagentes e produtos ao longo do tempo.",
+  "context": "Uma reação pode ser rápida, como uma combustão, ou lenta, como certos processos de corrosão. A velocidade é analisada a partir da mudança na concentração de espécies químicas em determinado intervalo de tempo.",
+  "simulation": {
+    "scene": "kinetics_concept",
+    "parameters": [],
+    "description": "Observe a transformação de reagentes em produtos ao longo do tempo."
+  },
+  "challenge": {
+    "prompt": "Como a velocidade média de uma reação pode ser descrita?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "Pela variação da concentração de reagente ou produto dividida pelo intervalo de tempo.",
+        "Pela massa total do recipiente, independentemente do tempo.",
+        "Apenas pela temperatura inicial da reação.",
+        "Pela cor dos reagentes, sem considerar o tempo."
+      ],
+      "correct": 0,
+      "hint": "A velocidade relaciona uma variação observável da reação com o intervalo de tempo em que ela ocorre.",
+      "explanation": "A velocidade média pode ser expressa pela variação de concentração dividida pelo intervalo de tempo. Para reagentes consumidos, costuma-se usar o sinal negativo da variação para expressar uma velocidade positiva."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "raciocinio-quimico"
+  }
+}
