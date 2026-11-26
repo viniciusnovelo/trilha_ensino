@@ -1,0 +1,47 @@
+{
+  "id": "qui3-func-06",
+  "phase": 2,
+  "exercise_number": 6,
+  "title": "Identificação de aminas e amidas",
+  "learning_objective": "Distinguir aminas e amidas pela ligação do nitrogênio.",
+  "context": "Aminas apresentam nitrogênio ligado a grupos carbônicos e/ou hidrogênio. Amidas têm nitrogênio diretamente ligado ao carbono de uma carbonila.",
+  "simulation": {
+    "scene": "amine_amide",
+    "parameters": [
+      {
+        "key": "moleculeIndex",
+        "label": "Molécula",
+        "value": 1,
+        "min": 1,
+        "max": 2,
+        "step": 1,
+        "unit": "",
+        "note": "1 metilamina · 2 etanamida"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "A estrutura selecionada corresponde a qual função?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "amine",
+          "label": "Amina."
+        },
+        {
+          "value": "amide",
+          "label": "Amida."
+        }
+      ],
+      "formula": "amine_or_amide",
+      "hint": "Verifique se o nitrogênio está diretamente ligado ao carbono de uma carbonila C=O.",
+      "explanation": "Metilamina não possui carbonila adjacente ao nitrogênio; etanamida possui nitrogênio ligado ao carbono carbonílico."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "identificacao-funcional"
+  }
+}
