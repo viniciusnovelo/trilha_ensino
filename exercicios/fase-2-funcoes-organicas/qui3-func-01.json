@@ -1,0 +1,32 @@
+{
+  "id": "qui3-func-01",
+  "phase": 2,
+  "exercise_number": 1,
+  "title": "Conceitos e identificação das funções orgânicas",
+  "learning_objective": "Compreender que grupos funcionais definem famílias de compostos orgânicos.",
+  "context": "Funções orgânicas agrupam substâncias por grupos funcionais ou padrões estruturais que ajudam a reconhecer propriedades e nomenclatura.",
+  "simulation": {
+    "scene": "functional_groups_overview",
+    "parameters": [],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "O que caracteriza uma função orgânica?",
+    "answer": {
+      "type": "choice",
+      "choices": [
+        "A presença de um grupo funcional ou padrão estrutural característico.",
+        "A massa total da substância.",
+        "A cor e o estado físico da amostra.",
+        "Apenas o número de ligações C–C."
+      ],
+      "correct": 0,
+      "hint": "Procure uma parte da estrutura que se repete e identifica uma família.",
+      "explanation": "Funções orgânicas são classificadas por grupos estruturais, como hidroxila, carbonila, carboxila, éster e amino."
+    }
+  },
+  "completion": {
+    "xp": 30,
+    "skill": "identificacao-funcional"
+  }
+}
