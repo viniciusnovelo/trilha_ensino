@@ -1,0 +1,59 @@
+{
+  "id": "qui3-eq-03",
+  "phase": 5,
+  "exercise_number": 3,
+  "title": "Cálculo e interpretação da constante de equilíbrio",
+  "learning_objective": "Calcular Kc a partir das concentrações de reagentes e produtos no equilíbrio.",
+  "context": "Para N₂(g) + 3H₂(g) ⇌ 2NH₃(g), Kc = [NH₃]² / ([N₂][H₂]³). Os coeficientes balanceados tornam-se expoentes.",
+  "simulation": {
+    "scene": "kc_calculation",
+    "parameters": [
+      {
+        "key": "nh3",
+        "label": "[NH₃] no equilíbrio",
+        "value": 2,
+        "min": 0.5,
+        "max": 4,
+        "step": 0.5,
+        "unit": "mol/L",
+        "note": ""
+      },
+      {
+        "key": "n2",
+        "label": "[N₂] no equilíbrio",
+        "value": 1,
+        "min": 0.5,
+        "max": 3,
+        "step": 0.5,
+        "unit": "mol/L",
+        "note": ""
+      },
+      {
+        "key": "h2",
+        "label": "[H₂] no equilíbrio",
+        "value": 2,
+        "min": 0.5,
+        "max": 3,
+        "step": 0.5,
+        "unit": "mol/L",
+        "note": ""
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual é o valor de Kc para as concentrações selecionadas?",
+    "answer": {
+      "type": "numeric",
+      "formula": "kc_ammonia",
+      "display_unit": "(mol/L)⁻²",
+      "tolerance": 0.01,
+      "hint": "Use Kc = [NH₃]² / ([N₂] × [H₂]³), respeitando o expoente 3 do H₂.",
+      "explanation": "Para N₂ + 3H₂ ⇌ 2NH₃, Kc = [NH₃]² / ([N₂][H₂]³). Com 2, 1 e 2 mol/L, Kc = 4/(1×8) = 0,5 na forma em concentração."
+    }
+  },
+  "completion": {
+    "xp": 40,
+    "skill": "equilibrio-acido-base"
+  }
+}
