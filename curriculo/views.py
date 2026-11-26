@@ -2604,6 +2604,10 @@ def fase_detalhe(
         from .chem1_views import chem1_player
         return chem1_player(request, fase_id)
 
+    if slug_disciplina == 'quimica-2':
+        from .chem2_views import chem2_player
+        return chem2_player(request, fase_id)
+
     if slug_disciplina == 'matematica-1':
         from .math1_views import math1_player
         return math1_player(request, fase_id)
