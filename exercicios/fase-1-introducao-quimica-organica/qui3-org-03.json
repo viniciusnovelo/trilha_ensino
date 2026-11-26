@@ -1,0 +1,55 @@
+{
+  "id": "qui3-org-03",
+  "phase": 1,
+  "exercise_number": 3,
+  "title": "Classificação das cadeias carbônicas",
+  "learning_objective": "Classificar cadeias quanto à forma, ramificação, saturação e composição.",
+  "context": "As cadeias podem ser abertas ou fechadas, normais ou ramificadas, saturadas ou insaturadas e homogêneas ou heterogêneas.",
+  "simulation": {
+    "scene": "chain_classification",
+    "parameters": [
+      {
+        "key": "chainType",
+        "label": "Tipo de cadeia",
+        "value": 1,
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "unit": "",
+        "note": "1 aberta normal saturada · 2 aberta ramificada insaturada · 3 cíclica saturada · 4 heterogênea"
+      }
+    ],
+    "description": "Observe a representação e relacione os elementos visuais ao conceito."
+  },
+  "challenge": {
+    "prompt": "Qual descrição corresponde à cadeia apresentada?",
+    "answer": {
+      "type": "dynamic_choice",
+      "choices": [
+        {
+          "value": "open_normal_saturated",
+          "label": "Aberta, normal, saturada e homogênea."
+        },
+        {
+          "value": "open_branched_unsaturated",
+          "label": "Aberta, ramificada, insaturada e homogênea."
+        },
+        {
+          "value": "closed_saturated",
+          "label": "Fechada, saturada e homogênea."
+        },
+        {
+          "value": "open_heterogeneous",
+          "label": "Aberta, normal, saturada e heterogênea."
+        }
+      ],
+      "formula": "chain_classification",
+      "hint": "Observe ciclo, ramificações, ligações múltiplas e presença de heteroátomo entre carbonos.",
+      "explanation": "A classificação considera forma, ramificação, saturação e composição da cadeia."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "estrutura-carbonica"
+  }
+}
