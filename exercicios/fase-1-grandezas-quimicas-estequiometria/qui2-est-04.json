@@ -1,0 +1,38 @@
+{
+  "id": "qui2-est-04",
+  "phase": 1,
+  "exercise_number": 4,
+  "title": "Relações quantitativas em equações químicas",
+  "learning_objective": "Interpretar os coeficientes de uma equação balanceada como proporções em mol entre reagentes e produtos.",
+  "context": "Na síntese da amônia, N₂ + 3H₂ → 2NH₃. Os coeficientes indicam que 1 mol de nitrogênio reage com 3 mol de hidrogênio para formar 2 mol de amônia.",
+  "simulation": {
+    "scene": "stoich_ratio",
+    "parameters": [
+      {
+        "key": "nN2",
+        "label": "Quantidade de N₂",
+        "value": 2.5,
+        "min": 0.5,
+        "max": 6,
+        "step": 0.5,
+        "unit": "mol"
+      }
+    ],
+    "description": "Ajuste a quantidade de N₂ e observe a proporção estequiométrica com H₂ e NH₃."
+  },
+  "challenge": {
+    "prompt": "Quantos mols de NH₃ podem ser formados a partir da quantidade selecionada de N₂, considerando H₂ em excesso?",
+    "answer": {
+      "type": "numeric",
+      "formula": "ammonia_from_nitrogen",
+      "display_unit": "mol",
+      "tolerance": 0.005,
+      "hint": "Compare os coeficientes: 1 mol de N₂ produz 2 mol de NH₃.",
+      "explanation": "Pela equação N₂ + 3H₂ → 2NH₃, a razão N₂:NH₃ é 1:2. Portanto, n(NH₃) = 2 × n(N₂)."
+    }
+  },
+  "completion": {
+    "xp": 35,
+    "skill": "quimica-quantitativa"
+  }
+}
