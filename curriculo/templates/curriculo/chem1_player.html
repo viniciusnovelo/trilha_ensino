@@ -145,7 +145,7 @@ ${controls?`<div class="params">${controls}</div><div class="control-actions"><b
 <section class="panel math-challenge">
 <div class="muted">DESAFIO</div><h2 class="math-prompt">${safe(e.challenge.prompt)}</h2>
 ${answerHTML}
-<div class="challenge-actions"><button class="btn primary" id="checkBtn">Responder</button><button class="btn soft" id="hintBtn">Ver dica</button><button class="btn" id="solutionBtn">Ver resolução</button><button class="btn" id="nextBtn">${state.data.exercises.findIndex(item=>item.id===e.id)===state.data.exercises.length-1?'Voltar ao mapa':'Próximo exercício →'}</button></div>
+<div class="challenge-actions"><button class="btn primary" id="checkBtn">Responder</button><button class="btn soft" id="hintBtn">Ver dica</button><button class="btn" id="solutionBtn" style="display:none">Ver resolução</button><button class="btn" id="nextBtn" style="display:none">${state.data.exercises.findIndex(item=>item.id===e.id)===state.data.exercises.length-1?'Voltar ao mapa':'Próximo exercício →'}</button></div>
 <div class="feedback" id="feedback"></div><div class="solution" id="hintBox"></div><div class="solution" id="solutionBox"></div>
 <p class="muted math-note">Ajuste os parâmetros da simulação antes de responder. Os valores utilizados serão guardados no histórico.</p>
 </section></main>`;
@@ -184,6 +184,8 @@ async function checkAnswer(e){
  try{
   const response=await fetch(P.urls.check,{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
   const result=await response.json();if(!response.ok)throw new Error(result.error||'Não foi possível verificar.');
+  if(result.vidas!==undefined){const lives=document.querySelector('.hud-pill.lives');if(lives)lives.textContent='♡ '+result.vidas;}
+  $('solutionBtn').style.display='inline-block';$('nextBtn').style.display='inline-block';
   showFeedback(result.correct,result.correct?'Resposta correta! '+(result.feedback||''):'Ainda não é isso. '+(result.hint||result.feedback||'Revise a simulação.'));
   if(result.correct){
    const finish=await fetch(P.urls.finish,{method:'POST',headers:{'X-CSRFToken':getCookie('csrftoken')}});
