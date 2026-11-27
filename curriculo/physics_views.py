@@ -155,13 +155,13 @@ def physics_check_answer(request, fase_id):
             consumir_vida=(papel_efetivo(request) == 'aluno'),
         )
         if sem_vidas:
-            return JsonResponse({'error': 'Você está sem vidas. Aguarde a recuperação ou consulte a loja.', 'vidas': vidas_atualizadas, 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada}, status=409)
+            return JsonResponse({'error': 'Você está sem vidas. Aguarde a recuperação ou consulte a loja.', 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada}, status=409)
         correct = resposta_salva.correta
         feedback = resposta_salva.feedback_snapshot
         return JsonResponse({'correct': correct, 'feedback': feedback,
                               'hint': '' if correct else (dynamic['challenge'].get('hint') or answer.get('hint', '')),
                               'expected_display': None if question.tipo_resposta == 'choice' else round(expected_value, answer.get('digits', 2)),
-                              'unit': answer.get('display_unit', answer.get('unit', ''))})
+                              'unit': answer.get('display_unit', answer.get('unit', '')), 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada})
     except (KeyError, TypeError, ValueError) as exc:
         return JsonResponse({'error': f'Resposta inválida: {exc}'}, status=400)
 
