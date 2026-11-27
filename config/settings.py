@@ -1,6 +1,9 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,31 +12,45 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # AMBIENTE
 # ============================================================
 
+EM_RENDER = bool(os.getenv('RENDER'))
+
 SECRET_KEY = os.getenv(
     'DJANGO_SECRET_KEY',
     'dev-only-chave-nao-usar-em-producao',
 )
+if EM_RENDER and SECRET_KEY == 'dev-only-chave-nao-usar-em-producao':
+    raise ImproperlyConfigured(
+        'Configure DJANGO_SECRET_KEY nas variáveis de ambiente do Render.'
+    )
 
 DEBUG = os.getenv(
     'DJANGO_DEBUG',
-    '1',
-).lower() in (
-    '1',
-    'true',
-    'yes',
-    'on',
-)
+    '0' if EM_RENDER else '1',
+).lower() in ('1', 'true', 'yes', 'on')
 
 hosts_configurados = os.getenv(
     'DJANGO_ALLOWED_HOSTS',
     '127.0.0.1,localhost',
 )
-
 ALLOWED_HOSTS = [
     host.strip()
     for host in hosts_configurados.split(',')
     if host.strip()
 ]
+
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',')
+    if origin.strip()
+]
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(
+        f'https://{RENDER_EXTERNAL_HOSTNAME}'
+    )
 
 
 # ============================================================
@@ -59,6 +76,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -95,12 +113,29 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # BANCO DE DADOS
 # ============================================================
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        )
     }
-}
+elif EM_RENDER:
+    raise ImproperlyConfigured(
+        'Configure DATABASE_URL para conectar o Django ao Neon.'
+    )
+else:
+    # SQLite continua sendo usado no desenvolvimento local.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # ============================================================
@@ -150,6 +185,18 @@ USE_TZ = True
 # ============================================================
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': (
+            'whitenoise.storage.CompressedManifestStaticFilesStorage'
+        ),
+    },
+}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -168,10 +215,12 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 # ============================================================
-# SEGURANÇA CONDICIONAL
+# SEGURANÇA
 # ============================================================
 
 if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
