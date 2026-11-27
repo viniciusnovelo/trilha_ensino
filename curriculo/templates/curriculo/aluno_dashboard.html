@@ -103,6 +103,143 @@
             background-size: 42px 42px;
             mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
         }
+
+        /* Identidade Trilha Ensino: gamer moderno escuro, com prioridade mobile */
+        :root { color-scheme: dark; }
+        body {
+            background-color: #070b16;
+            color: #f8fafc;
+            -webkit-font-smoothing: antialiased;
+        }
+        .catalogo-card {
+            background: linear-gradient(145deg, rgba(17,25,48,.94), rgba(10,16,32,.94));
+            border: 1px solid rgba(148,163,184,.13);
+            box-shadow: 0 18px 48px rgba(0,0,0,.22);
+        }
+        .catalogo-card:hover {
+            border-color: rgba(129,140,248,.35);
+            box-shadow: 0 22px 58px rgba(30,41,90,.28);
+        }
+        .game-mini {
+            background: rgba(8,14,29,.72);
+            border-color: rgba(148,163,184,.12);
+        }
+        .game-mini:hover {
+            background: rgba(99,102,241,.10);
+            border-color: rgba(129,140,248,.32);
+        }
+        .progress-track { background: rgba(2,6,23,.72); }
+        .mobile-dock { display: none; }
+
+        @media (max-width: 640px) {
+            body { background-attachment: fixed; }
+            main.max-w-7xl { padding: 1.15rem 1rem 7.25rem; }
+            header .max-w-7xl { padding: .8rem 1rem; }
+            header h1 { font-size: 1.35rem; line-height: 1.25; }
+            header p { max-width: 100%; }
+            header .flex.flex-wrap.items-center.justify-between.gap-4 {
+                align-items: flex-start;
+                gap: .7rem;
+            }
+            header .flex.items-center.gap-2.shrink-0 {
+                width: 100%;
+                justify-content: flex-end;
+                flex-wrap: wrap;
+            }
+            main section.grid.lg\:grid-cols-\[1fr_auto\] {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+                gap: .85rem;
+                margin-bottom: 1.5rem;
+            }
+            main section.grid.lg\:grid-cols-\[1fr_auto\] > .catalogo-card:first-child {
+                padding: 1.1rem;
+                border-radius: 1.35rem;
+            }
+            main section.grid.lg\:grid-cols-\[1fr_auto\] > .catalogo-card:first-child > .flex.flex-wrap {
+                display: block;
+            }
+            .dashboard-stats {
+                display: grid !important;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: .5rem;
+                margin-top: 1rem;
+            }
+            .dashboard-stats > div {
+                min-width: 0;
+                padding: .7rem .55rem;
+                border-radius: .9rem;
+            }
+            .dashboard-stats p:last-child { font-size: 1.05rem; }
+            main section.grid.lg\:grid-cols-\[1fr_auto\] > a {
+                min-width: 0;
+                padding: 1rem 1.1rem;
+                border-radius: 1.2rem;
+            }
+            main h2 { overflow-wrap: anywhere; }
+            main .text-3xl { font-size: 1.65rem; line-height: 1.2; }
+            main section.grid.md\:grid-cols-2 {
+                grid-template-columns: minmax(0, 1fr);
+                gap: .9rem;
+            }
+            .materia-shell { border-radius: 1.35rem; padding: 1rem; }
+            .materia-shell h3 { font-size: 1.35rem; line-height: 1.2; }
+            .materia-shell .grid.grid-cols-3 { gap: .4rem; }
+            .materia-shell .grid.grid-cols-3 > div { padding: .55rem .5rem; }
+            .materia-shell .grid.grid-cols-3 p:last-child { font-size: 1rem; }
+            .materia-shell .mt-5.flex.flex-wrap.gap-2 { display: grid; grid-template-columns: minmax(0, 1fr); }
+            .materia-shell .game-mini { min-width: 0; width: 100%; padding: .75rem; }
+            .materia-shell .flex.items-center.gap-3 { min-width: 0; }
+            .materia-shell .materia-index { width: 2.8rem; height: 2.8rem; }
+            .mobile-dock {
+                position: fixed;
+                z-index: 70;
+                left: .75rem;
+                right: .75rem;
+                bottom: max(.65rem, env(safe-area-inset-bottom));
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: .25rem;
+                padding: .45rem;
+                border: 1px solid rgba(148,163,184,.18);
+                border-radius: 1.2rem;
+                background: rgba(8,13,27,.94);
+                box-shadow: 0 12px 36px rgba(0,0,0,.48);
+                backdrop-filter: blur(18px);
+            }
+            .mobile-dock a {
+                display: flex;
+                min-width: 0;
+                min-height: 3.2rem;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: .22rem;
+                border-radius: .85rem;
+                color: rgba(226,232,240,.65);
+                font-size: .65rem;
+                font-weight: 800;
+                letter-spacing: .01em;
+                text-decoration: none;
+            }
+            .mobile-dock a:active,
+            .mobile-dock a:focus-visible {
+                color: #c4b5fd;
+                background: rgba(99,102,241,.16);
+                outline: 1px solid rgba(129,140,248,.35);
+            }
+            .mobile-dock svg { width: 1.15rem; height: 1.15rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+
     </style>
 </head>
 
@@ -196,7 +333,7 @@
         </header>
 
 
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 py-7 sm:py-10">
+        <main id="inicio" class="max-w-7xl mx-auto px-4 sm:px-6 py-7 sm:py-10">
 
 
             <section class="grid lg:grid-cols-[1fr_auto] gap-5 items-stretch mb-8">
@@ -221,7 +358,7 @@
                         </div>
 
 
-                        <div class="flex gap-2">
+                        <div class="dashboard-stats flex gap-2">
 
                             <div class="rounded-2xl border border-yellow-400/15 bg-yellow-500/8 px-4 py-3 min-w-[88px]">
                                 <p class="text-[9px] uppercase tracking-widest text-white/35 font-black">
@@ -397,7 +534,7 @@
                         Catálogo
                     </p>
 
-                    <h2 class="text-3xl sm:text-4xl font-black mt-1">
+                    <h2 id="materias" class="text-3xl sm:text-4xl font-black mt-1">
                         Escolha uma matéria
                     </h2>
 
@@ -650,6 +787,26 @@
         </main>
 
     </div>
+
+
+        <nav class="mobile-dock" aria-label="Navegação principal">
+            <a href="#inicio" aria-label="Início">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+                <span>Início</span>
+            </a>
+            <a href="#materias" aria-label="Matérias">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 1 4 16.5z"/><path d="M4 16.5A2.5 2.5 0 0 1 6.5 14H20M8 7h8M8 10h6"/></svg>
+                <span>Matérias</span>
+            </a>
+            <a href="{% url 'loja' %}" aria-label="Loja">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h18l-1.5 12h-15z"/><path d="M8 8a4 4 0 0 1 8 0M9 12v.01M15 12v.01"/></svg>
+                <span>Loja</span>
+            </a>
+            <a href="{% url 'perfil_gamificacao' %}" aria-label="Perfil">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                <span>Perfil</span>
+            </a>
+        </nav>
 
 </body>
 </html>
