@@ -2701,3 +2701,77 @@ class RevisaoFaseAutenticacaoTests(AutenticacaoBaseTests):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "gamificacao/revisao_fase.html")
 
+class ConsumoVidasRespostaTests(AutenticacaoBaseTests):
+    def setUp(self):
+        self.aluno = self.criar_usuario(username="aluno_vidas")
+        materia = Materia.objects.create(
+            nome="Matéria de Vidas",
+            slug="materia-vidas",
+        )
+        disciplina = Disciplina.objects.create(
+            nome="Trilha de Vidas",
+            slug="trilha-vidas",
+            materia=materia,
+            ativo=True,
+        )
+        modulo = Modulo.objects.create(
+            disciplina=disciplina,
+            titulo="Módulo de Vidas",
+            ordem=1,
+        )
+        self.fase = Fase.objects.create(
+            modulo=modulo,
+            titulo="Fase de Vidas",
+            ordem=1,
+        )
+        self.questao = Questao.objects.create(
+            fase=self.fase,
+            enunciado="Qual alternativa está correta?",
+        )
+        self.opcao_errada = Opcao.objects.create(
+            questao=self.questao,
+            texto="Alternativa incorreta",
+            e_correta=False,
+        )
+        self.opcao_correta = Opcao.objects.create(
+            questao=self.questao,
+            texto="Alternativa correta",
+            e_correta=True,
+        )
+        self.client.login(
+            username=self.aluno.username,
+            password="SenhaForte123!",
+        )
+
+    def responder(self, opcao):
+        return self.client.post(
+            reverse("verificar_resposta", args=[self.fase.pk]),
+            data=json.dumps({
+                "questao_id": self.questao.pk,
+                "opcao_id": opcao.pk,
+            }),
+            content_type="application/json",
+        )
+
+    def test_resposta_incorreta_consume_uma_vida_apenas_uma_vez(self):
+        primeira = self.responder(self.opcao_errada)
+        self.assertEqual(primeira.status_code, 200)
+        self.assertFalse(primeira.json()["correta"])
+        self.assertEqual(primeira.json()["vidas"], 4)
+
+        repetida = self.responder(self.opcao_errada)
+        self.assertEqual(repetida.status_code, 200)
+        self.assertTrue(repetida.json()["resposta_ja_registrada"])
+        self.assertEqual(repetida.json()["vidas"], 4)
+
+        alterada = self.responder(self.opcao_correta)
+        self.assertEqual(alterada.status_code, 409)
+        self.aluno.perfil.refresh_from_db()
+        self.assertEqual(self.aluno.perfil.vidas, 4)
+
+    def test_resposta_correta_nao_consume_vida(self):
+        response = self.responder(self.opcao_correta)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json()["correta"])
+        self.assertEqual(response.json()["vidas"], 5)
+
