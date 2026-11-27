@@ -216,6 +216,8 @@ def chem3_check_answer(request, fase_id):
 def chem3_finish_phase(request, fase_id):
     fase = get_object_or_404(Fase, pk=fase_id, modulo__disciplina__slug='quimica-3')
     attempt_id = request.session.get(f'chem3_attempt_{fase.pk}')
+    if not fase_esta_liberada(request, fase):
+        return JsonResponse({'error': 'Esta fase ainda não está liberada.'}, status=403)
     if not attempt_id:
         return JsonResponse({'error': 'Tentativa não encontrada.'}, status=409)
     attempt = get_object_or_404(
