@@ -2774,6 +2774,7 @@ class ConsumoVidasRespostaTests(AutenticacaoBaseTests):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.json()["correta"])
         self.assertEqual(response.json()["vidas"], 5)
+
     def test_finalizar_fase_nao_desconta_vida_uma_segunda_vez(self):
         resposta = self.responder(self.opcao_errada)
         self.assertEqual(resposta.status_code, 200)
