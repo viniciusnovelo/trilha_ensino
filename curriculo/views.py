@@ -2838,25 +2838,6 @@ def verificar_resposta(
         .first()
     )
 
-    if (
-        usuario_e_aluno(request)
-        and perfil.vidas <= 0
-        and not (
-            progresso
-            and progresso.concluida
-        )
-    ):
-        return JsonResponse(
-            {
-                'status': 'erro',
-                'msg': (
-                    'Você está sem vidas. '
-                    'Recarregue na loja para continuar.'
-                ),
-            },
-            status=409,
-        )
-
     questao = get_object_or_404(
         Questao,
         id=questao_id,
@@ -2924,6 +2905,25 @@ def verificar_resposta(
                 if opcao_correta else None
             ),
         })
+
+    if (
+        usuario_e_aluno(request)
+        and perfil.vidas <= 0
+        and not (
+            progresso
+            and progresso.concluida
+        )
+    ):
+        return JsonResponse(
+            {
+                'status': 'erro',
+                'msg': (
+                    'Você está sem vidas. '
+                    'Recarregue na loja para continuar.'
+                ),
+            },
+            status=409,
+        )
 
     if usuario_e_aluno(request) and not correta and not (progresso and progresso.concluida):
         with transaction.atomic():
@@ -2995,6 +2995,10 @@ def finalizar_fase(
     if fase.modulo.disciplina.slug == 'quimica-2':
         from .chem2_views import chem2_finish_phase
         return chem2_finish_phase(request, fase_id)
+
+    if fase.modulo.disciplina.slug == 'quimica-3':
+        from .chem3_views import chem3_finish_phase
+        return chem3_finish_phase(request, fase_id)
 
     if not fase_esta_liberada(
         request,
@@ -3468,18 +3472,6 @@ def finalizar_fase(
                 proximo_modulo_titulo = proximo_modulo.titulo
 
         campos_perfil_atualizados = []
-
-        if (
-            not aprovado
-            and not fase_ja_concluida
-        ):
-            perfil.vidas = max(
-                0,
-                perfil.vidas - 1,
-            )
-            campos_perfil_atualizados.append(
-                'vidas'
-            )
 
         if (
             recompensa_xp
