@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: trilha-ensino
+    runtime: python
+    plan: free
+    branch: feat/modulo3-fisica
+    buildCommand: bash build.sh
+    startCommand: python manage.py migrate --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "false"
+      - key: DATABASE_URL
+        sync: false
