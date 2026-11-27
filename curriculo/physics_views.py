@@ -14,6 +14,7 @@ from .rewards import conceder_moedas_por_questao
 from .views import fase_esta_liberada, contexto_papel, papel_efetivo
 from .physics_engine import calculate, is_correct
 from gamificacao.models import PerfilUsuario, TentativaFase, RespostaTentativa, ProgressoFase
+from gamificacao.vidas import registrar_resposta_com_vida
 
 
 def _question_payload(question):
@@ -137,9 +138,8 @@ def physics_check_answer(request, fase_id):
             feedback = ('Resposta correta.' if correct else answer.get('solution', answer.get('explanation', 'Revise a relação física e tente novamente.')))
             chosen_option = None
         with transaction.atomic():
-            RespostaTentativa.objects.update_or_create(
-                tentativa=attempt, questao=question,
-                defaults={
+            resposta_salva, vidas_atualizadas, resposta_criada, sem_vidas = registrar_resposta_com_vida(
+            attempt, question, {
                     'opcao_escolhida': chosen_option,
                     'texto_questao_snapshot': question.enunciado,
                     'texto_opcao_snapshot': chosen_option.texto if chosen_option else '',
@@ -150,7 +150,12 @@ def physics_check_answer(request, fase_id):
                     'parametros_snapshot': parameters,
                     'feedback_snapshot': feedback,
                 },
-            )
+            consumir_vida=(papel_efetivo(request) == 'aluno'),
+        )
+        if sem_vidas:
+            return JsonResponse({'error': 'Você está sem vidas. Aguarde a recuperação ou consulte a loja.', 'vidas': vidas_atualizadas, 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada}, status=409)
+        correct = resposta_salva.correta
+        feedback = resposta_salva.feedback_snapshot
         return JsonResponse({'correct': correct, 'feedback': feedback,
                               'hint': '' if correct else (dynamic['challenge'].get('hint') or answer.get('hint', '')),
                               'expected_display': None if question.tipo_resposta == 'choice' else round(expected_value, answer.get('digits', 2)),
