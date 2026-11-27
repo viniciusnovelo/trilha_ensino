@@ -4,7 +4,7 @@ from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -19,9 +19,11 @@ from gamificacao.vidas import registrar_resposta_com_vida
 @ensure_csrf_cookie
 def math2_player(request, fase_id):
     fase = get_object_or_404(Fase.objects.select_related("modulo__disciplina"), pk=fase_id, modulo__disciplina__slug="matematica-2")
-    if not fase_esta_liberada(request, fase): return HttpResponseForbidden("Esta fase ainda não está liberada.")
+    if not fase_esta_liberada(request, fase): return redirect('trilha', trilha_id=fase.modulo.disciplina_id)
     question = get_object_or_404(Questao.objects.prefetch_related("opcoes"), fase=fase)
     perfil, _ = PerfilUsuario.objects.get_or_create(usuario=request.user)
+    if papel_efetivo(request) == 'aluno' and perfil.vidas <= 0 and not ProgressoFase.objects.filter(perfil=perfil, fase=fase, concluida=True).exists():
+        return redirect('trilha', trilha_id=fase.modulo.disciplina_id)
     attempt = TentativaFase.objects.create(perfil=perfil,fase=fase,fase_titulo_snapshot=fase.titulo,total_questoes=1)
     request.session["math2_attempt_id"], request.session["math2_phase_id"] = attempt.pk, fase.pk
     phases = list(fase.modulo.fases.order_by("ordem","id"))
