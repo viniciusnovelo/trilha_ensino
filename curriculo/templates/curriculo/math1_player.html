@@ -84,7 +84,8 @@ body[data-appearance="claro"] .transport button{color:#17283b;background:#e2ebf4
 <main class="shell"><div class="layout"><section id="content"><div class="content-card empty">Carregando laboratório de Matemática…</div></section></div><div class="footer-note">Progresso, tentativas e XP registrados na plataforma · Simulações didáticas esquemáticas.</div></main></div><div class="toast" id="toast"></div>
 {{ math1_payload|json_script:"math1-data" }}
 <script>
-const $=id=>document.getElementById(id);const state={data:null,currentId:null,params:{},selectedChoice:null,playing:true,time:0,lastFrame:0,speed:1,completed:new Set(),xp:0,raf:0};
+const $=id=>document.getElementById(id);let solutionText = '';
+const state={data:null,currentId:null,params:{},selectedChoice:null,playing:true,time:0,lastFrame:0,speed:1,completed:new Set(),xp:0,raf:0};
 const colors={blue:'#3978e8',cyan:'#24b8c7',green:'#159b78',amber:'#e6a23c',red:'#d95d67',ink:'#26364f',muted:'#7d8ba0',grid:'#e9eef5',pale:'#f0f5fc'};
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function fmt(v,d=2){if(!Number.isFinite(v))return '—';return Number(v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})}
@@ -104,7 +105,7 @@ function decimals(step){const s=String(step);return s.includes('.')?s.split('.')
 function clearFeedback(){const f=$('feedback');if(f){f.className='feedback';f.innerHTML=''}const c=$('checkBtn');if(c){c.disabled=false;c.textContent='Verificar resposta'}}
 function togglePlay(){state.playing=!state.playing;updateTransport()}function updateTransport(){const b=$('playBtn');if(!b)return;b.textContent=state.playing?'Ⅱ Pausar':'▶ Continuar';$('sceneStatus').textContent=state.playing?'Animação em execução':'Animação pausada'}
 function toggleHint(){const e=current(),box=$('hintBox');box.classList.toggle('show');box.innerHTML=box.classList.contains('show')?`<b>Dica:</b> ${safe(e.challenge.answer.hint||'Observe as relações entre as grandezas apresentadas na simulação.')}`:''}
-function toggleSolution(){const e=current(),box=$('solutionBox'),a=e.challenge.answer;box.classList.toggle('show');if(!box.classList.contains('show')){box.innerHTML='';return}const detail=a.type==='choice'?(a.explanation||''):'';box.innerHTML=`<b>Resolução:</b> ${safe(a.solution||a.explanation||'Relacione os dados ao conceito estudado.')} ${safe(detail)}`}
+function toggleSolution(){const box=$('solutionBox');box.classList.toggle('show');if(!box.classList.contains('show')){box.innerHTML='';return}box.innerHTML='<b>Resolução:</b> '+safe(solutionText||'A resolução ficará disponível após o envio da resposta.');}
 function nextExercise(){if(state.data.phase.next_phase_id){window.location.href='/fase/'+state.data.phase.next_phase_id+'/'}else{window.location.href='/trilha/'+state.data.phase.discipline_id+'/'}}
 function val(k,def=0){return Number(state.params[k]??def)}function rad(d){return d*Math.PI/180}
 function computeAnswer(e){const p=state.params,a=e.challenge.answer;switch(a.formula){
@@ -125,6 +126,7 @@ async function checkAnswer(e){
   const result=await response.json();if(!response.ok){toast(result.error||'Não foi possível validar a resposta.');return}
   if(result.vidas!==undefined){const lives=document.querySelector('.hud-pill.lives');if(lives)lives.textContent='♡ '+result.vidas;}
   $('solutionBtn').style.display='inline-block';
+  solutionText = result.solution || result.feedback || '';
   $('checkBtn').disabled=true; $('checkBtn').textContent='Resposta registrada';
   const f=$('feedback');f.className='feedback show '+(result.correct?'good':'bad');
   let msg=result.feedback||'';if(result.expected_display!==null)msg+=' Resultado calculado: '+fmt(result.expected_display,a.digits)+' '+(result.unit||'')+'.';
