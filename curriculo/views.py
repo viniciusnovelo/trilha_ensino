@@ -3182,6 +3182,19 @@ def finalizar_fase(
             status=400,
         )
 
+    # A finalização só aceita as alternativas efetivamente verificadas
+    # pelo servidor; o navegador não pode fabricar acertos no envio final.
+    respostas_verificadas = request.session.get(
+        f'respostas_verificadas_fase_{fase.id}', {}
+    )
+    for questao_id, opcao_id in respostas_por_questao.items():
+        registro = respostas_verificadas.get(str(questao_id))
+        if not registro or int(registro.get('opcao_id', 0)) != opcao_id:
+            return JsonResponse({
+                'status': 'erro',
+                'msg': 'Há respostas que ainda não foram verificadas. Responda novamente.',
+            }, status=400)
+
     acertos = 0
 
     respostas_validadas = []
@@ -3563,6 +3576,8 @@ def finalizar_fase(
             aprovado
         )
     )
+
+    request.session.pop(f'respostas_verificadas_fase_{fase.id}', None)
 
     return JsonResponse(
         {
