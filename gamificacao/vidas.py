@@ -1,6 +1,6 @@
 """Registro atômico de respostas e consumo de vidas dos alunos."""
 from django.db import transaction
-from .models import PerfilUsuario, TentativaFase, RespostaTentativa
+from .models import PerfilUsuario, TentativaFase, RespostaTentativa, ProgressoFase
 
 
 @transaction.atomic
@@ -15,6 +15,10 @@ def registrar_resposta_com_vida(attempt, question, defaults, consumir_vida=True)
     resposta = RespostaTentativa.objects.filter(
         tentativa=tentativa, questao=question
     ).first()
+    if consumir_vida and ProgressoFase.objects.filter(
+        perfil_id=perfil.pk, fase_id=tentativa.fase_id, concluida=True
+    ).exists():
+        consumir_vida = False
     if resposta:
         return resposta, perfil.vidas, False, False
 
