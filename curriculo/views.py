@@ -2896,6 +2896,51 @@ def verificar_resposta(
         or 'Revise o conceito e refaça o raciocínio passo a passo.'
     )
 
+    # Uma questão só pode ser respondida uma vez por tentativa de fase.
+    # A sessão impede que requisições repetidas consumam vidas novamente.
+    chave_respostas = f'respostas_verificadas_fase_{fase.id}'
+    respostas_verificadas = request.session.get(chave_respostas, {})
+    chave_questao = str(questao.id)
+    if chave_questao in respostas_verificadas:
+        resposta_anterior = respostas_verificadas[chave_questao]
+        if int(resposta_anterior.get('opcao_id', 0)) != opcao.id:
+            return JsonResponse({
+                'status': 'erro',
+                'msg': 'Esta questão já foi respondida nesta tentativa.',
+                'vidas': perfil.vidas,
+            }, status=409)
+        return JsonResponse({
+            'status': 'ok',
+            'correta': resposta_anterior['correta'],
+            'explicacao': explicacao,
+            'explicacao_erro': explicacao,
+            'vidas': perfil.vidas,
+            'resposta_ja_registrada': True,
+            'opcao_correta': (
+                {'id': opcao_correta.id, 'texto': opcao_correta.texto}
+                if opcao_correta else None
+            ),
+        })
+
+    if usuario_e_aluno(request) and not correta:
+        with transaction.atomic():
+            perfil = PerfilUsuario.objects.select_for_update().get(pk=perfil.pk)
+            if perfil.vidas <= 0:
+                return JsonResponse({
+                    'status': 'erro',
+                    'msg': 'Você está sem vidas. Aguarde a recuperação ou consulte a loja.',
+                    'vidas': perfil.vidas,
+                }, status=409)
+            perfil.vidas -= 1
+            perfil.save(update_fields=['vidas'])
+
+    respostas_verificadas[chave_questao] = {
+        'opcao_id': opcao.id,
+        'correta': correta,
+    }
+    request.session[chave_respostas] = respostas_verificadas
+    request.session.modified = True
+
     return JsonResponse(
         {
             'status': 'ok',
