@@ -200,7 +200,7 @@ def chem2_check_answer(request, fase_id):
         feedback = resposta_salva.feedback_snapshot
         request.session[f'chem2_attempt_{fase.pk}'] = attempt.pk
         return JsonResponse({
-            'correct': correct, 'feedback': feedback,
+            'correct': correct, 'feedback': feedback, 'solution': answer.get('solution') or answer.get('explanation') or feedback,
             'hint': '' if correct else answer.get('hint', ''),
             'unit': answer.get('display_unit', ''),
         , 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada})
