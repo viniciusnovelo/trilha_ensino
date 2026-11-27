@@ -16,6 +16,7 @@ from .rewards import conceder_moedas_por_questao
 from .views import fase_esta_liberada, contexto_papel, papel_efetivo
 from .chem3_engine import calculate, is_correct
 from gamificacao.models import PerfilUsuario, TentativaFase, RespostaTentativa, ProgressoFase
+from gamificacao.vidas import registrar_resposta_com_vida
 
 
 def _safe_exercise(question, completed_ids):
@@ -177,9 +178,8 @@ def chem3_check_answer(request, fase_id):
             defaults={'fase_titulo_snapshot': fase.titulo, 'total_questoes': 1},
         )
         with transaction.atomic():
-            RespostaTentativa.objects.update_or_create(
-                tentativa=attempt, questao=question,
-                defaults={
+            resposta_salva, vidas_atualizadas, resposta_criada, sem_vidas = registrar_resposta_com_vida(
+            attempt, question, {
                     'opcao_escolhida': chosen,
                     'texto_questao_snapshot': question.enunciado,
                     'texto_opcao_snapshot': chosen.texto if chosen else '',
@@ -190,7 +190,12 @@ def chem3_check_answer(request, fase_id):
                     'parametros_snapshot': params,
                     'feedback_snapshot': feedback,
                 },
-            )
+            consumir_vida=(papel_efetivo(request) == 'aluno'),
+        )
+        if sem_vidas:
+            return JsonResponse({'error': 'Você está sem vidas. Aguarde a recuperação ou consulte a loja.', 'vidas': vidas_atualizadas, 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada}, status=409)
+        correct = resposta_salva.correta
+        feedback = resposta_salva.feedback_snapshot
         request.session[f'chem3_attempt_{fase.pk}'] = attempt.pk
         return JsonResponse({
             'correct': correct, 'feedback': feedback,
