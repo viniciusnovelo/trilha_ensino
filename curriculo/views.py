@@ -2650,6 +2650,9 @@ def fase_detalhe(
         request.user
     )
 
+    request.session[f'respostas_verificadas_fase_{fase.id}'] = {}
+    request.session.modified = True
+
     progresso = (
         ProgressoFase.objects
         .filter(
@@ -2955,6 +2958,7 @@ def verificar_resposta(
                 if opcao_correta
                 else None
             ),
+            'vidas': perfil.vidas,
         }
     )
 
