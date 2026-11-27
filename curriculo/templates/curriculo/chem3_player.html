@@ -97,6 +97,7 @@ body[data-appearance="claro"] .transport button{color:#17283b;background:#e2ebf4
 <script>
 const $=id=>document.getElementById(id);
 const P=JSON.parse(document.getElementById('chem3-data').textContent);
+let solutionText = '';
 const state={data:P,currentId:null,params:{},selectedChoice:null,completed:new Set(P.completed_ids||[]),xp:P.xp_total||0,time:0,sceneStep:0,polymerUnits:5,activeFunctionalGroup:0,recycleStage:0};
 const C={blue:'#287f87',cyan:'#35b7a5',green:'#3d9b70',amber:'#dda047',red:'#d7655c',ink:'#263b49',muted:'#748795',purple:'#8870b8',pink:'#c7789b'};
 let canvas=null,ctx=null,W=900,H=360,dpr=1,resizeObserver=null,raf=null;
@@ -200,6 +201,7 @@ async function checkAnswer(e){
   const result=await response.json();if(!response.ok)throw new Error(result.error||'Não foi possível verificar.');
   if(result.vidas!==undefined){const lives=document.querySelector('.hud-pill.lives');if(lives)lives.textContent='♡ '+result.vidas;}
   $('solutionBtn').style.display='inline-block';
+  solutionText = result.solution || result.feedback || '';
   $('checkBtn').disabled=true; $('checkBtn').textContent='Resposta registrada';$('nextBtn').style.display='inline-block';
   showFeedback(result.correct,result.correct?'Resposta correta! '+(result.feedback||''):'Ainda não é isso. '+(result.hint||result.feedback||'Revise a simulação.'));
   if(result.correct){
@@ -214,7 +216,7 @@ async function checkAnswer(e){
 }
 function getCookie(name){const value=('; '+document.cookie).split('; '+name+'=');return value.length===2?value.pop().split(';').shift():''}
 function showFeedback(good,msg){const f=$('feedback');f.className='feedback show '+(good?'good':'bad');f.textContent=msg}
-function toggleSolution(){const e=current(),box=$('solutionBox');box.classList.toggle('show');if(!box.classList.contains('show')){box.innerHTML='';return}box.innerHTML='<b>Como pensar:</b> '+safe(e.challenge.answer.hint||'Relacione os dados apresentados à ideia química estudada.')}
+function toggleSolution(){const box=$('solutionBox');box.classList.toggle('show');if(!box.classList.contains('show')){box.innerHTML='';return}box.innerHTML='<b>Resolução:</b> '+safe(solutionText||'A resolução ficará disponível após o envio da resposta.');}
 function nextExercise(){const i=state.data.exercises.findIndex(e=>e.id===state.currentId);if(i<state.data.exercises.length-1)loadExercise(state.data.exercises[i+1].id);else window.location.href=P.urls.map}
 // Canvas utilities
 function rounded(x,y,w,h,r,fill='#fff',stroke='#dce7eb',lw=1){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.lineWidth=lw;ctx.strokeStyle=stroke;ctx.stroke()}}
