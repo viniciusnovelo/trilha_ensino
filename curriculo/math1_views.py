@@ -13,6 +13,7 @@ from .rewards import conceder_moedas_por_questao
 from .views import fase_esta_liberada, contexto_papel, papel_efetivo
 from .math1_engine import calculate, is_correct
 from gamificacao.models import PerfilUsuario, TentativaFase, RespostaTentativa, ProgressoFase
+from gamificacao.vidas import registrar_resposta_com_vida
 
 @login_required
 @ensure_csrf_cookie
@@ -79,12 +80,19 @@ def math1_check_answer(request, fase_id):
             correct_snapshot={"value":expected,"unit":answer.get("unit","")}
             feedback="Resposta correta." if correct else answer.get("solution","Revise os conceitos e tente novamente.")
         with transaction.atomic():
-            RespostaTentativa.objects.update_or_create(tentativa=attempt,questao=question,defaults={
+            resposta_salva, vidas_atualizadas, resposta_criada, sem_vidas = registrar_resposta_com_vida(
+            attempt, question, {
                 "opcao_escolhida":chosen,"texto_questao_snapshot":question.enunciado,
                 "texto_opcao_snapshot":chosen.texto if chosen else "","correta":correct,
                 "tipo_resposta_snapshot":question.tipo_resposta,"resposta_snapshot":submitted,
                 "resposta_correta_snapshot":correct_snapshot,"parametros_snapshot":params,"feedback_snapshot":feedback
-            })
+            },
+            consumir_vida=(papel_efetivo(request) == 'aluno'),
+        )
+        if sem_vidas:
+            return JsonResponse({'error': 'Você está sem vidas. Aguarde a recuperação ou consulte a loja.', 'vidas': vidas_atualizadas, 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada}, status=409)
+        correct = resposta_salva.correta
+        feedback = resposta_salva.feedback_snapshot
         return JsonResponse({"correct":correct,"feedback":feedback,"hint":"" if correct else answer.get("hint",""),
             "expected_display":None if expected is None else round(expected,int(answer.get("digits",2))),
             "unit":answer.get("display_unit",answer.get("unit",""))})
