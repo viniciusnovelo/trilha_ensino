@@ -166,12 +166,13 @@ async function checkAnswer(e){
   const result=await response.json();if(!response.ok){toast(result.error||'Não foi possível validar a resposta.');return}
   if(result.vidas!==undefined){const lives=document.querySelector('.hud-pill.lives');if(lives)lives.textContent='♡ '+result.vidas;}
   $('solutionBtn').style.display='inline-block';
+  $('checkBtn').disabled=true; $('checkBtn').textContent='Resposta registrada';
   const f=$('feedback');f.className='feedback show '+(result.correct?'good':'bad');let msg=result.feedback||'';
   if(result.expected_display!==null&&result.expected_display!==undefined){const expected=typeof result.expected_display==='object'?Object.entries(result.expected_display).map(([k,v])=>k+': '+fmt(v,a.digits)).join(' · '):result.expected_display;msg+=' Resultado calculado: '+expected+' '+(result.unit||'')+'.'}
   if(!result.correct&&result.hint)msg+=' Dica: '+result.hint;
   if(result.correct){const finish=await fetch(endpoint+'finalizar/',{method:'POST',headers:{'X-CSRFToken':decodeURIComponent(csrf)}});const completed=await finish.json();if(!finish.ok){toast(completed.error||'Não foi possível finalizar a fase.');return}
    state.completed.add(e.id);updateProgress();$('xpPill').textContent=completed.xp_ganho+' XP';$('nextBtn').style.display='inline-block';$('checkBtn').disabled=true;$('checkBtn').textContent='Concluído ✓';msg+=' Fase concluída! +'+completed.xp_ganho+' XP e +'+completed.moedas_ganhas+' moedas.';if($('coinsPill'))$('coinsPill').textContent='◎ '+(Number($('coinsPill').textContent.replace(/[^0-9]/g,''))+Number(completed.moedas_ganhas));
-  }else{$('checkBtn').disabled=false}
+  }
   f.innerHTML='<b>'+(result.correct?'Resposta correta! ✦':'Ainda não é isso.')+'</b><br>'+safe(msg);
  }catch(error){toast('Falha de comunicação com o servidor. Tente novamente.')}
 }
