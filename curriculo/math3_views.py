@@ -34,7 +34,7 @@ def math3_player(request, fase_id):
     data = question.dados_dinamicos
     safe_data = json.loads(json.dumps(data))
     safe_answer = safe_data["challenge"]["answer"]
-    for private_key in ("correct",):
+    for private_key in ("correct","solution","explanation"):
         safe_answer.pop(private_key, None)
     context = contexto_papel(request)
     options = [{"id":o.pk,"text":o.texto} for o in question.opcoes.all()]
