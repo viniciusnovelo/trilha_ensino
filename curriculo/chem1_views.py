@@ -133,7 +133,7 @@ def chem1_check_answer(request,fase_id):
             return JsonResponse({'error': 'Você está sem vidas. Aguarde a recuperação ou consulte a loja.', 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada}, status=409)
         correct = resposta_salva.correta
         feedback = resposta_salva.feedback_snapshot
-        return JsonResponse({'correct':correct,'feedback':feedback,'hint':'' if correct else answer.get('hint',''),'unit':answer.get('display_unit',answer.get('unit','')), 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada})
+        return JsonResponse({'correct':correct,'feedback':feedback, 'solution': answer.get('solution') or answer.get('explanation') or feedback,'hint':'' if correct else answer.get('hint',''),'unit':answer.get('display_unit',answer.get('unit','')), 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada})
     except (KeyError,TypeError,ValueError,ZeroDivisionError) as exc: return JsonResponse({'error':f'Resposta inválida: {exc}'},status=400)
 
 @login_required
