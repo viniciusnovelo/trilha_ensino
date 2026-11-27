@@ -2774,4 +2774,36 @@ class ConsumoVidasRespostaTests(AutenticacaoBaseTests):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.json()["correta"])
         self.assertEqual(response.json()["vidas"], 5)
+    def test_finalizar_fase_nao_desconta_vida_uma_segunda_vez(self):
+        resposta = self.responder(self.opcao_errada)
+        self.assertEqual(resposta.status_code, 200)
+        self.assertEqual(resposta.json()["vidas"], 4)
+
+        finalizacao = self.client.post(
+            reverse("finalizar_fase", args=[self.fase.pk]),
+            data=json.dumps({
+                "respostas": [{
+                    "questao_id": self.questao.pk,
+                    "opcao_id": self.opcao_errada.pk,
+                }],
+            }),
+            content_type="application/json",
+        )
+
+        self.assertEqual(finalizacao.status_code, 200)
+        self.aluno.perfil.refresh_from_db()
+        self.assertEqual(self.aluno.perfil.vidas, 4)
+
+    def test_resposta_ja_registrada_pode_ser_consultada_sem_vidas(self):
+        primeira = self.responder(self.opcao_errada)
+        self.assertEqual(primeira.status_code, 200)
+
+        self.aluno.perfil.refresh_from_db()
+        self.aluno.perfil.vidas = 0
+        self.aluno.perfil.save(update_fields=["vidas"])
+
+        repetida = self.responder(self.opcao_errada)
+        self.assertEqual(repetida.status_code, 200)
+        self.assertTrue(repetida.json()["resposta_ja_registrada"])
+        self.assertEqual(repetida.json()["vidas"], 0)
 
