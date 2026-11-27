@@ -2925,7 +2925,7 @@ def verificar_resposta(
             ),
         })
 
-    if usuario_e_aluno(request) and not correta:
+    if usuario_e_aluno(request) and not correta and not (progresso and progresso.concluida):
         with transaction.atomic():
             perfil = PerfilUsuario.objects.select_for_update().get(pk=perfil.pk)
             if perfil.vidas <= 0:
