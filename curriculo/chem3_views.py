@@ -203,7 +203,9 @@ def chem3_check_answer(request, fase_id):
             'correct': correct, 'feedback': feedback, 'solution': answer.get('solution') or answer.get('explanation') or feedback,
             'hint': '' if correct else answer.get('hint', ''),
             'unit': answer.get('display_unit', ''),
-        , 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada})
+            'vidas': vidas_atualizadas,
+            'resposta_ja_registrada': not resposta_criada,
+        })
     except (KeyError, TypeError, ValueError, ZeroDivisionError) as exc:
         return JsonResponse({'error': f'Resposta inválida: {exc}'}, status=400)
 
