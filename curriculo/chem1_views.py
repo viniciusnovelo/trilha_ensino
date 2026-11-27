@@ -14,6 +14,7 @@ from .rewards import conceder_moedas_por_questao
 from .views import fase_esta_liberada,contexto_papel,papel_efetivo
 from .chem1_engine import calculate,is_correct
 from gamificacao.models import PerfilUsuario,TentativaFase,RespostaTentativa,ProgressoFase
+from gamificacao.vidas import registrar_resposta_com_vida
 
 def _public_exercise(q):
     data=json.loads(json.dumps(q.dados_dinamicos or {}))
@@ -122,7 +123,14 @@ def chem1_check_answer(request,fase_id):
             submitted={'value':submitted_value,'unit':answer.get('unit','')}; snapshot={'value':expected,'unit':answer.get('unit','')}
         feedback=answer.get('explanation',answer.get('solution','Resposta correta.')) if correct else answer.get('hint','Revise a simulação e tente novamente.')
         with transaction.atomic():
-            RespostaTentativa.objects.update_or_create(tentativa=attempt,questao=q,defaults={'opcao_escolhida':chosen,'texto_questao_snapshot':q.enunciado,'texto_opcao_snapshot':chosen.texto if chosen else '','correta':correct,'tipo_resposta_snapshot':'choice' if kind in {'choice','dynamic_choice'} else 'numeric','resposta_snapshot':submitted,'resposta_correta_snapshot':snapshot,'parametros_snapshot':params,'feedback_snapshot':feedback})
+            resposta_salva, vidas_atualizadas, resposta_criada, sem_vidas = registrar_resposta_com_vida(
+            attempt, q, {'opcao_escolhida':chosen,'texto_questao_snapshot':q.enunciado,'texto_opcao_snapshot':chosen.texto if chosen else '','correta':correct,'tipo_resposta_snapshot':'choice' if kind in {'choice','dynamic_choice'} else 'numeric','resposta_snapshot':submitted,'resposta_correta_snapshot':snapshot,'parametros_snapshot':params,'feedback_snapshot':feedback},
+            consumir_vida=(papel_efetivo(request) == 'aluno'),
+        )
+        if sem_vidas:
+            return JsonResponse({'error': 'Você está sem vidas. Aguarde a recuperação ou consulte a loja.', 'vidas': vidas_atualizadas, 'vidas': vidas_atualizadas, 'resposta_ja_registrada': not resposta_criada}, status=409)
+        correct = resposta_salva.correta
+        feedback = resposta_salva.feedback_snapshot
         return JsonResponse({'correct':correct,'feedback':feedback,'hint':'' if correct else answer.get('hint',''),'unit':answer.get('display_unit',answer.get('unit',''))})
     except (KeyError,TypeError,ValueError,ZeroDivisionError) as exc: return JsonResponse({'error':f'Resposta inválida: {exc}'},status=400)
 
