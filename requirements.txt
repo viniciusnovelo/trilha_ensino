@@ -3,3 +3,7 @@ Django==6.1.1
 pillow==12.3.0
 sqlparse==0.6.0
 playwright==1.63.0
+dj-database-url>=2.3,<3
+psycopg[binary]>=3.2,<4
+whitenoise>=6.9,<7
+gunicorn>=23,<24
