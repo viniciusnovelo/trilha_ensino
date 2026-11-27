@@ -95,6 +95,8 @@ def physics_player(request, fase_id):
 @require_POST
 def physics_check_answer(request, fase_id):
     fase = get_object_or_404(Fase, pk=fase_id)
+    if not fase_esta_liberada(request, fase):
+        return JsonResponse({'error': 'Esta fase ainda não está liberada.'}, status=403)
     attempt_id = request.session.get('physics_attempt_id')
     if not attempt_id or request.session.get('physics_phase_id') != fase.id:
         return JsonResponse({'error': 'Tentativa não encontrada. Reabra a fase.'}, status=409)
@@ -174,6 +176,8 @@ def physics_finish_phase(request, fase_id):
     attempt_id = request.session.get("physics_attempt_id")
     if not attempt_id or request.session.get("physics_phase_id") != fase.id:
         return JsonResponse({"error": "Tentativa não encontrada."}, status=409)
+    if not fase_esta_liberada(request, fase):
+        return JsonResponse({'error': 'Esta fase ainda não está liberada.'}, status=403)
     attempt = get_object_or_404(
         TentativaFase.objects.select_for_update(),
         pk=attempt_id, perfil__usuario=request.user, fase=fase,
