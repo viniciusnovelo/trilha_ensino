@@ -193,7 +193,8 @@ async function checkAnswer(e){
   const response=await fetch(P.urls.check,{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
   const result=await response.json();if(!response.ok)throw new Error(result.error||'Não foi possível verificar.');
   if(result.vidas!==undefined){const lives=document.querySelector('.hud-pill.lives');if(lives)lives.textContent='♡ '+result.vidas;}
-  $('solutionBtn').style.display='inline-block';$('nextBtn').style.display='inline-block';
+  $('solutionBtn').style.display='inline-block';
+  $('checkBtn').disabled=true; $('checkBtn').textContent='Resposta registrada';$('nextBtn').style.display='inline-block';
   showFeedback(result.correct,result.correct?'Resposta correta! '+(result.feedback||''):'Ainda não é isso. '+(result.hint||result.feedback||'Revise a simulação.'));
   if(result.correct){
    const finish=await fetch(P.urls.finish,{method:'POST',headers:{'X-CSRFToken':getCookie('csrftoken')}});
