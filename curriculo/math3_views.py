@@ -51,6 +51,8 @@ def math3_player(request, fase_id):
 @require_POST
 def math3_check_answer(request, fase_id):
     fase=get_object_or_404(Fase,pk=fase_id,modulo__disciplina__slug="matematica-3")
+    if not fase_esta_liberada(request, fase):
+        return JsonResponse({'error': 'Esta fase ainda não está liberada.'}, status=403)
     aid=request.session.get("math3_attempt_id")
     if not aid or request.session.get("math3_phase_id") != fase.pk: return JsonResponse({"error":"Tentativa não encontrada. Reabra a fase."},status=409)
     attempt=get_object_or_404(TentativaFase,pk=aid,perfil__usuario=request.user,fase=fase,finalizada_em__isnull=True)
@@ -131,6 +133,8 @@ def math3_check_answer(request, fase_id):
 def math3_finish_phase(request, fase_id):
     fase=get_object_or_404(Fase,pk=fase_id,modulo__disciplina__slug="matematica-3")
     aid=request.session.get("math3_attempt_id")
+    if not fase_esta_liberada(request, fase):
+        return JsonResponse({'error': 'Esta fase ainda não está liberada.'}, status=403)
     if not aid or request.session.get("math3_phase_id")!=fase.pk:
         return JsonResponse({"error":"Tentativa não encontrada."},status=409)
     attempt=get_object_or_404(
