@@ -3032,6 +3032,7 @@ def finalizar_fase(
             progresso_existente
             and progresso_existente.concluida
         )
+        and not request.session.get(f'respostas_verificadas_fase_{fase.id}')
     ):
         return JsonResponse(
             {
