@@ -106,7 +106,7 @@
                             {% endif %}
                             <span class="hidden md:inline-flex items-center rounded-xl border border-yellow-400/20 bg-slate-950/60 px-3 py-2 text-xs font-black text-yellow-300">✦ Nv. {{ perfil.nivel }}</span>
                             <span class="hidden lg:inline-flex items-center rounded-xl border border-blue-400/20 bg-slate-950/60 px-3 py-2 text-xs font-black text-blue-300">◎ {{ perfil.moedas }}</span>
-                            <span class="inline-flex items-center rounded-xl border border-red-400/20 bg-slate-950/60 px-3 py-2 text-xs font-black text-red-300">♡ {{ perfil.vidas }}</span>
+                            <span class="inline-flex items-center rounded-xl border border-red-400/20 bg-slate-950/60 px-3 py-2 text-xs font-black text-red-300" id="livesPill">♡ {{ perfil.vidas }}</span>
                         {% else %}
                             <span class="rounded-xl border border-indigo-400/15 bg-indigo-500/10 px-3 py-2 text-[10px] font-black uppercase tracking-wider text-indigo-200">Professor</span>
                         {% endif %}
@@ -1083,6 +1083,10 @@
 
                 const data =
                     await resposta.json();
+
+                if (data.vidas !== undefined) {
+                    document.getElementById('livesPill').innerText = '♡ ' + data.vidas;
+                }
 
 
                 if (
