@@ -1085,7 +1085,8 @@
                     await resposta.json();
 
                 if (data.vidas !== undefined) {
-                    document.getElementById('livesPill').innerText = '♡ ' + data.vidas;
+                    const livesPill = document.getElementById('livesPill');
+                    if (livesPill) livesPill.innerText = '♡ ' + data.vidas;
                 }
 
 
